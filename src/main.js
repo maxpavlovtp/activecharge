@@ -5,14 +5,21 @@ const ewelink = require('ewelink-api');
 
 const deviceId = '1001323420';
 (async () => {
-    const connection = new ewelink({
-        email: 'maxpavlov.dp@gmail.com',
+    const connectionWithRegionOnly = new ewelink({
+        email: props.get('email'),
         password: props.get('password'),
-        region: 'eu',
+    });
+    const region = await connectionWithRegionOnly.getRegion();
+    console.log(region);
+
+
+    const connection = new ewelink({
+        email: props.get('email'),
+        password: props.get('password'),
+        region:  props.get('region'),
     });
 
-    const region = await connection.getRegion();
-    console.log(region);
+
 
 
     /* get all devices */
