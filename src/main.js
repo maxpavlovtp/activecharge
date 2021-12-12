@@ -21,7 +21,6 @@ const deviceId = '1001323420';
 
 
 
-
     /* get all devices */
     const devices = await connection.getDevices();
     console.log(devices);
@@ -31,9 +30,9 @@ const deviceId = '1001323420';
     console.log(device);
 
     /* toggle device */
-    await connection.toggleDevice(deviceId);
+     await connection.toggleDevice(deviceId);
 
-    const usage = await connection.getDevicePowerUsage(deviceId)
-    console.log(usage);
+    // const usage = await connection.getDevicePowerUsage(deviceId)
+    // console.log(usage);
 
 })();
