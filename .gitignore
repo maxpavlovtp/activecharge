@@ -36,4 +36,7 @@ out/
 ### VS Code ###
 .vscode/
 
-!**/node_modules/
+src/main/javascript/node_modules/
+src/main/javascript/package-lock.json
+src/main/javascript/props.properties
+
