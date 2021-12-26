@@ -3,7 +3,7 @@ var props = new propertiesReader('./props.properties');
 
 const ewelink = require('ewelink-api');
 
-const deviceId = '1001323420';
+const deviceId = '100136f129';
 (async () => {
     const connectionWithRegionOnly = new ewelink({
         email: props.get('email'),
