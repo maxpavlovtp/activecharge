@@ -8,8 +8,6 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.io.UnsupportedEncodingException;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
 @ActiveProfiles("test")
 class PaymentServiceTest {
@@ -21,5 +19,6 @@ class PaymentServiceTest {
     void checkout() throws UnsupportedEncodingException {
         String response = paymentService.checkout();
         Assertions.assertThat(response).contains("failure");
+//        Assertions.assertThat(response).contains("success");
     }
 }
