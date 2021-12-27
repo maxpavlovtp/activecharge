@@ -1,4 +1,4 @@
-package com.activecharge.charger;
+package com.activecharge.service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,12 +7,12 @@ import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
 @ActiveProfiles("test")
-class MainServiceTest {
+class DiyServiceTest {
     @Autowired
-    MainService mainService;
+    DiyService diYService;
 
     @Test
     void run() throws Exception {
-        mainService.run();
+        diYService.run();
     }
 }

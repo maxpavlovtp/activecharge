@@ -1,11 +1,11 @@
-package com.activecharge.charger;
+package com.activecharge.service;
 
 import com.github.realzimboguy.ewelink.api.EweLink;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MainService {
+public class DiyService {
 
     @Value("${ewelink.region}")
     private String region;
