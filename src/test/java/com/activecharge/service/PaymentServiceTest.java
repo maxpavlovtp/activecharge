@@ -20,6 +20,6 @@ class PaymentServiceTest {
     @Test
     void checkout() throws UnsupportedEncodingException {
         String response = paymentService.checkout();
-        Assertions.assertThat(response).contains("success");
+        Assertions.assertThat(response).contains("failure");
     }
 }

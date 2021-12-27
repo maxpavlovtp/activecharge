@@ -20,7 +20,7 @@ public class DiyService {
         eweLink.login();
 
         eweLink.setDeviceStatus(deviceId, "on");
-        Thread.sleep(300);
+        Thread.sleep(1000);
         eweLink.setDeviceStatus(deviceId, "off");
 
     }

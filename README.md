@@ -2,8 +2,7 @@
 
 1. Buy 10 kWt Relay for Smart Home 63A https://www.aliexpress.com/item/1005002497097746.html
 2. Create account from mobile app eWeLink.
-3. put email, password and region to src/main/resources/application.properties
-3.1 copy src/main/resources/application.properties to src/main/resources/application-test.properties
-4. install java 8
+3. put email, password and region to src/main/resources/application-test.properties
+4. install java 11
 5. run: ./gradlew clean build
 6. use github pages to deploy like: https://maxpavlovdp.github.io/activecharge/
