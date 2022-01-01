@@ -15,4 +15,16 @@ const ewelink = require('ewelink-api');
     const devices = await connection.getDevices();
     console.log(devices);
 
+
+    // const actionParams = {
+    //     apiUrl: this.getApiWebSocket(),
+    //     at: this.at,
+    //     apiKey: this.apiKey,
+    //     deviceId,
+    //     appid: this.APP_ID,
+    // };
+
+    const usage = await connection.getDevicePowerUsage('1001323420');
+    console.log(usage);
+
 })();

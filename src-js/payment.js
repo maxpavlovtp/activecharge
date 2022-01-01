@@ -10,7 +10,7 @@ const fondy = new CloudIpsp(
     }
 )
 const requestData = {
-    order_id: '24',
+    order_id: '29',
     order_desc: 'test order',
     currency: 'UAH',
     amount: '200'
