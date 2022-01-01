@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
-public class DiyService {
+public class ChargeService {
 
     @Value("${ewelink.region}")
     private String region;
@@ -15,13 +15,14 @@ public class DiyService {
     private String password;
 
     public void run() throws Exception {
-        String deviceId = "100136f129";
+        String deviceId = "1001323420";
         EweLink eweLink = new EweLink(region, email, password, 60);
         eweLink.login();
 
-        eweLink.setDeviceStatus(deviceId, "on");
-        Thread.sleep(1000);
-        eweLink.setDeviceStatus(deviceId, "off");
 
+        for (int i = 0; i < 100; i++) {
+            System.out.println(eweLink.getDevice(deviceId).getParams().getPower().toString());
+            Thread.sleep(1000);
+        }
     }
 }

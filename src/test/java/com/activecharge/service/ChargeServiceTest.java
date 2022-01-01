@@ -7,12 +7,12 @@ import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
 @ActiveProfiles("test")
-class DiyServiceTest {
+class ChargeServiceTest {
     @Autowired
-    DiyService diYService;
+    ChargeService chargeService;
 
     @Test
     void run() throws Exception {
-        diYService.run();
+        chargeService.run();
     }
 }
