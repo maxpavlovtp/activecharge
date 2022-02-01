@@ -6,3 +6,4 @@
 4. install java 11
 5. run: ./gradlew clean build
 6. use github pages to deploy like: https://maxpavlovdp.github.io/activecharge/
+7. for mvc dployment use hetzner or other hosting: http://49.12.117.164:3000/
