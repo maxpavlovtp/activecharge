@@ -10,10 +10,10 @@ const fondy = new CloudIpsp(
     }
 )
 const requestData = {
-    order_id: '29',
+    order_id: new Date().getTime(),
     order_desc: 'test order',
     currency: 'UAH',
-    amount: '200'
+    amount: '100'
 }
 fondy.Checkout(requestData).then(data => {
     console.log(data)
