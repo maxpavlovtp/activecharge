@@ -13,18 +13,14 @@ const ewelink = require('ewelink-api');
 
     /* get all devices */
     const devices = await connection.getDevices();
-    console.log(devices);
+    // console.log(devices);
 
+    const christmassTree = "100136f129"
 
-    // const actionParams = {
-    //     apiUrl: this.getApiWebSocket(),
-    //     at: this.at,
-    //     apiKey: this.apiKey,
-    //     deviceId,
-    //     appid: this.APP_ID,
-    // };
+    const status = await connection.setDevicePowerState(christmassTree, 'on');
+    console.log(status);
 
-    const usage = await connection.getDevicePowerUsage('1001323420');
-    console.log(usage);
+    const usage = await connection.getDevicePowerUsage('100136f129');
+    // console.log(usage);
 
 })();

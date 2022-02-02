@@ -1,6 +1,9 @@
 import {Get, Controller, Render} from '@nestjs/common';
+
 const CloudIpsp = require('cloudipsp-node-js-sdk')
 
+var propertiesReader = require('properties-reader');
+var props = new propertiesReader('./props.properties');
 
 @Controller()
 export class AppController {
@@ -8,12 +11,10 @@ export class AppController {
     @Render('index')
     async root() {
         let result;
-        const fondy = new CloudIpsp(
-            {
-                merchantId: '1494220',
-                secretKey: 'Z8YwcMnR6ad82Zv9UmQPH7R5HID7L2Zc'
-            }
-        )
+        const fondy = new CloudIpsp({
+            merchantId: props.get('merchantId'),
+            secretKey: props.get('secretKey')
+        })
 
         const requestData = {
             order_id: new Date().getTime(),
@@ -22,7 +23,7 @@ export class AppController {
             amount: '100'
         }
 
-       await fondy.Checkout(requestData).then(data => {
+        await fondy.Checkout(requestData).then(data => {
             console.log(data)
             result = data
         }).catch((error) => {
