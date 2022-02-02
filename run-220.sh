@@ -1,2 +1,2 @@
 cd /git/activecharge/src-js/mvc
-npm run start
+npm run start:dev
