@@ -11,6 +11,7 @@ export class ChargeController {
     @Post()
     async startCharging(@Body() startChargingDto: StartChargingDto) {
         console.log(startChargingDto)
+        if (startChargingDto.checkout_url == null) return
 
         const ewelink = require('ewelink-api');
         const connection = new ewelink({
