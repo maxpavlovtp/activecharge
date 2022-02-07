@@ -1,4 +1,5 @@
-import {Body, Controller, Post} from '@nestjs/common';
+import {Body, Controller, HttpStatus, Post, Res} from '@nestjs/common';
+import { Response } from 'express';
 
 var propertiesReader = require('properties-reader');
 var props = new propertiesReader('./props.properties');
@@ -10,9 +11,9 @@ class StartChargingDto {
 @Controller('charge')
 export class ChargeController {
     @Post()
-    async startCharging(@Body() startChargingDto: StartChargingDto) {
+    async startCharging(@Res() response:Response, @Body() startChargingDto: StartChargingDto) {
         console.log(startChargingDto)
-        if (startChargingDto.checkout_url == null) return
+        // if (startChargingDto.checkout_url == null) return
 
         const ewelink = require('ewelink-api');
         const connection = new ewelink({
@@ -29,5 +30,7 @@ export class ChargeController {
 
         const status = await connection.setDevicePowerState(christmassTree, 'on');
         console.log(status);
+
+        response.status(HttpStatus.OK).send("charging ");
     }
 }
