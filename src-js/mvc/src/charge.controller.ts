@@ -4,6 +4,7 @@ var propertiesReader = require('properties-reader');
 var props = new propertiesReader('./props.properties');
 
 class StartChargingDto {
+    checkout_url
 }
 
 @Controller('charge')
