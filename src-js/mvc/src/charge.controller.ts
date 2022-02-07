@@ -13,7 +13,6 @@ export class ChargeController {
     @Post()
     async startCharging(@Res() response:Response, @Body() startChargingDto: StartChargingDto) {
         console.log(startChargingDto)
-        // if (startChargingDto.checkout_url == null) return
 
         const ewelink = require('ewelink-api');
         const connection = new ewelink({
@@ -21,10 +20,6 @@ export class ChargeController {
             password: '891234567',
             region: props.get('region'),
         });
-
-        /* get all devices */
-        // const devices = await connection.getDevices();
-        // console.log(devices);
 
         const christmassTree = "100136f129"
 
