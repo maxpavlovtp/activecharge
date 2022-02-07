@@ -35,7 +35,7 @@ export class AppController {
             order_id: new Date().getTime(),
             order_desc: 'test order',
             currency: 'UAH',
-            amount: '10000'
+            amount: '100'
         }
 
         await fondy.Checkout(requestData).then(data => {
