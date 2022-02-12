@@ -21,9 +21,9 @@ export class ChargeController {
             region: props.get('region'),
         });
 
-        const christmassTree = "100136f129"
+        const stationA1 = "1000d61c41"
 
-        const status = await connection.setDevicePowerState(christmassTree, 'on');
+        const status = await connection.setDevicePowerState(stationA1, 'on');
         console.log(status);
 
         response.status(HttpStatus.OK).send("charging ");

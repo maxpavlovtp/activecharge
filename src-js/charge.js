@@ -13,7 +13,7 @@ const ewelink = require('ewelink-api');
 
     /* get all devices */
     const devices = await connection.getDevices();
-    // console.log(devices);
+    console.log(devices);
 
     const christmassTree = "100136f129"
 
