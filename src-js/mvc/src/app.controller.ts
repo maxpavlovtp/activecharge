@@ -11,9 +11,12 @@ export class AppController {
     @Render('index')
     async root() {
         const ewelink = require('ewelink-api');
-        const connection = new ewelink({email: props.get('email'), password: '891234567', region: props.get('region'),});
-        const christmassTree = "100136f129"
-        const device = await connection.getDevice(christmassTree);
+        const connection = new ewelink({
+            email: props.get('email'),
+            password: props.get('password'),
+            region: props.get('region'),
+        });
+        const device = await connection.getDevice(props.get('a36_1'));
 
         if (device.online) {
             return await this.generateCheckoutUrl();

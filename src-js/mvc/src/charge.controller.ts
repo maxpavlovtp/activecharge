@@ -17,14 +17,15 @@ export class ChargeController {
         const ewelink = require('ewelink-api');
         const connection = new ewelink({
             email: props.get('email'),
-            password: '891234567',
+            password: props.get('password'),
             region: props.get('region'),
         });
 
-        const a36_1G = "ab30000079"
-        // const a36_1R = "ab30000079"
+        /* get all devices */
+        const devices = await connection.getDevices();
+        // console.log(devices);
 
-        const status = await connection.setDevicePowerState(a36_1G, 'on');
+        const status = await connection.setDevicePowerState(props.get('a36_1'), 'on');
         console.log(status);
 
         response.status(HttpStatus.OK).send("charging ");
