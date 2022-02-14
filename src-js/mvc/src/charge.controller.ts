@@ -21,9 +21,10 @@ export class ChargeController {
             region: props.get('region'),
         });
 
-        const stationA1 = "1000d61c41"
+        const a36_1G = "ab30000079"
+        // const a36_1R = "ab30000079"
 
-        const status = await connection.setDevicePowerState(stationA1, 'on');
+        const status = await connection.setDevicePowerState(a36_1G, 'on');
         console.log(status);
 
         response.status(HttpStatus.OK).send("charging ");
