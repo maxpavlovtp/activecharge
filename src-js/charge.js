@@ -7,7 +7,7 @@ const ewelink = require('ewelink-api');
 
     const connection = new ewelink({
         email: props.get('email'),
-        password: '891234567',
+        password: props.get('password'),
         region:  props.get('region'),
     });
 
@@ -15,7 +15,7 @@ const ewelink = require('ewelink-api');
     const devices = await connection.getDevices();
     console.log(devices);
 
-    const christmassTree = "100136f129"
+    const christmassTree = "100136f1a4"
 
     const status = await connection.setDevicePowerState(christmassTree, 'on');
     console.log(status);
