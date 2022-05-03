@@ -1,38 +1,34 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import styles from './Header.module.css';
-import logo from "../../assets/mainScreenImg/logo.png"
-import {Link} from 'react-router-dom'
+import logo from '../../assets/mainScreenImg/logo.png';
+import { Link } from 'react-router-dom';
+import Navigation from './Navigation';
+import MobileNavigation from './MobileNavigation';
 
 const Header = () => {
-  const [fix, setFix] = useState(false)
+  const [fix, setFix] = useState(false);
 
   const fixed = () => {
-    if (window.scrollY >= 1) {
-      setFix(true)
+    if (window.scrollY >= 20) {
+      setFix(true);
     } else {
-      setFix(false)
+      setFix(false);
     }
-  }
+  };
 
-  window.addEventListener('scroll', fixed)
+  window.addEventListener('scroll', fixed);
   return (
     <header className={styles.headerBox}>
       <nav className={fix ? styles.paddingBoxFixed : styles.paddingBox}>
         <Link className={styles.homeLink} to="/">
-          <img className={styles.logoImg} src={logo} alt="logo"/>
+          <div className={styles.logoContainer}>
+            <img className={styles.logoImg} src={logo} alt="logo" />
+          </div>
           <h3 className={styles.logoText}>220-km.com</h3>
         </Link>
-        <ul className={styles.routeLinks}>
-          <li>
-            <Link className={styles.links} to="/contacts">контактні дані</Link>
-          </li>
-          <li>
-            <Link className={styles.links} to="/contract">договір публічної оферти</Link>
-          </li>
-
-        </ul>
+        <Navigation />
+        <MobileNavigation />
       </nav>
-
     </header>
   );
 };

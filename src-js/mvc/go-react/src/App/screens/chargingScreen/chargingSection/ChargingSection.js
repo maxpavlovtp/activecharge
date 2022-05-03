@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './MainSection.module.css';
+import styles from './ChargingSection.module.css';
 import Timer from "../../../../components/timer/Timer";
 
 const MainSection = () => {

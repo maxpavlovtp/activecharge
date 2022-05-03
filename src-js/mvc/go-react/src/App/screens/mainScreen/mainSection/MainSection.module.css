@@ -1,25 +1,26 @@
-.mainBox {
-    padding-top: 120px;
-    padding-bottom: 50px;
-}
+
 
 .container {
     display: flex;
     flex-direction: column;
     align-items: center;
+    box-sizing: border-box;
+    margin-top: 30px;
 }
 
 .title{
-    font-size: 48px;
+    font-size: calc(2rem + 1.5vw);
     font-family: 'Open Sans';
     font-weight: 700;
     color: #393939;
     text-align: center;
+    margin: 60px 0 50px 0;
+    padding: 0 15px
 }
 
 .btnStart {
-    margin-top: 50px;
-    margin-bottom: 30px;
+    margin-top: 40px;
+    margin-bottom: 40px;
 }
 
 .btn {
@@ -28,15 +29,45 @@
     background-color: #04AA6D;
     color: white;
     font-family: "Open Sans", sans-serif;
-    font-size: 60px ;
+    font-size: calc(1.5rem + 2vw);
     border-radius: 12px;
     padding: 15px 15px;
     font-weight: 500;
     text-decoration: none;
 }
 
+.imgCont {
+    /* display: flex; */
+    /* justify-content: center; */
+    margin-top: 50px;
+}
+
 .mainImg{
-    width: 256px;
-    height: 256px;
-    margin-top: 58px;
+    max-width: 256px;
+    height: auto;
+}
+
+@media (max-width: 720px) {
+    .title {
+        font-size: calc(1.5rem + 1.5vw);
+    }
+}
+
+@media (max-width: 420px) {
+    .title {
+        font-size: calc(1.7rem + 1.5vw);
+    }
+}
+
+@media (max-width: 320px) {
+    .title {
+        font-size: calc(1.2rem + 1.5vw);
+    }
+    .btn {
+        font-size: calc(1rem + 2vw);
+    }
+    .mainImg {
+        max-width: 180px;
+        height: auto;
+    }
 }

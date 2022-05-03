@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './MainSection.module.css';
+import styles from './PaymentSection.module.css';
 
 const MainSection = () => {
   return (

@@ -5,7 +5,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import HomeScreen from "./App/screens/mainScreen/HomeScreen";
+import MainScreen from "./App/screens/mainScreen/MainScreen";
 import ContactsScreen from "./App/screens/contactsScreen/ContactsScreen";
 import ContractScreen from "./App/screens/contractScreen/ContractScreen";
 import PaymentScreen from "./App/screens/paymentScreen/PaymentScreen";
@@ -19,7 +19,7 @@ function App() {
         <Route path="/contacts" element={<ContactsScreen/>}/>
         <Route path="/payment" element={<PaymentScreen/>}/>
         <Route path="/charging" element={<ChargingScreen/>}/>
-        <Route path="/" element={<HomeScreen/>}/>
+        <Route path="/" element={<MainScreen/>}/>
       </Routes>
     </Router>
 
