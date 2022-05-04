@@ -1,4 +1,4 @@
-import {Get, Controller, Render} from '@nestjs/common';
+import {Get, Controller} from '@nestjs/common';
 
 const CloudIpsp = require('cloudipsp-node-js-sdk')
 
@@ -8,7 +8,6 @@ var props = new propertiesReader('./props.properties');
 @Controller()
 export class AppController {
     @Get()
-    @Render('index')
     async root() {
         const ewelink = require('ewelink-api');
         const connection = new ewelink({

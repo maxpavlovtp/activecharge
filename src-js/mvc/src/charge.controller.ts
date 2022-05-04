@@ -1,4 +1,4 @@
-import {Body, Controller, Get, HttpStatus, Post, Render, Res} from '@nestjs/common';
+import {Body, Controller, Get, HttpStatus, Post, Res} from '@nestjs/common';
 import { Response } from 'express';
 
 var propertiesReader = require('properties-reader');
@@ -10,7 +10,7 @@ class StartChargingDto {
 
 @Controller('charge')
 export class ChargeController {
-    @Post()
+    @Post('/charging')
     async startCharging(@Res() response:Response, @Body() startChargingDto: StartChargingDto) {
         console.log(startChargingDto)
         await this.charge();
@@ -29,12 +29,12 @@ export class ChargeController {
         console.log(status);
     }
 
-    @Get("startFreeCharging")
-    async startFreeCharging() {
+    @Get("/charging")
+    async startFreeCharging(@Res() res) {
         console.log("free charging...")
         this.charge()
-        return {
-            message: 'Charging Status: todo put count down here'
-        };
+        return res.status(HttpStatus.OK).json({
+            message: 'charging!'
+        });
     }
 }
