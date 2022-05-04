@@ -9,10 +9,11 @@ const MainSection = () => {
       const response = await fetch(`http://localhost:5000/charge/charging`);
       const json = await response.json();
       setMsg(json);
-      console.log(msg);
+      
     };
     fetchData();
   }, []);
+  console.log(msg);
   return (
     <div className={styles.chargingBox}>
       <div>

@@ -10,11 +10,11 @@ const MainSection = () => {
     const fetchData = async () => {
       const response = await fetch(`http://localhost:5000`);
       setLink(await response.json());
-      console.log(link);
     };
     fetchData();
+    
   }, []);
-
+  console.log(link);
   const override = css`
   display: block;
   margin: 0 auto;
