@@ -6,7 +6,7 @@ const MainSection = () => {
   const [msg, setMsg] = useState();
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`http://localhost:5000/charge/charging`);
+      const response = await fetch(`http://220-km.com:5000/charge/charging`);
       const json = await response.json();
       setMsg(json);
       
