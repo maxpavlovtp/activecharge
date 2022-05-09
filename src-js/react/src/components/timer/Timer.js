@@ -29,8 +29,10 @@ const Timer = ({hours = 0, minutes = 0, seconds = 0}) => {
       <p className={over ? styles.overTimerText : styles.timerText}>{`${h.toString().padStart(2, '0')}:${m
         .toString()
         .padStart(2, '0')}:${s.toString().padStart(2, '0')}`}</p>
-      <div className={over ? styles.overText : styles.endText}>{over ? "Time's up!" : ''}</div>
-      <p className={styles.chargingPower}>{over ? "100km charged" : '500KwH ~ 10km/h'}</p>
+      <div className={over ? styles.overText : styles.endText}>{over ? "Congrats!" : 'Charging...'}</div>
+      {/*todo: add dots animation for '27 km/hour...' */}
+      {/*todo: add internacialization' */}
+      <p className={styles.chargingPower}>{over ? "Your car charged by 220-km" : 'Pumping your car with 27 km/hour...'}</p>
     </div>
   );
 }

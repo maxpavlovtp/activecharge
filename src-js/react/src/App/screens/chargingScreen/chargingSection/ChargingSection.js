@@ -17,7 +17,7 @@ const MainSection = () => {
   return (
     <div className={styles.chargingBox}>
       <div>
-        <Timer seconds={1} />
+        <Timer seconds={10} />
       </div>
     </div>
   );
