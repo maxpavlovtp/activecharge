@@ -1,3 +1,5 @@
 cd "$(dirname "$0")" || exit
-npm run start:dev
+
+npm i -f
+npm run start:prod
 # go to http://localhost/
