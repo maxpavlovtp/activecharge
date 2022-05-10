@@ -9,3 +9,7 @@
 7. for mvc dployment use hetzner or other hosting: http://49.12.117.164:3000/
 8. our chat: https://discord.gg/hRwCF5jYvj
 9. Kanban board: https://esound.youtrack.cloud/youtrack/agiles/87-4/current
+
+#SDLC:
+1. We push to master -> deployment happens every midnight to http://220-km.com/
+2. If deployment broken use last tag https://github.com/maxpavlovdp/activecharge/releases/tag/v1.1

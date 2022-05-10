@@ -7,7 +7,8 @@ const MainSection: React.FC = () => {
   
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`http://localhost:5000/charge/charging`);
+      //todo: extract host to props
+      const response = await fetch(`http://220-km.com:5000/charge/charging`);
       const json = await response.json();
       setMsg(json);
       
