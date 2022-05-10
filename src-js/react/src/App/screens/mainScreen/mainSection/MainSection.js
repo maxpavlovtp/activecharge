@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import styles from './MainSection.module.css';
-import mainImg from '../../../../assets/mainScreenImg/charging.png';
+import mainImg from '../../../assets/charging.png';
 import { Link } from 'react-router-dom';
-import RotateLoader from 'react-spinners/RotateLoader';
-import { css } from "@emotion/react";
-const MainSection = () => {
-  const [link, setLink] = useState();
+import {ThreeDots} from 'react-loader-spinner';
+
+
+
+interface LinkPayment {
+  message: string
+}
+
+const MainSection: React.FC = () => {
+  const [link, setLink] = useState<LinkPayment>();
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(`http://220-km.com:5000`);
@@ -15,11 +22,6 @@ const MainSection = () => {
     
   }, []);
   console.log(link);
-  const override = css`
-  display: block;
-  margin: 0 auto;
-  border-color: red;
-`;
 
   return (
     <div className={styles.mainBox}>
@@ -42,7 +44,10 @@ const MainSection = () => {
           </div>
         </div>
       ) : (
-          <RotateLoader color={'#04AA6D'} css={override} size={15}/>
+        <div className={styles.load}>
+          <ThreeDots color="#04AA6D" height={70} width={70} />
+        </div>
+          
       )}
     </div>
   );

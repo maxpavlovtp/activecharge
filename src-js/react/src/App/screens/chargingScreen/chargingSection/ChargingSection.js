@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import styles from './ChargingSection.module.css';
-import Timer from '../../../../components/timer/Timer';
+import Timer from '../../../components/timer/Timer';
 
-const MainSection = () => {
-  const [msg, setMsg] = useState();
+const MainSection: React.FC = () => {
+  const [msg, setMsg] = useState<string>();
+  
   useEffect(() => {
     const fetchData = async () => {
       //todo: extract host to props
