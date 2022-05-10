@@ -7,7 +7,7 @@ const MainSection: React.FC = () => {
   
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`http://localhost:5000/charge/charging`);
+      const response = await fetch(`${process.env.REACT_APP_LINK_SERVE}charge/charging`);
       const json = await response.json();
       setMsg(json);
       

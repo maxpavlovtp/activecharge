@@ -27,6 +27,7 @@
     "@nestjs/serve-static": "^2.2.2",
     "cloudipsp-node-js-sdk": "^1.0.5",
     "dotenv": "^16.0.0",
+    "env-cmd": "^10.1.0",
     "ewelink-api": "^3.1.1",
     "hbs": "^4.2.0",
     "properties-reader": "^2.2.0",
