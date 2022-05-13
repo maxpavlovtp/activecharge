@@ -3,6 +3,7 @@ import styles from './MainSection.module.css';
 import mainImg from '../../../assets/charging.png';
 import { Link } from 'react-router-dom';
 import {ThreeDots} from 'react-loader-spinner';
+import ErrorPage from '../../../components/error-page/ErrorPage';
 
 
 
@@ -12,13 +13,21 @@ interface LinkPayment {
 
 const MainSection: React.FC = () => {
   const [link, setLink] = useState<LinkPayment>();
+  const [err, setErr] = useState<string>('');
 
   useEffect(() => {
-    const fetchData = async () => {
+    try{
+      const fetchData = async () => {
       const response = await fetch(`${process.env.REACT_APP_LINK_SERVE}`);
       setLink(await response.json());
     };
     fetchData();
+    } catch(error: any) {
+      if(error.response.status === 500) {
+        setErr('error')
+      }
+    }
+    
     
   }, []);
   console.log(link);
