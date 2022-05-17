@@ -1,22 +1,10 @@
-import {Body, Controller, Get, HttpStatus, Post, Res} from '@nestjs/common';
-import { Response } from 'express';
+import {Controller, Get, HttpStatus, Res} from '@nestjs/common';
 
 var propertiesReader = require('properties-reader');
 var props = new propertiesReader('./props.properties');
 
-class StartChargingDto {
-    checkout_url
-}
-
 @Controller('charge')
 export class ChargeController {
-    // @Post()
-    // async startCharging(@Res() response:Response, @Body() startChargingDto: StartChargingDto) {
-    //     console.log(startChargingDto)
-    //     await this.charge();
-    //     response.status(HttpStatus.OK).send("charging ");
-    // }
-
 
     @Get("/charging")
     async startFreeCharging(@Res() res) {
