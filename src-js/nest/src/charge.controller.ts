@@ -18,6 +18,9 @@ export class ChargeController {
         const status = await connection.setDevicePowerState(props.get('a36_1'), 'on');
         console.log(status);
 
+        const powerUsage = await connection.getDevicePowerUsage(props.get('a36_1'));
+        console.log(powerUsage);
+
         return res.status(HttpStatus.OK).json({
             message: 'charging!'
         });
