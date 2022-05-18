@@ -25,8 +25,6 @@ export class ChargeController {
     //   devicePower = await connection.getDevice(props.get('a36_1'));
     //   console.log(devicePower);
     // }, 3000);
-    const powerUsage = await connection.getDevicePowerUsage(props.get('a36_1'));
-    console.log(powerUsage);
 
     return res.status(HttpStatus.OK).json({
       powerAgregation: status,
