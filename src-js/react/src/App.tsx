@@ -10,6 +10,7 @@ import ContactsScreen from "./App/contactsScreen/ContactsScreen";
 import ContractScreen from "./App/contractScreen/ContractScreen";
 import PaymentScreen from "./App/paymentScreen/PaymentScreen";
 import ChargingScreen from "./App/chargingScreen/ChargingScreen";
+import StatisticScreen from "./App/statisticsScreen/StatisticScreen";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Routes>
         <Route path="/contract" element={<ContractScreen/>}/>
         <Route path="/contacts" element={<ContactsScreen/>}/>
+        <Route path="/statistic" element={<StatisticScreen/>}/>
         <Route path="/payment" element={<PaymentScreen/>}/>
         <Route path="/charging" element={<ChargingScreen/>}/>
         <Route path="/" element={<MainScreen/>}/>

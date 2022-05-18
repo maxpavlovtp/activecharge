@@ -11,11 +11,16 @@ export default function Links() {
   return (
     <ul className={styles.routeLinks}>
       <motion.li initial={animateFrom} animate={animateTo} transition={{delay: 0.05}} className={styles.list}>
+        <Link className={styles.links} to="/statistic">
+          статистика споживання
+        </Link>
+      </motion.li>
+      <motion.li initial={animateFrom} animate={animateTo} transition={{delay: 0.10}} className={styles.list}>
         <Link className={styles.links} to="/contacts">
           контактні дані
         </Link>
       </motion.li>
-      <motion.li initial={animateFrom} animate={animateTo} transition={{delay: 0.10}} className={styles.list}>
+      <motion.li initial={animateFrom} animate={animateTo} transition={{delay: 0.15}} className={styles.list}>
         <Link className={styles.links} to="/contract">
           договір публічної оферти
         </Link>
