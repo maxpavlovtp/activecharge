@@ -8,7 +8,7 @@ import axios from "axios";
 const url = `${process.env.REACT_APP_LINK_SERVE}charge/charging`;
 
 const MainSection = () => {
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<any>([0, 0]);
   const [loading, setLoading] = useState<any>(false);
   const [error, setError] = useState<any>(null);
 
@@ -18,7 +18,10 @@ const MainSection = () => {
       axios
         .get(url)
         .then((response) => {
-          setData(response.data);
+          setData((oldArr: any) => [
+            ...oldArr,
+            Number(response.data.powerAgregation),
+          ]);
         })
         .catch((err) => {
           setError(err);
@@ -26,7 +29,7 @@ const MainSection = () => {
         .finally(() => {
           setLoading(false);
         });
-    }, 15000);
+    }, 6000);
   }, [url]);
 
   if (loading)
@@ -37,15 +40,15 @@ const MainSection = () => {
     );
 
   if (error) return <ErrorPage />;
-
-  console.log(data?.powerAgregation);
+  
+  if (data) console.log(data);
 
   return (
     <div className={styles.chargingBox}>
       <div className={styles.contTimer}>
         <div>
           <Timer seconds={10} />
-          <p>{data?.powerAgregation}</p>
+          <p>{data.reduce((prevValue: number, currValue: number) => prevValue + currValue).toFixed(2)}</p>
         </div>
       </div>
     </div>

@@ -23,8 +23,7 @@ export class ChargeController {
     console.log(devicePower);
 
     return res.status(HttpStatus.OK).json({
-      powerAgregation: devicePower.params.power,
-      chargeStatus: status,
+      powerAgregation: devicePower.params.power
     });
   }
 
