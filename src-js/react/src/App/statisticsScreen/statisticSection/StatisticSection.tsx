@@ -15,19 +15,18 @@ const MainSection: React.FC = () => {
     };
     fetchData();
   }, []);
-  // console.log(stat.usage.monthly);
   return (
     <div className={styles.statisticBox}>
       {stat.usage ? (
         <div className={styles.power}>
           <h2 className={styles.monthlyPower}>
-            Monthly: {stat.usage.monthly.toFixed(2)}W
+            Monthly: {stat.usage.monthly}kWH
           </h2>
           <div className={styles.tableList}>
             {stat.usage.daily.map((el: any) => (
               <div className={styles.listPower}>
                 <p className={styles.powerInfo}>{el.day})</p>
-                <p className={styles.powerInfo}>{el.usage}W</p>
+                <p className={styles.powerInfo}>{el.usage}kWH</p>
               </div>
             ))}
           </div>
