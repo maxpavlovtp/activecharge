@@ -4,7 +4,7 @@ import Timer from "../../../components/timer/Timer";
 import { ThreeDots } from "react-loader-spinner";
 
 const MainSection: React.FC = () => {
-  const [msg, setMsg] = useState<string>();
+  const [msg, setMsg] = useState<any>();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,7 +21,11 @@ const MainSection: React.FC = () => {
     <div className={styles.chargingBox}>
       <div className={styles.contTimer}>
         {msg ? (
-          <Timer seconds={10} />
+          <div>
+            <Timer seconds={10} />
+            <p>{msg.powerAgregation}</p>
+          </div>
+          
         ) : (
           <div className={styles.load}>
             <ThreeDots color="#04AA6D" height={70} width={70} />
