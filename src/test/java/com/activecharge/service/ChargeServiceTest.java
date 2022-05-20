@@ -32,4 +32,12 @@ class ChargeServiceTest {
 
         assertThat(power).isNotEmpty();
     }
+
+    @Test
+    void apiStressTest() throws Exception {
+        for (int i = 0; i < 100; i++) {
+            String power = chargeService.getPower();
+            System.out.println(power);
+        }
+    }
 }
