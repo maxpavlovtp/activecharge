@@ -1,6 +1,5 @@
 package com.activecharge.service;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,5 +23,13 @@ class ChargeServiceTest {
         String devices = chargeService.getDevices();
 
         assertThat(devices).isNotEmpty();
+    }
+
+    @Test
+    void getPower() throws Exception {
+        String power = chargeService.getPower();
+        System.out.println(power);
+
+        assertThat(power).isNotEmpty();
     }
 }

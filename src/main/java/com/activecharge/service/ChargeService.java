@@ -18,6 +18,7 @@ public class ChargeService {
     private String deviceId;
 
     public void onOff() throws Exception {
+        // todo configure connection pool
         EweLink eweLink = new EweLink(region, email, password, 60);
         eweLink.login();
 
@@ -31,5 +32,12 @@ public class ChargeService {
         eweLink.login();
 
         return eweLink.getDevices();
+    }
+
+    public String getPower() throws Exception {
+        EweLink eweLink = new EweLink(region, email, password, 60);
+        eweLink.login();
+
+        return eweLink.getDevice(deviceId).getParams().getPower();
     }
 }
