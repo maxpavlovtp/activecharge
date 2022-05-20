@@ -20,8 +20,7 @@ public class ChargeService {
         EweLink eweLink = new EweLink(region, email, password, 60);
         eweLink.login();
 
-
-        eweLink.getDevices();
+//        eweLink.getDevices();
 
         String deviceId = "1001323420";
         eweLink.setDeviceStatus(deviceId, "on");
