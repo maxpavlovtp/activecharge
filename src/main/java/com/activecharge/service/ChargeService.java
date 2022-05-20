@@ -4,6 +4,8 @@ import com.activecharge.ewelink.api.EweLink;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+
 @Service
 public class ChargeService {
 
@@ -17,27 +19,25 @@ public class ChargeService {
     @Value("${deviceId}")
     private String deviceId;
 
-    public void onOff() throws Exception {
-        // todo configure connection pool
-        EweLink eweLink = new EweLink(region, email, password, 60);
-        eweLink.login();
+    EweLink eweLink;
 
+    @PostConstruct
+    public void init() throws Exception {
+        eweLink = new EweLink(region, email, password, 60);
+        eweLink.login();
+    }
+
+    public void onOff() throws Exception {
         eweLink.setDeviceStatus(deviceId, "on");
         Thread.sleep(4000);
         eweLink.setDeviceStatus(deviceId, "off");
     }
 
     public String getDevices() throws Exception {
-        EweLink eweLink = new EweLink(region, email, password, 60);
-        eweLink.login();
-
         return eweLink.getDevices();
     }
 
     public String getPower() throws Exception {
-        EweLink eweLink = new EweLink(region, email, password, 60);
-        eweLink.login();
-
         return eweLink.getDevice(deviceId).getParams().getPower();
     }
 }
