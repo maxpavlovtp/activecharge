@@ -35,7 +35,7 @@ class ChargeServiceTest {
 
     @Test
     void apiStressTest() throws Exception {
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < 3600*8; i++) {
             String power = chargeService.getPower();
             System.out.println(power);
             System.out.println(i);
