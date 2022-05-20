@@ -17,24 +17,15 @@ public class ChargeService {
     private String password;
 
     public void run() throws Exception {
-        String deviceId = "ab30000079";
         EweLink eweLink = new EweLink(region, email, password, 60);
         eweLink.login();
 
-        Devices getDevices = eweLink.getDevices();
 
-        for (DeviceItem devicelist : getDevices.getDevicelist()) {
-            System.out.println(devicelist.getDeviceid());
-            System.out.println(devicelist.getName());
+        eweLink.getDevices();
 
-            eweLink.getDeviceStatus(devicelist.getDeviceid());
-
-        }
-
-
-        for (int i = 0; i < 10; i++) {
-            System.out.println(eweLink.getDevice(deviceId).getParams().getPower().toString());
-            Thread.sleep(1000);
-        }
+        String deviceId = "1001323420";
+        eweLink.setDeviceStatus(deviceId, "on");
+        Thread.sleep(4000);
+        eweLink.setDeviceStatus(deviceId, "off");
     }
 }
