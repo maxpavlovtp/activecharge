@@ -1,8 +1,6 @@
 package com.activecharge.service;
 
-import com.github.realzimboguy.ewelink.api.EweLink;
-import com.github.realzimboguy.ewelink.api.model.devices.DeviceItem;
-import com.github.realzimboguy.ewelink.api.model.devices.Devices;
+import com.activecharge.ewelink.api.EweLink;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -16,15 +14,22 @@ public class ChargeService {
     @Value("${ewelink.password}")
     private String password;
 
-    public void run() throws Exception {
+    @Value("${deviceId}")
+    private String deviceId;
+
+    public void onOff() throws Exception {
         EweLink eweLink = new EweLink(region, email, password, 60);
         eweLink.login();
 
-//        eweLink.getDevices();
-
-        String deviceId = "1001323420";
         eweLink.setDeviceStatus(deviceId, "on");
         Thread.sleep(4000);
         eweLink.setDeviceStatus(deviceId, "off");
+    }
+
+    public String getDevices() throws Exception {
+        EweLink eweLink = new EweLink(region, email, password, 60);
+        eweLink.login();
+
+        return eweLink.getDevices();
     }
 }
