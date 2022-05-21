@@ -35,11 +35,17 @@ class ChargeServiceTest {
 
     @Test
     void apiStressTest() throws Exception {
-        for (int i = 0; i < 3600*8; i++) {
+        float chargedWt = 0;
+        for (int i = 0; i < 3600 * 10; i++) {
             String power = chargeService.getPower();
             System.out.println(power);
             System.out.println(i);
             Thread.sleep(1000);
+
+            float powerWt = Float.parseFloat(power);
+            chargedWt += powerWt / 3600;
+
+            System.out.println("chargedWt: " + chargedWt);
         }
     }
 }
