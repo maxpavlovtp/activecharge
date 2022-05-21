@@ -46,6 +46,7 @@ class OnServiceTest {
         long offTime = onTime + 3600 * 1000 * 8;
 
         for (int i = 0; offTime > currentTimeMillis(); i++) {
+            System.out.println("sleep for ms: " + checkInterval);
             Thread.sleep(checkInterval);
 
             onService.login();
