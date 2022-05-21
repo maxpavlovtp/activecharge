@@ -23,6 +23,8 @@ class ChargeServiceTest {
     void getDevices() throws Exception {
         String devices = chargeService.getDevices();
 
+        System.out.println(devices);
+
         assertThat(devices).isNotEmpty();
     }
 
