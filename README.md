@@ -13,3 +13,5 @@
 #Design:
 ![img.png](img.png)
 
+
+[![Java CI with Gradle](https://github.com/maxpavlovdp/activecharge/actions/workflows/gradle.yml/badge.svg)](https://github.com/maxpavlovdp/activecharge/actions/workflows/gradle.yml)
