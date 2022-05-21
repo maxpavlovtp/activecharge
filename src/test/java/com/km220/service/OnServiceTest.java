@@ -37,7 +37,7 @@ class OnServiceTest {
     }
 
     @Test
-    @Disabled
+//    @Disabled
     void apiStressTest() throws Exception {
         float chargedWt = 0;
         for (int i = 0; i < 3600 * 8; i++) {
@@ -51,7 +51,7 @@ class OnServiceTest {
 
             System.out.println("chargedWt: " + chargedWt);
 
-            if(i%100==0) {
+            if (i % 100 == 0) {
                 onService.login();
             }
         }
