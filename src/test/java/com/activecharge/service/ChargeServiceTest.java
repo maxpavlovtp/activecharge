@@ -1,5 +1,6 @@
 package com.activecharge.service;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -34,6 +35,7 @@ class ChargeServiceTest {
     }
 
     @Test
+    @Disabled
     void apiStressTest() throws Exception {
         float chargedWt = 0;
         for (int i = 0; i < 3600 * 8; i++) {
