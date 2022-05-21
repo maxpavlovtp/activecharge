@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import static java.lang.System.currentTimeMillis;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -37,23 +38,25 @@ class OnServiceTest {
     }
 
     @Test
-//    @Disabled
     void apiStressTest() throws Exception {
+        int checkInterval = 15000;
         float chargedWt = 0;
-        for (int i = 0; i < 3600 * 8; i++) {
+
+        long onTime = currentTimeMillis();
+        long offTime = onTime + 3600 * 1000 * 8;
+
+        for (int i = 0; offTime > currentTimeMillis(); i++) {
+            Thread.sleep(checkInterval);
+
+            onService.login();
             String power = onService.getPower();
             System.out.println(power);
             System.out.println(i);
-            Thread.sleep(1000);
 
             float powerWt = Float.parseFloat(power);
-            chargedWt += powerWt / 3600;
+            chargedWt += powerWt / (3600*1000F / checkInterval);
 
             System.out.println("chargedWt: " + chargedWt);
-
-            if (i % 100 == 0) {
-                onService.login();
-            }
         }
     }
 }
