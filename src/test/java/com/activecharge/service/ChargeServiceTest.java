@@ -46,6 +46,10 @@ class ChargeServiceTest {
             chargedWt += powerWt / 3600;
 
             System.out.println("chargedWt: " + chargedWt);
+
+            if(i%100==0) {
+                chargeService.login();
+            }
         }
     }
 }

@@ -14,6 +14,6 @@
 1. We push to master -> deployment happens every midnight to http://220-km.com/
 2. If deployment broken use last tag https://github.com/maxpavlovdp/activecharge/releases/tag/v1.1
 
-#Forks
-1. https://github.com/maxpavlovdp/ewelink-api-java
-2. https://github.com/maxpavlovdp/ewelink-api
+#Design:
+![img.png](img.png)
+

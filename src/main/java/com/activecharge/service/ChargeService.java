@@ -23,7 +23,11 @@ public class ChargeService {
 
     @PostConstruct
     public void init() throws Exception {
-        eweLink = new EweLink(region, email, password, 60);
+        eweLink = new EweLink(region, email, password, 60*8);
+        login();
+    }
+
+    public void login() throws Exception {
         eweLink.login();
     }
 
