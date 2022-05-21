@@ -10,18 +10,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @ActiveProfiles("test")
-class ChargeServiceTest {
+class OnServiceTest {
     @Autowired
-    ChargeService chargeService;
+    OnService onService;
 
     @Test
     void onOff() throws Exception {
-        chargeService.onOff();
+        onService.onOff();
     }
 
     @Test
     void getDevices() throws Exception {
-        String devices = chargeService.getDevices();
+        String devices = onService.getDevices();
 
         System.out.println(devices);
 
@@ -30,7 +30,7 @@ class ChargeServiceTest {
 
     @Test
     void getPower() throws Exception {
-        String power = chargeService.getPower();
+        String power = onService.getPower();
         System.out.println(power);
 
         assertThat(power).isNotEmpty();
@@ -41,7 +41,7 @@ class ChargeServiceTest {
     void apiStressTest() throws Exception {
         float chargedWt = 0;
         for (int i = 0; i < 3600 * 8; i++) {
-            String power = chargeService.getPower();
+            String power = onService.getPower();
             System.out.println(power);
             System.out.println(i);
             Thread.sleep(1000);
@@ -52,7 +52,7 @@ class ChargeServiceTest {
             System.out.println("chargedWt: " + chargedWt);
 
             if(i%100==0) {
-                chargeService.login();
+                onService.login();
             }
         }
     }

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 
 @Service
-public class ChargeService {
+public class OnService {
 
     @Value("${ewelink.region}")
     private String region;
@@ -23,7 +23,7 @@ public class ChargeService {
 
     @PostConstruct
     public void init() throws Exception {
-        eweLink = new EweLink(region, email, password, 60*8);
+        eweLink = new EweLink(region, email, password, 60 * 8);
         login();
     }
 
