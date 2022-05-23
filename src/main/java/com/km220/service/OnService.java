@@ -43,11 +43,17 @@ public class OnService {
   }
 
   public String getPower() throws Exception {
-    return eweLink.getDevice(deviceId).getParams().getPower();
+    try {
+      return eweLink.getDevice(deviceId).getParams().getPower();
+    } catch (Exception e) {
+      eweLink.login();
+      return eweLink.getDevice(deviceId).getParams().getPower();
+    }
   }
 
   // todo move to DB
   float chargedWt = 0;
+
   public float getConsumedPower(int checkIntervalInMilliseconds) throws Exception {
     return 0;
   }

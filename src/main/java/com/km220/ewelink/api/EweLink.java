@@ -253,14 +253,7 @@ public class EweLink {
       }
       logger.debug("GetDevice Response Raw:{}", response.toString());
 
-      DeviceItem device = null;
-      try {
-        device = gson.fromJson(response.toString(), DeviceItem.class);
-      } catch (Throwable t) {
-        // todo refactor
-        login();
-        device = gson.fromJson(response.toString(), DeviceItem.class);
-      }
+      DeviceItem device = gson.fromJson(response.toString(), DeviceItem.class);
 
       logger.debug("GetDevice Response:{}", device.toString());
 
