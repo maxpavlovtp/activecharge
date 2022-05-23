@@ -14,21 +14,23 @@ const connection = new ewelink({
 export class ChargeController {
   @Get('/charging')
   async startFreeCharging(@Res() res) {
-    const status = await connection.setDevicePowerState(
-      props.get('a36_1'),
-      'on',
-    );
-    console.log(status);
+    const device = await connection.getDevice(props.get('a36_1'));
+    console.log(device)
 
-    // let devicePower = '0';
-    // setInterval(async () => {
-    //   devicePower = await connection.getDevice(props.get('a36_1'));
-    //   console.log(devicePower);
-    // }, 3000);
-
-    return res.status(HttpStatus.OK).json({
-      powerAgregation: status,
-    });
+    if (device.online) {
+      const status = await connection.setDevicePowerState(
+        props.get('a36_1'),
+        'on',
+      );
+      console.log(status);
+      return res.status(HttpStatus.OK).json({
+        message: 'success',
+      });
+    } else {
+      return res.status(HttpStatus.OK).json({
+        message: 'error',
+      });
+    }
   }
 
   @Get('/statistic')
