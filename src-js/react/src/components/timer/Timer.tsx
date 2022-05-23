@@ -32,7 +32,7 @@ const Timer = (props: ITimer) => {
                 .toString()
                 .padStart(2, '0')}:${s.toString().padStart(2, '0')}`}</p>
             {/*todo: fetch <3.33 kWt> from BE*/}
-            <div className={over ? styles.overText : styles.endText}>{over ? "Congrats! Your car charged by 40 kWt" : 'Charged: <3.33' +
+            <div className={over ? styles.overText : styles.endText}>{over ? "Congrats! Your car charged by 40 kWt" : 'Charged: <10.77' +
                 ' kWt>'}</div>
             {/*todo: add fetch <4 kWt/hour> from BE' */}
             <p className={styles.chargingPower}>{over ? "" : 'Charging speed: <4 kWt/hour>'}</p>
