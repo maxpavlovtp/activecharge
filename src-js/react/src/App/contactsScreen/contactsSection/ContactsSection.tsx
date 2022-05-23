@@ -5,7 +5,7 @@ const MainSection: React.FC = () => {
   return (
     <div className={styles.contactsBox}>
       <div>
-        <p>contacts</p>
+        <p>Viber/Telegram/Whatsup: +380971983759</p>
       </div>
     </div>
   )

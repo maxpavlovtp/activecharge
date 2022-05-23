@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./ChargingSection.module.css";
 import Timer from "../../../components/timer/Timer";
 import { ThreeDots } from "react-loader-spinner";
