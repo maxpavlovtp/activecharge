@@ -34,7 +34,7 @@ class OnServiceTest {
   }
 
   @Test
-  void apiStressTest() throws Exception {
+  void powerAggregatinJobTest() throws Exception {
     int checkInterval = 15000;
     float chargedWt = 0;
 
