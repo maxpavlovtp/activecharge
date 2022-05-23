@@ -256,7 +256,7 @@ public class EweLink {
       DeviceItem device = null;
       try {
         device = gson.fromJson(response.toString(), DeviceItem.class);
-      } catch (NumberFormatException nfe) {
+      } catch (Throwable t) {
         // todo refactor
         login();
         device = gson.fromJson(response.toString(), DeviceItem.class);
