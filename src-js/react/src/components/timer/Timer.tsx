@@ -66,7 +66,7 @@ const Timer = (props: ITimer) => {
       <div className={over ? styles.overText : styles.endText}>
         {over
           ? "Congrats! Your car charged by 40 kWt"
-          : `Charged: ${num}` + " kWt>"}
+          : `Charged: ${num === undefined ? 0 : num}` + " kWt>"}
       </div>
       {/*todo: add fetch <4 kWt/hour> from BE' */}
       <p className={styles.chargingPower}>
