@@ -32,6 +32,19 @@ export class ChargeController {
     }
   }
 
+  @Get('/getChargingStatus')
+  async chargingStatus(@Res() res) {
+    let num = 0;
+    function getRandomInt(max: number) {
+      num = Math.floor(Math.random() * max);
+    }
+    getRandomInt(100)
+    console.log(num)
+    return res.status(HttpStatus.OK).json({
+      random: num,
+    });
+  }
+
   @Get('/statistic')
   async usageStatistics(@Res() res) {
     const ewelink = require('ewelink-api');
