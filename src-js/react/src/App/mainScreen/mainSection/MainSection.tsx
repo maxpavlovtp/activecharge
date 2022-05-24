@@ -1,46 +1,49 @@
-import React, { useEffect, useState } from 'react';
-import styles from './MainSection.module.css';
-import mainImg from '../../../assets/charging.png';
-import { Link } from 'react-router-dom';
-import {ThreeDots} from 'react-loader-spinner';
-import ErrorPage from '../../../components/error-page/ErrorPage';
+import React, { useEffect, useState } from "react";
+import styles from "./MainSection.module.css";
+import mainImg from "../../../assets/charging.png";
+import { Link } from "react-router-dom";
 
-
-
-interface LinkPayment {
-  message: string
-}
+import axios from "axios";
+import ErrorPage from "../../../components/error-page/ErrorPage";
 
 const MainSection: React.FC = () => {
-  const [link, setLink] = useState<LinkPayment>();
-  const [err, setErr] = useState<string>('');
+  const [link, setLink] = useState<any>();
+  const [loading, setLoading] = useState<any>(false);
+  const [error, setError] = useState<any>(null);
+
+  const url = `${process.env.REACT_APP_LINK_SERVE}`;
 
   useEffect(() => {
-    try{
-      const fetchData = async () => {
-      const response = await fetch(`${process.env.REACT_APP_LINK_SERVE}`);
-      setLink(await response.json());
-    };
-    fetchData();
-    } catch(error: any) {
-      if(error.response.status === 500) {
-        setErr('error')
-      }
-    }
-    
-    
+    setLoading(true);
+    axios
+      .get(url)
+      .then((response) => {
+        setLink(response.data.message);
+      })
+      .catch((err) => {
+        setError(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
   console.log(link);
 
+  if (error) {
+    console.log(error.message);
+    return <p>Error server!</p>;
+  }
+
   return (
     <div className={styles.mainBox}>
-      {link ? (
+      {link !== "error" ? (
         <div className={styles.container}>
           <h1 className={styles.title}>Заряди 220 кілометрів за ніч</h1>
           <div className={styles.btnStart}>
             <button
-              className={styles.btnPay}
-              onClick={() => window.open(link.message)}
+              disabled={loading ? true : false}
+              className={loading ? styles.disaleBtn : styles.btnPay}
+              onClick={() => window.open(link)}
             >
               Start
             </button>
@@ -53,10 +56,10 @@ const MainSection: React.FC = () => {
           </div>
         </div>
       ) : (
-        <div className={styles.load}>
-          <ThreeDots color="#04AA6D" height={70} width={70} />
-        </div>
-          
+        <ErrorPage
+          errorHeader="Сервер не відповідає"
+          errorBody="Вибачте! Сервер не відповідає, спробуйте, будь ласка, пізніше"
+        />
       )}
     </div>
   );
