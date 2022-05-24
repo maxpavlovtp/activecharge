@@ -39,7 +39,7 @@ class OnServiceTest {
     float chargedWt = 0;
 
     long onTime = currentTimeMillis();
-    long offTime = onTime + 3600 * 1000 * 8;
+    long offTime = onTime + 3600 * 1000 * 5;
 
     for (int i = 0; offTime > currentTimeMillis(); i++) {
       System.out.println("sleep for ms: " + checkInterval);
