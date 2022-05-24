@@ -70,7 +70,7 @@ const Timer = (props: ITimer) => {
       </div>
       {/*todo: add fetch <4 kWt/hour> from BE' */}
       <p className={styles.chargingPower}>
-        {over ? "" : "Charging speed: <4 kWt/hour>"}
+        {over ? "" : `Charging speed: ${num === undefined ? 0 : num/2}`}
       </p>
     </div>
   );
