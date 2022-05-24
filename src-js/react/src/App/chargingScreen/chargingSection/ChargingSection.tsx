@@ -39,7 +39,7 @@ const MainSection: React.FC = () => {
   return (
     <div className={styles.chargingBox}>
       <div className={styles.contTimer}>
-        {msg?.data.message === "error" && <ErrorPage numError='500' errorHeader='Device is offline' errorBody='Sorry! Device is offline now. Please, try later'/>}
+        {msg?.data.message === "error" && <ErrorPage errorHeader='Device is offline' errorBody='Sorry! Device is offline now. Please, try later'/>}
         {msg?.data.message === "success" && <Timer seconds={10} />}
       </div>
     </div>
