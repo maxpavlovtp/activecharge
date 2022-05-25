@@ -34,34 +34,41 @@ const MainSection: React.FC = () => {
     return <p>Error server!</p>;
   }
 
+  if (loading)
+    return (
+      <></>
+    );
+
   return (
-    <div className={styles.mainBox}>
-      {link !== "error" ? (
-        <div className={styles.container}>
-          <h1 className={styles.title}>Заряди 220 кілометрів за ніч</h1>
-          <div className={styles.btnStart}>
-            <button
-              disabled={loading ? true : false}
-              className={loading ? styles.disaleBtn : styles.btnPay}
-              onClick={() => window.open(link)}
-            >
-              Start
-            </button>
-            <Link className={styles.btn} to="/charging">
-              Start Free
-            </Link>
+    <>
+      <div className={styles.mainBox}>
+        {link !== "error" ? (
+          <div className={styles.container}>
+            <h1 className={styles.title}>Заряди 220 кілометрів за ніч</h1>
+            <div className={styles.btnStart}>
+              <button
+                disabled={loading ? true : false}
+                className={loading ? styles.disaleBtn : styles.btnPay}
+                onClick={() => window.open(link)}
+              >
+                Start
+              </button>
+              <Link className={styles.btn} to="/charging">
+                Start Free
+              </Link>
+            </div>
+            <div className={styles.imgCont}>
+              <img className={styles.mainImg} src={mainImg} alt="mainImg" />
+            </div>
           </div>
-          <div className={styles.imgCont}>
-            <img className={styles.mainImg} src={mainImg} alt="mainImg" />
-          </div>
-        </div>
-      ) : (
-        <ErrorPage
-          errorHeader="Device is offline"
-          errorBody="Sorry! Device is offline. Please, try later"
-        />
-      )}
-    </div>
+        ) : (
+          <ErrorPage
+            errorHeader="Device is offline"
+            errorBody="Sorry! Device is offline. Please, try later"
+          />
+        )}
+      </div>
+    </>
   );
 };
 
