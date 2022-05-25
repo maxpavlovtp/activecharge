@@ -14,10 +14,14 @@ public class OnController {
   @Autowired
   private OnService onService;
 
-
   @GetMapping("/start")
   public Response start() throws Exception {
     Status status = onService.on(8);
     return status.getError() > 0 ? Response.fail() : Response.success();
+  }
+
+  @GetMapping("/getChargingStatus")
+  public Response getChargingStatus() throws Exception {
+    return new Response("getChargingStatus", onService.getChargedWt());
   }
 }

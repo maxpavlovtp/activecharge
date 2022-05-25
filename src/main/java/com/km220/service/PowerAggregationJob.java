@@ -21,7 +21,7 @@ public class PowerAggregationJob {
     String power = onService.getPower();
     System.out.println("charging power (watts): " + power);
     System.out
-        .println("charging time (minutes): " + (currentTimeMillis() - onTime) / (1000 * 60));
+        .println("charging time (minutes): " + (currentTimeMillis() - onTime) / 1000);
 
     float powerWt = Float.parseFloat(power);
     chargedWt += powerWt / (3600 * 1000F / checkIntervalInMillis);
