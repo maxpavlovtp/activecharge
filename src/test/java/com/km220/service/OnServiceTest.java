@@ -13,45 +13,35 @@ import static org.assertj.core.api.Assertions.assertThat;
 class OnServiceTest {
 
   @Autowired
-  DeviceService deviceService;
+  OnService onService;
 
   @Test
-  void getDevices() throws Exception {
-    String devices = deviceService.getDevices();
-
+  void getDevicesTest() throws Exception {
+    // when
+    String devices = onService.getDevices();
     System.out.println(devices);
 
+    // then
     assertThat(devices).isNotEmpty();
   }
 
   @Test
-  void getPower() throws Exception {
-    String power = deviceService.getPower();
+  void getPowerTest() throws Exception {
+    // when
+    String power = onService.getPower();
     System.out.println(power);
 
+    //then
     assertThat(power).isNotEmpty();
   }
 
   @Test
-  void powerAggregatinJobTest() throws Exception {
-    int checkInterval = 15000;
-    float chargedWt = 0;
+  void getChargedWtTest() throws Exception {
+    // when
+    onService.on(1);
 
-    long onTime = currentTimeMillis();
-    long offTime = onTime + 3600 * 1000 * 5;
-
-    for (int i = 0; offTime > currentTimeMillis(); i++) {
-      System.out.println("sleep for ms: " + checkInterval);
-      Thread.sleep(checkInterval);
-
-      String power = deviceService.getPower();
-      System.out.println(power);
-      System.out.println(i);
-
-      float powerWt = Float.parseFloat(power);
-      chargedWt += powerWt / (3600 * 1000F / checkInterval);
-
-      System.out.println("chargedWt: " + chargedWt);
-    }
+    Thread.sleep(10000);
+    // then
+    assertThat(onService.getChargedWt() > 0).isTrue();
   }
 }
