@@ -1,6 +1,5 @@
 package com.km220.service;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,11 +13,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 class OnServiceTest {
 
   @Autowired
-  OnService onService;
+  DeviceService deviceService;
 
   @Test
   void getDevices() throws Exception {
-    String devices = onService.getDevices();
+    String devices = deviceService.getDevices();
 
     System.out.println(devices);
 
@@ -27,7 +26,7 @@ class OnServiceTest {
 
   @Test
   void getPower() throws Exception {
-    String power = onService.getPower();
+    String power = deviceService.getPower();
     System.out.println(power);
 
     assertThat(power).isNotEmpty();
@@ -45,7 +44,7 @@ class OnServiceTest {
       System.out.println("sleep for ms: " + checkInterval);
       Thread.sleep(checkInterval);
 
-      String power = onService.getPower();
+      String power = deviceService.getPower();
       System.out.println(power);
       System.out.println(i);
 

@@ -1,15 +1,13 @@
 package com.km220.service;
 
-import static java.lang.System.currentTimeMillis;
-
 import com.km220.ewelink.api.EweLink;
+import com.km220.ewelink.api.model.Status;
+import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
-
 @Service
-public class OnService {
+public class DeviceService {
 
   @Value("${ewelink.region}")
   private String region;
@@ -29,13 +27,13 @@ public class OnService {
     eweLink.login();
   }
 
-  public void on() throws Exception {
+  public Status on() throws Exception {
     chargedWt = 0;
-    eweLink.setDeviceStatus(deviceId, "on");
+    return eweLink.setDeviceStatus(deviceId, "on");
   }
 
-  public void off() throws Exception {
-    eweLink.setDeviceStatus(deviceId, "off");
+  public Status off() throws Exception {
+    return eweLink.setDeviceStatus(deviceId, "off");
   }
 
   public String getDevices() throws Exception {
