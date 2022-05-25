@@ -8,13 +8,12 @@ import ErrorPage from "../../../components/error-page/ErrorPage";
 
 const MainSection: React.FC = () => {
   const [link, setLink] = useState<any>();
-  const [loading, setLoading] = useState<any>(false);
+  const [loading, setLoading] = useState<any>(true);
   const [error, setError] = useState<any>(null);
 
   const url = `${process.env.REACT_APP_LINK_SERVE}`;
 
   useEffect(() => {
-    setLoading(true);
     axios
       .get(url)
       .then((response) => {
