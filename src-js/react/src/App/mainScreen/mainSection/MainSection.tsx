@@ -57,8 +57,8 @@ const MainSection: React.FC = () => {
         </div>
       ) : (
         <ErrorPage
-          errorHeader="Сервер не відповідає"
-          errorBody="Вибачте! Сервер не відповідає, спробуйте, будь ласка, пізніше"
+          errorHeader="Device is offline"
+          errorBody="Sorry! Device is offline. Please, try later"
         />
       )}
     </div>
