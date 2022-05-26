@@ -11,7 +11,7 @@ const MainSection: React.FC = () => {
   const [loading, setLoading] = useState<any>(true);
   const [error, setError] = useState<any>(null);
 
-  const url = `http://220-km.com:5000/`;
+  const url = `${process.env.REACT_APP_LINK_SERVE}`;
 
   useEffect(() => {
     axios
@@ -30,15 +30,13 @@ const MainSection: React.FC = () => {
 
   if (error) {
     console.log(error.message);
-    return (
-      <ErrorPage
-        errorHeader="Device is offline"
-        errorBody="Sorry! Device is offline. Please, try later"
-      />
-    );
+    return <p>Error server!</p>;
   }
 
-  if (loading) return <></>;
+  if (loading)
+    return (
+      <></>
+    );
 
   return (
     <>
