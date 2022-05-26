@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./Timer.module.css";
 import { ITimer } from "../../interfaces";
 import axios from "axios";
+import ErrorPage from "../error-page/ErrorPage";
 
 const url = `${process.env.REACT_APP_LINK_SERVE}on/getChargingStatus`;
 
@@ -38,7 +39,7 @@ const Timer = (props: ITimer) => {
       axios
         .get(url)
         .then((response) => {
-          setNum(response.data.data);
+          setNum(response);
           console.log(num);
         })
         .catch((err: any) => {
@@ -55,6 +56,14 @@ const Timer = (props: ITimer) => {
     return () => clearInterval(timerID);
   });
 
+  if (error)
+    return (
+      <ErrorPage
+        errorHeader="Device is offline"
+        errorBody="Sorry! Device is offline. Please, try later"
+      />
+    );
+
   return (
     // todo: add internacialization'
     <div className={styles.timerBox}>
@@ -67,11 +76,11 @@ const Timer = (props: ITimer) => {
       <div className={over ? styles.overText : styles.endText}>
         {over
           ? "Congrats! Your car charged by 40 kWt"
-          : `Charged: ${num === undefined ? 0 : num}` + " kWt"}
+          : `Charged: ${num?.data?.data === undefined ? 0 : num?.data?.data}` + " kWt"}
       </div>
       {/*todo: add fetch <4 kWt/hour> from BE' */}
       <p className={styles.chargingPower}>
-        {over ? "" : `Charging speed: ${num === undefined ? 0 : num}`}
+        {over ? "" : `Charging speed: ${num?.data?.data === undefined ? 0 : num?.data?.data}`}
       </p>
     </div>
   );
