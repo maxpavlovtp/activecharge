@@ -11,7 +11,7 @@ const MainSection: React.FC = () => {
   const [loading, setLoading] = useState<any>(true);
   const [error, setError] = useState<any>(null);
 
-  const url = `http://localhost:8000/`;
+  const url = `http://220-km.com:5000/`;
 
   useEffect(() => {
     axios
