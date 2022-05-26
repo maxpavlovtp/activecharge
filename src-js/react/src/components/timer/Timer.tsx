@@ -3,7 +3,7 @@ import styles from "./Timer.module.css";
 import { ITimer } from "../../interfaces";
 import axios from "axios";
 
-const url = `${process.env.REACT_APP_LINK_SERVE}charge/getChargingStatus`;
+const url = `${process.env.REACT_APP_LINK_SERVE}on/getChargingStatus`;
 
 const Timer = (props: ITimer) => {
   const [over, setOver] = useState(false);
@@ -38,7 +38,8 @@ const Timer = (props: ITimer) => {
       axios
         .get(url)
         .then((response) => {
-          setNum(response.data.random);
+          setNum(response.data.data);
+          console.log(num);
         })
         .catch((err: any) => {
           setError(err);
@@ -70,7 +71,7 @@ const Timer = (props: ITimer) => {
       </div>
       {/*todo: add fetch <4 kWt/hour> from BE' */}
       <p className={styles.chargingPower}>
-        {over ? "" : `Charging speed: ${num === undefined ? 0 : num/2}`}
+        {over ? "" : `Charging speed: ${num === undefined ? 0 : num}`}
       </p>
     </div>
   );
