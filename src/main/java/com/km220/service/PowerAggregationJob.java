@@ -20,8 +20,9 @@ public class PowerAggregationJob {
   public void sumPower() throws Exception {
     String power = onService.getPower();
     System.out.println("charging power (watts): " + power);
+    float chargingTimeSecs = (currentTimeMillis() - onTime) / 1000;
     System.out
-        .println("charging time (minutes): " + (currentTimeMillis() - onTime) / 1000);
+        .println("chargingTimeSecs: " + chargingTimeSecs);
 
     float powerWt = Float.parseFloat(power);
     chargedWt += powerWt / (3600 * 1000F / checkIntervalInMillis);
