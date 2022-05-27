@@ -30,13 +30,15 @@ const MainSection: React.FC = () => {
 
   if (error) {
     console.log(error.message);
-    return <p>Error server!</p>;
+    return (
+      <ErrorPage
+        errorHeader="Device is offline"
+        errorBody="Sorry! Device is offline. Please, try later"
+      />
+    );
   }
 
-  if (loading)
-    return (
-      <></>
-    );
+  if (loading) return <></>;
 
   return (
     <>
