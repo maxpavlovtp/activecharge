@@ -14,7 +14,7 @@ public class PowerAggregationJob {
   @Autowired
   private OnService onService;
 
-  final long checkIntervalInMillis = 5000;
+  final long checkIntervalInMillis = 1000;
 
   @Scheduled(fixedDelay = checkIntervalInMillis)
   public void sumPower() throws Exception {
