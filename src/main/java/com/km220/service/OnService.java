@@ -4,6 +4,7 @@ import static java.lang.System.currentTimeMillis;
 
 import com.km220.service.ewelink.EweLink;
 import com.km220.service.ewelink.model.Status;
+import com.km220.service.ewelink.model.devices.DeviceItem;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -50,12 +51,24 @@ public class OnService {
     return eweLink.getDevices();
   }
 
+  public String getDeviceStatus() throws Exception {
+    return getDevice().getParams().toString();
+  }
+
   public String getPower() throws Exception {
+    return getDevice().getParams().getPower();
+  }
+
+  private DeviceItem getDevice() throws Exception {
+    DeviceItem device = null;
     try {
-      return eweLink.getDevice(deviceId).getParams().getPower();
+      device = eweLink.getDevice(deviceId);
     } catch (Exception e) {
+      // todo implement reliable login
       eweLink.login();
-      return eweLink.getDevice(deviceId).getParams().getPower();
+      device = eweLink.getDevice(deviceId);
     }
+
+    return device;
   }
 }
