@@ -22,6 +22,11 @@ public class OnController {
 
   @GetMapping("/getChargingStatus")
   public Response getChargingStatus() throws Exception {
-    return new Response("getChargingStatus", onService.getChargedWt());
+    return new Response("kWtCharged", onService.getChargedWt());
+  }
+
+  @GetMapping("/getDeviceStatus")
+  public Response getDeviceStatus() throws Exception {
+    return new Response("deviceStatus", onService.getDeviceStatus());
   }
 }
