@@ -7,11 +7,9 @@ import ErrorPage from "../../../components/error-page/ErrorPage";
 
 const MainSection: React.FC = () => {
   const [msg, setMsg] = useState<any>();
-  const [response, setresponse] = useState<any>();
   const [loading, setLoading] = useState<any>(false);
   const [error, setError] = useState<any>(null);
   const url = `http://220-km.com:8080/on/start`;
-  const urlChargingStatus = `http://220-km.com:8080/on/getChargingStatus`;
 
   const start = () => {
     setLoading(true);
@@ -22,28 +20,13 @@ const MainSection: React.FC = () => {
       })
       .catch((err) => {
         setError(err);
+        console.log(err);
       })
       .finally(() => {
         setLoading(false);
       });
-    console.log(msg);
+      console.log(msg?.data.message);
   };
-
-  const getCargingStatus = () => {
-    setLoading(true);
-    axios
-      .get(urlChargingStatus)
-      .then((response) => {
-        setresponse(response.data.data  );
-      })
-      .catch((err) => {
-        setError(err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-    console.log(response);
-  }
 
   if (error) return <p>Error server!</p>;
 
@@ -63,19 +46,13 @@ const MainSection: React.FC = () => {
         >
           start
         </button>
-        <button
-          onClick={getCargingStatus}
-          className={loading ? styles.disaleBtn : styles.btnPay}
-        >
-          getChargingStatus
-        </button>
-        {msg?.data.message === "error" && (
+        {msg?.data.message === "success" && <Timer seconds={10} />}
+        {msg?.data?.message === "error" && (
           <ErrorPage
             errorHeader="Device is offline"
             errorBody="Sorry! Device is offline. Please, try later"
           />
         )}
-        {msg?.data.message === "success" && <Timer seconds={10} />}
       </div>
     </div>
   );

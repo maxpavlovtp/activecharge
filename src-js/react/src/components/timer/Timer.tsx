@@ -3,7 +3,8 @@ import styles from "./Timer.module.css";
 import { ITimer } from "../../interfaces";
 import axios from "axios";
 
-const url = `${process.env.REACT_APP_LINK_SERVE}charge/getChargingStatus`;
+// const url = `${process.env.REACT_APP_LINK_SERVE}charge/getChargingStatus`;
+const urlChargingStatus = `http://220-km.com:8080/on/getChargingStatus`;
 
 const Timer = (props: ITimer) => {
   const [over, setOver] = useState(false);
@@ -36,15 +37,31 @@ const Timer = (props: ITimer) => {
     }
     if (!get) {
       axios
-        .get(url)
+        .get(urlChargingStatus)
         .then((response) => {
-          setNum(response.data.random);
+          setNum(response);
+          console.log(response);
         })
         .catch((err: any) => {
           setError(err);
         });
     }
   };
+  // const getCargingStatus = () => {
+  //   setLoading(true);
+  //   axios
+  //     .get(urlChargingStatus)
+  //     .then((response) => {
+  //       setresponse(response.data.data  );
+  //     })
+  //     .catch((err) => {
+  //       setError(err);
+  //     })
+  //     .finally(() => {
+  //       setLoading(false);
+  //     });
+  //   console.log(response);
+  // }
 
   useEffect(() => {
     const timerID = setInterval(() => {
@@ -66,12 +83,23 @@ const Timer = (props: ITimer) => {
       <div className={over ? styles.overText : styles.endText}>
         {over
           ? "Congrats! Your car charged by 40 kWt"
-          : `Charged: ${num === undefined ? 0 : num}` + " kWt"}
+          : `Charged: ${num?.data?.data === undefined ? 0 : num?.data?.data}` +
+            " kWt"}
       </div>
       {/*todo: add fetch <4 kWt/hour> from BE' */}
       <p className={styles.chargingPower}>
-        {over ? "" : `Charging speed: ${num === undefined ? 0 : num/2}`}
+        {over
+          ? ""
+          : `Charging speed: ${
+              num?.data?.data === undefined ? 0 : num?.data?.data
+            }`}
       </p>
+      {/* <button
+          onClick={getCargingStatus}
+          className={loading ? styles.disaleBtn : styles.btnPay}
+        >
+          getChargingStatus
+        </button> */}
     </div>
   );
 };
