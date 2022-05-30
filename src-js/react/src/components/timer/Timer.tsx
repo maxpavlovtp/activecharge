@@ -40,28 +40,13 @@ const Timer = (props: ITimer) => {
         .get(urlChargingStatus)
         .then((response) => {
           setNum(response);
-          console.log(response);
         })
         .catch((err: any) => {
           setError(err);
         });
+      console.log(num?.data?.data);
     }
   };
-  // const getCargingStatus = () => {
-  //   setLoading(true);
-  //   axios
-  //     .get(urlChargingStatus)
-  //     .then((response) => {
-  //       setresponse(response.data.data  );
-  //     })
-  //     .catch((err) => {
-  //       setError(err);
-  //     })
-  //     .finally(() => {
-  //       setLoading(false);
-  //     });
-  //   console.log(response);
-  // }
 
   useEffect(() => {
     const timerID = setInterval(() => {
