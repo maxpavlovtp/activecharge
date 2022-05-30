@@ -1,3 +1,6 @@
+html {
+  scroll-padding-top: 4.5rem;
+}
 .contentPage {
   margin-top: 120px;
 }
@@ -40,6 +43,7 @@ p {
 .offerLink:active {
   color: #008957;
 }
+
 
 @media (max-width: 1340px) {
   .container {
