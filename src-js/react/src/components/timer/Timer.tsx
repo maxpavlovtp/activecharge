@@ -16,6 +16,7 @@ const Timer = (props: ITimer) => {
   const [num, setNum] = useState<any>();
   const [get, setGet] = useState<any>(false);
   const [error, setError] = useState<any>(null);
+  const [loading, setLoading] = useState<any>(false);
 
   const tick = () => {
     if (over) return;
@@ -31,30 +32,42 @@ const Timer = (props: ITimer) => {
     }
   };
 
-  const getNumber = async () => {
-    if (h === 0 && m === 0 && s === 1) {
-      setGet(true);
-    }
-    if (!get) {
-      axios
-        .get(urlChargingStatus)
-        .then((response) => {
-          setNum(response);
-        })
-        .catch((err: any) => {
-          setError(err);
-        });
-      console.log(num?.data?.data);
-    }
+  const getCargingStatus = () => {
+    axios
+      .get(urlChargingStatus)
+      .then((response) => {
+        setNum(response);
+      })
+      .catch((err: any) => {
+        setError(err);
+      });
+    console.log(num?.data?.data);
   };
 
-  useEffect(() => {
-    const timerID = setInterval(() => {
-      tick();
-      getNumber();
-    }, 1000);
-    return () => clearInterval(timerID);
-  });
+  // const getNumber = async () => {
+  //   if (h === 0 && m === 0 && s === 1) {
+  //     setGet(true);
+  //   }
+  //   if (!get) {
+  // axios
+  //   .get(urlChargingStatus)
+  //   .then((response) => {
+  //     setNum(response);
+  //   })
+  //   .catch((err: any) => {
+  //     setError(err);
+  //   });
+  // console.log(num?.data?.data);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   const timerID = setInterval(() => {
+  //     tick();
+  //     getNumber();
+  //   }, 1000);
+  //   return () => clearInterval(timerID);
+  // });
 
   return (
     // todo: add internacialization'
@@ -79,12 +92,12 @@ const Timer = (props: ITimer) => {
               num?.data?.data === undefined ? 0 : num?.data?.data
             }`}
       </p>
-      {/* <button
-          onClick={getCargingStatus}
-          className={loading ? styles.disaleBtn : styles.btnPay}
-        >
-          getChargingStatus
-        </button> */}
+      <button
+        onClick={getCargingStatus}
+        className={loading ? styles.disaleBtn : styles.btnPay}
+      >
+        getChargingStatus
+      </button>
     </div>
   );
 };
