@@ -15,8 +15,8 @@ http://220-km.com/
 
 ### SDLC:
 1. We push to master
-2. If deployment broken revert or use last tag https://github.com/maxpavlovdp/activecharge/releases/tag/v1.1
-3. We deploy every 20 mins from master using crontab + systemctl. 
+2. We deploy FE every 20 mins BE every day from master using crontab + systemctl. 
+3. If deployment broken revert or use last tag https://github.com/maxpavlovdp/activecharge/releases/tag/v1.1
 
 ### Design:
 https://app.diagrams.net/#G1xBm3YxmDuKMkPA-N649yD8FCtsIpkAai
