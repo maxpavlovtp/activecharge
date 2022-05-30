@@ -44,30 +44,30 @@ const Timer = (props: ITimer) => {
     console.log(num?.data?.data);
   };
 
-  // const getNumber = async () => {
-  //   if (h === 0 && m === 0 && s === 1) {
-  //     setGet(true);
-  //   }
-  //   if (!get) {
-  // axios
-  //   .get(urlChargingStatus)
-  //   .then((response) => {
-  //     setNum(response);
-  //   })
-  //   .catch((err: any) => {
-  //     setError(err);
-  //   });
-  // console.log(num?.data?.data);
-  //   }
-  // };
+  const getNumber = async () => {
+    if (h === 0 && m === 0 && s === 1) {
+      setGet(true);
+    }
+    if (!get) {
+  axios
+    .get(urlChargingStatus)
+    .then((response) => {
+      setNum(response);
+    })
+    .catch((err: any) => {
+      setError(err);
+    });
+  console.log(num?.data?.data);
+    }
+  };
 
-  // useEffect(() => {
-  //   const timerID = setInterval(() => {
-  //     tick();
-  //     getNumber();
-  //   }, 1000);
-  //   return () => clearInterval(timerID);
-  // });
+  useEffect(() => {
+    const timerID = setInterval(() => {
+      tick();
+      getNumber();
+    }, 1000);
+    return () => clearInterval(timerID);
+  });
 
   return (
     // todo: add internacialization'
