@@ -3,7 +3,8 @@ import styles from "./Timer.module.css";
 import { ITimer } from "../../interfaces";
 import axios from "axios";
 
-const url = `${process.env.REACT_APP_LINK_SERVE}charge/getChargingStatus`;
+// const url = `${process.env.REACT_APP_LINK_SERVE}charge/getChargingStatus`;
+const urlChargingStatus = `http://220-km.com:8080/on/getChargingStatus`;
 
 const Timer = (props: ITimer) => {
   const [over, setOver] = useState(false);
@@ -15,6 +16,7 @@ const Timer = (props: ITimer) => {
   const [num, setNum] = useState<any>();
   const [get, setGet] = useState<any>(false);
   const [error, setError] = useState<any>(null);
+  const [loading, setLoading] = useState<any>(false);
 
   const tick = () => {
     if (over) return;
@@ -30,19 +32,32 @@ const Timer = (props: ITimer) => {
     }
   };
 
+  const getCargingStatus = () => {
+    axios
+      .get(urlChargingStatus)
+      .then((response) => {
+        setNum(response);
+      })
+      .catch((err: any) => {
+        setError(err);
+      });
+    console.log(num?.data?.data);
+  };
+
   const getNumber = async () => {
     if (h === 0 && m === 0 && s === 1) {
       setGet(true);
     }
     if (!get) {
-      axios
-        .get(url)
-        .then((response) => {
-          setNum(response.data.random);
-        })
-        .catch((err: any) => {
-          setError(err);
-        });
+  axios
+    .get(urlChargingStatus)
+    .then((response) => {
+      setNum(response);
+    })
+    .catch((err: any) => {
+      setError(err);
+    });
+  console.log(num?.data?.data);
     }
   };
 
@@ -66,12 +81,23 @@ const Timer = (props: ITimer) => {
       <div className={over ? styles.overText : styles.endText}>
         {over
           ? "Congrats! Your car charged by 40 kWt"
-          : `Charged: ${num === undefined ? 0 : num}` + " kWt"}
+          : `Charged: ${num?.data?.data === undefined ? 0 : num?.data?.data}` +
+            " kWt"}
       </div>
       {/*todo: add fetch <4 kWt/hour> from BE' */}
       <p className={styles.chargingPower}>
-        {over ? "" : `Charging speed: ${num === undefined ? 0 : num/2}`}
+        {over
+          ? ""
+          : `Charging speed: ${
+              num?.data?.data === undefined ? 0 : num?.data?.data
+            }`}
       </p>
+      <button
+        onClick={getCargingStatus}
+        className={loading ? styles.disaleBtn : styles.btnPay}
+      >
+        getChargingStatus
+      </button>
     </div>
   );
 };

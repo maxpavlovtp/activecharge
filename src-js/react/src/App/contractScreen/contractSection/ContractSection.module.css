@@ -41,6 +41,7 @@ p {
   color: #008957;
 }
 
+
 @media (max-width: 1340px) {
   .container {
     padding-left: 40px;
