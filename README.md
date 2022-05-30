@@ -14,7 +14,7 @@ http://220-km.com/
 3. http://220-km.com:8080/on/getDeviceStatus
 
 ### SDLC:
-1. We push to master -> deployment happens every 20 mins to http://220-km.com/
+1. We push to master
 2. If deployment broken revert or use last tag https://github.com/maxpavlovdp/activecharge/releases/tag/v1.1
 3. We deploy every 20 mins from master using crontab + systemctl. 
 
