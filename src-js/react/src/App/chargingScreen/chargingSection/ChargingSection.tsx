@@ -17,6 +17,7 @@ const MainSection: React.FC = () => {
       .get(url)
       .then((response) => {
         setMsg(response);
+        console.log(response);
       })
       .catch((err) => {
         setError(err);
@@ -25,7 +26,6 @@ const MainSection: React.FC = () => {
       .finally(() => {
         setLoading(false);
       });
-      console.log(msg?.data.message);
   };
 
   if (error) return <p>Error server!</p>;
