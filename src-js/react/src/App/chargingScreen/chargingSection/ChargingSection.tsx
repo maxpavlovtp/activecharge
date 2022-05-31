@@ -9,7 +9,7 @@ const MainSection: React.FC = () => {
   const [msg, setMsg] = useState<any>();
   const [loading, setLoading] = useState<any>(false);
   const [error, setError] = useState<any>(null);
-  const url = `http://220-km.com:8080/on/start`;
+  const url = `http://220-km.com:8080/device/start`;
 
   const start = () => {
     setLoading(true);

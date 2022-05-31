@@ -4,7 +4,7 @@ import { ITimer } from "../../interfaces";
 import axios from "axios";
 
 // const url = `${process.env.REACT_APP_LINK_SERVE}charge/getChargingStatus`;
-const urlChargingStatus = `http://220-km.com:8080/on/getChargingStatus`;
+const urlChargingStatus = `http://220-km.com:8080/device/getChargingStatus`;
 
 const Timer = (props: ITimer) => {
   const [over, setOver] = useState(false);
