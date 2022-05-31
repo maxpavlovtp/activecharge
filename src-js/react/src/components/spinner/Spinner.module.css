@@ -4,7 +4,6 @@
     font-size: 4rem;
     align-self: flex-end;
     background-color: white;
-    /* z-index: 500; */
     top: 0;
     left: 0;
     overflow: hidden;
@@ -28,12 +27,7 @@
       transform: translate(-50%, -50%);
       border: 2px solid rgba(0, 0, 0, 0.178);
       padding: 30px;
-    }
-    100% {
-      opacity: 1;
-      transform: translate(-50%, -50%) rotate(360deg);
-      border: 3px solid rgba(0, 0, 0, 0);
-      padding: 17rem;
       color: #04aa6d;
+      opacity: 1;
     }
   }
