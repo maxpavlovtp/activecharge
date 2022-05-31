@@ -30,6 +30,10 @@ const MainSection: React.FC = () => {
       });
   };
 
+  useEffect(() => {
+    start();
+  }, []);
+
   if (error)
     return (
       <ErrorPage errorHeader={t("errorHeader")} errorBody={t("errorBody")} />
@@ -38,19 +42,13 @@ const MainSection: React.FC = () => {
   if (loading)
     return (
       <div className={styles.load_animation}>
-        <IoEarthOutline className={styles.animation}/>
+        <IoEarthOutline className={styles.animation} />
       </div>
     );
 
   return (
     <div className={styles.chargingBox}>
       <div className={styles.contTimer}>
-        <button
-          onClick={start}
-          className={loading ? styles.disaleBtn : styles.btnPay}
-        >
-          {t("btns.start")}
-        </button>
         {msg?.data.message === "success" && <Timer seconds={10} />}
         {msg?.data?.message === "error" && (
           <ErrorPage
