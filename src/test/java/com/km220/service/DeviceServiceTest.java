@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ActiveProfiles("test")
 class DeviceServiceTest {
 
-  long intervalMultipliedMillis = 3 * checkIntervalInMillis;
+  long intervalMultipliedMillis = 10 * checkIntervalInMillis;
   long chargeSeconds = intervalMultipliedMillis / 1000;
   long sleepInterval = chargeSeconds * 1000 + intervalMultipliedMillis;
 
