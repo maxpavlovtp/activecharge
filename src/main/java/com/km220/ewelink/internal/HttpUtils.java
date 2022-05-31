@@ -1,6 +1,6 @@
 package com.km220.ewelink.internal;
 
-public class HttpUtils {
+public final class HttpUtils {
 
   public static final String HTTP_POST = "POST";
 
@@ -13,6 +13,8 @@ public class HttpUtils {
   public static final int HTTP_STATUS_OK = 200;
 
   public static final String CONTENT_TYPE_HEADER = "Content-Type";
+
+  public static final String ACCEPT_HEADER = "Accept";
 
   public static final String AUTHORIZATION_HEADER = "Authorization";
 
