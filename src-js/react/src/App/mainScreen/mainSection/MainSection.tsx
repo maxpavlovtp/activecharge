@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 
 import axios from "axios";
 import ErrorPage from "../../../components/error-page/ErrorPage";
+import Spinner from "../../../components/spinner/Spinner";
 
 const MainSection: React.FC = () => {
   const [link, setLink] = useState<any>();
@@ -38,7 +39,7 @@ const MainSection: React.FC = () => {
     );
   }
 
-  if (loading) return <></>;
+  if (loading) return <Spinner />;
 
   return (
     <>

@@ -4,7 +4,7 @@ import Timer from "../../../components/timer/Timer";
 import axios from "axios";
 import ErrorPage from "../../../components/error-page/ErrorPage";
 import { useTranslation } from "react-i18next";
-import { IoEarthOutline } from "react-icons/io5";
+import Spinner from "../../../components/spinner/Spinner";
 
 const MainSection: React.FC = () => {
   const [msg, setMsg] = useState<any>();
@@ -41,9 +41,7 @@ const MainSection: React.FC = () => {
 
   if (loading)
     return (
-      <div className={styles.load_animation}>
-        <IoEarthOutline className={styles.animation} />
-      </div>
+      <Spinner />
     );
 
   return (
