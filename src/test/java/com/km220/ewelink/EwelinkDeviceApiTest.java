@@ -1,5 +1,6 @@
 package com.km220.ewelink;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.km220.ewelink.model.device.Device;
@@ -13,7 +14,7 @@ class EwelinkDeviceApiTest {
   static final String PASSWORD = "Nopassword1";
   static final String REGION = "eu";
 
-  static final long DEVICE_ID = 1001323420;
+  private static final String DEVICE_ID = "1001323420";
 
   private EwelinkClient ewelinkClient;
 
@@ -31,5 +32,6 @@ class EwelinkDeviceApiTest {
     Device device = ewelinkDeviceApi.getDevice(DEVICE_ID).get();
 
     assertNotNull(device);
+    assertEquals(DEVICE_ID, device.getDeviceid());
   }
 }

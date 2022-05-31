@@ -15,11 +15,12 @@ import lombok.extern.jackson.Jacksonized;
 @Builder
 @Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Tags {
+public class BindInfos {
 
-    private String mAc4bBret;
     @Default
-    private List<DisableTimer> disableTimers = new ArrayList<>();
+    private List<String> alexa = new ArrayList<>();
+    @Default
+    private List<String> gaction = new ArrayList<>();
     @Default
     private Map<String, Object> additionalProperties = new HashMap<>();
 
