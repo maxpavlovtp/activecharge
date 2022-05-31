@@ -21,7 +21,7 @@ http://220-km.com/
 
 ### Design:
 https://app.diagrams.net/#G1xBm3YxmDuKMkPA-N649yD8FCtsIpkAai
-<img width="1164" alt="image" src="https://user-images.githubusercontent.com/5563023/170946617-ced3502b-1c24-43bb-b3b7-6cb974d56542.png">
+<img width="963" alt="image" src="https://user-images.githubusercontent.com/5563023/171100461-22780c99-c5f7-4d60-9adb-db8363a91b57.png">
 
 
 [![Java CI with Gradle](https://github.com/maxpavlovdp/activecharge/actions/workflows/gradle.yml/badge.svg)](https://github.com/maxpavlovdp/activecharge/actions/workflows/gradle.yml)
