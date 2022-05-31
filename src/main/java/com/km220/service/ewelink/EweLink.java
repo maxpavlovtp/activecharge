@@ -333,9 +333,7 @@ public class EweLink {
         status.setDeviceid(deviceId);
         return status;
       }
-
     }
-
   }
 
   public Status setDeviceStatus(String deviceId, String status) throws Exception {
