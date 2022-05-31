@@ -5,10 +5,9 @@
     align-self: flex-end;
     background-color: white;
     z-index: 500;
-    /* position: fixed; */
     top: 0;
     left: 0;
-    /* overflow: hidden; */
+    overflow: hidden;
   }
   .animation {
     position: absolute;
