@@ -21,6 +21,8 @@ class DeviceServiceTest {
   DeviceService deviceService;
 
   @Test
+
+  // todo fix it
   public void loginHack() throws Exception {
 //    onTest();
     offTest();
