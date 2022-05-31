@@ -85,6 +85,11 @@
   border: none;
   cursor: pointer;
   color: #393939;
+  margin-left: 5px;
+}
+.btnLang:not(:last-child) {
+  border-right: 2px solid #a5adb4;
+  padding-right: 5px;
   margin-left: 15px;
 }
 
