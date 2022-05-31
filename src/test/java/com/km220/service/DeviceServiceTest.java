@@ -36,10 +36,12 @@ class DeviceServiceTest {
 
   @Test
   void getChargedWtTest() throws Exception {
-    // when
+    // given
     deviceService.on(1);
 
+    // when
     Thread.sleep(3000);
+
     // then
     assertThat(deviceService.getChargedWt() > 0).isTrue();
   }
