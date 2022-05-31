@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import styles from "./ChargingSection.module.css";
 import Timer from "../../../components/timer/Timer";
-import { ThreeDots } from "react-loader-spinner";
 import axios from "axios";
 import ErrorPage from "../../../components/error-page/ErrorPage";
 import { useTranslation } from "react-i18next";
+import { IoEarthOutline } from "react-icons/io5";
 
 const MainSection: React.FC = () => {
   const [msg, setMsg] = useState<any>();
@@ -37,8 +37,8 @@ const MainSection: React.FC = () => {
 
   if (loading)
     return (
-      <div className={styles.load}>
-        <ThreeDots color="#04AA6D" height={70} width={70} />
+      <div className={styles.load_animation}>
+        <IoEarthOutline className={styles.animation}/>
       </div>
     );
 
@@ -49,7 +49,7 @@ const MainSection: React.FC = () => {
           onClick={start}
           className={loading ? styles.disaleBtn : styles.btnPay}
         >
-          {t('btns.start')}
+          {t("btns.start")}
         </button>
         {msg?.data.message === "success" && <Timer seconds={10} />}
         {msg?.data?.message === "error" && (
