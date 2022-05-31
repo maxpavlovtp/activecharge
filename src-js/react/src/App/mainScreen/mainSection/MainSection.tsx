@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import styles from "./MainSection.module.css";
 import mainImg from "../../../assets/charging.png";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import axios from "axios";
 import ErrorPage from "../../../components/error-page/ErrorPage";
@@ -11,7 +12,9 @@ const MainSection: React.FC = () => {
   const [loading, setLoading] = useState<any>(true);
   const [error, setError] = useState<any>(null);
 
-  const url = `${process.env.REACT_APP_LINK_SERVE}`;
+  const { t } = useTranslation(["main"]);
+
+  const url = `http://220-km.com:5000`;
 
   useEffect(() => {
     axios
@@ -45,7 +48,7 @@ const MainSection: React.FC = () => {
       <div className={styles.mainBox}>
         {link !== "error" ? (
           <div className={styles.container}>
-            <h1 className={styles.title}>Заряди 220 кілометрів за ніч</h1>
+            <h1 className={styles.title}>{t("title")}</h1>
             <div className={styles.btnStart}>
               <button
                 disabled={loading ? true : false}
