@@ -1,7 +1,6 @@
 package com.km220.service;
 
-import static com.km220.service.OnService.chargedWt;
-import static com.km220.service.OnService.onTime;
+import static com.km220.service.DeviceService.isOn;
 import static java.lang.System.currentTimeMillis;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,16 +10,31 @@ import org.springframework.stereotype.Service;
 @Service
 public class PowerAggregationJob {
 
+  // todo move to DB
+  public static float chargedWt;
+  public static long onTime;
+  public static long offTime;
+
   @Autowired
-  private OnService onService;
+  private DeviceService deviceService;
 
   final long checkIntervalInMillis = 1000;
 
   @Scheduled(fixedDelay = checkIntervalInMillis)
   public void sumPower() throws Exception {
-    String power = onService.getPower();
+    long now = currentTimeMillis();
+
+    if (isOn && now > offTime) {
+      //todo: add error handling
+      deviceService.off();
+
+      isOn = false;
+      return;
+    }
+
+    String power = deviceService.getPower();
     System.out.println("charging power (watts): " + power);
-    float chargingTimeSecs = (currentTimeMillis() - onTime) / 1000;
+    float chargingTimeSecs = (now - onTime) / 1000;
     System.out.println("chargingTimeSecs: " + chargingTimeSecs);
 
     float powerWt = Float.parseFloat(power);

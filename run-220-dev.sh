@@ -5,7 +5,10 @@ pkill -f react
 pkill -f nest
 pkill -f java
 
+./gradlew clean build -x test
 nohup java -jar build/libs/220-km.com-0.0.1-SNAPSHOT.jar &
 nohup ./src-js/nest/run-nest-dev.sh &
 
 nohup ./src-js/react/run-react-dev.sh &
+
+tail -f nohup.out

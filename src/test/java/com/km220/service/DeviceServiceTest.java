@@ -5,20 +5,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import static java.lang.System.currentTimeMillis;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @ActiveProfiles("test")
-class OnServiceTest {
+class DeviceServiceTest {
 
   @Autowired
-  OnService onService;
+  DeviceService deviceService;
 
   @Test
   void getDevicesTest() throws Exception {
     // when
-    String devices = onService.getDevices();
+    String devices = deviceService.getDevices();
     System.out.println(devices);
 
     // then
@@ -28,7 +27,7 @@ class OnServiceTest {
   @Test
   void getPowerTest() throws Exception {
     // when
-    String power = onService.getPower();
+    String power = deviceService.getPower();
     System.out.println(power);
 
     //then
@@ -38,10 +37,10 @@ class OnServiceTest {
   @Test
   void getChargedWtTest() throws Exception {
     // when
-    onService.on(1);
+    deviceService.on(1);
 
-    Thread.sleep(10000);
+    Thread.sleep(15000);
     // then
-    assertThat(onService.getChargedWt() > 0).isTrue();
+    assertThat(deviceService.getChargedWt() > 0).isTrue();
   }
 }

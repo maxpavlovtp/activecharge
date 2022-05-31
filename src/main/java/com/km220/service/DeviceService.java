@@ -1,5 +1,9 @@
 package com.km220.service;
 
+import static com.km220.service.OrderService.chargeMinutes;
+import static com.km220.service.PowerAggregationJob.chargedWt;
+import static com.km220.service.PowerAggregationJob.offTime;
+import static com.km220.service.PowerAggregationJob.onTime;
 import static java.lang.System.currentTimeMillis;
 
 import com.km220.service.ewelink.EweLink;
@@ -10,7 +14,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
-public class OnService {
+public class DeviceService {
+  public static boolean isOn;
 
   @Value("${ewelink.region}")
   private String region;
@@ -26,21 +31,21 @@ public class OnService {
 
   @PostConstruct
   public void init() throws Exception {
-    eweLink = new EweLink(region, email, password, 60 * 8);
+    eweLink = new EweLink(region, email, password, 60 * chargeMinutes);
     eweLink.login();
   }
 
-  // todo move to DB
-  static float chargedWt;
-  static long onTime;
-  static long offTime;
-
-  public Status on(int chargeHours) throws Exception {
+  public Status on(int chargeMinutes) throws Exception {
     chargedWt = 0;
     onTime = currentTimeMillis();
-    offTime = onTime + 3600 * 1000 * chargeHours;
+    offTime = onTime + 60 * 1000 * chargeMinutes;
+    isOn = true;
 
     return eweLink.setDeviceStatus(deviceId, "on");
+  }
+
+  public Status off() throws Exception {
+    return eweLink.setDeviceStatus(deviceId, "off");
   }
 
   public float getChargedWt() throws Exception {
