@@ -12,11 +12,35 @@ i18n
   // for all options read: https://www.i18next.com/overview/configuration-options
   .init({
     debug: true,
-    fallbackLng: "en",
+    fallbackLng: "ua",
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default
     },
     resources: {
+      ua: {
+        translation: {
+          btns: {
+            start: "Старт",
+            startFree: "Cтарт Фрі",
+          },
+          title: "Заряди 220 кілометрів за ніч",
+          contacts: "Зв'яжіться з нами",
+          offer: "Умови користування",
+          kWt: "кВт",
+          charged: "Вітаю! Ваш автомобіль заряджений на 40 кВт",
+          charging: "Заряд",
+          chargingSpeed: "Швидкість заряду",
+          errorHeader: "Девайс офлайн",
+          errorBody: "Вибачте! Девайс офлайн. Спробуйте, будь ласка, пізніше",
+          offer: "Договір публічної оферти",
+          contents: "Зміст",
+          footer: {
+            part1: "Всі права захищені",
+            part2: "Розроблено",
+            part3: "з ♥ до електромобілів",
+          },
+        },
+      },
       en: {
         translation: {
           btns: {
@@ -30,23 +54,17 @@ i18n
           charged: "Congrats! Your car charged by 40 kWt",
           charging: "Charged",
           chargingSpeed: "Charging speed",
+          errorHeader: "Device is offline",
+          errorBody: "Sorry! Device is offline. Please, try later",
+          offer: "Public offer agreement",
+          contents: "Contents",
+          footer: {
+            part1: "All rights reserved",
+            part2: "Made by",
+            part3: "with ♥ to Zero Emission Vehicles",
+          },
         },
       },
-      ua: {
-        translation: {
-          btns: {
-            start: "Старт",
-            startFree: "Безкоштовний старт",
-          },
-          title: "Заряди 220 кілометрів за ніч",
-          contacts: "Зв'яжіться з нами",
-          offer: "Умови користування",
-          kWt: "кВт",
-          charged: "Вітаю! Ваш автомобіль заряджений на 40 кВт",
-          charging: "Заряд",
-          chargingSpeed: "Швидкість заряду",
-        }
-      }
     },
   });
 

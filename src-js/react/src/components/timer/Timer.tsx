@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./Timer.module.css";
 import { ITimer } from "../../interfaces";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 // const url = `${process.env.REACT_APP_LINK_SERVE}charge/getChargingStatus`;
 const urlChargingStatus = `http://220-km.com:8080/device/getChargingStatus`;
@@ -17,6 +18,7 @@ const Timer = (props: ITimer) => {
   const [get, setGet] = useState<any>(false);
   const [error, setError] = useState<any>(null);
   const [loading, setLoading] = useState<any>(false);
+  const { t } = useTranslation();
 
   const tick = () => {
     if (over) return;
@@ -80,15 +82,15 @@ const Timer = (props: ITimer) => {
       {/*todo: fetch <3.33 kWt> from BE*/}
       <div className={over ? styles.overText : styles.endText}>
         {over
-          ? "Congrats! Your car charged by 40 kWt"
-          : `Charged: ${num?.data?.data === undefined ? 0 : num?.data?.data}` +
-            " kWt"}
+          ? `${t('charged')}`
+          : `${t('charging')}: ${num?.data?.data === undefined ? 0 : num?.data?.data}` +
+            ` ${t('kWt')}`}
       </div>
       {/*todo: add fetch <4 kWt/hour> from BE' */}
       <p className={styles.chargingPower}>
         {over
           ? ""
-          : `Charging speed: ${
+          : `${t('chargingSpeed')}: ${
               num?.data?.data === undefined ? 0 : num?.data?.data
             }`}
       </p>

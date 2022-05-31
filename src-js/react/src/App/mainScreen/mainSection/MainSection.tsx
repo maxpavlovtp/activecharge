@@ -12,7 +12,7 @@ const MainSection: React.FC = () => {
   const [loading, setLoading] = useState<any>(true);
   const [error, setError] = useState<any>(null);
 
-  const { t } = useTranslation(["main"]);
+  const { t } = useTranslation();
 
   const url = `http://220-km.com:5000`;
 
@@ -34,10 +34,7 @@ const MainSection: React.FC = () => {
   if (error) {
     console.log(error.message);
     return (
-      <ErrorPage
-        errorHeader="Device is offline"
-        errorBody="Sorry! Device is offline. Please, try later"
-      />
+      <ErrorPage errorHeader={t("errorHeader")} errorBody={t("errorBody")} />
     );
   }
 
@@ -55,10 +52,10 @@ const MainSection: React.FC = () => {
                 className={loading ? styles.disaleBtn : styles.btnPay}
                 onClick={() => window.open(link)}
               >
-                Start
+                {t("btns.start")}
               </button>
               <Link className={styles.btn} to="/charging">
-                Start Free
+                {t("btns.startFree")}
               </Link>
             </div>
             <div className={styles.imgCont}>
@@ -67,8 +64,8 @@ const MainSection: React.FC = () => {
           </div>
         ) : (
           <ErrorPage
-            errorHeader="Device is offline"
-            errorBody="Sorry! Device is offline. Please, try later"
+            errorHeader={t("errorHeader")}
+            errorBody={t("errorBody")}
           />
         )}
       </div>

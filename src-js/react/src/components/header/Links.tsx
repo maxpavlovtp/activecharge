@@ -2,11 +2,11 @@ import React from "react";
 import styles from "./Header.module.css";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useTranslation, Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 
-const lngs = {
-  en: { nativeName: "English" },
-  de: { nativeName: "Українська" },
+const lngs: any = {
+  ua: { nativeName: "Укр" },
+  en: { nativeName: "Eng" },
 };
 
 export default function Links() {
@@ -24,7 +24,7 @@ export default function Links() {
         className={styles.list}
       >
         <Link className={styles.links} to="/contacts">
-          контактні дані
+          {t("contacts")}
         </Link>
       </motion.li>
       <motion.li
@@ -34,7 +34,7 @@ export default function Links() {
         className={styles.list}
       >
         <Link className={styles.links} to="/contract">
-          договір публічної оферти
+          {t("offer")}
         </Link>
       </motion.li>
       <motion.li
@@ -43,18 +43,21 @@ export default function Links() {
         transition={{ delay: 0.15 }}
         className={styles.list}
       >
-        {/* {Object.keys(lngs).map((lng) => (
-          <button
-            key={lng}
-            style={{
-              fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
-            }}
-            type="submit"
-            onClick={() => i18n.changeLanguage(lng)}
-          >
-            {lngs[lng].nativeName}
-          </button>
-        ))} */}
+        <div className={styles.langContainer}>
+          {Object.keys(lngs).map((lng: any) => (
+            <button
+              className={styles.btnLang}
+              key={lng}
+              style={{
+                fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
+              }}
+              type="submit"
+              onClick={() => i18n.changeLanguage(lng)}
+            >
+              {lngs[lng].nativeName}
+            </button>
+          ))}
+        </div>
       </motion.li>
     </ul>
   );

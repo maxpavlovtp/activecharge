@@ -4,12 +4,14 @@ import Timer from "../../../components/timer/Timer";
 import { ThreeDots } from "react-loader-spinner";
 import axios from "axios";
 import ErrorPage from "../../../components/error-page/ErrorPage";
+import { useTranslation } from "react-i18next";
 
 const MainSection: React.FC = () => {
   const [msg, setMsg] = useState<any>();
   const [loading, setLoading] = useState<any>(false);
   const [error, setError] = useState<any>(null);
   const url = `http://220-km.com:8080/device/start`;
+  const { t } = useTranslation();
 
   const start = () => {
     setLoading(true);
@@ -28,7 +30,10 @@ const MainSection: React.FC = () => {
       });
   };
 
-  if (error) return <p>Error server!</p>;
+  if (error)
+    return (
+      <ErrorPage errorHeader={t("errorHeader")} errorBody={t("errorBody")} />
+    );
 
   if (loading)
     return (
@@ -44,13 +49,13 @@ const MainSection: React.FC = () => {
           onClick={start}
           className={loading ? styles.disaleBtn : styles.btnPay}
         >
-          start
+          {t('btns.start')}
         </button>
         {msg?.data.message === "success" && <Timer seconds={10} />}
         {msg?.data?.message === "error" && (
           <ErrorPage
-            errorHeader="Device is offline"
-            errorBody="Sorry! Device is offline. Please, try later"
+            errorHeader={t("errorHeader")}
+            errorBody={t("errorBody")}
           />
         )}
       </div>

@@ -1,15 +1,17 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from './ContractSection.module.css';
 
 const MainSection: React.FC = () => {
+  const { t } = useTranslation();
   return (
     <div className={styles.contentPage}>
       <div className={styles.container}>
-        <h1 className={styles.title}>Договір публічної оферти</h1>
+        <h1 className={styles.title}>{t('offer')}</h1>
         <div className={styles.contractsBox}>
           <div className={styles.textContainer}>
             <p className={styles.conentTitle}>
-              <strong>Зміст:</strong>
+              <strong>{t('contents')}:</strong>
             </p>
             <p>
             <strong> </strong>
