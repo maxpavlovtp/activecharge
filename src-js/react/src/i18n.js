@@ -32,7 +32,7 @@ i18n
           chargingSpeed: "Швидкість заряду",
           errorHeader: "Девайс офлайн",
           errorBody: "Вибачте! Девайс офлайн. Спробуйте, будь ласка, пізніше",
-          offer: "Договір публічної оферти",
+          offerTitle: "Договір публічної оферти",
           contents: "Зміст",
           footer: {
             part1: "Всі права захищені",
@@ -56,7 +56,7 @@ i18n
           chargingSpeed: "Charging speed",
           errorHeader: "Device is offline",
           errorBody: "Sorry! Device is offline. Please, try later",
-          offer: "Public offer agreement",
+          offerTitle: "Public offer agreement",
           contents: "Contents",
           footer: {
             part1: "All rights reserved",

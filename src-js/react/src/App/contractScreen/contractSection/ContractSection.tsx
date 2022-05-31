@@ -7,7 +7,7 @@ const MainSection: React.FC = () => {
   return (
     <div className={styles.contentPage}>
       <div className={styles.container}>
-        <h1 className={styles.title}>{t('offer')}</h1>
+        <h1 className={styles.title}>{t('offerTitle')}</h1>
         <div className={styles.contractsBox}>
           <div className={styles.textContainer}>
             <p className={styles.conentTitle}>
