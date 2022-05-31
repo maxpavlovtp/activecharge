@@ -10,9 +10,10 @@ http://220-km.com/
 
 ### BE spring boot endpoints:
 1. http://220-km.com:8080/device/start
-2. http://220-km.com:8080/device/startMins?mins=5
+2. http://220-km.com:8080/device/startSecs?secs=20
 3. http://220-km.com:8080/device/getChargingStatus
 4. http://220-km.com:8080/device/getDeviceStatus
+5. http://220-km.com:8080/device/isDeviceOn
 
 ### SDLC:
 1. We push to master

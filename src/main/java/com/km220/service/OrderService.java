@@ -5,5 +5,5 @@ import org.springframework.stereotype.Service;
 @Service
 public class OrderService {
   // todo move to db.
-  public static int chargeMinutes = 1;
+  public static long chargeSeconds = 1;
 }

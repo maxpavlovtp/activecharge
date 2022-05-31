@@ -1,9 +1,8 @@
 package com.km220.service;
 
-import static com.km220.service.OrderService.chargeMinutes;
-import static com.km220.service.PowerAggregationJob.chargedWt;
-import static com.km220.service.PowerAggregationJob.offTime;
-import static com.km220.service.PowerAggregationJob.onTime;
+import static com.km220.PowerAggregationJob.chargedWt;
+import static com.km220.PowerAggregationJob.offTime;
+import static com.km220.PowerAggregationJob.onTime;
 import static java.lang.System.currentTimeMillis;
 
 import com.km220.service.ewelink.EweLink;
@@ -15,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class DeviceService {
+
   public static boolean isOn;
 
   @Value("${ewelink.region}")
@@ -31,22 +31,36 @@ public class DeviceService {
 
   @PostConstruct
   public void init() throws Exception {
-    eweLink = new EweLink(region, email, password, 60 * chargeMinutes);
+    eweLink = new EweLink(region, email, password, 60);
     eweLink.login();
   }
 
-  public Status on(int chargeMinutes) throws Exception {
+  public Status on(long chargeSeconds) throws Exception {
     chargedWt = 0;
     onTime = currentTimeMillis();
-    offTime = onTime + 60L * 1000 * chargeMinutes;
+    offTime = onTime + 1000L * chargeSeconds;
     isOn = true;
 
     return eweLink.setDeviceStatus(deviceId, "on");
   }
 
+  public boolean isDeviceOn() throws Exception {
+    return getDeviceStatus().contains("_switch='on'");
+  }
+
   public Status off() throws Exception {
-    // todo handle error
-    return eweLink.setDeviceStatus(deviceId, "off");
+    Status result;
+    try {
+      result = eweLink.setDeviceStatus(deviceId, "off");
+    } catch (Exception e) {
+      // todo fix login hack
+      eweLink.login();
+      result = eweLink.setDeviceStatus(deviceId, "off");
+    }
+
+    System.out.println("Charge has been finished");
+    isOn = false;
+    return result;
   }
 
   public float getChargedWt() throws Exception {

@@ -1,8 +1,9 @@
-package com.km220.service;
+package com.km220;
 
 import static com.km220.service.DeviceService.isOn;
 import static java.lang.System.currentTimeMillis;
 
+import com.km220.service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ public class PowerAggregationJob {
   @Autowired
   private DeviceService deviceService;
 
-  final long checkIntervalInMillis = 1000;
+  public static final long checkIntervalInMillis = 1000;
 
   @Scheduled(fixedDelay = checkIntervalInMillis)
   public void sumPower() throws Exception {
@@ -27,8 +28,6 @@ public class PowerAggregationJob {
     if (isOn && now > offTime) {
       //todo: add error handling
       deviceService.off();
-
-      isOn = false;
       return;
     }
 

@@ -19,15 +19,14 @@ public class DeviceController {
   // todo use post
   @GetMapping("/start")
   public Response start() throws Exception {
-    OrderService.chargeMinutes = 60 * 8;
-    Status status = deviceService.on(OrderService.chargeMinutes);
+    OrderService.chargeSeconds = 60 * 8;
+    Status status = deviceService.on(OrderService.chargeSeconds);
     return status.getError() > 0 ? Response.fail() : Response.success();
   }
 
-  @GetMapping("/startMins")
-  public Response startMins(@RequestParam String mins) throws Exception {
-    OrderService.chargeMinutes = Integer.parseInt(mins);
-    Status status = deviceService.on(OrderService.chargeMinutes);
+  @GetMapping("/startSecs")
+  public Response startSecs(@RequestParam String secs) throws Exception {
+    Status status = deviceService.on(Long.parseLong(secs));
     return status.getError() > 0 ? Response.fail() : Response.success();
   }
 
@@ -38,6 +37,11 @@ public class DeviceController {
 
   @GetMapping("/getDeviceStatus")
   public Response getDeviceStatus() throws Exception {
-    return new Response("deviceStatus", deviceService.getDeviceStatus());
+    return new Response("getDeviceStatus", deviceService.getDeviceStatus());
+  }
+
+  @GetMapping("/isDeviceOn")
+  public Response isDeviceOn() throws Exception {
+    return new Response("isDeviceOn", deviceService.isDeviceOn());
   }
 }
