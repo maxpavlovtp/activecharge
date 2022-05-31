@@ -2,8 +2,8 @@
 
 ### Setup dev env:
 1. install java 17
-2. run: ./gradlew clean build
-3. Kanban board: https://esound.youtrack.cloud/youtrack/agiles/87-6/current
+2. install npm
+3. run: sh run-220-dev.sh
 
 ### FE react endpoint: 
 http://220-km.com/
@@ -18,6 +18,7 @@ http://220-km.com/
 1. We push to master
 2. We deploy FE every 20 mins BE every day from master using crontab + systemctl. 
 3. If deployment broken revert or use last tag https://github.com/maxpavlovdp/activecharge/releases/tag/v1.1
+4. Kanban board: https://esound.youtrack.cloud/youtrack/agiles/87-6/current
 
 ### Design:
 https://app.diagrams.net/#G1xBm3YxmDuKMkPA-N649yD8FCtsIpkAai
