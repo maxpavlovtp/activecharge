@@ -39,7 +39,7 @@ class DeviceServiceTest {
     // when
     deviceService.on(1);
 
-    Thread.sleep(15000);
+    Thread.sleep(3000);
     // then
     assertThat(deviceService.getChargedWt() > 0).isTrue();
   }

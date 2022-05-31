@@ -38,13 +38,14 @@ public class DeviceService {
   public Status on(int chargeMinutes) throws Exception {
     chargedWt = 0;
     onTime = currentTimeMillis();
-    offTime = onTime + 60 * 1000 * chargeMinutes;
+    offTime = onTime + 60L * 1000 * chargeMinutes;
     isOn = true;
 
     return eweLink.setDeviceStatus(deviceId, "on");
   }
 
   public Status off() throws Exception {
+    // todo handle error
     return eweLink.setDeviceStatus(deviceId, "off");
   }
 
