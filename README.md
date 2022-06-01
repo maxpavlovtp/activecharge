@@ -1,7 +1,7 @@
 # Project to transform you garage or any public spot to electric car charging station.
 
 ### Setup dev env:
-1. install java 17 from https://www.azul.com/downloads/?version=java-17-lts&os=windows&architecture=x86-64-bit&package=jdk
+1. install java 17 from https://www.azul.com/downloads/?version=java-17-lts&package=jdk
 2. install npm
 3. run: sh run-220-dev.sh
 
