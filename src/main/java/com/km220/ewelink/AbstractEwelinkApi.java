@@ -42,9 +42,6 @@ public abstract class AbstractEwelinkApi {
   private static final String LOGIN_URI = "/user/login";
   private static final String API_VERSION = "8";
 
-  private String accessToken;
-  private String apiKey;
-
   protected AbstractEwelinkApi(final EwelinkParameters parameters, final String applicationId,
       final String applicationSecret, final HttpClient httpClient) {
     this.parameters = parameters;
@@ -89,13 +86,9 @@ public abstract class AbstractEwelinkApi {
       final Map<String, String> parameters,
       final int expectedStatus) {
 
-    if (this.accessToken == null) {
-      var credentials = getCredentials().join();
-      this.accessToken = credentials.getAt();
-      this.apiKey = credentials.getUser().getApikey();
-    }
+    var credentials = getCredentials().join();
 
-    Map<String, String> allHeaders = new HashMap<>(generateHeaders("Bearer", this.accessToken));
+    Map<String, String> allHeaders = new HashMap<>(generateHeaders("Bearer", credentials.getAt()));
     allHeaders.putAll(headers);
     Map<String, String> allParameters = new HashMap<>(generateParameters());
     allParameters.putAll(parameters);

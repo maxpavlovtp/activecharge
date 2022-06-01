@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.km220.ewelink.model.device.Device;
-import java.util.concurrent.ExecutionException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,10 +25,10 @@ class EwelinkDeviceApiTest {
   }
 
   @Test
-  void getDeviceShouldReturnDevice() throws ExecutionException, InterruptedException {
+  void getDeviceShouldReturnDevice() {
     EwelinkDeviceApi ewelinkDeviceApi = ewelinkClient.devices();
 
-    Device device = ewelinkDeviceApi.getDevice(DEVICE_ID).get();
+    Device device = ewelinkDeviceApi.getDevice(DEVICE_ID).join();
 
     assertNotNull(device);
     assertEquals(DEVICE_ID, device.getDeviceid());
