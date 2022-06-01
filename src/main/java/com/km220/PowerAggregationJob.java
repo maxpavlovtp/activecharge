@@ -23,8 +23,11 @@ public class PowerAggregationJob {
 
   @Scheduled(fixedDelay = checkIntervalInMillis)
   public void sumPower() throws Exception {
-    long now = currentTimeMillis();
+    if (!isOn) {
+      return;
+    }
 
+    long now = currentTimeMillis();
     if (isOn && now > offTime) {
       //todo: add error handling
       deviceService.off();
