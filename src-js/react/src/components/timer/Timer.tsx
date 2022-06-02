@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import styles from "./Timer.module.css";
-import { ITimer } from "../../interfaces";
+import {ITimer} from "../../interfaces";
 import axios from "axios";
-import { useTranslation } from "react-i18next";
+import {useTranslation} from "react-i18next";
 
 // const url = `${process.env.REACT_APP_LINK_SERVE}charge/getChargingStatus`;
 const urlChargingStatus = `http://220-km.com:8080/device/getChargingStatus`;
@@ -18,7 +18,7 @@ const Timer = (props: ITimer) => {
   const [get, setGet] = useState<any>(false);
   const [error, setError] = useState<any>(null);
   const [loading, setLoading] = useState<any>(false);
-  const { t } = useTranslation();
+  const {t} = useTranslation();
 
   const tick = () => {
     if (over) return;
@@ -36,13 +36,13 @@ const Timer = (props: ITimer) => {
 
   const getCargingStatus = () => {
     axios
-      .get(urlChargingStatus)
-      .then((response) => {
-        setNum(response);
-      })
-      .catch((err: any) => {
-        setError(err);
-      });
+    .get(urlChargingStatus)
+    .then((response) => {
+      setNum(response);
+    })
+    .catch((err: any) => {
+      setError(err);
+    });
     console.log(num?.data?.data);
   };
 
@@ -51,15 +51,15 @@ const Timer = (props: ITimer) => {
       setGet(true);
     }
     if (!get) {
-  axios
-    .get(urlChargingStatus)
-    .then((response) => {
-      setNum(response);
-    })
-    .catch((err: any) => {
-      setError(err);
-    });
-  console.log(num?.data?.data);
+      axios
+      .get(urlChargingStatus)
+      .then((response) => {
+        setNum(response);
+      })
+      .catch((err: any) => {
+        setError(err);
+      });
+      console.log(num?.data?.data);
     }
   };
 
@@ -71,36 +71,30 @@ const Timer = (props: ITimer) => {
     return () => clearInterval(timerID);
   });
 
+  let wtCharged = Math.round(num?.data?.data);
+
+  // todo use for car range calculation feature
+  // nisan leaf = 150
+  // tesla model 3 = 100
+  let carKwtKmRatio = 150;
   return (
-    // todo: add internacialization'
-    <div className={styles.timerBox}>
-      <p className={over ? styles.overTimerText : styles.timerText}>{`${h
+      // todo: add internacialization'
+      <div className={styles.timerBox}>
+        <p className={over ? styles.overTimerText : styles.timerText}>{`${h
         .toString()
         .padStart(2, "0")}:${m.toString().padStart(2, "0")}:${s
         .toString()
         .padStart(2, "0")}`}</p>
-      {/*todo: fetch <3.33 kWt> from BE*/}
-      <div className={over ? styles.overText : styles.endText}>
-        {over
-          ? `${t('charged')}`
-          : `${t('charging')}: ${num?.data?.data === undefined ? 0 : num?.data?.data}` +
-            ` ${t('kWt')}`}
+        {/*todo: fetch <3.33 kWt> from BE*/}
+        <div className={over ? styles.overText : styles.endText}>
+          {
+            over
+                ? `${t('charged')}`
+                : `${t('charging')}: ${num?.data?.data === undefined ? 0 : wtCharged}` +
+                ` ${t('wt')}  (${num?.data?.data === undefined ? 0 : Math.round(wtCharged / carKwtKmRatio)} km)`
+          }
+        </div>
       </div>
-      {/*todo: add fetch <4 kWt/hour> from BE' */}
-      <p className={styles.chargingPower}>
-        {over
-          ? ""
-          : `${t('chargingSpeed')}: ${
-              num?.data?.data === undefined ? 0 : num?.data?.data
-            }`}
-      </p>
-      <button
-        onClick={getCargingStatus}
-        className={loading ? styles.disaleBtn : styles.btnPay}
-      >
-        getChargingStatus
-      </button>
-    </div>
   );
 };
 
