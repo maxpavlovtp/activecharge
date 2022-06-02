@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Links from './Links';
 import styles from './Header.module.css';
 import { IoClose, IoMenu } from 'react-icons/io5';
-import Navigation from './Navigation';
 
 export default function MobileNavigation() {
   const [open, setOpen] = useState(false);

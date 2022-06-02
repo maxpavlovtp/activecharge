@@ -1,0 +1,79 @@
+.contactsBox {
+  padding-top: 120px;
+}
+.contactsCont {
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 100px;
+}
+.firstPart,
+.secondPart {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 300px;
+}
+.social {
+  text-decoration: none;
+  cursor: pointer;
+  transition: 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.social:hover {
+  color: #2c2b2b;
+  transition: 0.3s;
+}
+.linkName {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: 10px;
+}
+.instagram {
+  color: #e8424e;
+}
+.telegram {
+  color: #27ade3;
+}
+.watsapp {
+  color: #44be54;
+}
+.viber {
+  color: #754d94;
+}
+
+@media (max-width: 900px) {
+  .contactsCont {
+    padding-right: 50px;
+    padding-left: 50px;
+    padding-top: 80px;
+  }
+}
+@media (max-width: 821px) {
+  .firstPart,
+  .secondPart {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .contactsCont {
+    justify-content: space-evenly;
+  }
+  .social {
+    margin-top: 100px;
+  }
+}
+@media (max-width: 540px) {
+  .social {
+    margin-top: 60px;
+  }
+  .contactsCont {
+    padding-top: 20px;
+  }
+}

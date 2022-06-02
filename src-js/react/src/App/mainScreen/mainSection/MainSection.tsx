@@ -1,17 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import styles from "./MainSection.module.css";
 import mainImg from "../../../assets/charging.png";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import axios from "axios";
 import ErrorPage from "../../../components/error-page/ErrorPage";
+import Spinner from "../../../components/spinner/Spinner";
 
 const MainSection: React.FC = () => {
   const [link, setLink] = useState<any>();
   const [loading, setLoading] = useState<any>(true);
   const [error, setError] = useState<any>(null);
 
-  const url = `${process.env.REACT_APP_LINK_SERVE}`;
+  const { t } = useTranslation();
+
+  const url = `http://220-km.com:5000`;
 
   useEffect(() => {
     axios
@@ -30,30 +34,29 @@ const MainSection: React.FC = () => {
 
   if (error) {
     console.log(error.message);
-    return <p>Error server!</p>;
+    return (
+      <ErrorPage errorHeader={t("errorHeader")} errorBody={t("errorBody")} />
+    );
   }
 
-  if (loading)
-    return (
-      <></>
-    );
+  if (loading) return <Spinner />;
 
   return (
     <>
       <div className={styles.mainBox}>
         {link !== "error" ? (
           <div className={styles.container}>
-            <h1 className={styles.title}>Заряди 220 кілометрів за ніч</h1>
+            <h1 className={styles.title}>{t("title")}</h1>
             <div className={styles.btnStart}>
               <button
                 disabled={loading ? true : false}
                 className={loading ? styles.disaleBtn : styles.btnPay}
                 onClick={() => window.open(link)}
               >
-                Start
+                {t("btns.start")}
               </button>
               <Link className={styles.btn} to="/charging">
-                Start Free
+                {t("btns.startFree")}
               </Link>
             </div>
             <div className={styles.imgCont}>
@@ -62,8 +65,8 @@ const MainSection: React.FC = () => {
           </div>
         ) : (
           <ErrorPage
-            errorHeader="Device is offline"
-            errorBody="Sorry! Device is offline. Please, try later"
+            errorHeader={t("errorHeader")}
+            errorBody={t("errorBody")}
           />
         )}
       </div>
