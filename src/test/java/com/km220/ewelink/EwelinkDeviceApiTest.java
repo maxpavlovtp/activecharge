@@ -32,5 +32,10 @@ class EwelinkDeviceApiTest {
 
     assertNotNull(device);
     assertEquals(DEVICE_ID, device.getDeviceid());
+
+    device = ewelinkDeviceApi.getDevice(DEVICE_ID).join();
+
+    assertNotNull(device);
+    assertEquals(DEVICE_ID, device.getDeviceid());
   }
 }

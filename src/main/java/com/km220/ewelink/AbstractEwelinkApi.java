@@ -86,15 +86,16 @@ public abstract class AbstractEwelinkApi {
       final Map<String, String> parameters,
       final int expectedStatus) {
 
-    var credentials = getCredentials().join();
+    return getCredentials().thenCompose(credentials -> {
+      Map<String, String> allHeaders = new HashMap<>(
+          generateHeaders("Bearer", credentials.getAt()));
+      allHeaders.putAll(headers);
+      Map<String, String> allParameters = new HashMap<>(generateParameters());
+      allParameters.putAll(parameters);
 
-    Map<String, String> allHeaders = new HashMap<>(generateHeaders("Bearer", credentials.getAt()));
-    allHeaders.putAll(headers);
-    Map<String, String> allParameters = new HashMap<>(generateParameters());
-    allParameters.putAll(parameters);
-
-    return apiJsonRequest(httpMethod, httpRequestBodyPublisher, apiUrl, allHeaders,
-        allParameters, expectedStatus);
+      return apiJsonRequest(httpMethod, httpRequestBodyPublisher, apiUrl, allHeaders,
+          allParameters, expectedStatus);
+    });
   }
 
   protected final CompletableFuture<JsonNode> apiJsonRequest(
