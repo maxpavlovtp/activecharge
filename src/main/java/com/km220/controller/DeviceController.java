@@ -19,7 +19,7 @@ public class DeviceController {
   // todo use post
   @GetMapping("/start")
   public Response start() throws Exception {
-    Status status = deviceService.on(60 * 15);
+    Status status = deviceService.on(20);
     return status.getError() > 0 ? Response.fail() : Response.success();
   }
 

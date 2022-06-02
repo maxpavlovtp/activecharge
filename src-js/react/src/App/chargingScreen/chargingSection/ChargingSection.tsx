@@ -45,11 +45,11 @@ const MainSection: React.FC = () => {
     );
 
   // todo fetch from BE
-  let minutes = 15;
+  let seconds = 20;
   return (
     <div className={styles.chargingBox}>
       <div className={styles.contTimer}>
-        {msg?.data.message === "success" && <Timer minutes={minutes} />}
+        {msg?.data.message === "success" && <Timer seconds={seconds} />}
         {msg?.data?.message === "error" && (
           <ErrorPage
             errorHeader={t("errorHeader")}
