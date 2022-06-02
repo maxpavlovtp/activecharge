@@ -44,10 +44,12 @@ const MainSection: React.FC = () => {
       <Spinner />
     );
 
+  // todo fetch from BE
+  let minutes = 15;
   return (
     <div className={styles.chargingBox}>
       <div className={styles.contTimer}>
-        {msg?.data.message === "success" && <Timer minutes={15} />}
+        {msg?.data.message === "success" && <Timer minutes={minutes} />}
         {msg?.data?.message === "error" && (
           <ErrorPage
             errorHeader={t("errorHeader")}
