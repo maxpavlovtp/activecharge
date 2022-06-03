@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 public class DeviceService {
 
   public static boolean isOn;
-  public static final int POWER_LIMIT_WTH = 1900;
 
   @Value("${ewelink.region}")
   private String region;

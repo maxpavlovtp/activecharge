@@ -1,5 +1,6 @@
 package com.km220.controller;
 
+import com.km220.PowerAggregationJob;
 import com.km220.service.PowerLimitOverloadService;
 import com.km220.service.ewelink.model.Status;
 import com.km220.service.DeviceService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/device")
 public class DeviceController {
+
   // todo remove
   private static final int OFF_DELAY_SECS = 3000;
 
@@ -21,7 +23,8 @@ public class DeviceController {
   // todo use post
   @GetMapping("/start")
   public Response start() throws Exception {
-    Status status = deviceService.on(PowerLimitOverloadService.OVERLOAD_LIMIT_TIMER_SECS + OFF_DELAY_SECS);
+    Status status = deviceService
+        .on(PowerLimitOverloadService.OVERLOAD_LIMIT_TIMER_SECS + OFF_DELAY_SECS);
     return status.getError() > 0 ? Response.fail() : Response.success();
   }
 
@@ -57,7 +60,7 @@ public class DeviceController {
 
   @GetMapping("/getPower")
   public Response getPower() {
-    return new Response("getPower", 1000);
+    return new Response("chargingWtAverageWtH", PowerAggregationJob.chargingWtAverageWtH);
   }
 
   @GetMapping("/isPowerLimitOvelrloaded")
@@ -68,11 +71,12 @@ public class DeviceController {
 
   @GetMapping("/getPowerLimit")
   public Response getPowerLimit() {
-    return new Response("getPowerLimit", 1500);
+    return new Response("getPowerLimit", powerLimitOverloadService.getPowerLimit());
   }
 
   @GetMapping("/isOverloadCheckCompleted")
   public Response isOverloadCheckCompleted() {
-    return new Response("isOverloadCheckCompleted", false);
+    return new Response("isOverloadCheckCompleted",
+        powerLimitOverloadService.isOverloadCheckCompleted());
   }
 }
