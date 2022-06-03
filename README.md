@@ -21,6 +21,18 @@ http://220-km.com/
 9. http://localhost:8080/device/getPowerLimit
 10. http://localhost:8080/device/isOverloadCheckCompleted
 
+1. http://220-km.com:8080/device/start
+2. http://220-km.com:8080/device/startSecs?secs=20
+3. http://220-km.com:8080/device/getChargingDurationLeftSecs
+4. http://220-km.com:8080/device/getChargingStatus
+5. http://220-km.com:8080/device/getDeviceStatus
+6. http://220-km.com:8080/device/isDeviceOn
+   #### overload check
+7. http://220-km.com:8080/device/getPower
+8. http://220-km.com:8080/device/isPowerLimitOvelrloaded
+9. http://220-km.com:8080/device/getPowerLimit
+10. http://220-km.com:8080/device/isOverloadCheckCompleted
+
 ### SDLC:
 1. We push to master
 2. We deploy FE every 20 mins BE every day from master using crontab + systemctl. 
