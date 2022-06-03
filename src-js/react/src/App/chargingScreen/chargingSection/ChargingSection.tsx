@@ -13,7 +13,7 @@ const MainSection: React.FC = () => {
 
   const [secondsTime, setSecondsTime] = useState<any>();
   // const url = `http://localhost:8080/device/start`;
-  const secondsUrl = 'http://localhost:8080/device/getChargingDurationLeftSecs';
+  const secondsUrl = `${process.env.REACT_APP_LINK_SERVE}device/getChargingDurationLeftSecs`;
   const { t } = useTranslation();
 
   const start = async () => {
