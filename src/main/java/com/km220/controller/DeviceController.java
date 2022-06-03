@@ -29,7 +29,7 @@ public class DeviceController {
   }
 
   @GetMapping("/getChargingDurationLeftSecs")
-  public Response getChargeTimeLeftSecs() throws Exception {
+  public Response getChargeTimeLeftSecs() {
     return new Response("getChargeTimeLeftSecs", deviceService.getChargingDurationLeftSecs());
   }
 

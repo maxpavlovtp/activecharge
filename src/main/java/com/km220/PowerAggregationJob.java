@@ -41,7 +41,7 @@ public class PowerAggregationJob {
     System.out.println("charging power (watts): " + power);
     chargingDurationSecs = (int) ((now - onTime) / 1000);
     System.out.println("chargingDurationSecs: " + chargingDurationSecs);
-    chargingDurationLeftSecs = offTime - now;
+    chargingDurationLeftSecs = (offTime - now) / 1000;
     System.out.println("chargingDurationLeftSecs: " + chargingDurationLeftSecs);
 
     float powerWt = Float.parseFloat(power);
