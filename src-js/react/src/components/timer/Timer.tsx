@@ -6,7 +6,7 @@ import {useTranslation} from "react-i18next";
 
 // const url = `${process.env.REACT_APP_LINK_SERVE}charge/getChargingStatus`;
 // todo use props
-const urlChargingStatus = `http://220-km.com:8080/device/getChargingStatus`;
+const urlChargingStatus = `http://localhost:8080/device/getChargingStatus`;
 
 const Timer = (props: ITimer) => {
   const [over, setOver] = useState(false);

@@ -52,7 +52,7 @@ const MainSection: React.FC = () => {
   return (
     <div className={styles.chargingBox}>
       <div className={styles.contTimer}>
-        {secondsTime && <Timer seconds={secondsTime} />}
+        {secondsTime > 0 && <Timer seconds={secondsTime}/>}
         {/* {msg?.data?.message === "error" && (
           <ErrorPage
             errorHeader={t("errorHeader")}
