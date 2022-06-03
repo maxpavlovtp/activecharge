@@ -5,6 +5,7 @@ import static com.km220.PowerAggregationJob.offTime;
 import static com.km220.PowerAggregationJob.onTime;
 import static java.lang.System.currentTimeMillis;
 
+import com.km220.PowerAggregationJob;
 import com.km220.service.ewelink.EweLink;
 import com.km220.service.ewelink.model.Status;
 import com.km220.service.ewelink.model.devices.DeviceItem;
@@ -36,9 +37,11 @@ public class DeviceService {
   }
 
   public Status on(long chargeSeconds) throws Exception {
+    // todo refactor
+    PowerAggregationJob.chargeDurationSecs = chargeSeconds;
     chargedWt = 0;
     onTime = currentTimeMillis();
-    offTime = onTime + 1000L * chargeSeconds;
+    offTime = onTime + 1000L * PowerAggregationJob.chargeDurationSecs;
     isOn = true;
 
     return eweLink.setDeviceStatus(deviceId, "on");
@@ -46,6 +49,10 @@ public class DeviceService {
 
   public boolean isDeviceOn() throws Exception {
     return getDeviceStatus().contains("_switch='on'");
+  }
+
+  public long getChargeTimeLeftSecs() {
+    return PowerAggregationJob.chargingDurationLeftSecs;
   }
 
   public Status off() throws Exception {

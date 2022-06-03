@@ -15,6 +15,9 @@ public class PowerAggregationJob {
   public static float chargedWt;
   public static long onTime;
   public static long offTime;
+  public static long chargeDurationSecs;
+  public static long chargingDurationSecs;
+  public static long chargingDurationLeftSecs;
 
   @Autowired
   private DeviceService deviceService;
@@ -36,8 +39,10 @@ public class PowerAggregationJob {
 
     String power = deviceService.getPower();
     System.out.println("charging power (watts): " + power);
-    float chargingTimeSecs = (now - onTime) / 1000;
-    System.out.println("chargingTimeSecs: " + chargingTimeSecs);
+    chargingDurationSecs = (int) ((now - onTime) / 1000);
+    System.out.println("chargingDurationSecs: " + chargingDurationSecs);
+    chargingDurationLeftSecs = offTime - now;
+    System.out.println("chargingDurationLeftSecs: " + chargingDurationLeftSecs);
 
     float powerWt = Float.parseFloat(power);
     chargedWt += powerWt / (3600 * 1000F / checkIntervalInMillis);

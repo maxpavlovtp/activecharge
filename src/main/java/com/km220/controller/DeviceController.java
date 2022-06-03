@@ -1,6 +1,5 @@
 package com.km220.controller;
 
-import com.km220.service.OrderService;
 import com.km220.service.ewelink.model.Status;
 import com.km220.service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +24,13 @@ public class DeviceController {
 
   @GetMapping("/startSecs")
   public Response startSecs(@RequestParam String secs) throws Exception {
-    Status status = deviceService.on(Long.parseLong(secs));
+    Status status = deviceService.on(Integer.parseInt(secs));
     return status.getError() > 0 ? Response.fail() : Response.success();
+  }
+
+  @GetMapping("/getChargeTimeLeftSecs")
+  public Response getChargeTimeLeftSecs() throws Exception {
+    return new Response("getChargeTimeLeftSecs", deviceService.getChargeTimeLeftSecs());
   }
 
   @GetMapping("/getChargingStatus")

@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class DeviceServiceTest {
 
   long intervalMultipliedMillis = 10 * checkIntervalInMillis;
-  long chargeSeconds = intervalMultipliedMillis / 1000;
+  long chargeSeconds = (intervalMultipliedMillis / 1000);
   long sleepInterval = chargeSeconds * 1000 + intervalMultipliedMillis;
 
   @Autowired

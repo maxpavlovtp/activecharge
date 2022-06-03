@@ -15,7 +15,6 @@ http://220-km.com/
 4. http://220-km.com:8080/device/getChargingStatus
 5. http://220-km.com:8080/device/getDeviceStatus
 6. http://220-km.com:8080/device/isDeviceOn
-7. http://220-km.com:8080/device/getChargeTime
 
 ### SDLC:
 1. We push to master
