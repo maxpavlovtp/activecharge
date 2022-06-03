@@ -47,4 +47,25 @@ public class DeviceController {
   public Response isDeviceOn() throws Exception {
     return new Response("isDeviceOn", deviceService.isDeviceOn());
   }
+
+  //  power limit check
+  @GetMapping("/getPower")
+  public Response getPower() {
+    return new Response("getPower", 1000);
+  }
+
+  @GetMapping("/isPowerLimitOvelrloaded")
+  public Response isPowerLimitOvelrloaded() {
+    return new Response("isPowerLimitOvelrloaded", false);
+  }
+
+  @GetMapping("/getPowerLimit")
+  public Response getPowerLimit() {
+    return new Response("getPowerLimit", 1500);
+  }
+
+  @GetMapping("/isOverloadCheckCompleted")
+  public Response isOverloadCheckCompleted() {
+    return new Response("isOverloadCheckCompleted", false);
+  }
 }

@@ -87,7 +87,7 @@ public class DeviceService {
   }
 
   private DeviceItem getDevice() throws Exception {
-    DeviceItem device = null;
+    DeviceItem device;
     try {
       device = eweLink.getDevice(deviceId);
     } catch (Exception e) {
