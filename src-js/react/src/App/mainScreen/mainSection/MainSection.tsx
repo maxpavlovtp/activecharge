@@ -17,7 +17,7 @@ const MainSection: React.FC = () => {
   const { t } = useTranslation();
 
   const url = `http://220-km.com:5000`;
-  const urlOn = `http://localhost:8080/device/start`;
+  const urlOn = `${process.env.REACT_APP_LINK_SERVE}device/start`;
 
   const start = async () => {
     await axios
