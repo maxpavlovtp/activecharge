@@ -5,14 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import static com.km220.PowerAggregationJob.CHECK_INTERVAL_IN_MILLIS;
+import static com.km220.PowerAggregationJob.CHECK_INTERVAL_MILLIS;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @ActiveProfiles("test")
 class DeviceServiceTest {
 
-  long intervalMultipliedMillis = 10 * CHECK_INTERVAL_IN_MILLIS;
+  long intervalMultipliedMillis = 10 * CHECK_INTERVAL_MILLIS;
   long chargeSeconds = (intervalMultipliedMillis / 1000);
   long sleepInterval = chargeSeconds * 1000 + intervalMultipliedMillis;
 
@@ -51,7 +51,7 @@ class DeviceServiceTest {
     assertThat(power).isNotEmpty();
   }
 
-  //  @Test
+//    @Test
   void getChargedWtTest() throws Exception {
     // given
     deviceService.on(chargeSeconds);
@@ -75,7 +75,7 @@ class DeviceServiceTest {
     assertThat(deviceService.isDeviceOn()).isTrue();
   }
 
-  //  @Test
+//    @Test
   void offTest() throws Exception {
     // given
     deviceService.on(chargeSeconds);

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class DeviceController {
 
   // todo remove
-  private static final int OFF_DELAY_SECS = 3000;
+  private static final int OFF_DELAY_SECS = 2;
 
   @Autowired
   private DeviceService deviceService;
@@ -60,7 +60,7 @@ public class DeviceController {
 
   @GetMapping("/getPower")
   public Response getPower() {
-    return new Response("chargingWtAverageWtH", PowerAggregationJob.chargingWtAverageWtH);
+    return new Response("chargingWtAverageWtH", PowerAggregationJob.powerWt);
   }
 
   @GetMapping("/isPowerLimitOvelrloaded")

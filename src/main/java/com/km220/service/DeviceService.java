@@ -16,8 +16,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class DeviceService {
 
-  public static boolean isOn;
-
   @Value("${ewelink.region}")
   private String region;
   @Value("${ewelink.email}")
@@ -39,12 +37,13 @@ public class DeviceService {
   public Status on(long chargeSeconds) throws Exception {
     // todo refactor
     PowerAggregationJob.chargeDurationSecs = chargeSeconds;
-    chargedWt = 0;
-    onTime = currentTimeMillis();
-    offTime = onTime + 1000L * PowerAggregationJob.chargeDurationSecs;
-    isOn = true;
+    PowerAggregationJob.chargedWt = 0;
+    PowerAggregationJob.onTime = currentTimeMillis();
+    PowerAggregationJob.offTime = onTime + 1000L * PowerAggregationJob.chargeDurationSecs;
 
-    return eweLink.setDeviceStatus(deviceId, "on");
+    Status status = eweLink.setDeviceStatus(deviceId, "on");
+    PowerAggregationJob.isOn = true;
+    return status;
   }
 
   public boolean isDeviceOn() throws Exception {
@@ -66,7 +65,7 @@ public class DeviceService {
     }
 
     System.out.println("Charge has been finished");
-    isOn = false;
+    PowerAggregationJob.isOn = false;
     return result;
   }
 

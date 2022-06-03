@@ -7,12 +7,12 @@ import org.springframework.stereotype.Service;
 public class PowerLimitOverloadService {
 
   //todo move to db
-  public static final int OVERLOAD_LIMIT_TIMER_SECS = 30;
+  public static final int OVERLOAD_LIMIT_TIMER_SECS = 20;
   private static final int POWER_LIMIT_WTH = 1900;
 
   public boolean isPowerLimitOvelrloaded() {
     return PowerAggregationJob.chargingDurationSecs > OVERLOAD_LIMIT_TIMER_SECS &&
-        PowerAggregationJob.chargingWtAverageWtH > POWER_LIMIT_WTH;
+        PowerAggregationJob.powerWt > POWER_LIMIT_WTH;
   }
 
   public int getPowerLimit() {
