@@ -10,21 +10,21 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PowerAggregationJob {
+  @Autowired
+  private DeviceService deviceService;
 
   // todo move to DB
   public static float chargedWt;
+  public static float chargingWtAverageWtH;
   public static long onTime;
   public static long offTime;
   public static long chargeDurationSecs;
   public static long chargingDurationSecs;
   public static long chargingDurationLeftSecs;
 
-  @Autowired
-  private DeviceService deviceService;
+  public static final long CHECK_INTERVAL_IN_MILLIS = 1000;
 
-  public static final long checkIntervalInMillis = 1000;
-
-  @Scheduled(fixedDelay = checkIntervalInMillis)
+  @Scheduled(fixedDelay = CHECK_INTERVAL_IN_MILLIS)
   public void sumPower() throws Exception {
     if (!isOn) {
       return;
@@ -43,9 +43,11 @@ public class PowerAggregationJob {
     System.out.println("chargingDurationSecs: " + chargingDurationSecs);
     chargingDurationLeftSecs = (offTime - now) / 1000;
     System.out.println("chargingDurationLeftSecs: " + chargingDurationLeftSecs);
+    chargingWtAverageWtH = chargedWt * 3600 / chargingDurationSecs;
+    System.out.println("chargingWtAverageWtH: " + chargingWtAverageWtH);
 
     float powerWt = Float.parseFloat(power);
-    chargedWt += powerWt / (3600 * 1000F / checkIntervalInMillis);
+    chargedWt += powerWt / (3600 * 1000F / CHECK_INTERVAL_IN_MILLIS);
 
     System.out.println("chargedWt: " + chargedWt);
   }

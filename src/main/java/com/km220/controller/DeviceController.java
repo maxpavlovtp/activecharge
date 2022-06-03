@@ -1,5 +1,6 @@
 package com.km220.controller;
 
+import com.km220.service.PowerLimitOverloadService;
 import com.km220.service.ewelink.model.Status;
 import com.km220.service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/device")
 public class DeviceController {
+  // todo remove
+  private static final int OFF_DELAY_SECS = 3000;
 
   @Autowired
   private DeviceService deviceService;
@@ -18,7 +21,7 @@ public class DeviceController {
   // todo use post
   @GetMapping("/start")
   public Response start() throws Exception {
-    Status status = deviceService.on(20);
+    Status status = deviceService.on(PowerLimitOverloadService.OVERLOAD_LIMIT_TIMER_SECS + OFF_DELAY_SECS);
     return status.getError() > 0 ? Response.fail() : Response.success();
   }
 
@@ -49,6 +52,9 @@ public class DeviceController {
   }
 
   //  power limit check
+  @Autowired
+  PowerLimitOverloadService powerLimitOverloadService;
+
   @GetMapping("/getPower")
   public Response getPower() {
     return new Response("getPower", 1000);
@@ -56,7 +62,8 @@ public class DeviceController {
 
   @GetMapping("/isPowerLimitOvelrloaded")
   public Response isPowerLimitOvelrloaded() {
-    return new Response("isPowerLimitOvelrloaded", false);
+    return new Response("isPowerLimitOvelrloaded",
+        powerLimitOverloadService.isPowerLimitOvelrloaded());
   }
 
   @GetMapping("/getPowerLimit")
