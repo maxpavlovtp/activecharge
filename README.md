@@ -15,7 +15,7 @@ http://220-km.com/
 4. http://localhost:8080/device/getChargingStatus
 5. http://localhost:8080/device/getDeviceStatus
 6. http://localhost:8080/device/isDeviceOn
-   overload check
+   #### overload check
 7. http://localhost:8080/device/getPower
 8. http://localhost:8080/device/isPowerLimitOvelrloaded
 9. http://localhost:8080/device/getPowerLimit
