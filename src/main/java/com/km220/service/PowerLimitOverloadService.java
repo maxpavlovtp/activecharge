@@ -20,6 +20,6 @@ public class PowerLimitOverloadService {
   }
 
   public boolean isOverloadCheckCompleted() {
-    return OVERLOAD_LIMIT_TIMER_SECS > PowerAggregationJob.chargingDurationSecs;
+    return PowerAggregationJob.chargingDurationSecs > OVERLOAD_LIMIT_TIMER_SECS;
   }
 }
