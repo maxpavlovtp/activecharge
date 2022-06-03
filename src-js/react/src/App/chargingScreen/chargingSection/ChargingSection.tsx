@@ -7,27 +7,30 @@ import { useTranslation } from "react-i18next";
 import Spinner from "../../../components/spinner/Spinner";
 
 const MainSection: React.FC = () => {
-  const [msg, setMsg] = useState<any>();
+  // const [msg, setMsg] = useState<any>();
   const [loading, setLoading] = useState<any>(false);
   const [error, setError] = useState<any>(null);
-  const url = `http://220-km.com:8080/device/start`;
+
+  const [secondsTime, setSecondsTime] = useState<any>();
+  // const url = `http://localhost:8080/device/start`;
+  const secondsUrl = 'http://localhost:8080/device/getChargingDurationLeftSecs';
   const { t } = useTranslation();
 
-  const start = () => {
+  const start = async () => {
     setLoading(true);
-    axios
-      .get(url)
-      .then((response) => {
-        setMsg(response);
-        console.log(response);
-      })
-      .catch((err) => {
-        setError(err);
-        console.log(err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+      await axios
+        .get(secondsUrl)
+        .then((response) => {
+          setSecondsTime(response.data.data);
+          console.log(response)
+        })
+        .catch((err) => {
+          setError(err);
+          console.log(err);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
   };
 
   useEffect(() => {
@@ -45,17 +48,17 @@ const MainSection: React.FC = () => {
     );
 
   // todo fetch from BE
-  let seconds = 20;
+  // let seconds = 20;
   return (
     <div className={styles.chargingBox}>
       <div className={styles.contTimer}>
-        {msg?.data.message === "success" && <Timer seconds={seconds} />}
-        {msg?.data?.message === "error" && (
+        {secondsTime && <Timer seconds={secondsTime} />}
+        {/* {msg?.data?.message === "error" && (
           <ErrorPage
             errorHeader={t("errorHeader")}
             errorBody={t("errorBody")}
           />
-        )}
+        )} */}
       </div>
     </div>
   );

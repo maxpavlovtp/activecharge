@@ -60,7 +60,7 @@ const Timer = (props: ITimer) => {
       .catch((err: any) => {
         setError(err);
       });
-      console.log(num?.data?.data);
+      // console.log(num?.data?.data);
     }
   };
 

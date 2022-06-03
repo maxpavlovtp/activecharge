@@ -9,6 +9,7 @@ import ErrorPage from "../../../components/error-page/ErrorPage";
 import Spinner from "../../../components/spinner/Spinner";
 
 const MainSection: React.FC = () => {
+  const [msg, setMsg] = useState<any>();
   const [link, setLink] = useState<any>();
   const [loading, setLoading] = useState<any>(true);
   const [error, setError] = useState<any>(null);
@@ -16,6 +17,20 @@ const MainSection: React.FC = () => {
   const { t } = useTranslation();
 
   const url = `http://220-km.com:5000`;
+  const urlOn = `http://localhost:8080/device/start`;
+
+  const start = async () => {
+    await axios
+      .get(urlOn)
+      .then((response) => {
+        setMsg(response);
+        console.log(response);
+      })
+      .catch((err) => {
+        setError(err);
+        console.log(err);
+      });
+  };
 
   useEffect(() => {
     axios
@@ -55,7 +70,7 @@ const MainSection: React.FC = () => {
               >
                 {t("btns.start")}
               </button>
-              <Link className={styles.btn} to="/charging">
+              <Link onClick={start} className={styles.btn} to="/charging">
                 {t("btns.startFree")}
               </Link>
             </div>
