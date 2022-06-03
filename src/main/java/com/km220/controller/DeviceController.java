@@ -28,9 +28,9 @@ public class DeviceController {
     return status.getError() > 0 ? Response.fail() : Response.success();
   }
 
-  @GetMapping("/getChargeTimeLeftSecs")
+  @GetMapping("/getChargingDurationLeftSecs")
   public Response getChargeTimeLeftSecs() throws Exception {
-    return new Response("getChargeTimeLeftSecs", deviceService.getChargeTimeLeftSecs());
+    return new Response("getChargeTimeLeftSecs", deviceService.getChargingDurationLeftSecs());
   }
 
   @GetMapping("/getChargingStatus")

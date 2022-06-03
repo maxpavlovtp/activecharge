@@ -51,7 +51,7 @@ public class DeviceService {
     return getDeviceStatus().contains("_switch='on'");
   }
 
-  public long getChargeTimeLeftSecs() {
+  public long getChargingDurationLeftSecs() {
     return PowerAggregationJob.chargingDurationLeftSecs;
   }
 
