@@ -15,7 +15,7 @@ import org.springframework.test.context.ActiveProfiles;
 @ActiveProfiles("test")
 class PowerAggregationJobTest {
 
-  public static final int AVG_POWER_DELTA = 20;
+  public static final int AVG_POWER_DELTA = 30;
   long intervalMultipliedMillis = 5 * CHECK_INTERVAL_MILLIS;
   long chargeSeconds = (intervalMultipliedMillis / 1000);
   long sleepInterval = chargeSeconds * 1000 + intervalMultipliedMillis;
