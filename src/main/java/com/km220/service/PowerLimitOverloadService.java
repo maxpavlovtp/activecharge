@@ -14,7 +14,7 @@ public class PowerLimitOverloadService {
 
   public boolean isPowerLimitOvelrloaded() {
     return PowerAggregationJob.chargingDurationSecs > OVERLOAD_LIMIT_TIMER_SECS &&
-        PowerAggregationJob.powerWt > POWER_LIMIT_WTH;
+        PowerAggregationJob.chargingWtAverageWtH > POWER_LIMIT_WTH;
   }
 
   public int getPowerLimit() {
