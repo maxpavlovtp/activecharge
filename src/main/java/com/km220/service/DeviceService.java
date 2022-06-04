@@ -6,7 +6,8 @@ import static com.km220.service.PowerLimitOverloadService.OVERLOAD_LIMIT_TIMER_S
 import static java.lang.System.currentTimeMillis;
 
 import com.km220.PowerAggregationJob;
-import com.km220.ewelink.EwelinkDeviceApi;
+import com.km220.ewelink.EwelinkClient;
+import com.km220.ewelink.EwelinkParameters;
 import com.km220.service.ewelink.EweLink;
 import com.km220.service.ewelink.model.Status;
 import com.km220.service.ewelink.model.devices.DeviceItem;
@@ -27,15 +28,19 @@ public class DeviceService {
   @Value("${deviceId}")
   private String deviceId;
 
-  EweLink eweLinkLegacy;
-  EwelinkDeviceApi eweLink;
+  private EweLink eweLinkLegacy;
+
+  private EwelinkClient eweLink;
+  public static boolean newApiForGetPower = false;
 
   @PostConstruct
   public void init() throws Exception {
     eweLinkLegacy = new EweLink(region, email, password, 60);
     eweLinkLegacy.login();
 
-//    eweLink = new EwelinkDeviceApi()
+    eweLink = EwelinkClient.builder()
+        .parameters(new EwelinkParameters(region, email, password))
+        .build();
   }
 
   public Status on() throws Exception {
@@ -90,8 +95,12 @@ public class DeviceService {
     return getDevice().getParams().toString();
   }
 
-  public String getPower() throws Exception {
-    return getDevice().getParams().getPower();
+  public String getPower(boolean newApi) throws Exception {
+    if (newApiForGetPower || newApi) {
+      return eweLink.devices().getDevice(deviceId).join().getParams().getPower();
+    } else {
+      return getDevice().getParams().getPower();
+    }
   }
 
   private DeviceItem getDevice() throws Exception {

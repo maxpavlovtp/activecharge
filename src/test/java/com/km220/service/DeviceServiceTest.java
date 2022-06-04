@@ -1,13 +1,14 @@
 package com.km220.service;
 
+import static com.km220.PowerAggregationJob.CHECK_INTERVAL_MILLIS;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-
-import static com.km220.PowerAggregationJob.CHECK_INTERVAL_MILLIS;
-import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -38,23 +39,11 @@ class DeviceServiceTest {
   @Test
   void getPowerTest() throws Exception {
     // when
-    String power = deviceService.getPower();
+    String power = deviceService.getPower(false);
     System.out.println(power);
 
     //then
     assertThat(power).isNotEmpty();
-  }
-
-  @Test
-  void getChargedWtTest() throws Exception {
-    // given
-    deviceService.on(chargeSeconds);
-
-    // when
-    Thread.sleep(sleepInterval);
-
-    // then
-    assertThat(deviceService.getChargedWt() > 0).isTrue();
   }
 
   @Test

@@ -55,8 +55,8 @@ public class DeviceController {
   PowerLimitOverloadService powerLimitOverloadService;
 
   @GetMapping("/getPower")
-  public Response getPower() {
-    return new Response("chargingWtAverageWtH", PowerAggregationJob.powerWt);
+  public Response getPower() throws Exception {
+    return new Response("chargingWtAverageWtH", deviceService.getPower(false));
   }
 
   @GetMapping("/isPowerLimitOvelrloaded")
