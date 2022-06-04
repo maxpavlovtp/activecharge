@@ -11,15 +11,16 @@ http://220-km.com/
 ### BE spring boot endpoints local:
 1. http://localhost:8080/device/start
 2. http://localhost:8080/device/startSecs?secs=7
-3. http://localhost:8080/device/getChargingDurationLeftSecs
-4. http://localhost:8080/device/getChargingStatus
-5. http://localhost:8080/device/getDeviceStatus
-6. http://localhost:8080/device/isDeviceOn
+4. http://localhost:8080/device/getDeviceStatus
+7. http://localhost:8080/device/getDeviceStatusNewAPI
+8. http://localhost:8080/device/getChargingStatus
+9. http://localhost:8080/device/getChargingDurationLeftSecs
+10.http://localhost:8080/device/isDeviceOn
    #### overload check
-7. http://localhost:8080/device/getPower
-8. http://localhost:8080/device/isPowerLimitOvelrloaded
-9. http://localhost:8080/device/getPowerLimit
-10. http://localhost:8080/device/isOverloadCheckCompleted
+1. http://localhost:8080/device/getPower
+2. http://localhost:8080/device/isPowerLimitOvelrloaded
+3. http://localhost:8080/device/getPowerLimit
+4. http://localhost:8080/device/isOverloadCheckCompleted
 
 ### BE spring boot endpoints:
 1. http://220-km.com:8080/device/start
