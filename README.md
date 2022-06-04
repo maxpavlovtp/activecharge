@@ -12,37 +12,37 @@ http://220-km.com/
 
 ### BE spring boot endpoints local:
 
-http://localhost:8080/device/start
-http://localhost:8080/device/startSecs?secs=7
-http://localhost:8080/device/getDeviceStatus
-http://localhost:8080/device/getDeviceStatusNewAPI
-http://localhost:8080/device/getChargingStatus
-http://localhost:8080/device/getChargingDurationLeftSecs
-http://localhost:8080/device/isDeviceOn
+1. http://localhost:8080/device/start
+2. http://localhost:8080/device/startSecs?secs=7
+3. http://localhost:8080/device/getDeviceStatus
+4. http://localhost:8080/device/getDeviceStatusNewAPI
+5. http://localhost:8080/device/getChargingStatus
+6. http://localhost:8080/device/getChargingDurationLeftSecs
+7. http://localhost:8080/device/isDeviceOn
 
 #### overload check
 
-http://localhost:8080/device/getPower
-http://localhost:8080/device/isPowerLimitOvelrloaded
-http://localhost:8080/device/getPowerLimit
-http://localhost:8080/device/isOverloadCheckCompleted
+1. http://localhost:8080/device/getPower
+2. http://localhost:8080/device/isPowerLimitOvelrloaded
+3. http://localhost:8080/device/getPowerLimit
+4. http://localhost:8080/device/isOverloadCheckCompleted
 
 ### BE spring boot endpoints:
 
-http://220-km.com:8080/device/start
-http://220-km.com:8080/device/startSecs?secs=7
-http://220-km.com:8080/device/getDeviceStatus
-http://220-km.com:8080/device/getDeviceStatusNewAPI
-http://220-km.com:8080/device/getChargingStatus
-http://220-km.com:8080/device/getChargingDurationLeftSecs
-http://220-km.com:8080/device/isDeviceOn
+1. http://220-km.com:8080/device/start
+2. http://220-km.com:8080/device/startSecs?secs=7
+3. http://220-km.com:8080/device/getDeviceStatus
+4. http://220-km.com:8080/device/getDeviceStatusNewAPI
+5. http://220-km.com:8080/device/getChargingStatus
+6. http://220-km.com:8080/device/getChargingDurationLeftSecs
+7. http://220-km.com:8080/device/isDeviceOn
 
 #### overload check
 
-http://220-km.com:8080/device/getPower
-http://220-km.com:8080/device/isPowerLimitOvelrloaded
-http://220-km.com:8080/device/getPowerLimit
-http://220-km.com:8080/device/isOverloadCheckCompleted
+1. http://220-km.com:8080/device/getPower
+2. http://220-km.com:8080/device/isPowerLimitOvelrloaded
+3. http://220-km.com:8080/device/getPowerLimit
+4. http://220-km.com:8080/device/isOverloadCheckCompleted
 
 ### SDLC:
 
