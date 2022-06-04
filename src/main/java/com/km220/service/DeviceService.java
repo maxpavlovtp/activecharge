@@ -115,4 +115,8 @@ public class DeviceService {
 
     return device;
   }
+
+  public String getDeviceStatusNewAPI() {
+    return eweLink.devices().getDevice(deviceId).join().getDeviceStatus();
+  }
 }

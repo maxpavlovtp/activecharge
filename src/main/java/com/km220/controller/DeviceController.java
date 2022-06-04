@@ -45,6 +45,11 @@ public class DeviceController {
     return new Response("getDeviceStatus", deviceService.getDeviceStatus());
   }
 
+  @GetMapping("/getDeviceStatusNewAPI")
+  public Response getDeviceStatusNewAPI() throws Exception {
+    return new Response("getDeviceStatusNewAPI", deviceService.getDeviceStatusNewAPI());
+  }
+
   @GetMapping("/isDeviceOn")
   public Response isDeviceOn() throws Exception {
     return new Response("isDeviceOn", deviceService.isDeviceOn());
