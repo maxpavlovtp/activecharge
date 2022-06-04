@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ActiveProfiles("test")
 class DeviceServiceTest {
 
-  long intervalMultipliedMillis = 10 * CHECK_INTERVAL_MILLIS;
+  long intervalMultipliedMillis = 5 * CHECK_INTERVAL_MILLIS;
   long chargeSeconds = (intervalMultipliedMillis / 1000);
   long sleepInterval = chargeSeconds * 1000 + intervalMultipliedMillis;
 
@@ -20,18 +20,6 @@ class DeviceServiceTest {
   DeviceService deviceService;
 
   @Test
-
-  // todo fix it
-  public void loginHack() throws Exception {
-//    onTest();
-    offTest();
-//    getPowerTest();
-//    getChargedWtTest();
-
-//    getDevicesTest();
-  }
-
-  //  @Test
   void getDevicesTest() throws Exception {
     // when
     String devices = deviceService.getDevices();
@@ -41,7 +29,7 @@ class DeviceServiceTest {
     assertThat(devices).isNotEmpty();
   }
 
-  //  @Test
+  @Test
   void getPowerTest() throws Exception {
     // when
     String power = deviceService.getPower();
@@ -51,7 +39,7 @@ class DeviceServiceTest {
     assertThat(power).isNotEmpty();
   }
 
-//    @Test
+  @Test
   void getChargedWtTest() throws Exception {
     // given
     deviceService.on(chargeSeconds);
@@ -63,27 +51,18 @@ class DeviceServiceTest {
     assertThat(deviceService.getChargedWt() > 0).isTrue();
   }
 
-  //  @Test
-  void onTest() throws Exception {
-    // given
-    deviceService.on(chargeSeconds);
-
+  @Test
+  void onOffTest() throws Exception {
     // when
-    Thread.sleep(sleepInterval);
-
+    deviceService.on(chargeSeconds);
     // then
     assertThat(deviceService.isDeviceOn()).isTrue();
-  }
 
-//    @Test
-  void offTest() throws Exception {
-    // given
-    deviceService.on(chargeSeconds);
-
-    // when
+    // and when
     Thread.sleep(sleepInterval);
 
     // then
     assertThat(deviceService.isDeviceOn()).isFalse();
+
   }
 }
