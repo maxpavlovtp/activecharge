@@ -5,9 +5,13 @@ import static com.km220.PowerAggregationJob.onTime;
 import static com.km220.service.PowerLimitOverloadService.OVERLOAD_LIMIT_TIMER_SECS;
 import static java.lang.System.currentTimeMillis;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import com.km220.PowerAggregationJob;
 import com.km220.ewelink.EwelinkClient;
 import com.km220.ewelink.EwelinkParameters;
+import com.km220.ewelink.model.device.Device;
 import com.km220.service.ewelink.EweLink;
 import com.km220.service.ewelink.model.Status;
 import com.km220.service.ewelink.model.devices.DeviceItem;
@@ -116,7 +120,8 @@ public class DeviceService {
     return device;
   }
 
-  public String getDeviceStatusNewAPI() {
-    return eweLink.devices().getDevice(deviceId).join().getDeviceStatus();
+  public String getDeviceStatusNewAPI() throws JsonProcessingException {
+    Device device = eweLink.devices().getDevice(deviceId).join();
+    return new ObjectMapper().writeValueAsString(device);
   }
 }

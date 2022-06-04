@@ -3,6 +3,7 @@ package com.km220.service;
 import static com.km220.PowerAggregationJob.CHECK_INTERVAL_MILLIS;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -58,6 +59,10 @@ class DeviceServiceTest {
 
     // then
     assertThat(deviceService.isDeviceOn()).isFalse();
+  }
 
+  @Test
+  void getDeviceStatusNewAPITest() throws JsonProcessingException {
+    assertThat(deviceService.getDeviceStatusNewAPI()).contains("power");
   }
 }
