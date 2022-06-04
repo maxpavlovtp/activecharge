@@ -84,7 +84,7 @@ const MainSection: React.FC = () => {
             <div className={styles.btnStart}>
               <Link
                 to="/overload"
-                className={loading ? styles.disaleBtn : styles.btnPay}
+                className={styles.btnPay}
                 onClick={start}
               >
                 {t("btns.start")}
