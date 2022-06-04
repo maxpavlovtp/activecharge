@@ -27,6 +27,6 @@ class PowerAggregationJobTest {
     // then
     float delta = ((chargingWtAverageWtH - powerWt) / powerWt) * 100;
     System.out.println("delta: " + delta);
-    assertThat(delta < 25).isTrue();
+    assertThat(delta < 35).isTrue();
   }
 }
