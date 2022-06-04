@@ -3,6 +3,7 @@ package com.km220.service;
 import static com.km220.PowerAggregationJob.chargedWt;
 import static com.km220.PowerAggregationJob.offTime;
 import static com.km220.PowerAggregationJob.onTime;
+import static com.km220.service.PowerLimitOverloadService.OVERLOAD_LIMIT_TIMER_SECS;
 import static java.lang.System.currentTimeMillis;
 
 import com.km220.PowerAggregationJob;
@@ -32,6 +33,10 @@ public class DeviceService {
   public void init() throws Exception {
     eweLink = new EweLink(region, email, password, 60);
     eweLink.login();
+  }
+
+  public Status on() throws Exception {
+    return on(OVERLOAD_LIMIT_TIMER_SECS);
   }
 
   public Status on(long chargeSeconds) throws Exception {

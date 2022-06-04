@@ -23,8 +23,7 @@ public class DeviceController {
   // todo use post
   @GetMapping("/start")
   public Response start() throws Exception {
-    Status status = deviceService
-        .on(PowerLimitOverloadService.OVERLOAD_LIMIT_TIMER_SECS + OFF_DELAY_SECS);
+    Status status = deviceService.on();
     return status.getError() > 0 ? Response.fail() : Response.success();
   }
 

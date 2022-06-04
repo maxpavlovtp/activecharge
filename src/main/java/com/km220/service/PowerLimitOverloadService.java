@@ -1,5 +1,7 @@
 package com.km220.service;
 
+import static java.lang.System.currentTimeMillis;
+
 import com.km220.PowerAggregationJob;
 import org.springframework.stereotype.Service;
 
@@ -7,7 +9,7 @@ import org.springframework.stereotype.Service;
 public class PowerLimitOverloadService {
 
   //todo move to db
-  public static final int OVERLOAD_LIMIT_TIMER_SECS = 3600 * 8;
+  public static final int OVERLOAD_LIMIT_TIMER_SECS = 20;
   private static final int POWER_LIMIT_WTH = 1900;
 
   public boolean isPowerLimitOvelrloaded() {
@@ -20,6 +22,7 @@ public class PowerLimitOverloadService {
   }
 
   public boolean isOverloadCheckCompleted() {
-    return PowerAggregationJob.chargingDurationSecs > OVERLOAD_LIMIT_TIMER_SECS;
+    long now = currentTimeMillis();
+    return (now - PowerAggregationJob.onTime) / 1000 > OVERLOAD_LIMIT_TIMER_SECS;
   }
 }
