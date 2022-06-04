@@ -39,7 +39,7 @@ public class DeviceService {
   }
 
   public Status on() throws Exception {
-    return on(OVERLOAD_LIMIT_TIMER_SECS + 2);
+    return on(OVERLOAD_LIMIT_TIMER_SECS + 10);
   }
 
   public Status on(long chargeSeconds) throws Exception {
