@@ -7,12 +7,10 @@ import { useTranslation } from "react-i18next";
 import Spinner from "../../../components/spinner/Spinner";
 
 const MainSection: React.FC = () => {
-  // const [msg, setMsg] = useState<any>();
   const [loading, setLoading] = useState<any>(false);
   const [error, setError] = useState<any>(null);
 
   const [secondsTime, setSecondsTime] = useState<any>();
-  // const url = `http://localhost:8080/device/start`;
   const secondsUrl = `${process.env.REACT_APP_LINK_SERVE}device/getChargingDurationLeftSecs`;
   const { t } = useTranslation();
 
@@ -53,12 +51,6 @@ const MainSection: React.FC = () => {
     <div className={styles.chargingBox}>
       <div className={styles.contTimer}>
         {secondsTime > 0 && <Timer seconds={secondsTime}/>}
-        {/* {msg?.data?.message === "error" && (
-          <ErrorPage
-            errorHeader={t("errorHeader")}
-            errorBody={t("errorBody")}
-          />
-        )} */}
       </div>
     </div>
   );

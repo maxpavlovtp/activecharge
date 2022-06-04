@@ -16,8 +16,9 @@ const MainSection: React.FC = () => {
 
   const { t } = useTranslation();
 
-  const url = `http://220-km.com:5000`;
+  // const url = `http://220-km.com:5000`;
   const urlOn = `${process.env.REACT_APP_LINK_SERVE}device/start`;
+  // const urlPowerLimit = `${process.env.REACT_APP_LINK_SERVE}device/getPowerLimit`;
 
   const start = async () => {
     await axios
@@ -32,20 +33,38 @@ const MainSection: React.FC = () => {
       });
   };
 
-  useEffect(() => {
-    axios
-      .get(url)
-      .then((response) => {
-        setLink(response.data.message);
-      })
-      .catch((err) => {
-        setError(err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
-  console.log(link);
+  // let powerLimit: AxiosResponse;
+  // const getPowerLimit = () => {
+  //   axios
+  //     .get(urlPowerLimit)
+  //     .then((response) => {
+  //       powerLimit = response;
+  //       console.log(powerLimit.data.data);
+  //     })
+  //     .catch((err) => {
+  //       setError(err);
+  //       console.log(err);
+  //     });
+
+  //   console.log(powerLimit);
+  // };
+
+  // useEffect(() => {
+  //   axios
+  //     .get(url)
+  //     .then((response) => {
+  //       setLink(response.data.message);
+  //     })
+  //     .catch((err) => {
+  //       setError(err);
+  //     })
+  //     .finally(() => {
+  //       setLoading(false);
+  //     });
+
+  //   getPowerLimit();
+  // }, []);
+  // console.log(link);
 
   if (error) {
     console.log(error.message);
@@ -54,7 +73,7 @@ const MainSection: React.FC = () => {
     );
   }
 
-  if (loading) return <Spinner />;
+  // if (loading) return <Spinner />;
 
   return (
     <>
@@ -63,13 +82,13 @@ const MainSection: React.FC = () => {
           <div className={styles.container}>
             <h1 className={styles.title}>{t("title")}</h1>
             <div className={styles.btnStart}>
-              <button
-                disabled={loading ? true : false}
+              <Link
+                to="/overload"
                 className={loading ? styles.disaleBtn : styles.btnPay}
-                onClick={() => window.open(link)}
+                onClick={start}
               >
                 {t("btns.start")}
-              </button>
+              </Link>
               <Link onClick={start} className={styles.btn} to="/charging">
                 {t("btns.startFree")}
               </Link>
