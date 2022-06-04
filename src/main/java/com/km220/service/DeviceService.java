@@ -1,12 +1,12 @@
 package com.km220.service;
 
 import static com.km220.PowerAggregationJob.chargedWt;
-import static com.km220.PowerAggregationJob.offTime;
 import static com.km220.PowerAggregationJob.onTime;
 import static com.km220.service.PowerLimitOverloadService.OVERLOAD_LIMIT_TIMER_SECS;
 import static java.lang.System.currentTimeMillis;
 
 import com.km220.PowerAggregationJob;
+import com.km220.ewelink.EwelinkDeviceApi;
 import com.km220.service.ewelink.EweLink;
 import com.km220.service.ewelink.model.Status;
 import com.km220.service.ewelink.model.devices.DeviceItem;
@@ -27,26 +27,30 @@ public class DeviceService {
   @Value("${deviceId}")
   private String deviceId;
 
-  EweLink eweLink;
+  EweLink eweLinkLegacy;
+  EwelinkDeviceApi eweLink;
 
   @PostConstruct
   public void init() throws Exception {
-    eweLink = new EweLink(region, email, password, 60);
-    eweLink.login();
+    eweLinkLegacy = new EweLink(region, email, password, 60);
+    eweLinkLegacy.login();
+
+//    eweLink = new EwelinkDeviceApi()
   }
 
   public Status on() throws Exception {
-    return on(OVERLOAD_LIMIT_TIMER_SECS);
+    return on(OVERLOAD_LIMIT_TIMER_SECS + 2);
   }
 
   public Status on(long chargeSeconds) throws Exception {
     // todo refactor
+    PowerAggregationJob.chargingDurationSecs = 0;
     PowerAggregationJob.chargeDurationSecs = chargeSeconds;
     PowerAggregationJob.chargedWt = 0;
     PowerAggregationJob.onTime = currentTimeMillis();
     PowerAggregationJob.offTime = onTime + 1000L * PowerAggregationJob.chargeDurationSecs;
 
-    Status status = eweLink.setDeviceStatus(deviceId, "on");
+    Status status = eweLinkLegacy.setDeviceStatus(deviceId, "on");
     PowerAggregationJob.isOn = true;
     return status;
   }
@@ -62,11 +66,11 @@ public class DeviceService {
   public Status off() throws Exception {
     Status result;
     try {
-      result = eweLink.setDeviceStatus(deviceId, "off");
+      result = eweLinkLegacy.setDeviceStatus(deviceId, "off");
     } catch (Exception e) {
       // todo fix login hack
-      eweLink.login();
-      result = eweLink.setDeviceStatus(deviceId, "off");
+      eweLinkLegacy.login();
+      result = eweLinkLegacy.setDeviceStatus(deviceId, "off");
     }
 
     System.out.println("Charge has been finished");
@@ -79,7 +83,7 @@ public class DeviceService {
   }
 
   public String getDevices() throws Exception {
-    return eweLink.getDevices();
+    return eweLinkLegacy.getDevices();
   }
 
   public String getDeviceStatus() throws Exception {
@@ -93,11 +97,11 @@ public class DeviceService {
   private DeviceItem getDevice() throws Exception {
     DeviceItem device;
     try {
-      device = eweLink.getDevice(deviceId);
+      device = eweLinkLegacy.getDevice(deviceId);
     } catch (Exception e) {
       // todo implement reliable login
-      eweLink.login();
-      device = eweLink.getDevice(deviceId);
+      eweLinkLegacy.login();
+      device = eweLinkLegacy.getDevice(deviceId);
     }
 
     return device;

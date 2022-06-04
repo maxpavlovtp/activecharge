@@ -14,9 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/device")
 public class DeviceController {
 
-  // todo remove
-  private static final int OFF_DELAY_SECS = 2;
-
   @Autowired
   private DeviceService deviceService;
 
