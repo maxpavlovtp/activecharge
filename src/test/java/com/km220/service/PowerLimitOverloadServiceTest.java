@@ -5,6 +5,7 @@ import static com.km220.service.PowerLimitOverloadService.OVERLOAD_LIMIT_TIMER_S
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,6 +20,11 @@ class PowerLimitOverloadServiceTest {
 
   @Autowired
   PowerLimitOverloadService powerLimitOverloadService;
+
+  @AfterEach
+  public void teardown() throws Exception {
+    deviceService.off();
+  }
 
   @Test
   void isOverloadCheckCompleted() throws Exception {
