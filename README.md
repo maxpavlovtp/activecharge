@@ -10,7 +10,7 @@ http://220-km.com/
 
 ### BE spring boot endpoints local:
 1. http://localhost:8080/device/start
-2. http://localhost:8080/device/startSecs?secs=20
+2. http://localhost:8080/device/startSecs?secs=7
 3. http://localhost:8080/device/getChargingDurationLeftSecs
 4. http://localhost:8080/device/getChargingStatus
 5. http://localhost:8080/device/getDeviceStatus
@@ -23,7 +23,7 @@ http://220-km.com/
 
 ### BE spring boot endpoints:
 1. http://220-km.com:8080/device/start
-2. http://220-km.com:8080/device/startSecs?secs=20
+2. http://220-km.com:8080/device/startSecs?secs=7
 3. http://220-km.com:8080/device/getChargingDurationLeftSecs
 4. http://220-km.com:8080/device/getChargingStatus
 5. http://220-km.com:8080/device/getDeviceStatus
