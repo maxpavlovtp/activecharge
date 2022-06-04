@@ -15,7 +15,7 @@ import org.springframework.test.context.ActiveProfiles;
 @ActiveProfiles("test")
 class PowerAggregationJobTest {
 
-  public static final int AVG_POWER_DELTA = 30;
+  public static final int AVG_POWER_DELTA = 50;
   long intervalMultipliedMillis = 5 * CHECK_INTERVAL_MILLIS;
   long chargeSeconds = (intervalMultipliedMillis / 1000);
   long sleepInterval = chargeSeconds * 1000 + intervalMultipliedMillis;
@@ -52,7 +52,7 @@ class PowerAggregationJobTest {
     // then
     float delta = ((chargingWtAverageWtH - powerWt) / powerWt) * 100;
     System.out.println("delta: " + delta);
-    assertThat(delta < AVG_POWER_DELTA * 2).isTrue();
+    assertThat(delta < AVG_POWER_DELTA).isTrue();
   }
 
   @Test
