@@ -120,7 +120,7 @@ const OverloadPage = () => {
             {loading ? (
               <div className={styles.seccessCont}>
                 <p className={styles.waitPay}>Wait a second! </p>
-                <p className={styles.waitPay}>Getting payment link...</p>
+                <p className={styles.waitPayTwo}>Getting payment link</p>
               </div>
             ) : (
               <div className={styles.seccessCont}>
@@ -137,8 +137,8 @@ const OverloadPage = () => {
             )}
           </div>
         ) : (
-          <div>
-            <p>is overloaded checking</p>
+          <div className={styles.checkContainer}>
+            <p className={styles.checkText}>is overloaded checking</p>
           </div>
         )}
         {overload === true && (
