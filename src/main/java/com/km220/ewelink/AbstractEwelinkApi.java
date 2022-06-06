@@ -1,11 +1,11 @@
 package com.km220.ewelink;
 
-import static com.km220.ewelink.internal.HttpUtils.ACCEPT_HEADER;
-import static com.km220.ewelink.internal.HttpUtils.AUTHORIZATION_HEADER;
-import static com.km220.ewelink.internal.HttpUtils.CONTENT_TYPE_HEADER;
-import static com.km220.ewelink.internal.HttpUtils.HTTP_GET;
-import static com.km220.ewelink.internal.HttpUtils.HTTP_POST;
-import static com.km220.ewelink.internal.HttpUtils.HTTP_STATUS_OK;
+import static com.km220.ewelink.internal.utils.HttpUtils.ACCEPT_HEADER;
+import static com.km220.ewelink.internal.utils.HttpUtils.AUTHORIZATION_HEADER;
+import static com.km220.ewelink.internal.utils.HttpUtils.CONTENT_TYPE_HEADER;
+import static com.km220.ewelink.internal.utils.HttpUtils.HTTP_GET;
+import static com.km220.ewelink.internal.utils.HttpUtils.HTTP_POST;
+import static com.km220.ewelink.internal.utils.HttpUtils.HTTP_STATUS_OK;
 import static java.net.http.HttpRequest.BodyPublishers.noBody;
 import static java.util.stream.Collectors.joining;
 
@@ -14,8 +14,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.km220.ewelink.internal.CredentialsRequest;
 import com.km220.ewelink.internal.CredentialsResponse;
-import com.km220.ewelink.internal.JsonUtils;
-import com.km220.ewelink.internal.SecurityUtils;
+import com.km220.ewelink.internal.utils.JsonUtils;
+import com.km220.ewelink.internal.utils.SecurityUtils;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -27,20 +27,21 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-public abstract class AbstractEwelinkApi {
+abstract class AbstractEwelinkApi {
 
   protected final EwelinkParameters parameters;
-  private final String applicationId;
-  private final String applicationSecret;
-  private final HttpClient httpClient;
+  protected final String applicationId;
+  protected final String applicationSecret;
+  protected final HttpClient httpClient;
 
   private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-  private static final String API_BASE_URI = "https://%s-api.coolkit.cc:8080/api";
-  private static final String LOGIN_URI = "/user/login";
-  private static final String API_VERSION = "8";
+  private static final String API_BASE_URI = "https://%s-api.coolkit.cc:8080";
+  private static final String LOGIN_URI = "/api/user/login";
+  static final int API_VERSION = 8;
 
   protected AbstractEwelinkApi(final EwelinkParameters parameters, final String applicationId,
       final String applicationSecret, final HttpClient httpClient) {
@@ -50,7 +51,7 @@ public abstract class AbstractEwelinkApi {
     this.httpClient = httpClient;
   }
 
-  private CompletableFuture<CredentialsResponse> getCredentials() {
+  protected final CompletableFuture<CredentialsResponse> getCredentials() {
     String jsonRequestBody = JsonUtils.serialize(
         CredentialsRequest.builder()
             .appid(applicationId)
@@ -58,7 +59,7 @@ public abstract class AbstractEwelinkApi {
             .password(parameters.password())
             .nonce(SecurityUtils.generateNonce())
             .version(API_VERSION)
-            .ts(Instant.now().toString())
+            .ts(Instant.now().getEpochSecond())
             .build()
     );
     return apiJsonRequest(HTTP_POST,
@@ -67,15 +68,36 @@ public abstract class AbstractEwelinkApi {
         generateHeaders("Sign",
             SecurityUtils.makeAuthorizationSign(applicationSecret, jsonRequestBody)),
         Map.of(),
-        HTTP_STATUS_OK).thenApply(jsonDataConverter(CredentialsResponse.class));
+        HTTP_STATUS_OK).thenApply(JsonUtils.jsonDataConverter(CredentialsResponse.class));
   }
 
-  protected final <T> CompletableFuture<T> apiGetObjectRequest(final String apiUrl,
+  protected final <T> CompletableFuture<T> apiGetObjectRequest(final String apiUri,
       final Map<String, String> parameters,
       final Function<JsonNode, T> dataConverter) {
     return
-        apiResourceRequest(HTTP_GET, noBody(), apiUrl, Map.of(), parameters, HTTP_STATUS_OK)
-            .thenApply(dataConverter);
+        getCredentials().thenCompose(credentials ->
+            apiResourceRequest(HTTP_GET,
+                noBody(),
+                apiUri,
+                Map.of(),
+                parameters,
+                credentials.getAt(),
+                HTTP_STATUS_OK).thenApply(dataConverter));
+  }
+
+  protected final <T> CompletableFuture<T> apiPostObjectRequest(final String apiUri,
+      final Map<String, String> parameters,
+      final Supplier<String> bodySupplier,
+      final Function<JsonNode, T> dataConverter) {
+    return
+        getCredentials().thenCompose(credentials ->
+            apiResourceRequest(HTTP_POST,
+                BodyPublishers.ofString(bodySupplier.get()),
+                apiUri,
+                Map.of(),
+                parameters,
+                credentials.getAt(),
+                HTTP_STATUS_OK).thenApply(dataConverter));
   }
 
   protected final CompletableFuture<JsonNode> apiResourceRequest(
@@ -84,18 +106,17 @@ public abstract class AbstractEwelinkApi {
       final String apiUrl,
       final Map<String, String> headers,
       final Map<String, String> parameters,
+      final String accessToken,
       final int expectedStatus) {
 
-    return getCredentials().thenCompose(credentials -> {
-      Map<String, String> allHeaders = new HashMap<>(
-          generateHeaders("Bearer", credentials.getAt()));
-      allHeaders.putAll(headers);
-      Map<String, String> allParameters = new HashMap<>(generateParameters());
-      allParameters.putAll(parameters);
+    Map<String, String> allHeaders = new HashMap<>(
+        generateHeaders("Bearer", accessToken));
+    allHeaders.putAll(headers);
+    Map<String, String> allParameters = new HashMap<>(generateParameters());
+    allParameters.putAll(parameters);
 
-      return apiJsonRequest(httpMethod, httpRequestBodyPublisher, apiUrl, allHeaders,
-          allParameters, expectedStatus);
-    });
+    return apiJsonRequest(httpMethod, httpRequestBodyPublisher, apiUrl, allHeaders,
+        allParameters, expectedStatus);
   }
 
   protected final CompletableFuture<JsonNode> apiJsonRequest(
@@ -171,7 +192,7 @@ public abstract class AbstractEwelinkApi {
         "appid", applicationId,
         "nonce", nonce,
         "ts", timestamp,
-        "version", API_VERSION
+        "version", String.valueOf(API_VERSION)
     );
   }
 
@@ -186,15 +207,5 @@ public abstract class AbstractEwelinkApi {
       throw new EwelinkApiException(
           String.format(Locale.ROOT, "API responded with error=%d, msg=%s", error, msg));
     }
-  }
-
-  protected static <T> Function<JsonNode, T> jsonDataConverter(Class<T> clazz) {
-    return jsonData -> {
-      try {
-        return OBJECT_MAPPER.treeToValue(jsonData, clazz);
-      } catch (JsonProcessingException e) {
-        throw new EwelinkApiException(e);
-      }
-    };
   }
 }

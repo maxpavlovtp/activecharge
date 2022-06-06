@@ -11,7 +11,7 @@ public class CredentialsRequest {
     String email;
     String phoneNumber;
     String password;
-    String ts;
-    String version;
+    Long ts;
+    Integer version;
     String nonce;
 }
