@@ -47,7 +47,7 @@ class WSEwelinkDeviceApiTest {
 
     WSEwelinkDeviceApi api = ewelinkClient.devices(listener);
     api.getDeviceStatus(DEVICE_ID);
-    latch.await(60, TimeUnit.SECONDS);
+    latch.await(15, TimeUnit.SECONDS);
 
     assertNotNull(response.get());
   }

@@ -29,20 +29,22 @@ abstract class AbstractWSEwelinkApi extends AbstractEwelinkApi {
   private static final String WSS_URI_TEMPLATE = "wss://%s:%s/api/ws";
   static final String DISPATCH_APP_API_URI = "/dispatch/app";
 
-  protected CredentialsResponse credentials;
+  private CredentialsResponse credentials;
+  private WebSocket webSocket;
 
 
   protected AbstractWSEwelinkApi(final EwelinkParameters parameters, final String applicationId,
-      final String applicationSecret, final HttpClient httpClient) {
+      final String applicationSecret, final HttpClient httpClient, final WSClientListener wssClientListener) {
     super(parameters, applicationId, applicationSecret, httpClient);
+    webSocket = openWebSocket(wssClientListener);
   }
 
-  protected final WebSocket openWebSocket(WSClientListener clientListener) {
+  private WebSocket openWebSocket(WSClientListener clientListener) {
     credentials = getCredentials().join();
     long timestamp = Instant.now().getEpochSecond();
     var latch = new CountDownLatch(1);
 
-    var webSocket = apiResourceRequest(HTTP_POST,
+    webSocket = apiResourceRequest(HTTP_POST,
         BodyPublishers.ofString(JsonUtils.serialize(DispatchRequest.builder()
             .accept("ws")
             .version(API_VERSION)
@@ -81,20 +83,28 @@ abstract class AbstractWSEwelinkApi extends AbstractEwelinkApi {
     try {
       latch.await();
     } catch (InterruptedException e) {
-      throw new EwelinkApiException(e);
+      Thread.currentThread().interrupt();
     }
 
     return webSocket;
   }
 
-  private static class WebSocketClient implements WebSocket.Listener {
+  protected String getApiKey() {
+    return credentials.getAt();
+  }
+
+  protected void sendText(String text) {
+    webSocket.sendText(text, true).join();
+  }
+
+  private static final class WebSocketClient implements WebSocket.Listener {
 
     private List<CharSequence> parts = new ArrayList<>();
     private CompletableFuture<?> accumulatedMessage = new CompletableFuture<>();
     private final WSClientListener clientListener;
 
     private final CountDownLatch latch;
-    private AtomicBoolean init = new AtomicBoolean(false);
+    private final AtomicBoolean init = new AtomicBoolean(false);
 
     public WebSocketClient(WSClientListener clientListener, CountDownLatch latch) {
       this.clientListener = clientListener;
