@@ -3,6 +3,9 @@ import styles from "./OverloadPage.module.css";
 import axios, { AxiosResponse } from "axios";
 import Header from "../header/Header";
 import Footer from "../footer/Footer";
+import { useAppSelector } from "../../hooks/reduxHooks";
+import ErrorPage from "../error-page/ErrorPage";
+import { t } from "i18next";
 
 const OverloadPage = () => {
   const [power, setPower] = useState<any>();
@@ -10,27 +13,15 @@ const OverloadPage = () => {
   const [overload, setOverload] = useState<any>(false);
   const [completed, setCompleted] = useState<any>(false);
   const [loading, setLoading] = useState<any>(true);
-  const [error, setError] = useState<any>(null);
 
-  const urlPowerLimit = `${process.env.REACT_APP_LINK_SERVE}device/getPowerLimit`;
+  const { isLoadingOverload, error } = useAppSelector(
+    (state) => state.fetchReducer
+  );
+
   const urlPowerDevice = `${process.env.REACT_APP_LINK_SERVE}device/getPower`;
   const urlCheckCompleted = `${process.env.REACT_APP_LINK_SERVE}device/isOverloadCheckCompleted`;
   const urlIsOverloaded = `${process.env.REACT_APP_LINK_SERVE}device/isPowerLimitOvelrloaded`;
   const urlPayment = `http://220-km.com:5000`;
-
-  let powerLimit: AxiosResponse;
-  const getPowerLimit = () => {
-    axios
-      .get(urlPowerLimit)
-      .then((response) => {
-        powerLimit = response.data.data;
-        // console.log(powerLimit.data.data);
-      })
-      .catch((err) => {
-        setError(err);
-        console.log(err);
-      });
-  };
 
   const isOverloaded = () => {
     axios
@@ -40,7 +31,6 @@ const OverloadPage = () => {
         console.log(response.data.data);
       })
       .catch((err) => {
-        setError(err);
         console.log(err);
       });
   };
@@ -53,7 +43,6 @@ const OverloadPage = () => {
         console.log(response.data.data);
       })
       .catch((err) => {
-        setError(err);
         console.log(err);
       });
   };
@@ -65,7 +54,6 @@ const OverloadPage = () => {
         setPower(response.data.data);
       })
       .catch((err) => {
-        setError(err);
         console.log(err);
       });
     console.log(power);
@@ -92,7 +80,7 @@ const OverloadPage = () => {
           console.log(response.data.message);
         })
         .catch((err) => {
-          setError(err);
+          console.log(err);
         })
         .finally(() => {
           setLoading(false);
@@ -102,60 +90,70 @@ const OverloadPage = () => {
   };
 
   useEffect(() => {
-    getPowerLimit();
-    const overloadTimer = setInterval(() => {
-      checkPowerLimit();
-      getPayLink();
-    }, 1000);
-    return () => clearInterval(overloadTimer);
+    if (isLoadingOverload === false) {
+      const overloadTimer = setInterval(() => {
+        checkPowerLimit();
+        getPayLink();
+      }, 1000);
+      return () => clearInterval(overloadTimer);
+    }
   });
+
+  if (error) {
+    console.log(error);
+    return (
+      <ErrorPage errorHeader={t("errorHeader")} errorBody={t("errorBody")} />
+    );
+  }
 
   return (
     <div className={styles.container}>
       <Header />
-      <div className={styles.checkOverloadContainer}>
-        {/* <div className={styles.overloadBox}> */}
-        {completed === true ? (
-          <div className={styles.seccessCont}>
-            {loading ? (
-              <div className={styles.seccessCont}>
-                <p className={styles.waitPay}>Wait a second! </p>
-                <p className={styles.waitPayTwo}>Getting payment link</p>
-              </div>
-            ) : (
-              <div className={styles.seccessCont}>
-                <button
-                  className={loading ? styles.disaleBtn : styles.btnPay}
-                  onClick={() => window.open(link)}
-                  // onClick={start}
-                >
-                  Pay
-                </button>
-                <p className={styles.successCheck}>Success!</p>
-                <p className={styles.successCheck}>Let`s charge it!</p>
-              </div>
-            )}
-          </div>
-        ) : (
-          <div className={styles.checkContainer}>
-            <p className={styles.checkText}>is overloaded checking</p>
-          </div>
-        )}
-        {overload === true && (
-          <div>
-            <p>please, slow down and try again</p>
-            <button
-              onClick={() => {
-                window.location.reload();
-                setOverload(false);
-              }}
-            >
-              Try Again
-            </button>
-          </div>
-        )}
-        {/* </div> */}
-      </div>
+      {isLoadingOverload === false && (
+        <div className={styles.checkOverloadContainer}>
+          {/* <div className={styles.overloadBox}> */}
+          {completed === true ? (
+            <div className={styles.seccessCont}>
+              {loading ? (
+                <div className={styles.seccessCont}>
+                  <p className={styles.waitPay}>Wait a second! </p>
+                  <p className={styles.waitPayTwo}>Getting payment link</p>
+                </div>
+              ) : (
+                <div className={styles.seccessCont}>
+                  <button
+                    className={loading ? styles.disaleBtn : styles.btnPay}
+                    onClick={() => window.open(link)}
+                    // onClick={start}
+                  >
+                    Pay
+                  </button>
+                  <p className={styles.successCheck}>Success!</p>
+                  <p className={styles.successCheck}>Let`s charge it!</p>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className={styles.checkContainer}>
+              <p className={styles.checkText}>is overloaded checking</p>
+            </div>
+          )}
+          {overload === true && (
+            <div>
+              <p>please, slow down and try again</p>
+              <button
+                onClick={() => {
+                  window.location.reload();
+                  setOverload(false);
+                }}
+              >
+                Try Again
+              </button>
+            </div>
+          )}
+          {/* </div> */}
+        </div>
+      )}
 
       <Footer />
     </div>
