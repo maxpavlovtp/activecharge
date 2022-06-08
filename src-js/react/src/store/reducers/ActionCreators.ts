@@ -4,6 +4,7 @@ import { FetchSlice } from "./FetchSlice";
 import { IFetch } from "./../../models/IFetch";
 
 const urlOn = `${process.env.REACT_APP_LINK_SERVE}device/start`;
+const secondsUrl = `${process.env.REACT_APP_LINK_SERVE}device/getChargingDurationLeftSecs`;
 
 export const fetchOverloadData = () => async (dispatch: AppDispatch) => {
   try {

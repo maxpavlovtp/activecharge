@@ -12,8 +12,8 @@ interface FetchState {
 const initialState: FetchState = {
   startDataOverload: [],
   startDataCharging: [],
-  isLoadingOverload: true,
-  isLoadingCharging: true,
+  isLoadingOverload: false,
+  isLoadingCharging: false,
   error: "",
 };
 

@@ -10,7 +10,7 @@ import { useAppSelector } from "../../../hooks/reduxHooks";
 const MainSection: React.FC = () => {
   const [loading, setLoading] = useState<any>(true);
 
-  const [secondsTime, setSecondsTime] = useState<any>();
+  const [secondsTime, setSecondsTime] = useState<any>(0);
   const secondsUrl = `${process.env.REACT_APP_LINK_SERVE}device/getChargingDurationLeftSecs`;
   const { t } = useTranslation();
 
