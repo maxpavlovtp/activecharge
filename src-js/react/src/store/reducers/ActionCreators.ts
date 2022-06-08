@@ -12,7 +12,7 @@ export const fetchOverloadData = () => async (dispatch: AppDispatch) => {
     dispatch(FetchSlice.actions.overloadDataFetchingSuccess(response.data));
     console.log(response.data);
   } catch (e: any) {
-    dispatch(FetchSlice.actions.chargingDataFetchingError(e.message));
+    dispatch(FetchSlice.actions.overloadDataFetchingError(e.message));
     console.log(e.message);
   }
 };
