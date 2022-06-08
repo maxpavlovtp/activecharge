@@ -92,9 +92,9 @@ const OverloadPage = () => {
   useEffect(() => {
     console.log(isLoadingOverload);
     if (isLoadingOverload === false) {
+      getPayLink();
       const overloadTimer = setInterval(() => {
         checkPowerLimit();
-        getPayLink();
       }, 1000);
       return () => clearInterval(overloadTimer);
     }
