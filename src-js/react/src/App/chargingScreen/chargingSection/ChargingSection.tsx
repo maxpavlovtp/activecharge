@@ -8,7 +8,7 @@ import Spinner from "../../../components/spinner/Spinner";
 import { useAppSelector } from "../../../hooks/reduxHooks";
 
 const MainSection: React.FC = () => {
-  const [loading, setLoading] = useState<any>(false);
+  const [loading, setLoading] = useState<any>(true);
 
   const [secondsTime, setSecondsTime] = useState<any>();
   const secondsUrl = `${process.env.REACT_APP_LINK_SERVE}device/getChargingDurationLeftSecs`;
@@ -50,13 +50,15 @@ const MainSection: React.FC = () => {
   // todo fetch from BE
   // let seconds = 20;
   return (
-    <div className={styles.chargingBox}>
-      {secondsTime >= 0 && (
-        <div className={styles.contTimer}>
-          <Timer seconds={secondsTime} />
+    <>
+      {loading === false && (
+        <div className={styles.chargingBox}>
+          <div className={styles.contTimer}>
+            <Timer seconds={secondsTime} />
+          </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 
