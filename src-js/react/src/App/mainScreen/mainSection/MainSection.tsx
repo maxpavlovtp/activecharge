@@ -10,11 +10,9 @@ import {
 } from "../../../store/reducers/ActionCreators";
 
 const MainSection: React.FC = () => {
-  // const [error, setError] = useState<any>(null);
 
   const { t } = useTranslation();
 
-  // const urlOn = `${process.env.REACT_APP_LINK_SERVE}device/start`;
   const dispatch = useAppDispatch();
 
   const startCharging = () => {
@@ -37,7 +35,7 @@ const MainSection: React.FC = () => {
             >
               {t("btns.start")}
             </Link>
-            <Link to="/charging" className={styles.btn} onClick={startCharging}>
+            <Link to="/charging" className={styles.btn} onClick={startOverloadChecing}>
               {t("btns.startFree")}
             </Link>
           </div>

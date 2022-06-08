@@ -90,6 +90,7 @@ const OverloadPage = () => {
   };
 
   useEffect(() => {
+    console.log(isLoadingOverload);
     if (isLoadingOverload === false) {
       const overloadTimer = setInterval(() => {
         checkPowerLimit();
