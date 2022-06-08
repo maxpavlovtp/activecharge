@@ -35,7 +35,7 @@ const MainSection: React.FC = () => {
             >
               {t("btns.start")}
             </Link>
-            <Link to="/charging" className={styles.btn} onClick={startOverloadChecing}>
+            <Link to="/charging" className={styles.btn} onClick={startCharging}>
               {t("btns.startFree")}
             </Link>
           </div>

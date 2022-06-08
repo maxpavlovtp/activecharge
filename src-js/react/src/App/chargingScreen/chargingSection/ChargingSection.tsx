@@ -14,13 +14,11 @@ const MainSection: React.FC = () => {
   const secondsUrl = `${process.env.REACT_APP_LINK_SERVE}device/getChargingDurationLeftSecs`;
   const { t } = useTranslation();
 
-  const { isLoadingOverload, error } = useAppSelector(
+  const { isLoadingCharging, error } = useAppSelector(
     (state) => state.fetchReducer
   );
-
   useEffect(() => {
-    console.log(isLoadingOverload);
-    if (isLoadingOverload === false) {
+    if (isLoadingCharging === false) {
       axios
         .get(secondsUrl)
         .then((response) => {
@@ -34,7 +32,7 @@ const MainSection: React.FC = () => {
           setLoading(false);
         });
     }
-  }, []);
+  });
 
   if (error)
     return (
