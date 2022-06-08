@@ -17,22 +17,27 @@ const MainSection: React.FC = () => {
   const { isLoadingCharging, error } = useAppSelector(
     (state) => state.fetchReducer
   );
+
+  const start = async () => {
+    await axios
+      .get(secondsUrl)
+      .then((response) => {
+        setSecondsTime(response.data.data);
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
   useEffect(() => {
+    console.log(isLoadingCharging);
     if (isLoadingCharging === false) {
-      axios
-        .get(secondsUrl)
-        .then((response) => {
-          setSecondsTime(response.data.data);
-          console.log(response);
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
+      start();
     }
-  });
+  }, [isLoadingCharging]);
 
   if (error)
     return (
