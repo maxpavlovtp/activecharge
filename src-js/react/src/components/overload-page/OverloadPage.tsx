@@ -6,6 +6,7 @@ import Footer from "../footer/Footer";
 import { useAppSelector } from "../../hooks/reduxHooks";
 import ErrorPage from "../error-page/ErrorPage";
 import { t } from "i18next";
+import Spinner from "../spinner/Spinner";
 
 const OverloadPage = () => {
   const [power, setPower] = useState<any>();
@@ -106,6 +107,8 @@ const OverloadPage = () => {
       <ErrorPage errorHeader={t("errorHeader")} errorBody={t("errorBody")} />
     );
   }
+
+  if (isLoadingOverload === true) return <Spinner />;
 
   return (
     <div className={styles.container}>
