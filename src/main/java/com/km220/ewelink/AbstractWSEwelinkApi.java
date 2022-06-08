@@ -3,13 +3,12 @@ package com.km220.ewelink;
 import static com.km220.ewelink.internal.utils.HttpUtils.HTTP_POST;
 import static com.km220.ewelink.internal.utils.HttpUtils.HTTP_STATUS_OK;
 
-import com.km220.ewelink.internal.CredentialsResponse;
 import com.km220.ewelink.internal.utils.JsonUtils;
 import com.km220.ewelink.internal.utils.SecurityUtils;
 import com.km220.ewelink.internal.ws.DispatchRequest;
 import com.km220.ewelink.internal.ws.DispatchResponse;
 import com.km220.ewelink.internal.ws.WssLogin;
-import com.km220.ewelink.model.device.WssResponse;
+import com.km220.ewelink.model.ws.WssResponse;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest.BodyPublishers;
@@ -23,26 +22,31 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 abstract class AbstractWSEwelinkApi extends AbstractEwelinkApi {
 
   private static final String WSS_URI_TEMPLATE = "wss://%s:%s/api/ws";
   static final String DISPATCH_APP_API_URI = "/dispatch/app";
 
-  private CredentialsResponse credentials;
   private WebSocket webSocket;
+  private WebSocketClient webSocketClient;
+  private String apiKey;
 
 
-  protected AbstractWSEwelinkApi(final EwelinkParameters parameters, final String applicationId,
-      final String applicationSecret, final HttpClient httpClient, final WSClientListener wssClientListener) {
+  protected AbstractWSEwelinkApi(EwelinkParameters parameters, String applicationId,
+      String applicationSecret, HttpClient httpClient,
+      WSClientListener wssClientListener) {
     super(parameters, applicationId, applicationSecret, httpClient);
     webSocket = openWebSocket(wssClientListener);
   }
 
   private WebSocket openWebSocket(WSClientListener clientListener) {
-    credentials = getCredentials().join();
+    var credentials = getCredentials().join();
     long timestamp = Instant.now().getEpochSecond();
     var latch = new CountDownLatch(1);
+
+    webSocketClient = new WebSocketClient(clientListener, latch);
 
     webSocket = apiResourceRequest(HTTP_POST,
         BodyPublishers.ofString(JsonUtils.serialize(DispatchRequest.builder()
@@ -62,9 +66,10 @@ abstract class AbstractWSEwelinkApi extends AbstractEwelinkApi {
         .thenCompose(dispatchResponse -> HttpClient
             .newHttpClient()
             .newWebSocketBuilder()
-            .buildAsync(URI.create(String.format(WSS_URI_TEMPLATE, dispatchResponse.getDomain(),
+            .buildAsync(URI.create(String.format(WSS_URI_TEMPLATE,
+                    dispatchResponse.getDomain(),
                     dispatchResponse.getPort())),
-                new WebSocketClient(clientListener, latch)
+                webSocketClient
             )).join();
 
     webSocket = webSocket.sendText(JsonUtils.serialize(
@@ -82,6 +87,7 @@ abstract class AbstractWSEwelinkApi extends AbstractEwelinkApi {
 
     try {
       latch.await();
+      apiKey = webSocketClient.handshakeResponse.get().getApikey();
     } catch (InterruptedException e) {
       Thread.currentThread().interrupt();
     }
@@ -90,7 +96,7 @@ abstract class AbstractWSEwelinkApi extends AbstractEwelinkApi {
   }
 
   protected String getApiKey() {
-    return credentials.getAt();
+    return apiKey;
   }
 
   protected void sendText(String text) {
@@ -102,6 +108,8 @@ abstract class AbstractWSEwelinkApi extends AbstractEwelinkApi {
     private List<CharSequence> parts = new ArrayList<>();
     private CompletableFuture<?> accumulatedMessage = new CompletableFuture<>();
     private final WSClientListener clientListener;
+
+    private final AtomicReference<WssResponse> handshakeResponse = new AtomicReference<>();
 
     private final CountDownLatch latch;
     private final AtomicBoolean init = new AtomicBoolean(false);
@@ -145,11 +153,14 @@ abstract class AbstractWSEwelinkApi extends AbstractEwelinkApi {
     }
 
     private void onMessageCompleted() {
+      var body = String.join("", parts);
+      WssResponse response = JsonUtils.deserialize(body, WssResponse.class);
       if (init.compareAndSet(false, true)) {
+        handshakeResponse.set(response);
         latch.countDown();
-      } else {
-        clientListener.onMessage(JsonUtils.deserialize(String.join("", parts), WssResponse.class));
+        return;
       }
+      clientListener.onMessage(response);
     }
   }
 }

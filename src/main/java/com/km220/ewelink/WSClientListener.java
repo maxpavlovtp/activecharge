@@ -1,6 +1,6 @@
 package com.km220.ewelink;
 
-import com.km220.ewelink.model.device.WssResponse;
+import com.km220.ewelink.model.ws.WssResponse;
 
 public interface WSClientListener {
 

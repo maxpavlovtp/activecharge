@@ -2,7 +2,7 @@ package com.km220.ewelink;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import com.km220.ewelink.model.device.WssResponse;
+import com.km220.ewelink.model.ws.WssResponse;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
@@ -47,7 +47,7 @@ class WSEwelinkDeviceApiTest {
 
     WSEwelinkDeviceApi api = ewelinkClient.devices(listener);
     api.getDeviceStatus(DEVICE_ID);
-    latch.await(15, TimeUnit.SECONDS);
+    latch.await(5, TimeUnit.SECONDS);
 
     assertNotNull(response.get());
   }

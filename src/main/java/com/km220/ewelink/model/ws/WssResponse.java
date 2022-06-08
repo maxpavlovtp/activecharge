@@ -1,10 +1,9 @@
 
-package com.km220.ewelink.model.device;
+package com.km220.ewelink.model.ws;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.km220.service.ewelink.model.devices.Params;
-import com.km220.service.ewelink.wss.wssrsp.Config;
+import com.km220.ewelink.model.device.Params;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.Builder;

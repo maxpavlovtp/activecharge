@@ -3,6 +3,7 @@ package com.km220.ewelink;
 import com.km220.ewelink.internal.utils.JsonUtils;
 import java.net.http.HttpClient;
 import java.time.Instant;
+import java.util.List;
 import lombok.Builder;
 import lombok.Value;
 
@@ -39,5 +40,6 @@ public final class WSEwelinkDeviceApi extends AbstractWSEwelinkApi {
     String userAgent;
     Long sequence;
     Long ts;
+    List<String> params;
   }
 }
