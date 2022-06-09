@@ -33,7 +33,7 @@ const MainSection: React.FC = () => {
         .finally(() => {
           setLoading(false);
         });
-    }, 1500);
+    }, 1700);
   };
   useEffect(() => {
     console.log(isLoadingCharging);
