@@ -11,7 +11,7 @@ import Spinner from "../spinner/Spinner";
 const OverloadPage = () => {
   const [power, setPower] = useState<any>();
   const [link, setLink] = useState<any>();
-  const [overload, setOverload] = useState<any>(false);
+  const [overload, setOverload] = useState<any>(true);
   const [completed, setCompleted] = useState<any>(false);
   const [loading, setLoading] = useState<any>(true);
 
@@ -114,37 +114,46 @@ const OverloadPage = () => {
       <Header />
       {isLoadingOverload === false && (
         <div className={styles.checkOverloadContainer}>
-          {/* <div className={styles.overloadBox}> */}
-          {completed === true ? (
-            <div className={styles.seccessCont}>
-              {loading ? (
+          {overload === false && (
+            <>
+              {" "}
+              {completed === true ? (
                 <div className={styles.seccessCont}>
-                  <p className={styles.waitPay}>Wait a second! </p>
-                  <p className={styles.waitPayTwo}>Getting payment link</p>
+                  {loading ? (
+                    <div className={styles.seccessCont}>
+                      <p className={styles.waitPay}>Wait a second! </p>
+                      <p className={styles.waitPayTwo}>Getting payment link</p>
+                    </div>
+                  ) : (
+                    <div className={styles.seccessCont}>
+                      <button
+                        className={loading ? styles.disaleBtn : styles.btnPay}
+                        onClick={() => window.open(link)}
+                        // onClick={start}
+                      >
+                        Pay
+                      </button>
+                      <p className={styles.successCheck}>Success!</p>
+                      <p className={styles.successCheck}>Let`s charge it!</p>
+                    </div>
+                  )}
                 </div>
               ) : (
-                <div className={styles.seccessCont}>
-                  <button
-                    className={loading ? styles.disaleBtn : styles.btnPay}
-                    onClick={() => window.open(link)}
-                    // onClick={start}
-                  >
-                    Pay
-                  </button>
-                  <p className={styles.successCheck}>Success!</p>
-                  <p className={styles.successCheck}>Let`s charge it!</p>
+                <div className={styles.checkContainer}>
+                  <p className={styles.checkText}>is overloaded checking</p>
                 </div>
               )}
-            </div>
-          ) : (
-            <div className={styles.checkContainer}>
-              <p className={styles.checkText}>is overloaded checking</p>
-            </div>
+            </>
           )}
+
           {overload === true && (
-            <div>
-              <p>please, slow down and try again</p>
+            <div className={styles.seccessCont}>
+              <p className={styles.checkTextOverload}>
+                Overload! <br />
+                Please, slow down and try again
+              </p>
               <button
+                className={styles.btnPayOverload}
                 onClick={() => {
                   window.location.reload();
                   setOverload(false);
@@ -154,7 +163,6 @@ const OverloadPage = () => {
               </button>
             </div>
           )}
-          {/* </div> */}
         </div>
       )}
 
