@@ -54,7 +54,7 @@ class WSEwelinkDeviceApiTest {
       WssResponse response = messageQueue.poll(5, TimeUnit.SECONDS);
       assertNotNull(response);
 
-      System.out.println(response.getParams());
+      System.out.println(response);
 
       assertNull(errorRef.get());
 

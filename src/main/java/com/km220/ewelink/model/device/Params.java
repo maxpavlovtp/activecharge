@@ -38,7 +38,6 @@ public class Params {
   @Default
   private List<Integer> alarmPValue = new ArrayList<>();
   private String oneKwh;
-  private Integer uiActive;
   private Integer timeZone;
   private Integer version;
   private String startup;
