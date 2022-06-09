@@ -65,8 +65,7 @@ const OverloadPage = () => {
       getPower();
       isOverloaded();
       isCheckedCompleted();
-    }
-    if (overload === true || completed === true) {
+    } else if (overload === true || completed === true) {
       return;
     }
   };

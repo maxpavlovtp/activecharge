@@ -18,19 +18,22 @@ const MainSection: React.FC = () => {
     (state) => state.fetchReducer
   );
 
-  const start = async () => {
-    await axios
-      .get(secondsUrl)
-      .then((response) => {
-        setSecondsTime(response.data.data);
-        console.log(response);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+  const start = () => {
+    setLoading(true);
+    setTimeout(() => {
+      axios
+        .get(secondsUrl)
+        .then((response) => {
+          setSecondsTime(response.data.data);
+          console.log(response);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }, 1300);
   };
   useEffect(() => {
     console.log(isLoadingCharging);
