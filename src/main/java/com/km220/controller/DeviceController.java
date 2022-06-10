@@ -81,8 +81,8 @@ public class DeviceController {
   }
 
   @GetMapping("/isOverloadCheckCompleted")
-  public Response isOverloadCheckCompleted() throws Exception {
+  public Response isOverloadCheckCompleted() {
     return new Response("isOverloadCheckCompleted",
-        !deviceService.isDeviceOn());
+        !PowerAggregationJob.isOn);
   }
 }
