@@ -109,9 +109,6 @@ public class DeviceService {
     }
   }
 
-  public String getPowerViaSockets() throws Exception {
-    return null;
-  }
 
   private DeviceItem getDevice() throws Exception {
     DeviceItem device;

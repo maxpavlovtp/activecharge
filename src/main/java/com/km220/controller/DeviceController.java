@@ -50,6 +50,11 @@ public class DeviceController {
     return new Response("getDeviceStatusNewAPI", deviceService.getDeviceStatusNewAPI());
   }
 
+  @GetMapping("/getDeviceStatusViaSockets")
+  public Response getDeviceStatusViaSockets() throws Exception {
+    return null;
+  }
+
   @GetMapping("/isDeviceOn")
   public Response isDeviceOn() throws Exception {
     return new Response("isDeviceOn", deviceService.isDeviceOn());
