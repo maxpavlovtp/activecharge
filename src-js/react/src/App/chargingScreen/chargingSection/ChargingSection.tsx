@@ -5,54 +5,62 @@ import axios from "axios";
 import ErrorPage from "../../../components/error-page/ErrorPage";
 import { useTranslation } from "react-i18next";
 import Spinner from "../../../components/spinner/Spinner";
+import { useAppSelector } from "../../../hooks/reduxHooks";
 
 const MainSection: React.FC = () => {
-  const [loading, setLoading] = useState<any>(false);
-  const [error, setError] = useState<any>(null);
+  const [loading, setLoading] = useState<any>(true);
 
   const [secondsTime, setSecondsTime] = useState<any>();
   const secondsUrl = `${process.env.REACT_APP_LINK_SERVE}device/getChargingDurationLeftSecs`;
   const { t } = useTranslation();
 
-  const start = async () => {
+  const { isLoadingCharging, error } = useAppSelector(
+    (state) => state.fetchReducer
+  );
+
+  const start = () => {
     setLoading(true);
-      await axios
+    setTimeout(() => {
+      axios
         .get(secondsUrl)
         .then((response) => {
           setSecondsTime(response.data.data);
-          console.log(response)
+          console.log(response);
         })
         .catch((err) => {
-          setError(err);
           console.log(err);
         })
         .finally(() => {
           setLoading(false);
         });
+    }, 1500);
   };
-
   useEffect(() => {
-    start();
-  }, []);
+    console.log(isLoadingCharging);
+    if (isLoadingCharging === false) {
+      start();
+    }
+  }, [isLoadingCharging]);
 
   if (error)
     return (
       <ErrorPage errorHeader={t("errorHeader")} errorBody={t("errorBody")} />
     );
 
-  if (loading)
-    return (
-      <Spinner />
-    );
+  if (loading === true) return <Spinner />;
 
   // todo fetch from BE
   // let seconds = 20;
   return (
-    <div className={styles.chargingBox}>
-      <div className={styles.contTimer}>
-        {secondsTime > 0 && <Timer seconds={secondsTime}/>}
-      </div>
-    </div>
+    <>
+      {loading === false && (
+        <div className={styles.chargingBox}>
+          <div className={styles.contTimer}>
+            <Timer seconds={secondsTime} />
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
