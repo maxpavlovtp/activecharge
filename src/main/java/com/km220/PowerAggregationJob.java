@@ -31,7 +31,7 @@ public class PowerAggregationJob {
   public static final long CHECK_INTERVAL_MILLIS = 1000;
 
   @Scheduled(fixedDelay = CHECK_INTERVAL_MILLIS)
-  public void sumPower() {
+  public void sumPower() throws Exception {
     long now = currentTimeMillis();
     if (!isOn) {
       return;
@@ -69,7 +69,7 @@ public class PowerAggregationJob {
     System.out.println("chargingDurationLeftSecs: " + chargingDurationLeftSecs);
 
     System.out.println(
-        "isOverloadCheckCompleted: " + powerLimitOverloadService.isOverloadCheckCompleted());
+        "isOverloadCheckCompleted: " + deviceService.isDeviceOn());
     System.out.println(
         "isPowerLimitOvelrloaded: " + powerLimitOverloadService.isPowerLimitOvelrloaded());
     System.out.println(
