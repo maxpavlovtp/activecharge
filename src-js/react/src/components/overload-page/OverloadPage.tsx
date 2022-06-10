@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 const OverloadPage = () => {
   const [power, setPower] = useState<any>();
   const [link, setLink] = useState<any>();
-  const [overload, setOverload] = useState<any>(true);
+  const [overload, setOverload] = useState<any>(false);
   const [completed, setCompleted] = useState<any>(false);
   const [loading, setLoading] = useState<any>(true);
 
