@@ -20,9 +20,4 @@ public class PowerLimitOverloadService {
   public int getPowerLimit() {
     return POWER_LIMIT_WTH;
   }
-
-  public boolean isOverloadCheckCompleted() {
-    long now = currentTimeMillis();
-    return (now - PowerAggregationJob.onTime) / 1000 > OVERLOAD_LIMIT_TIMER_SECS;
-  }
 }

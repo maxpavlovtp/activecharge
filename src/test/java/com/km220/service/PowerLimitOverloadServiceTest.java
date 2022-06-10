@@ -24,18 +24,4 @@ class PowerLimitOverloadServiceTest {
   public void teardown() throws Exception {
     deviceService.off();
   }
-
-  @Test
-  void isOverloadCheckCompleted() throws Exception {
-    // given
-    deviceService.on();
-
-    // when
-    Thread.sleep((OVERLOAD_LIMIT_TIMER_SECS - 2) * 1000);
-    Assertions.assertThat(powerLimitOverloadService.isOverloadCheckCompleted()).isFalse();
-
-    // and when
-    Thread.sleep(4000);
-    Assertions.assertThat(powerLimitOverloadService.isOverloadCheckCompleted()).isTrue();
-  }
 }
