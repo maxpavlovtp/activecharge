@@ -5,7 +5,7 @@ import ContactsScreen from "./App/contactsScreen/ContactsScreen";
 import ContractScreen from "./App/contractScreen/ContractScreen";
 import PaymentScreen from "./App/paymentScreen/PaymentScreen";
 import ChargingScreen from "./App/chargingScreen/ChargingScreen";
-import OverloadPage from "./components/overload-page/OverloadPage";
+import MainOverload from "./components/overload-page/MainOverload";
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
           <Route path="/contacts" element={<ContactsScreen />} />
           <Route path="/payment" element={<PaymentScreen />} />
           <Route path="/charging" element={<ChargingScreen />} />
-          <Route path="/overload" element={<OverloadPage />} />
+          <Route path="/overload" element={<MainOverload />} />
           <Route path="/" element={<MainScreen />} />
         </Routes>
       </Router>

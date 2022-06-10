@@ -4,9 +4,11 @@ import axios, { AxiosResponse } from "axios";
 import Header from "../header/Header";
 import Footer from "../footer/Footer";
 import { useAppSelector } from "../../hooks/reduxHooks";
+import { useAppDispatch } from "../../hooks/reduxHooks";
 import ErrorPage from "../error-page/ErrorPage";
 import { t } from "i18next";
 import Spinner from "../spinner/Spinner";
+import { fetchOverloadData } from "../../store/reducers/ActionCreators";
 
 const OverloadPage = () => {
   const [power, setPower] = useState<any>();
@@ -23,6 +25,12 @@ const OverloadPage = () => {
   const urlCheckCompleted = `${process.env.REACT_APP_LINK_SERVE}device/isOverloadCheckCompleted`;
   const urlIsOverloaded = `${process.env.REACT_APP_LINK_SERVE}device/isPowerLimitOvelrloaded`;
   const urlPayment = `http://220-km.com:5000`;
+
+  const dispatch = useAppDispatch();
+
+  const startOverloadChecing = () => {
+    dispatch(fetchOverloadData());
+  };
 
   const isOverloaded = () => {
     axios
@@ -110,13 +118,11 @@ const OverloadPage = () => {
   if (isLoadingOverload === true) return <Spinner />;
 
   return (
-    <div className={styles.container}>
-      <Header />
+    <div>
       {isLoadingOverload === false && (
         <div className={styles.checkOverloadContainer}>
           {overload === false && (
             <>
-              {" "}
               {completed === true ? (
                 <div className={styles.seccessCont}>
                   {loading ? (
@@ -155,8 +161,9 @@ const OverloadPage = () => {
               <button
                 className={styles.btnPayOverload}
                 onClick={() => {
-                  window.location.reload();
+                  startOverloadChecing();
                   setOverload(false);
+                  setCompleted(false);
                 }}
               >
                 Try Again
@@ -165,8 +172,6 @@ const OverloadPage = () => {
           )}
         </div>
       )}
-
-      <Footer />
     </div>
   );
 };
