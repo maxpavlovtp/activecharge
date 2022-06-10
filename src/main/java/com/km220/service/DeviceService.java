@@ -52,7 +52,9 @@ public class DeviceService {
   }
 
   public Status on(long chargeSeconds) throws Exception {
-    // todo refactor
+    // todo fix
+    eweLinkLegacy.login();
+
     PowerAggregationJob.chargingDurationSecs = 0;
     PowerAggregationJob.chargeDurationSecs = chargeSeconds;
     PowerAggregationJob.chargedWt = 0;
@@ -105,6 +107,10 @@ public class DeviceService {
     } else {
       return getDevice().getParams().getPower();
     }
+  }
+
+  public String getPowerViaSockets() throws Exception {
+    return null;
   }
 
   private DeviceItem getDevice() throws Exception {
