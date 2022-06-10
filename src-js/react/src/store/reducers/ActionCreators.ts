@@ -11,7 +11,7 @@ export const fetchOverloadData = () => async (dispatch: AppDispatch) => {
     dispatch(FetchSlice.actions.overloadDataFetching());
     const response = await axios.get(urlOn);
     dispatch(FetchSlice.actions.overloadDataFetchingSuccess(response.data));
-    console.log(response.data);
+    console.log(response);
   } catch (e: any) {
     dispatch(FetchSlice.actions.overloadDataFetchingError(e.message));
     console.log(e.message);
@@ -23,7 +23,7 @@ export const fetchChargingData = () => async (dispatch: AppDispatch) => {
     dispatch(FetchSlice.actions.chargingDataFetching());
     const response = await axios.get(urlOn);
     dispatch(FetchSlice.actions.chargingDataFetchingSuccess(response.data));
-    console.log(response.data);
+    console.log(response);
   } catch (e: any) {
     dispatch(FetchSlice.actions.chargingDataFetchingError(e.message));
     console.log(e.message);
