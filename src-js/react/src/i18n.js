@@ -35,6 +35,18 @@ i18n
           errorBody: "Вибачте! Девайс офлайн. Спробуйте, будь ласка, пізніше",
           offerTitle: "Договір публічної оферти",
           contents: "Зміст",
+          overload: {
+            waitForLink: "Зачекайте секунду",
+            gettingLink: "Отримуємо посилання для оплати",
+            btnPay: "Оплатити",
+            successChecked: "Вийшло",
+            letsCharge: "Погнали заряджати",
+            checking: "перевіряємо навантаження",
+            overloadDetected: "Виявлено перевантаження",
+            slowdown: "Будь ласка, зменшіть напругу до",
+            repeat: "і спробуйте ще раз",
+            btnRepeat: "Спробуй ще"
+          },
           footer: {
             part1: "Всі права захищені",
             part2: "Розроблено",
@@ -60,6 +72,18 @@ i18n
           errorBody: "Sorry! Device is offline. Please, try later",
           offerTitle: "Public offer agreement",
           contents: "Contents",
+          overload: {
+            waitForLink: "Wait a second",
+            gettingLink: "Getting payment link",
+            btnPay: "Pay",
+            successChecked: "Success",
+            letsCharge: "Let`s charge it",
+            checking: "is overloaded checking",
+            overloadDetected: "Overload",
+            slowdown: "Please, slow down to",
+            repeat: "and try again",
+            btnRepeat: "Try Again"
+          },
           footer: {
             part1: "All rights reserved",
             part2: "Made by",

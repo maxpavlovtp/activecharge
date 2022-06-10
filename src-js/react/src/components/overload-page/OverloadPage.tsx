@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from "react";
 import styles from "./OverloadPage.module.css";
 import axios, { AxiosResponse } from "axios";
-import Header from "../header/Header";
-import Footer from "../footer/Footer";
 import { useAppSelector } from "../../hooks/reduxHooks";
 import { useAppDispatch } from "../../hooks/reduxHooks";
 import ErrorPage from "../error-page/ErrorPage";
 import { t } from "i18next";
 import Spinner from "../spinner/Spinner";
 import { fetchOverloadData } from "../../store/reducers/ActionCreators";
+import { useTranslation } from "react-i18next";
 
 const OverloadPage = () => {
   const [power, setPower] = useState<any>();
   const [link, setLink] = useState<any>();
-  const [overload, setOverload] = useState<any>(false);
+  const [overload, setOverload] = useState<any>(true);
   const [completed, setCompleted] = useState<any>(false);
   const [loading, setLoading] = useState<any>(true);
 
@@ -21,10 +20,13 @@ const OverloadPage = () => {
     (state) => state.fetchReducer
   );
 
+  const urlPowerLimit = `${process.env.REACT_APP_LINK_SERVE}device/getPowerLimit`;
   const urlPowerDevice = `${process.env.REACT_APP_LINK_SERVE}device/getPower`;
   const urlCheckCompleted = `${process.env.REACT_APP_LINK_SERVE}device/isOverloadCheckCompleted`;
   const urlIsOverloaded = `${process.env.REACT_APP_LINK_SERVE}device/isPowerLimitOvelrloaded`;
   const urlPayment = `http://220-km.com:5000`;
+
+  const { t } = useTranslation();
 
   const dispatch = useAppDispatch();
 
@@ -32,8 +34,21 @@ const OverloadPage = () => {
     dispatch(fetchOverloadData());
   };
 
-  const isOverloaded = () => {
-    axios
+  let powerLimit: any = 2000;
+  const getPowerLimit = async () => {
+    await axios
+      .get(urlPowerLimit)
+      .then((response) => {
+        powerLimit = response.data.data;
+        console.log(response.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const isOverloaded = async () => {
+    await axios
       .get(urlIsOverloaded)
       .then((response) => {
         setOverload(response.data.data);
@@ -44,8 +59,8 @@ const OverloadPage = () => {
       });
   };
 
-  const isCheckedCompleted = () => {
-    axios
+  const isCheckedCompleted = async () => {
+    await axios
       .get(urlCheckCompleted)
       .then((response) => {
         setCompleted(response.data.data);
@@ -56,8 +71,8 @@ const OverloadPage = () => {
       });
   };
 
-  const getPower = () => {
-    axios
+  const getPower = async () => {
+    await axios
       .get(urlPowerDevice)
       .then((response) => {
         setPower(response.data.data);
@@ -81,7 +96,7 @@ const OverloadPage = () => {
   const getPayLink = async () => {
     if (completed && link === undefined) {
       setLoading(true);
-      axios
+      await axios
         .get(urlPayment)
         .then((response) => {
           setLink(response.data.message);
@@ -100,6 +115,7 @@ const OverloadPage = () => {
   useEffect(() => {
     console.log(isLoadingOverload);
     if (isLoadingOverload === false) {
+      getPowerLimit();
       getPayLink();
       const overloadTimer = setInterval(() => {
         checkPowerLimit();
@@ -127,26 +143,33 @@ const OverloadPage = () => {
                 <div className={styles.seccessCont}>
                   {loading ? (
                     <div className={styles.seccessCont}>
-                      <p className={styles.waitPay}>Wait a second! </p>
-                      <p className={styles.waitPayTwo}>Getting payment link</p>
+                      <p className={styles.waitPay}>
+                        {t("overload.waitForLink")}!
+                      </p>
+                      <p className={styles.waitPayTwo}>
+                        {t("overload.gettingLink")}
+                      </p>
                     </div>
                   ) : (
                     <div className={styles.seccessCont}>
+                      <p className={styles.successCheck}>
+                        {t("overload.successChecked")}!
+                      </p>
+                      <p className={styles.successCheck}>
+                        {t("overload.letsCharge")}!
+                      </p>
                       <button
                         className={loading ? styles.disaleBtn : styles.btnPay}
                         onClick={() => window.open(link)}
-                        // onClick={start}
                       >
-                        Pay
+                        {t("overload.btnPay")}
                       </button>
-                      <p className={styles.successCheck}>Success!</p>
-                      <p className={styles.successCheck}>Let`s charge it!</p>
                     </div>
                   )}
                 </div>
               ) : (
                 <div className={styles.checkContainer}>
-                  <p className={styles.checkText}>is overloaded checking</p>
+                  <p className={styles.checkText}>{t("overload.checking")}</p>
                 </div>
               )}
             </>
@@ -155,8 +178,8 @@ const OverloadPage = () => {
           {overload === true && (
             <div className={styles.seccessCont}>
               <p className={styles.checkTextOverload}>
-                Overload! <br />
-                Please, slow down and try again
+                {t("overload.overloadDetected")}! <br />
+                {t("overload.slowdown")} {powerLimit} {t("overload.repeat")}
               </p>
               <button
                 className={styles.btnPayOverload}
@@ -166,7 +189,7 @@ const OverloadPage = () => {
                   setCompleted(false);
                 }}
               >
-                Try Again
+                {t("overload.btnRepeat")}
               </button>
             </div>
           )}
