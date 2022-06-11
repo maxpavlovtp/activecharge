@@ -1,7 +1,7 @@
 package com.km220.ewelink.model.device;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +21,7 @@ public class Params {
 
   private BindInfos bindInfos;
   private String sledOnline;
-  @SerializedName("switch")
+  @JsonProperty("switch")
   private String _switch;
   private String power;
   private String voltage;

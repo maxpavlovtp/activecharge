@@ -1,8 +1,10 @@
 package com.km220.ewelink.internal.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.km220.ewelink.EwelinkApiException;
 import java.util.function.Function;
 
@@ -37,5 +39,15 @@ public final class JsonUtils {
         throw new EwelinkApiException(e);
       }
     };
+  }
+
+  public static String addPropertyToJson(String json, String key, String value) {
+    try {
+      var jsonNode = OBJECT_MAPPER.readTree(json);
+      ((ObjectNode) jsonNode).put(key, value);
+      return OBJECT_MAPPER.writeValueAsString(jsonNode);
+    } catch (JsonProcessingException e) {
+      throw new EwelinkApiException(e);
+    }
   }
 }

@@ -1,33 +1,32 @@
 package com.km220.ewelink;
 
 import com.km220.ewelink.internal.utils.JsonUtils;
+import com.km220.ewelink.model.ws.WssResponse;
 import java.net.http.HttpClient;
 import java.time.Instant;
 import java.util.List;
 import lombok.Builder;
 import lombok.Value;
 
-public final class WSEwelinkDeviceApi extends AbstractWSEwelinkApi {
+public final class WSEwelinkDeviceApi extends CloseableWSEwelinkApi {
 
   public WSEwelinkDeviceApi(final EwelinkParameters parameters, final String applicationId,
-      final String applicationSecret, final HttpClient httpClient,
-      final WSClientListener wssClientListener) {
-    super(parameters, applicationId, applicationSecret, httpClient, wssClientListener);
+      final String applicationSecret, final HttpClient httpClient) {
+    super(parameters, applicationId, applicationSecret, httpClient);
   }
 
-  public void getDeviceStatus(String deviceId) {
+  public WssResponse getDeviceStatus(String deviceId) {
     var timestamp = Instant.now().getEpochSecond();
-    sendText(
+   return sendMessageAsync(
         JsonUtils.serialize(WSGetDeviceStatusPayload.builder()
             .action("query")
             .deviceid(deviceId)
-            .apikey(getApiKey())
             .userAgent("app")
             .sequence(timestamp * 1000)
             .ts(timestamp)
             .build()
         )
-    );
+    ).join();
   }
 
   @Value
@@ -36,7 +35,6 @@ public final class WSEwelinkDeviceApi extends AbstractWSEwelinkApi {
 
     String action;
     String deviceid;
-    String apikey;
     String userAgent;
     Long sequence;
     Long ts;

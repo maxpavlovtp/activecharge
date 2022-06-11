@@ -28,25 +28,21 @@ abstract class AbstractWSEwelinkApi extends AbstractEwelinkApi {
 
   private static final String WSS_URI_TEMPLATE = "wss://%s:%s/api/ws";
   static final String DISPATCH_APP_API_URI = "/dispatch/app";
-
-  private WebSocket webSocket;
-  private WebSocketClient webSocketClient;
   private String apiKey;
+  private WebSocket webSocket;
 
 
   protected AbstractWSEwelinkApi(EwelinkParameters parameters, String applicationId,
-      String applicationSecret, HttpClient httpClient,
-      WSClientListener wssClientListener) {
+      String applicationSecret, HttpClient httpClient) {
     super(parameters, applicationId, applicationSecret, httpClient);
-    webSocket = openWebSocket(wssClientListener);
   }
 
-  private WebSocket openWebSocket(WSClientListener clientListener) {
+  protected void openWebSocket(WSClientListener clientListener) {
     var credentials = getCredentials().join();
     long timestamp = Instant.now().getEpochSecond();
     var latch = new CountDownLatch(1);
 
-    webSocketClient = new WebSocketClient(clientListener, latch);
+    var webSocketClient = new WebSocketClient(clientListener, latch);
 
     webSocket = apiResourceRequest(HTTP_POST,
         BodyPublishers.ofString(JsonUtils.serialize(DispatchRequest.builder()
@@ -55,7 +51,8 @@ abstract class AbstractWSEwelinkApi extends AbstractEwelinkApi {
             .appid(applicationId)
             .nonce(SecurityUtils.generateNonce())
             .ts(timestamp)
-            .build())),
+            .build())
+        ),
         DISPATCH_APP_API_URI,
         Map.of(),
         Map.of(),
@@ -72,18 +69,17 @@ abstract class AbstractWSEwelinkApi extends AbstractEwelinkApi {
                 webSocketClient
             )).join();
 
-    webSocket = webSocket.sendText(JsonUtils.serialize(
+    sendMessage(JsonUtils.serialize(
         WssLogin.builder()
             .action("userOnline")
             .version(API_VERSION)
             .ts(timestamp)
             .at(credentials.getAt())
             .userAgent("app")
-            .apikey(credentials.getUser().getApikey())
             .appid(applicationId)
             .nonce(SecurityUtils.generateNonce())
             .sequence(timestamp * 1000)
-            .build()), true).join();
+            .build()), credentials.getUser().getApikey());
 
     try {
       latch.await();
@@ -91,16 +87,25 @@ abstract class AbstractWSEwelinkApi extends AbstractEwelinkApi {
     } catch (InterruptedException e) {
       Thread.currentThread().interrupt();
     }
-
-    return webSocket;
   }
 
-  protected String getApiKey() {
-    return apiKey;
+  protected final void closeWebSocket() {
+    if (webSocket != null) {
+      webSocket.sendClose(WebSocket.NORMAL_CLOSURE, "").join();
+      webSocket = null;
+    }
   }
 
-  protected void sendText(String text) {
-    webSocket.sendText(text, true).join();
+  final void sendMessage(String message, String apiKey) {
+    if (webSocket == null) {
+      throw new IllegalStateException("WebSocket is not opened!");
+    }
+    var messageWithApiKey = JsonUtils.addPropertyToJson(message, "apikey", apiKey);
+    webSocket.sendText(messageWithApiKey, true).join();
+  }
+
+  final void sendMessage(String message) {
+    sendMessage(message, apiKey);
   }
 
   private static final class WebSocketClient implements WebSocket.Listener {

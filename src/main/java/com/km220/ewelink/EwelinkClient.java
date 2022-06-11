@@ -35,8 +35,7 @@ public class EwelinkClient {
     return new EwelinkDeviceApi(parameters, applicationId, applicationSecret, httpClient);
   }
 
-  public WSEwelinkDeviceApi devices(WSClientListener wsClientListener) {
-    return new WSEwelinkDeviceApi(parameters, applicationId, applicationSecret, httpClient,
-        wsClientListener);
+  public WSEwelinkDeviceApi wsDevices() {
+    return new WSEwelinkDeviceApi(parameters, applicationId, applicationSecret, httpClient);
   }
 }

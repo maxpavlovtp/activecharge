@@ -2,6 +2,7 @@
 package com.km220.ewelink.model.device;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.Builder;
@@ -15,6 +16,7 @@ import lombok.extern.jackson.Jacksonized;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Do_ {
 
+    @JsonProperty("switch")
     private String _switch;
     @Default
     private Map<String, Object> additionalProperties = new HashMap<>();
