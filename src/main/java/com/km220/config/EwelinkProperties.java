@@ -7,11 +7,11 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @ConfigurationProperties(prefix = "ewelink")
 public class EwelinkProperties {
 
-  private String region;
-  private String email;
-  private String password;
-  private String appId;
-  private String appSecret;
+  private final String region;
+  private final String email;
+  private final String password;
+  private final String appId;
+  private final String appSecret;
 
   public EwelinkProperties(final String region, final String email, final String password,
       final String appId,
