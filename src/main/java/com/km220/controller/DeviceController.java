@@ -1,6 +1,7 @@
 package com.km220.controller;
 
 import com.km220.PowerAggregationJob;
+import com.km220.ewelink.model.ws.WssResponse;
 import com.km220.service.PowerLimitOverloadService;
 import com.km220.service.ewelink.model.Status;
 import com.km220.service.DeviceService;
@@ -16,6 +17,8 @@ public class DeviceController {
 
   @Autowired
   private DeviceService deviceService;
+
+  private static final String BOILER_DEVICE_ID = "1001323420";
 
   // todo use post
   @GetMapping("/start")
@@ -48,6 +51,12 @@ public class DeviceController {
   @GetMapping("/getDeviceStatusNewAPI")
   public Response getDeviceStatusNewAPI() throws Exception {
     return new Response("getDeviceStatusNewAPI", deviceService.getDeviceStatusNewAPI());
+  }
+
+  @GetMapping("/getWSDeviceStatus")
+  public Response getWSDeviceStatus() {
+    return new Response("getWSDeviceStatus",
+        deviceService.getWSDeviceStatus(BOILER_DEVICE_ID));
   }
 
   @GetMapping("/getDeviceStatusViaSockets")

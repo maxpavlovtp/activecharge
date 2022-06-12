@@ -17,9 +17,10 @@ http://220-km.com/
 2. http://localhost:8080/device/startSecs?secs=7
 3. http://localhost:8080/device/getDeviceStatus
 4. http://localhost:8080/device/getDeviceStatusNewAPI
-5. http://localhost:8080/device/getChargingStatus
-6. http://localhost:8080/device/getChargingDurationLeftSecs
-7. http://localhost:8080/device/isDeviceOn
+5. http://localhost:8080/device/getWSDeviceStatus
+6. http://localhost:8080/device/getChargingStatus
+7. http://localhost:8080/device/getChargingDurationLeftSecs
+8. http://localhost:8080/device/isDeviceOn
 
 #### overload check
 
