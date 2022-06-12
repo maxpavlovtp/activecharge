@@ -1,7 +1,7 @@
 package com.km220.ewelink.model.device;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,17 +9,19 @@ import java.util.Map;
 import lombok.Builder;
 import lombok.Builder.Default;
 import lombok.Getter;
+import lombok.ToString;
 import lombok.extern.jackson.Jacksonized;
 
 @Jacksonized
 @Builder
 @Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
+@ToString
 public class Params {
 
   private BindInfos bindInfos;
   private String sledOnline;
-  @SerializedName("switch")
+  @JsonProperty("switch")
   private String _switch;
   private String power;
   private String voltage;
@@ -36,7 +38,6 @@ public class Params {
   @Default
   private List<Integer> alarmPValue = new ArrayList<>();
   private String oneKwh;
-  private Integer uiActive;
   private Integer timeZone;
   private Integer version;
   private String startup;

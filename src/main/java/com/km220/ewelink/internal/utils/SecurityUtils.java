@@ -1,4 +1,4 @@
-package com.km220.ewelink.internal;
+package com.km220.ewelink.internal.utils;
 
 import com.km220.ewelink.EwelinkApiException;
 import java.nio.charset.StandardCharsets;
