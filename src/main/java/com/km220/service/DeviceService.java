@@ -7,7 +7,6 @@ import static java.lang.System.currentTimeMillis;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.km220.PowerAggregationJob;
 import com.km220.ewelink.EwelinkClient;
 import com.km220.ewelink.EwelinkParameters;

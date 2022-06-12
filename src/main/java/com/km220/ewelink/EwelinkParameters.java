@@ -1,13 +1,13 @@
 package com.km220.ewelink;
 
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.ToString;
 import lombok.Value;
 
 
 @Value
-@Builder
+@AllArgsConstructor
 @ToString
 public class EwelinkParameters {
 
