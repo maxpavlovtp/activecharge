@@ -28,7 +28,7 @@ class WSEwelinkDeviceApiTest {
     var api = ewelinkClient.wsDevices();
 
     for (int i = 0; i < 10000; i++) {
-      WssResponse response = api.getDeviceStatus(DEVICE_ID);
+      WssResponse response = api.getDeviceStatus(DEVICE_ID).join();
       assertNotNull(response);
 
       System.out.println(response);

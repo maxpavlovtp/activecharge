@@ -9,11 +9,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.km220.PowerAggregationJob;
 import com.km220.ewelink.EwelinkClient;
-import com.km220.ewelink.EwelinkParameters;
 import com.km220.ewelink.model.device.Device;
+import com.km220.ewelink.model.ws.WssResponse;
 import com.km220.service.ewelink.EweLink;
 import com.km220.service.ewelink.model.Status;
 import com.km220.service.ewelink.model.devices.DeviceItem;
+import java.util.Objects;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -33,17 +34,17 @@ public class DeviceService {
 
   private EweLink eweLinkLegacy;
 
-  private EwelinkClient eweLink;
+  private final EwelinkClient ewelinkClient;
   public static boolean newApiForGetPower = false;
+
+  public DeviceService(final EwelinkClient ewelinkClient) {
+    this.ewelinkClient = ewelinkClient;
+  }
 
   @PostConstruct
   public void init() throws Exception {
     eweLinkLegacy = new EweLink(region, email, password, 60);
     eweLinkLegacy.login();
-
-    eweLink = EwelinkClient.builder()
-        .parameters(new EwelinkParameters(region, email, password))
-        .build();
   }
 
   public Status on() throws Exception {
@@ -102,7 +103,7 @@ public class DeviceService {
 
   public String getPower(boolean newApi) throws Exception {
     if (newApiForGetPower || newApi) {
-      return eweLink.devices().getDevice(deviceId).join().getParams().getPower();
+      return ewelinkClient.devices().getDevice(deviceId).join().getParams().getPower();
     } else {
       return getDevice().getParams().getPower();
     }
@@ -123,7 +124,13 @@ public class DeviceService {
   }
 
   public String getDeviceStatusNewAPI() throws JsonProcessingException {
-    Device device = eweLink.devices().getDevice(deviceId).join();
+    Device device = ewelinkClient.devices().getDevice(deviceId).join();
     return new ObjectMapper().writeValueAsString(device);
+  }
+
+  public WssResponse getWSDeviceStatus(String deviceId) {
+    return ewelinkClient.wsDevices()
+        .getDeviceStatus(Objects.requireNonNull(deviceId))
+        .join();
   }
 }

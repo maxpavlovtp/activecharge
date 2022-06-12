@@ -6,6 +6,7 @@ import com.km220.ewelink.model.ws.WssResponse;
 import java.net.http.HttpClient;
 import java.time.Instant;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import lombok.Builder;
 import lombok.Value;
 
@@ -16,18 +17,16 @@ public final class WSEwelinkDeviceApi extends CloseableWSEwelinkApi {
     super(parameters, applicationId, applicationSecret, httpClient);
   }
 
-  public WssResponse getDeviceStatus(String deviceId) {
+  public CompletableFuture<WssResponse> getDeviceStatus(String deviceId) {
     var timestamp = Instant.now().getEpochSecond();
-   return sendMessageAsync(
-        JsonUtils.serialize(WSGetDeviceStatusPayload.builder()
-            .action("query")
-            .deviceid(deviceId)
-            .userAgent("app")
-            .sequence(timestamp * 1000)
-            .ts(timestamp)
-            .build()
-        )
-    ).join();
+    return sendMessageAsync(JsonUtils.serialize(WSGetDeviceStatusPayload.builder()
+        .action("query")
+        .deviceid(deviceId)
+        .userAgent("app")
+        .sequence(timestamp * 1000)
+        .ts(timestamp)
+        .build()
+    ));
   }
 
   @Value
