@@ -1,5 +1,6 @@
 package com.km220.ewelink;
 
+import com.km220.ewelink.internal.CloseableWSEwelinkApi;
 import com.km220.ewelink.internal.utils.JsonUtils;
 import com.km220.ewelink.model.ws.WssResponse;
 import java.net.http.HttpClient;

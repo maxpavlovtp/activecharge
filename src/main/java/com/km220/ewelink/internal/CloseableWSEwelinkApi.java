@@ -1,5 +1,8 @@
-package com.km220.ewelink;
+package com.km220.ewelink.internal;
 
+import com.km220.ewelink.EwelinkApiException;
+import com.km220.ewelink.EwelinkParameters;
+import com.km220.ewelink.WSClientListener;
 import com.km220.ewelink.model.ws.WssResponse;
 import java.net.http.HttpClient;
 import java.util.concurrent.CompletableFuture;

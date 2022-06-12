@@ -1,4 +1,4 @@
-package com.km220.ewelink;
+package com.km220.ewelink.internal;
 
 import static com.km220.ewelink.internal.utils.HttpUtils.ACCEPT_HEADER;
 import static com.km220.ewelink.internal.utils.HttpUtils.AUTHORIZATION_HEADER;
@@ -14,8 +14,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.km220.ewelink.EwelinkApiException;
 import com.km220.ewelink.EwelinkParameters;
-import com.km220.ewelink.internal.CredentialsRequest;
-import com.km220.ewelink.internal.CredentialsResponse;
 import com.km220.ewelink.internal.utils.JsonUtils;
 import com.km220.ewelink.internal.utils.SecurityUtils;
 import java.net.URI;
@@ -32,7 +30,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-abstract class AbstractEwelinkApi {
+public abstract class AbstractEwelinkApi {
 
   protected final EwelinkParameters parameters;
   protected final String applicationId;
@@ -57,8 +55,8 @@ abstract class AbstractEwelinkApi {
     String jsonRequestBody = JsonUtils.serialize(
         CredentialsRequest.builder()
             .appid(applicationId)
-            .email(parameters.email())
-            .password(parameters.password())
+            .email(parameters.getEmail())
+            .password(parameters.getPassword())
             .nonce(SecurityUtils.generateNonce())
             .version(API_VERSION)
             .ts(Instant.now().getEpochSecond())
@@ -176,7 +174,7 @@ abstract class AbstractEwelinkApi {
   }
 
   private String getApiUri(String apiUri) {
-    return String.format(API_BASE_URI, parameters.region()) + apiUri;
+    return String.format(API_BASE_URI, parameters.getRegion()) + apiUri;
   }
 
   private Map<String, String> generateHeaders(String authSchema, String token) {

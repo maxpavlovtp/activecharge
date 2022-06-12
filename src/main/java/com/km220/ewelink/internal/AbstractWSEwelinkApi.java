@@ -1,8 +1,10 @@
-package com.km220.ewelink;
+package com.km220.ewelink.internal;
 
 import static com.km220.ewelink.internal.utils.HttpUtils.HTTP_POST;
 import static com.km220.ewelink.internal.utils.HttpUtils.HTTP_STATUS_OK;
 
+import com.km220.ewelink.EwelinkParameters;
+import com.km220.ewelink.WSClientListener;
 import com.km220.ewelink.internal.utils.JsonUtils;
 import com.km220.ewelink.internal.utils.SecurityUtils;
 import com.km220.ewelink.internal.ws.DispatchRequest;

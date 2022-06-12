@@ -1,5 +1,6 @@
 package com.km220.ewelink;
 
+import com.km220.ewelink.internal.AbstractEwelinkApi;
 import com.km220.ewelink.internal.utils.JsonUtils;
 import com.km220.ewelink.model.device.Device;
 import java.net.http.HttpClient;
