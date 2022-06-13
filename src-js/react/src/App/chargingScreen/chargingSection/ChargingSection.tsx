@@ -16,7 +16,6 @@ const MainSection: React.FC = () => {
   const [secondsTime, setSecondsTime] = useState<any>();
 
   const secondsUrl = `${process.env.REACT_APP_LINK_SERVE}device/getChargingDurationLeftSecs`;
-  const urlIsDeviceOn = `${process.env.REACT_APP_LINK_SERVE}device/isDeviceOn`;
 
   const dispatch = useAppDispatch();
 
@@ -42,7 +41,7 @@ const MainSection: React.FC = () => {
         .finally(() => {
           setLoading(false);
         });
-    }, 3000);
+    }, 2500);
   };
   useEffect(() => {
     console.log(isLoadingCharging);
