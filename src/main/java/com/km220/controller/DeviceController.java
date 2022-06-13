@@ -59,11 +59,6 @@ public class DeviceController {
     return new Response<>("getWSDeviceStatus", response);
   }
 
-  @GetMapping("/getDeviceStatusViaSockets")
-  public Response getDeviceStatusViaSockets() throws Exception {
-    return null;
-  }
-
   @GetMapping("/isDeviceOn")
   public Response isDeviceOn() throws Exception {
     return new Response("isDeviceOn", deviceService.isDeviceOn());
@@ -75,7 +70,7 @@ public class DeviceController {
 
   @GetMapping("/getPower")
   public Response getPower() throws Exception {
-    return new Response("chargingWtAverageWtH", deviceService.getPower(false));
+    return new Response("getPower", deviceService.getPower(false));
   }
 
   @GetMapping("/isPowerLimitOvelrloaded")
