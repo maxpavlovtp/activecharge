@@ -1,7 +1,5 @@
 package com.km220.service;
 
-import static java.lang.System.currentTimeMillis;
-
 import com.km220.PowerAggregationJob;
 import org.springframework.stereotype.Service;
 
