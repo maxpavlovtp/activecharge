@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 
 const OverloadPage = () => {
   const [power, setPower] = useState<any>();
+  const [powerLimit, setPowerLimit] = useState<any>();
   const [link, setLink] = useState<any>();
   const [overload, setOverload] = useState<any>(false);
   const [completed, setCompleted] = useState<any>(false);
@@ -34,12 +35,11 @@ const OverloadPage = () => {
     dispatch(fetchOverloadData());
   };
 
-  let powerLimit: any = 2000;
   const getPowerLimit = async () => {
     await axios
       .get(urlPowerLimit)
       .then((response) => {
-        powerLimit = response.data.data;
+        setPowerLimit(response.data.data);
         console.log(response.data.data);
       })
       .catch((err) => {
