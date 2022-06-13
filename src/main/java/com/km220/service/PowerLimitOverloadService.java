@@ -10,7 +10,7 @@ public class PowerLimitOverloadService {
 
   //todo move to db
   public static final int OVERLOAD_LIMIT_TIMER_SECS = 30;
-  private static final int POWER_LIMIT_WTH = 1;
+  private static final int POWER_LIMIT_WTH = 1900;
 
   public boolean isPowerLimitOvelrloaded() {
     return PowerAggregationJob.chargingDurationSecs > OVERLOAD_LIMIT_TIMER_SECS &&
