@@ -65,6 +65,9 @@ const MainSection: React.FC = () => {
     if (secondsBackend < 60) {
       setSecondsTime(secondsBackend);
     }
+    if (secondsBackend <= 2) {
+      setSecondsTime(0);
+    }
   });
 
   if (error)
