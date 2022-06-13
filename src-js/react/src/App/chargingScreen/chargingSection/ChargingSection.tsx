@@ -9,9 +9,13 @@ import { useAppSelector } from "../../../hooks/reduxHooks";
 
 const MainSection: React.FC = () => {
   const [loading, setLoading] = useState<any>(true);
-
+  const [secondsBackend, setSecondsBackend] = useState<any>();
+  const [hoursTime, setHoursTime] = useState<any>();
+  const [minuteTime, setMinuteTime] = useState<any>();
   const [secondsTime, setSecondsTime] = useState<any>();
+
   const secondsUrl = `${process.env.REACT_APP_LINK_SERVE}device/getChargingDurationLeftSecs`;
+
   const { t } = useTranslation();
 
   const { isLoadingCharging, error } = useAppSelector(
@@ -24,7 +28,7 @@ const MainSection: React.FC = () => {
       axios
         .get(secondsUrl)
         .then((response) => {
-          setSecondsTime(response.data.data);
+          setSecondsBackend(response.data.data);
           console.log(response);
         })
         .catch((err) => {
@@ -42,6 +46,16 @@ const MainSection: React.FC = () => {
     }
   }, [isLoadingCharging]);
 
+  useEffect(() => {
+    if (secondsBackend) {
+      setHoursTime(Math.floor(secondsBackend / 60 / 60));
+    }
+    if(secondsBackend && hoursTime){
+      setMinuteTime(Math.floor(secondsBackend / 60) - hoursTime * 60);
+      setSecondsTime(secondsBackend % 60);
+    }
+  });
+
   if (error)
     return (
       <ErrorPage errorHeader={t("errorHeader")} errorBody={t("errorBody")} />
@@ -56,7 +70,13 @@ const MainSection: React.FC = () => {
       {loading === false && (
         <div className={styles.chargingBox}>
           <div className={styles.contTimer}>
-            <Timer seconds={secondsTime} />
+            {hoursTime && minuteTime && secondsTime && (
+              <Timer
+                hours={hoursTime}
+                minutes={minuteTime}
+                seconds={secondsTime}
+              />
+            )}
           </div>
         </div>
       )}
