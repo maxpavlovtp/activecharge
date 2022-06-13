@@ -34,10 +34,11 @@ http://220-km.com/
 1. http://220-km.com:8080/device/start
 2. http://220-km.com:8080/device/startSecs?secs=7
 3. http://220-km.com:8080/device/getDeviceStatus
-4. http://220-km.com:8080/device/getDeviceStatusNewAPI
-5. http://220-km.com:8080/device/getChargingStatus
-6. http://220-km.com:8080/device/getChargingDurationLeftSecs
-7. http://220-km.com:8080/device/isDeviceOn
+4. http://220-km.com:8080/device/getWSDeviceStatus
+5. http://220-km.com:8080/device/getDeviceStatusNewAPI
+6. http://220-km.com:8080/device/getChargingStatus
+7. http://220-km.com:8080/device/getChargingDurationLeftSecs
+8. http://220-km.com:8080/device/isDeviceOn
 
 #### overload check
 
