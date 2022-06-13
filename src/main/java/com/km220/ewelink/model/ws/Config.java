@@ -1,10 +1,8 @@
 
-package com.km220.ewelink.model.device;
+package com.km220.ewelink.model.ws;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import lombok.Builder;
 import lombok.Builder.Default;
@@ -17,13 +15,10 @@ import lombok.extern.jackson.Jacksonized;
 @Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
 @ToString
-public class BindInfos {
+public class Config {
 
-    @Default
-    private List<String> alexa = new ArrayList<>();
-    @Default
-    private List<String> gaction = new ArrayList<>();
-    @Default
-    private Map<String, Object> additionalProperties = new HashMap<>();
-
+  private Integer hb;
+  private Integer hbInterval;
+  @Default
+  private Map<String, Object> additionalProperties = new HashMap<>();
 }

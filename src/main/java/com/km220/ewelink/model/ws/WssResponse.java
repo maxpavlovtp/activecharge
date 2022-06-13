@@ -1,9 +1,9 @@
 
-package com.km220.ewelink.model.device;
+package com.km220.ewelink.model.ws;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.km220.service.ewelink.model.devices.Do;
+import com.km220.ewelink.model.device.Params;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.Builder;
@@ -17,15 +17,18 @@ import lombok.extern.jackson.Jacksonized;
 @Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
 @ToString
-public class Timer {
+public class WssResponse {
 
-  private String mId;
-  private String type;
-  private String at;
-  private String coolkitTimerType;
-  private Integer enabled;
-  private Do _do;
-  private String period;
+  private Integer error;
+  private String action;
+  private String deviceid;
+  private String apikey;
+  private String userAgent;
+  private Params params;
+  private String from;
+  private Config config;
+  private String seq;
+  private String sequence;
   @Default
   private Map<String, Object> additionalProperties = new HashMap<>();
 }

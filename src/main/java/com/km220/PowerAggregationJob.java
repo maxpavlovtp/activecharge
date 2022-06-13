@@ -69,8 +69,6 @@ public class PowerAggregationJob {
     System.out.println("chargingDurationLeftSecs: " + chargingDurationLeftSecs);
 
     System.out.println(
-        "isOverloadCheckCompleted: " + deviceService.isDeviceOn());
-    System.out.println(
         "isPowerLimitOvelrloaded: " + powerLimitOverloadService.isPowerLimitOvelrloaded());
     System.out.println(
         "getPowerLimit: " + powerLimitOverloadService.getPowerLimit());
