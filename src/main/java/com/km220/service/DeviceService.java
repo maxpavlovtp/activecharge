@@ -29,6 +29,11 @@ public class DeviceService {
   @Value("${ewelink.password}")
   private String password;
 
+  @Value("${device.chargeTime}")
+  private int chargeTime;
+
+
+
   @Value("${deviceId}")
   private String deviceId;
 
@@ -48,7 +53,7 @@ public class DeviceService {
   }
 
   public Status on() throws Exception {
-    return on(OVERLOAD_LIMIT_TIMER_SECS + 10);
+    return on(OVERLOAD_LIMIT_TIMER_SECS + chargeTime);
   }
 
   public Status on(long chargeSeconds) throws Exception {
