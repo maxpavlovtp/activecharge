@@ -47,12 +47,19 @@ const MainSection: React.FC = () => {
   }, [isLoadingCharging]);
 
   useEffect(() => {
-    if (secondsBackend) {
+    if (secondsBackend >= 3610) {
       setHoursTime(Math.floor(secondsBackend / 60 / 60));
+      if (hoursTime) {
+        setMinuteTime(Math.floor(secondsBackend / 60) - hoursTime * 60);
+        setSecondsTime(secondsBackend % 60);
+      }
     }
-    if(secondsBackend && hoursTime){
-      setMinuteTime(Math.floor(secondsBackend / 60) - hoursTime * 60);
+    if (secondsBackend < 3610) {
+      setMinuteTime(Math.floor(secondsBackend / 60));
       setSecondsTime(secondsBackend % 60);
+    }
+    if (secondsBackend < 60) {
+      setSecondsTime(secondsBackend);
     }
   });
 
@@ -70,7 +77,7 @@ const MainSection: React.FC = () => {
       {loading === false && (
         <div className={styles.chargingBox}>
           <div className={styles.contTimer}>
-            {hoursTime && minuteTime && secondsTime && (
+            {secondsTime >= 0 && (
               <Timer
                 hours={hoursTime}
                 minutes={minuteTime}
