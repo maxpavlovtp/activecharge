@@ -27,7 +27,7 @@ class WSEwelinkDeviceApiTest {
   void getDeviceShouldReturnDevice() throws InterruptedException {
     var api = ewelinkClient.wsDevices();
 
-    for (int i = 0; i < 10000; i++) {
+    for (int i = 0; i < 10; i++) {
       WssResponse response = api.getDeviceStatus(DEVICE_ID).join();
       assertNotNull(response);
 
