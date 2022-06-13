@@ -3,6 +3,8 @@ import styles from "./Timer.module.css";
 import { ITimer } from "../../interfaces";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
+import { getDeviceIsOnStatus } from "../../store/reducers/ActionCreators";
 
 // const url = `${process.env.REACT_APP_LINK_SERVE}charge/getChargingStatus`;
 // todo use props
@@ -18,10 +20,12 @@ const Timer = (props: ITimer) => {
   ]);
   const [num, setNum] = useState<any>();
   const [get, setGet] = useState<any>(false);
-  const [isDeviceOn, setIsDeviceOn] = useState<any>();
-  const [error, setError] = useState<any>(null);
-  const [loading, setLoading] = useState<any>(false);
+
   const { t } = useTranslation();
+
+  const dispatch = useAppDispatch();
+
+  const { isDeviceOn } = useAppSelector((state) => state.fetchReducer);
 
   const tick = () => {
     if (over) return;
@@ -37,26 +41,17 @@ const Timer = (props: ITimer) => {
     }
   };
 
-  const getDeviceOn = async () => {
-    axios
-      .get(urlIsDeviceOn)
-      .then((response) => {
-        setIsDeviceOn(response.data.data);
-      })
-      .catch((err: any) => {
-        console.log(err);
-      });
-  };
-
   const getNumber = async () => {
-    if (h === 0 && m === 0 && s === 1) {
+    if (h === 0 && m === 0 && s === 0) {
       setGet(true);
     }
     if (!get) {
+      dispatch(getDeviceIsOnStatus());
       axios
         .get(urlChargingStatus)
         .then((response) => {
           setNum(response);
+          console.log(response.data)
         })
         .catch((err: any) => {
           console.log(err);
@@ -68,7 +63,6 @@ const Timer = (props: ITimer) => {
     const timerID = setInterval(() => {
       tick();
       getNumber();
-      getDeviceOn();
     }, 1000);
     return () => clearInterval(timerID);
   });
@@ -84,18 +78,16 @@ const Timer = (props: ITimer) => {
     isZero ? 0 : Math.round(wtCharged / carKwtKmRatio)
   } km)`;
   return (
-    // todo: add internacialization'
     <div className={styles.timerBox}>
-      <p className={!isDeviceOn ? styles.overTimerText : styles.timerText}>{`${h
-        .toString()
-        .padStart(2, "0")}:${m.toString().padStart(2, "0")}:${s
-        .toString()
-        .padStart(2, "0")}`}</p>
-      {/*todo: fetch <3.33 kWt> from BE*/}
+      <p className={isDeviceOn ? styles.timerText : styles.overTimerText}>
+        {`${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}:${s
+          .toString()
+          .padStart(2, "0")}`}
+      </p>
       <div className={over ? styles.overText : styles.endText}>
-        {isDeviceOn === false
-          ? `${t("charged")}${chargeStatus}`
-          : `${t("charging")}: ${chargeStatus}`}
+        {isDeviceOn
+          ? `${t("charging")}: ${chargeStatus}`
+          : `${t("charged")}${chargeStatus}`}
       </div>
     </div>
   );

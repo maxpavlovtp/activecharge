@@ -5,7 +5,8 @@ import axios from "axios";
 import ErrorPage from "../../../components/error-page/ErrorPage";
 import { useTranslation } from "react-i18next";
 import Spinner from "../../../components/spinner/Spinner";
-import { useAppSelector } from "../../../hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
+import { getDeviceIsOnStatus } from "../../../store/reducers/ActionCreators";
 
 const MainSection: React.FC = () => {
   const [loading, setLoading] = useState<any>(true);
@@ -15,6 +16,9 @@ const MainSection: React.FC = () => {
   const [secondsTime, setSecondsTime] = useState<any>();
 
   const secondsUrl = `${process.env.REACT_APP_LINK_SERVE}device/getChargingDurationLeftSecs`;
+  const urlIsDeviceOn = `${process.env.REACT_APP_LINK_SERVE}device/isDeviceOn`;
+
+  const dispatch = useAppDispatch();
 
   const { t } = useTranslation();
 
@@ -24,6 +28,7 @@ const MainSection: React.FC = () => {
 
   const start = () => {
     setLoading(true);
+    dispatch(getDeviceIsOnStatus());
     setTimeout(() => {
       axios
         .get(secondsUrl)
