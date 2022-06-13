@@ -32,6 +32,8 @@ const Timer = (props: ITimer) => {
 
     if (h === 0 && m === 0 && s === 0) {
       setOver(true);
+    } else if (!isDeviceOn) {
+      setTime([0, 0, 0]);
     } else if (m === 0 && s === 0) {
       setTime([h - 1, 59, 59]);
     } else if (s == 0) {
@@ -51,7 +53,7 @@ const Timer = (props: ITimer) => {
         .get(urlChargingStatus)
         .then((response) => {
           setNum(response);
-          console.log(response.data)
+          console.log(response.data);
         })
         .catch((err: any) => {
           console.log(err);
