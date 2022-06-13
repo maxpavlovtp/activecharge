@@ -66,7 +66,7 @@ const Timer = (props: ITimer) => {
   // tesla model 3 = 100
   let carKwtKmRatio = 150;
   let isZero = num?.data?.data === undefined;
-  let chargeStatus = `${isZero ? 0 : wtCharged} ${t("wt")}  (${t("around")} ${
+  let chargeStatus = `${isZero ? '' : wtCharged} ${t("wt")}  (${t("around")} ${
     isZero ? 0 : Math.round(wtCharged / carKwtKmRatio)
   } km)`;
   return (
