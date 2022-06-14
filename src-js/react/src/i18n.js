@@ -29,7 +29,7 @@ i18n
           wt: "ватт",
           around: "десь",
           charged: "Вітаннячка! Зараз в тачці +",
-          power: "Напруга",
+          power: "Потужність",
           charging: "Зарядили",
           chargingSpeed: "Швидкість заряду",
           errorHeader: "Девайс офлайн",
