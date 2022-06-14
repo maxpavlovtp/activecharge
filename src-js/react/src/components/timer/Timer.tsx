@@ -4,12 +4,10 @@ import { ITimer } from "../../interfaces";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
-import { getDeviceIsOnStatus } from "../../store/reducers/ActionCreators";
-
-// const url = `${process.env.REACT_APP_LINK_SERVE}charge/getChargingStatus`;
-// todo use props
-const urlChargingStatus = `${process.env.REACT_APP_LINK_SERVE}device/getChargingStatus`;
-const urlIsDeviceOn = `${process.env.REACT_APP_LINK_SERVE}device/isDeviceOn`;
+import {
+  getDeviceIsOnStatus,
+  getDeviceStatus,
+} from "../../store/reducers/ActionCreators";
 
 const Timer = (props: ITimer) => {
   const [over, setOver] = useState(false);
@@ -18,25 +16,25 @@ const Timer = (props: ITimer) => {
     props.minutes,
     props.seconds,
   ]);
-  const [num, setNum] = useState<any>();
   const [get, setGet] = useState<any>(false);
 
   const { t } = useTranslation();
 
   const dispatch = useAppDispatch();
 
-  const { isDeviceOn } = useAppSelector((state) => state.fetchReducer);
+  const { isDeviceOn, deviceStatus } = useAppSelector(
+    (state) => state.fetchReducer
+  );
+  console.log(deviceStatus);
 
   const tick = () => {
     if (over) return;
 
     if (h === 0 && m === 0 && s === 0) {
       setOver(true);
-    } 
-    else if (isDeviceOn === false) {
+    } else if (isDeviceOn === false) {
       setTime([0, 0, 0]);
-    } 
-    else if (m === 0 && s === 0) {
+    } else if (m === 0 && s === 0) {
       setTime([h - 1, 59, 59]);
     } else if (s == 0) {
       setTime([h, m - 1, 59]);
@@ -51,15 +49,7 @@ const Timer = (props: ITimer) => {
     }
     if (!get) {
       dispatch(getDeviceIsOnStatus());
-      axios
-        .get(urlChargingStatus)
-        .then((response) => {
-          setNum(response);
-          console.log(response.data);
-        })
-        .catch((err: any) => {
-          console.log(err);
-        });
+      dispatch(getDeviceStatus());
     }
   };
 
@@ -71,13 +61,14 @@ const Timer = (props: ITimer) => {
     return () => clearInterval(timerID);
   });
 
-  let wtCharged = Math.round(num?.data?.data);
+  // let wtCharged = Math.round(deviceStatus);
+  let wtCharged = deviceStatus;
 
   // todo use for car range calculation feature
   // nisan leaf = 150
   // tesla model 3 = 100
   let carKwtKmRatio = 150;
-  let isZero = num?.data?.data === undefined;
+  let isZero = deviceStatus === undefined;
   let chargeStatus = `${isZero ? " " : wtCharged} ${t("wt")}  (${t("around")} ${
     isZero ? 0 : Math.round(wtCharged / carKwtKmRatio)
   } km)`;

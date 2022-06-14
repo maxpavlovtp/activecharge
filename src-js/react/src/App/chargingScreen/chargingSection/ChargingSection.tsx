@@ -6,7 +6,10 @@ import ErrorPage from "../../../components/error-page/ErrorPage";
 import { useTranslation } from "react-i18next";
 import Spinner from "../../../components/spinner/Spinner";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
-import { getDeviceIsOnStatus } from "../../../store/reducers/ActionCreators";
+import {
+  getDeviceIsOnStatus,
+  getDeviceStatus,
+} from "../../../store/reducers/ActionCreators";
 
 const MainSection: React.FC = () => {
   const [loading, setLoading] = useState<any>(true);
@@ -28,6 +31,7 @@ const MainSection: React.FC = () => {
   const start = () => {
     setLoading(true);
     dispatch(getDeviceIsOnStatus());
+    dispatch(getDeviceStatus());
     setTimeout(() => {
       axios
         .get(secondsUrl)

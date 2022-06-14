@@ -5,7 +5,7 @@ export interface ITimer {
 }
 
 export interface IFetch {
-  data: object;
-  loading: boolean;
-  error?: string;
+  data?: any,
+  loading?: boolean,
+  error?: string,
 }
