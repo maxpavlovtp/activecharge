@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import {
   getChargingStatus,
   getDeviceIsOnStatus,
+  getPower,
 } from "../../store/reducers/ActionCreators";
 
 const Timer = (props: ITimer) => {
@@ -22,10 +23,9 @@ const Timer = (props: ITimer) => {
 
   const dispatch = useAppDispatch();
 
-  const { isDeviceOn, chargingStatus } = useAppSelector(
+  const { isDeviceOn, chargingStatus, devicePower } = useAppSelector(
     (state) => state.fetchReducer
   );
-  console.log(chargingStatus);
 
   const tick = () => {
     if (over) return;
@@ -49,7 +49,8 @@ const Timer = (props: ITimer) => {
     }
     if (!get) {
       dispatch(getDeviceIsOnStatus());
-      dispatch(getChargingStatus);
+      dispatch(getChargingStatus());
+      dispatch(getPower());
     }
   };
 
@@ -62,7 +63,8 @@ const Timer = (props: ITimer) => {
   });
 
   // let wtCharged = Math.round(deviceStatus);
-  let wtCharged = chargingStatus;
+  let wtCharged = Math.round(chargingStatus);
+  console.log(chargingStatus);
 
   // todo use for car range calculation feature
   // nisan leaf = 150
@@ -79,6 +81,9 @@ const Timer = (props: ITimer) => {
           .toString()
           .padStart(2, "0")}`}
       </p>
+      <div className={over ? styles.overText : styles.endText}>
+        {t("power")}: {devicePower}
+      </div>
       <div className={over ? styles.overText : styles.endText}>
         {isDeviceOn
           ? `${t("charging")}: ${chargeStatus}`

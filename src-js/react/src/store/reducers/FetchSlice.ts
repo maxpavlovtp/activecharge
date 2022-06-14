@@ -4,22 +4,26 @@ import { IFetch } from "../../interfaces";
 interface FetchState {
   startDataOverload: IFetch[];
   startDataCharging: IFetch[];
+  devicePower: string;
   chargingStatus: number;
   isDeviceOn: boolean;
   isLoadingOverload: boolean;
   isLoadingCharging: boolean;
-  isGotDeviceStatus: boolean;
+  isGotDevicePower: boolean;
+  isGotChargingStatus: boolean;
   error: string;
 }
 
 const initialState: FetchState = {
   startDataOverload: [],
   startDataCharging: [],
+  devicePower: '',
   chargingStatus: 0,
   isDeviceOn: false,
   isLoadingOverload: false,
   isLoadingCharging: false,
-  isGotDeviceStatus: false,
+  isGotDevicePower: false,
+  isGotChargingStatus: false,
   error: "",
 };
 
@@ -66,13 +70,13 @@ export const FetchSlice = createSlice({
     },
 
     chargingStatusFetching(state: FetchState) {
-      state.isGotDeviceStatus = true;
+      state.isGotChargingStatus = true;
     },
     chargingStatusFetchingSuccess(
       state: FetchState,
       action: PayloadAction<number>
     ) {
-      state.isGotDeviceStatus = false;
+      state.isGotChargingStatus = false;
       state.error = "";
       state.chargingStatus = action.payload;
     },
@@ -80,7 +84,26 @@ export const FetchSlice = createSlice({
       state: FetchState,
       action: PayloadAction<string>
     ) {
-      state.isGotDeviceStatus = false;
+      state.isGotChargingStatus = false;
+      state.error = action.payload;
+    },
+
+    devicePowerFetching(state: FetchState) {
+      state.isGotDevicePower = true;
+    },
+    devicePowerFetchingSuccess(
+      state: FetchState,
+      action: PayloadAction<string>
+    ) {
+      state.isGotDevicePower = false;
+      state.error = "";
+      state.devicePower = action.payload;
+    },
+    devicePowerFetchingError(
+      state: FetchState,
+      action: PayloadAction<string>
+    ) {
+      state.isGotDevicePower = false;
       state.error = action.payload;
     },
 

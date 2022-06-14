@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 import {
   getChargingStatus,
   getDeviceIsOnStatus,
+  getPower,
 } from "../../../store/reducers/ActionCreators";
 
 const MainSection: React.FC = () => {
@@ -32,6 +33,7 @@ const MainSection: React.FC = () => {
     setLoading(true);
     dispatch(getDeviceIsOnStatus());
     dispatch(getChargingStatus);
+    dispatch(getPower());
     setTimeout(() => {
       axios
         .get(secondsUrl)
