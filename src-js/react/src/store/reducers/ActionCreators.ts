@@ -31,14 +31,14 @@ export const fetchChargingData = () => async (dispatch: AppDispatch) => {
   }
 };
 
-export const getDeviceStatus = () => async (dispatch: AppDispatch) => {
+export const getChargingStatus = () => async (dispatch: AppDispatch) => {
   try {
-    dispatch(FetchSlice.actions.deviveStatusFetching());
+    dispatch(FetchSlice.actions.chargingStatusFetching());
     const response = await axios.get(urlChargingStatus);
-    dispatch(FetchSlice.actions.deviveStatusFetchingSuccess(response.data.data));
+    dispatch(FetchSlice.actions.chargingStatusFetchingSuccess(response.data.data));
     console.log(response);
   } catch (e: any) {
-    dispatch(FetchSlice.actions.deviveStatusFetchingError(e.message));
+    dispatch(FetchSlice.actions.chargingStatusFetchingError(e.message));
     console.log(e.message);
   }
 }

@@ -4,7 +4,7 @@ import { IFetch } from "../../interfaces";
 interface FetchState {
   startDataOverload: IFetch[];
   startDataCharging: IFetch[];
-  deviceStatus: number;
+  chargingStatus: number;
   isDeviceOn: boolean;
   isLoadingOverload: boolean;
   isLoadingCharging: boolean;
@@ -15,7 +15,7 @@ interface FetchState {
 const initialState: FetchState = {
   startDataOverload: [],
   startDataCharging: [],
-  deviceStatus: 0,
+  chargingStatus: 0,
   isDeviceOn: false,
   isLoadingOverload: false,
   isLoadingCharging: false,
@@ -65,18 +65,18 @@ export const FetchSlice = createSlice({
       state.error = action.payload;
     },
 
-    deviveStatusFetching(state: FetchState) {
+    chargingStatusFetching(state: FetchState) {
       state.isGotDeviceStatus = true;
     },
-    deviveStatusFetchingSuccess(
+    chargingStatusFetchingSuccess(
       state: FetchState,
       action: PayloadAction<number>
     ) {
       state.isGotDeviceStatus = false;
       state.error = "";
-      state.deviceStatus = action.payload;
+      state.chargingStatus = action.payload;
     },
-    deviveStatusFetchingError(
+    chargingStatusFetchingError(
       state: FetchState,
       action: PayloadAction<string>
     ) {

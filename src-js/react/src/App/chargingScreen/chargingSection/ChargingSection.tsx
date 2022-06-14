@@ -7,8 +7,8 @@ import { useTranslation } from "react-i18next";
 import Spinner from "../../../components/spinner/Spinner";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 import {
+  getChargingStatus,
   getDeviceIsOnStatus,
-  getDeviceStatus,
 } from "../../../store/reducers/ActionCreators";
 
 const MainSection: React.FC = () => {
@@ -31,7 +31,7 @@ const MainSection: React.FC = () => {
   const start = () => {
     setLoading(true);
     dispatch(getDeviceIsOnStatus());
-    dispatch(getDeviceStatus());
+    dispatch(getChargingStatus);
     setTimeout(() => {
       axios
         .get(secondsUrl)

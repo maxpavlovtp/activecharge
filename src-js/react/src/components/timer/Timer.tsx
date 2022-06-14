@@ -5,8 +5,8 @@ import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import {
+  getChargingStatus,
   getDeviceIsOnStatus,
-  getDeviceStatus,
 } from "../../store/reducers/ActionCreators";
 
 const Timer = (props: ITimer) => {
@@ -22,10 +22,10 @@ const Timer = (props: ITimer) => {
 
   const dispatch = useAppDispatch();
 
-  const { isDeviceOn, deviceStatus } = useAppSelector(
+  const { isDeviceOn, chargingStatus } = useAppSelector(
     (state) => state.fetchReducer
   );
-  console.log(deviceStatus);
+  console.log(chargingStatus);
 
   const tick = () => {
     if (over) return;
@@ -49,7 +49,7 @@ const Timer = (props: ITimer) => {
     }
     if (!get) {
       dispatch(getDeviceIsOnStatus());
-      dispatch(getDeviceStatus());
+      dispatch(getChargingStatus);
     }
   };
 
@@ -62,13 +62,13 @@ const Timer = (props: ITimer) => {
   });
 
   // let wtCharged = Math.round(deviceStatus);
-  let wtCharged = deviceStatus;
+  let wtCharged = chargingStatus;
 
   // todo use for car range calculation feature
   // nisan leaf = 150
   // tesla model 3 = 100
   let carKwtKmRatio = 150;
-  let isZero = deviceStatus === undefined;
+  let isZero = chargingStatus === undefined;
   let chargeStatus = `${isZero ? " " : wtCharged} ${t("wt")}  (${t("around")} ${
     isZero ? 0 : Math.round(wtCharged / carKwtKmRatio)
   } km)`;
