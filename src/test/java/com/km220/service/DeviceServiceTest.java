@@ -13,12 +13,34 @@ import org.springframework.test.context.ActiveProfiles;
 @SpringBootTest
 @ActiveProfiles("test")
 class DeviceServiceTest {
+
   @Autowired
   DeviceService deviceService;
 
   @AfterEach
   public void teardown() throws Exception {
     deviceService.off();
+  }
+
+  // Checks jershik ewelink api bug.
+  @Test
+  void getPowerTest() throws Exception {
+    // given
+    deviceService.on(5);
+
+    // when
+    Thread.sleep(3000);
+
+    //then
+    float power = Float.parseFloat(deviceService.getPower(false));
+    System.out.println("Power is: " + power);
+    assertThat(power > 0).isTrue();
+
+    // and when
+    deviceService.off();
+    Thread.sleep(3000);
+
+    assertThat(deviceService.getPower(false)).isEqualTo("0.00");
   }
 
   @Test
@@ -30,24 +52,6 @@ class DeviceServiceTest {
 
     // then
     assertThat(devices).isNotEmpty();
-  }
-
-  @Test
-  void getPowerTest() throws Exception {
-    // given
-    deviceService.on(5);
-
-    // when
-    Thread.sleep(3000);
-
-    //then
-    assertThat(Float.parseFloat(deviceService.getPower(false)) > 0).isTrue();
-
-    // and when
-    deviceService.off();
-    Thread.sleep(3000);
-
-    assertThat(deviceService.getPower(false)).isEqualTo("0.00");
   }
 
   @Test
