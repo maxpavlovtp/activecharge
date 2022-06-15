@@ -2,12 +2,10 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IFetch } from "../../interfaces";
 
 interface FetchState {
-  startDataOverload: IFetch[];
   startDataCharging: IFetch[];
   devicePower: string;
   chargingStatus: number;
   isDeviceOn: boolean;
-  isLoadingOverload: boolean;
   isLoadingCharging: boolean;
   isGotDevicePower: boolean;
   isGotChargingStatus: boolean;
@@ -15,12 +13,10 @@ interface FetchState {
 }
 
 const initialState: FetchState = {
-  startDataOverload: [],
   startDataCharging: [],
   devicePower: '',
   chargingStatus: 0,
   isDeviceOn: false,
-  isLoadingOverload: false,
   isLoadingCharging: false,
   isGotDevicePower: false,
   isGotChargingStatus: false,
@@ -31,25 +27,6 @@ export const FetchSlice = createSlice({
   name: "fetch",
   initialState,
   reducers: {
-    overloadDataFetching(state: FetchState) {
-      state.isLoadingOverload = true;
-    },
-    overloadDataFetchingSuccess(
-      state: FetchState,
-      action: PayloadAction<IFetch[]>
-    ) {
-      state.isLoadingOverload = false;
-      state.error = "";
-      state.startDataOverload = action.payload;
-    },
-    overloadDataFetchingError(
-      state: FetchState,
-      action: PayloadAction<string>
-    ) {
-      state.isLoadingOverload = false;
-      state.error = action.payload;
-    },
-
     chargingDataFetching(state: FetchState) {
       state.isLoadingCharging = true;
     },

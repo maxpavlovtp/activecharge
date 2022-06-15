@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch } from "../../../hooks/reduxHooks";
 import {
-  fetchOverloadData,
   fetchChargingData,
 } from "../../../store/reducers/ActionCreators";
 
@@ -18,9 +17,6 @@ const MainSection: React.FC = () => {
   const startCharging = () => {
     dispatch(fetchChargingData());
   };
-  const startOverloadChecing = () => {
-    dispatch(fetchOverloadData());
-  };
 
   return (
     <>
@@ -31,7 +27,7 @@ const MainSection: React.FC = () => {
             <Link
               to="/overload"
               className={styles.btnPay}
-              onClick={startOverloadChecing}
+              onClick={startCharging}
             >
               {t("btns.start")}
             </Link>

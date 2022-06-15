@@ -17,7 +17,7 @@ const MainSection: React.FC = () => {
   const [secondsBackend, setSecondsBackend] = useState<any>();
   const [hoursTime, setHoursTime] = useState<any>();
   const [minuteTime, setMinuteTime] = useState<any>();
-  const [secondsTime, setSecondsTime] = useState<any>();
+  const [secondsTime, setSecondsTime] = useState<any>(0);
 
   const secondsUrl = `${process.env.REACT_APP_LINK_SERVE}device/getChargingDurationLeftSecs`;
 
@@ -25,36 +25,42 @@ const MainSection: React.FC = () => {
 
   const { t } = useTranslation();
 
-  const { isLoadingCharging, error } = useAppSelector(
+  const { isLoadingCharging, isDeviceOn, error } = useAppSelector(
     (state) => state.fetchReducer
   );
 
   const start = () => {
-    setLoading(true);
-    dispatch(getDeviceIsOnStatus());
     dispatch(getChargingStatus);
     dispatch(getPower());
-    setTimeout(() => {
-      axios
-        .get(secondsUrl)
-        .then((response) => {
-          setSecondsBackend(response.data.data);
-          console.log(response);
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    }, 2500);
   };
   useEffect(() => {
     console.log(isLoadingCharging);
     if (isLoadingCharging === false) {
-      start();
+      setTimeout(() => {
+        dispatch(getDeviceIsOnStatus());
+      }, 500);
+      setTimeout(() => {
+        axios
+          .get(secondsUrl)
+          .then((response) => {
+            setSecondsBackend(response.data.data);
+            console.log(response.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }, 2500);
     }
   }, [isLoadingCharging]);
+
+  useEffect(() => {
+    console.log(isDeviceOn);
+    console.log(loading);
+    if (isDeviceOn === true) {
+      setLoading(true);
+      start();
+    }
+  }, [isDeviceOn]);
 
   useEffect(() => {
     if (secondsBackend >= 3610) {
@@ -62,19 +68,24 @@ const MainSection: React.FC = () => {
       if (hoursTime) {
         setMinuteTime(Math.floor(secondsBackend / 60) - hoursTime * 60);
         setSecondsTime(secondsBackend % 60);
+        setLoading(false);
       }
     }
     if (secondsBackend < 3610) {
       setMinuteTime(Math.floor(secondsBackend / 60));
       setSecondsTime(secondsBackend % 60);
+      setLoading(false);
     }
     if (secondsBackend < 60) {
       setSecondsTime(secondsBackend);
+      setLoading(false);
     }
     if (secondsBackend <= 2) {
       setSecondsTime(0);
+      setLoading(false);
     }
-  });
+    console.log(secondsTime);
+  }, [secondsBackend]);
 
   if (error)
     return (
@@ -87,19 +98,19 @@ const MainSection: React.FC = () => {
   // let seconds = 20;
   return (
     <>
-      {loading === false && (
-        <div className={styles.chargingBox}>
-          <div className={styles.contTimer}>
-            {secondsTime >= 0 && (
-              <Timer
-                hours={hoursTime}
-                minutes={minuteTime}
-                seconds={secondsTime}
-              />
-            )}
-          </div>
+      {/* {loading === false && ( */}
+      <div className={styles.chargingBox}>
+        <div className={styles.contTimer}>
+          {secondsTime >= 0 && (
+            <Timer
+              hours={hoursTime}
+              minutes={minuteTime}
+              seconds={secondsTime}
+            />
+          )}
         </div>
-      )}
+      </div>
+      {/* )} */}
     </>
   );
 };

@@ -6,7 +6,9 @@ import { useAppDispatch } from "../../hooks/reduxHooks";
 import ErrorPage from "../error-page/ErrorPage";
 import { t } from "i18next";
 import Spinner from "../spinner/Spinner";
-import { fetchOverloadData } from "../../store/reducers/ActionCreators";
+import {
+  fetchChargingData,
+} from "../../store/reducers/ActionCreators";
 import { useTranslation } from "react-i18next";
 
 const OverloadPage = () => {
@@ -17,7 +19,7 @@ const OverloadPage = () => {
   const [completed, setCompleted] = useState<any>(false);
   const [loading, setLoading] = useState<any>(true);
 
-  const { isLoadingOverload, error } = useAppSelector(
+  const { isLoadingCharging, error } = useAppSelector(
     (state) => state.fetchReducer
   );
 
@@ -32,7 +34,7 @@ const OverloadPage = () => {
   const dispatch = useAppDispatch();
 
   const startOverloadChecing = () => {
-    dispatch(fetchOverloadData());
+    dispatch(fetchChargingData());
   };
 
   const getPowerLimit = async () => {
@@ -113,8 +115,8 @@ const OverloadPage = () => {
   };
 
   useEffect(() => {
-    console.log(isLoadingOverload);
-    if (isLoadingOverload === false) {
+    console.log(isLoadingCharging);
+    if (isLoadingCharging === false) {
       getPowerLimit();
       getPayLink();
       const overloadTimer = setInterval(() => {
@@ -131,11 +133,11 @@ const OverloadPage = () => {
     );
   }
 
-  if (isLoadingOverload === true) return <Spinner />;
+  if (isLoadingCharging === true) return <Spinner />;
 
   return (
     <div>
-      {isLoadingOverload === false && (
+      {isLoadingCharging === false && (
         <div className={styles.checkOverloadContainer}>
           {overload === false && (
             <>

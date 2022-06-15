@@ -50,6 +50,7 @@ const Timer = (props: ITimer) => {
     if (!get) {
       dispatch(getDeviceIsOnStatus());
       dispatch(getChargingStatus());
+      console.log(chargingStatus)
       dispatch(getPower());
     }
   };
@@ -64,8 +65,7 @@ const Timer = (props: ITimer) => {
 
   // let wtCharged = Math.round(deviceStatus);
   let wtCharged = Math.round(chargingStatus);
-  let kWtPower = Number(devicePower) / 1000
-  console.log(chargingStatus);
+  let kWtPower = Number(devicePower) / 1000;
 
   // todo use for car range calculation feature
   // nisan leaf = 150
