@@ -25,6 +25,7 @@ class PowerAggregationJobTest {
 
   @AfterEach
   public void teardown() throws Exception {
+    Thread.sleep(2000);
     deviceService.off();
   }
 

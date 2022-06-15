@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,15 +14,13 @@ import org.springframework.test.context.ActiveProfiles;
 @ActiveProfiles("test")
 class DeviceServiceTest {
 
-  long intervalMultipliedMillis = 5 * CHECK_INTERVAL_MILLIS;
-  long chargeSeconds = (intervalMultipliedMillis / 1000);
-  long sleepInterval = chargeSeconds * 1000 + intervalMultipliedMillis;
 
   @Autowired
   DeviceService deviceService;
 
   @AfterEach
   public void teardown() throws Exception {
+    Thread.sleep(2000);
     deviceService.off();
   }
 
@@ -50,19 +47,15 @@ class DeviceServiceTest {
   @Test
   void onOffTest() throws Exception {
     // when
-    deviceService.on(chargeSeconds);
+    deviceService.on(CHECK_INTERVAL_MILLIS / 1000 * 5);
     // then
+    Thread.sleep(CHECK_INTERVAL_MILLIS * 2);
     assertThat(deviceService.isDeviceOn()).isTrue();
 
     // and when
-    Thread.sleep(sleepInterval);
+    Thread.sleep(CHECK_INTERVAL_MILLIS * 5);
 
     // then
     assertThat(deviceService.isDeviceOn()).isFalse();
-  }
-
-  @Test
-  void getDeviceStatusNewAPITest() throws JsonProcessingException {
-    assertThat(deviceService.getDeviceStatusNewAPI()).contains("power");
   }
 }
