@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.km220.ewelink.model.ws.WssResponse;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 class WSEwelinkDeviceApiTest {
@@ -24,10 +25,11 @@ class WSEwelinkDeviceApiTest {
   }
 
   @Test
+  @Disabled
   void getDeviceShouldReturnDevice() throws InterruptedException {
     var api = ewelinkClient.wsDevices();
 
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 3; i++) {
       WssResponse response = api.getDeviceStatus(DEVICE_ID).join();
       assertNotNull(response);
 

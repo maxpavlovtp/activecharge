@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.km220.service.DeviceService;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,11 +26,11 @@ class PowerAggregationJobTest {
 
   @AfterEach
   public void teardown() throws Exception {
-    Thread.sleep(2000);
     deviceService.off();
   }
 
   @Test
+  @Disabled
   public void chargingWtAverageWtHTest() throws Exception {
     // when
     int testTimeSecs = 30;
@@ -43,6 +44,7 @@ class PowerAggregationJobTest {
   }
 
   @Test
+  @Disabled
   public void chargingWtAverageWtHNewApiTest() throws Exception {
     // when
     DeviceService.newApiForGetPower = true;
@@ -57,6 +59,7 @@ class PowerAggregationJobTest {
   }
 
   @Test
+  @Disabled
   void getChargedWtTest() throws Exception {
     // given
     deviceService.on(chargeSeconds);
@@ -69,6 +72,7 @@ class PowerAggregationJobTest {
   }
 
   @Test
+  @Disabled
   void getChargedWtTestNewApi() throws Exception {
     // given
     DeviceService.newApiForGetPower = true;
