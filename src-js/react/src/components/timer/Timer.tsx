@@ -83,7 +83,7 @@ const Timer = (props: ITimer) => {
           .padStart(2, "0")}`}
       </p>
       <div className={over ? styles.overText : styles.endText}>
-        {t("power")}: {kWtPower}
+        {t("power")}: {kWtPower.toFixed(2)} {t("wt")}
       </div>
       <div className={over ? styles.overText : styles.endText}>
         {isDeviceOn
