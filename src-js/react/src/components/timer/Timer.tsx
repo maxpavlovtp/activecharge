@@ -64,6 +64,7 @@ const Timer = (props: ITimer) => {
 
   // let wtCharged = Math.round(deviceStatus);
   let wtCharged = Math.round(chargingStatus);
+  let kWtPower = Number(devicePower) / 1000
   console.log(chargingStatus);
 
   // todo use for car range calculation feature
@@ -82,7 +83,7 @@ const Timer = (props: ITimer) => {
           .padStart(2, "0")}`}
       </p>
       <div className={over ? styles.overText : styles.endText}>
-        {t("power")}: {devicePower}
+        {t("power")}: {kWtPower}
       </div>
       <div className={over ? styles.overText : styles.endText}>
         {isDeviceOn
