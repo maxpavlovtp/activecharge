@@ -2,6 +2,7 @@ package com.km220.service;
 
 import static com.km220.PowerAggregationJob.chargedWt;
 import static com.km220.PowerAggregationJob.onTime;
+import static com.km220.PowerAggregationJob.powerWt;
 import static com.km220.service.PowerLimitOverloadService.OVERLOAD_LIMIT_TIMER_SECS;
 import static java.lang.System.currentTimeMillis;
 
@@ -16,10 +17,12 @@ import com.km220.service.ewelink.model.Status;
 import com.km220.service.ewelink.model.devices.DeviceItem;
 import java.util.Objects;
 import javax.annotation.PostConstruct;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class DeviceService {
 
   @Value("${ewelink.region}")
@@ -107,11 +110,18 @@ public class DeviceService {
   }
 
   public String getPower(boolean newApi) throws Exception {
+    String result;
     if (newApiForGetPower || newApi) {
-      return ewelinkClient.devices().getDevice(deviceId).join().getParams().getPower();
+      log.debug("Getting power using new api v1....");
+      result = ewelinkClient.devices().getDevice(deviceId).join().getParams().getPower();
+
     } else {
-      return getDevice().getParams().getPower();
+      log.debug("Getting power using old api v1....");
+      result = getDevice().getParams().getPower();
     }
+    log.debug("Power is: {}", result);
+
+    return result;
   }
 
 

@@ -3,8 +3,8 @@ package com.km220.service;
 import static com.km220.PowerAggregationJob.CHECK_INTERVAL_MILLIS;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,18 +13,16 @@ import org.springframework.test.context.ActiveProfiles;
 @SpringBootTest
 @ActiveProfiles("test")
 class DeviceServiceTest {
-
-
   @Autowired
   DeviceService deviceService;
 
   @AfterEach
   public void teardown() throws Exception {
-    Thread.sleep(2000);
     deviceService.off();
   }
 
   @Test
+  @Disabled
   void getDevicesTest() throws Exception {
     // when
     String devices = deviceService.getDevices();
@@ -36,15 +34,24 @@ class DeviceServiceTest {
 
   @Test
   void getPowerTest() throws Exception {
+    // given
+    deviceService.on(5);
+
     // when
-    String power = deviceService.getPower(false);
-    System.out.println(power);
+    Thread.sleep(3000);
 
     //then
-    assertThat(power).isNotEmpty();
+    assertThat(Float.parseFloat(deviceService.getPower(false)) > 0).isTrue();
+
+    // and when
+    deviceService.off();
+    Thread.sleep(3000);
+
+    assertThat(deviceService.getPower(false)).isEqualTo("0.00");
   }
 
   @Test
+  @Disabled
   void onOffTest() throws Exception {
     // when
     deviceService.on(CHECK_INTERVAL_MILLIS / 1000 * 5);
