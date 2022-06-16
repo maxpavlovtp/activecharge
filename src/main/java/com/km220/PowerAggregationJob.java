@@ -24,7 +24,6 @@ public class PowerAggregationJob {
   public static float powerWt;
   public static long onTime;
   public static long offTime;
-  public static long chargeDurationSecs;
   public static long chargingDurationSecs;
   public static long chargingDurationLeftSecs;
 

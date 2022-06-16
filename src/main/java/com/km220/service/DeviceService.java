@@ -62,12 +62,11 @@ public class DeviceService {
     eweLinkLegacy.login();
 
     PowerAggregationJob.chargingDurationSecs = 0;
-    PowerAggregationJob.chargeDurationSecs = chargeSeconds;
     PowerAggregationJob.chargedWt = 0;
     PowerAggregationJob.onTime = currentTimeMillis();
-    PowerAggregationJob.offTime = onTime + 1000L * PowerAggregationJob.chargeDurationSecs;
+    PowerAggregationJob.offTime = onTime + 1000L * chargeSeconds;
 
-    Status status = eweLinkLegacy.setDeviceStatus(deviceId, "on", chargeTimeSecs);
+    Status status = eweLinkLegacy.setDeviceStatus(deviceId, "on", (int)chargeSeconds);
     PowerAggregationJob.isOn = true;
     return status;
   }

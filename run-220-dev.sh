@@ -12,6 +12,7 @@ nohup ./src-js/nest/run-nest-dev.sh &
 nohup ./src-js/react/run-react-dev.sh &
 
 ./gradlew clean build -x test
-java -jar build/libs/220-km.com-0.0.1-SNAPSHOT.jar
+#java -jar build/libs/220-km.com-0.0.1-SNAPSHOT.jar
+java -jar build/libs/220-km.com-0.0.1-SNAPSHOT.jar -Dspring.profiles.active=local
 
 #tail -f nohup.out
