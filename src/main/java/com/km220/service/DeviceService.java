@@ -1,6 +1,7 @@
 package com.km220.service;
 
 import static com.km220.PowerAggregationJob.chargedWt;
+import static com.km220.PowerAggregationJob.isOn;
 import static com.km220.PowerAggregationJob.onTime;
 import static com.km220.service.PowerLimitOverloadService.OVERLOAD_LIMIT_TIMER_SECS;
 import static java.lang.System.currentTimeMillis;
@@ -72,7 +73,8 @@ public class DeviceService {
   }
 
   public boolean isDeviceOn() throws Exception {
-    return getDeviceStatus().contains("_switch='on'");
+//    return getDeviceStatus().contains("_switch='on'");
+    return isOn;
   }
 
   public long getChargingDurationLeftSecs() {
