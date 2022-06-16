@@ -1,6 +1,7 @@
 package com.km220.service.ewelink;
 
 
+import com.km220.PowerAggregationJob;
 import com.km220.service.ewelink.errors.DeviceOfflineError;
 import com.km220.service.ewelink.model.Status;
 import com.km220.service.ewelink.model.StatusChange;
@@ -370,8 +371,10 @@ public class EweLink {
     statusChange.setDeviceid(deviceId);
     statusChange.setTs(new Date().getTime() + "");
     statusChange.setVersion("8");
-    statusChange.setParams("{\"switch\":\"" + status + "\"}");
-
+    statusChange.setParams("{"
+        + "\"switch\":\"" + status + "\", "
+        + "\"uiActive\": " + PowerAggregationJob.CHECK_INTERVAL_SECS * 3 +
+        "}");
     conn.setRequestProperty("Authorization", "Bearer " + accessToken);
 
     logger.debug("StatusChange Request:{}", statusChange.toString());
