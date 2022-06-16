@@ -2,7 +2,6 @@ package com.km220.service;
 
 import static com.km220.PowerAggregationJob.chargedWt;
 import static com.km220.PowerAggregationJob.onTime;
-import static com.km220.PowerAggregationJob.powerWt;
 import static com.km220.service.PowerLimitOverloadService.OVERLOAD_LIMIT_TIMER_SECS;
 import static java.lang.System.currentTimeMillis;
 
@@ -32,8 +31,8 @@ public class DeviceService {
   @Value("${ewelink.password}")
   private String password;
 
-  @Value("${device.chargeTime}")
-  private int chargeTime;
+  @Value("${device.chargeTimeSecs}")
+  private int chargeTimeSecs;
 
 
 
@@ -56,7 +55,7 @@ public class DeviceService {
   }
 
   public Status on() throws Exception {
-    return on(OVERLOAD_LIMIT_TIMER_SECS + chargeTime);
+    return on(OVERLOAD_LIMIT_TIMER_SECS + chargeTimeSecs);
   }
 
   public Status on(long chargeSeconds) throws Exception {

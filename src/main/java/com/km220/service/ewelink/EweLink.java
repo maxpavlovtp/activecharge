@@ -24,9 +24,12 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.Date;
+import org.springframework.beans.factory.annotation.Value;
 
 
 public class EweLink {
+  @Value("${device.chargeTimeSecs}")
+  private int chargeTimeSecs;
 
   Logger logger = LoggerFactory.getLogger(EweLink.class);
 
@@ -373,7 +376,7 @@ public class EweLink {
     statusChange.setVersion("8");
     statusChange.setParams("{"
         + "\"switch\":\"" + status + "\", "
-        + "\"uiActive\": " + PowerAggregationJob.CHECK_INTERVAL_SECS * 3 +
+        + "\"uiActive\": " + chargeTimeSecs +
         "}");
     conn.setRequestProperty("Authorization", "Bearer " + accessToken);
 

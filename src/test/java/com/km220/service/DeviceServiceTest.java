@@ -16,20 +16,20 @@ class DeviceServiceTest {
 
   @Autowired
   DeviceService deviceService;
-
-  @AfterEach
-  public void teardown() throws Exception {
-    deviceService.off();
-  }
+//
+//  @AfterEach
+//  public void teardown() throws Exception {
+//    deviceService.off();
+//  }
 
   // Checks jershik ewelink api bug.
   @Test
   void getPowerTest() throws Exception {
     // given
-    deviceService.on(10);
+    deviceService.on(10000);
 
     // when
-    Thread.sleep(5000);
+    Thread.sleep(700000000);
 
     //then
     float power = Float.parseFloat(deviceService.getPower(false));
