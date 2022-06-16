@@ -68,7 +68,7 @@ public class DeviceService {
     PowerAggregationJob.onTime = currentTimeMillis();
     PowerAggregationJob.offTime = onTime + 1000L * PowerAggregationJob.chargeDurationSecs;
 
-    Status status = eweLinkLegacy.setDeviceStatus(deviceId, "on");
+    Status status = eweLinkLegacy.setDeviceStatus(deviceId, "on", chargeTimeSecs);
     PowerAggregationJob.isOn = true;
     return status;
   }
@@ -84,11 +84,11 @@ public class DeviceService {
   public Status off() throws Exception {
     Status result;
     try {
-      result = eweLinkLegacy.setDeviceStatus(deviceId, "off");
+      result = eweLinkLegacy.setDeviceStatus(deviceId, "off", chargeTimeSecs);
     } catch (Exception e) {
       // todo fix login hack
       eweLinkLegacy.login();
-      result = eweLinkLegacy.setDeviceStatus(deviceId, "off");
+      result = eweLinkLegacy.setDeviceStatus(deviceId, "off", chargeTimeSecs);
     }
 
     System.out.println("Charge has been finished");

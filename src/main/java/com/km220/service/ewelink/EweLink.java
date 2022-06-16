@@ -1,7 +1,6 @@
 package com.km220.service.ewelink;
 
 
-import com.km220.PowerAggregationJob;
 import com.km220.service.ewelink.errors.DeviceOfflineError;
 import com.km220.service.ewelink.model.Status;
 import com.km220.service.ewelink.model.StatusChange;
@@ -24,12 +23,9 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.Date;
-import org.springframework.beans.factory.annotation.Value;
 
 
 public class EweLink {
-  @Value("${device.chargeTimeSecs}")
-  private int chargeTimeSecs;
 
   Logger logger = LoggerFactory.getLogger(EweLink.class);
 
@@ -340,7 +336,7 @@ public class EweLink {
     }
   }
 
-  public Status setDeviceStatus(String deviceId, String status) throws Exception {
+  public Status setDeviceStatus(String deviceId, String status, int chargeTimeSecs) throws Exception {
 
     if (!isLoggedIn) {
       throw new Exception("Not Logged In, please call login Method");
