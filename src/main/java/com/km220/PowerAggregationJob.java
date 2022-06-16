@@ -29,10 +29,9 @@ public class PowerAggregationJob {
   public static long chargingDurationLeftSecs;
 
   public static final long CHECK_INTERVAL_MILLIS = 1000;
-  public static final long CHECK_INTERVAL_SECS = CHECK_INTERVAL_MILLIS / 1000;
 
   @Scheduled(fixedDelay = CHECK_INTERVAL_MILLIS)
-  public void sumPower() throws Exception {
+  public void sumPower() {
     long now = currentTimeMillis();
     if (!isOn) {
       return;

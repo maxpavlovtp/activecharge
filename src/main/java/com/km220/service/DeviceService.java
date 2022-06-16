@@ -35,7 +35,6 @@ public class DeviceService {
   private int chargeTimeSecs;
 
 
-
   @Value("${deviceId}")
   private String deviceId;
 
