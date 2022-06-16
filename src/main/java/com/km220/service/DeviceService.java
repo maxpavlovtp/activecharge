@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.km220.PowerAggregationJob;
 import com.km220.ewelink.EwelinkClient;
 import com.km220.ewelink.model.device.Device;
+import com.km220.ewelink.model.device.Params;
 import com.km220.ewelink.model.ws.WssResponse;
 import com.km220.service.ewelink.EweLink;
 import com.km220.service.ewelink.model.Status;
@@ -67,7 +68,7 @@ public class DeviceService {
     PowerAggregationJob.onTime = currentTimeMillis();
     PowerAggregationJob.offTime = onTime + 1000L * chargeSeconds;
 
-    Status status = eweLinkLegacy.setDeviceStatus(deviceId, "on", (int)chargeSeconds);
+    Status status = eweLinkLegacy.setDeviceStatus(deviceId, "on", (int) chargeSeconds);
     PowerAggregationJob.isOn = true;
     return status;
   }
@@ -96,7 +97,7 @@ public class DeviceService {
     return result;
   }
 
-  public float getChargedWt() throws Exception {
+  public float getChargedWt() {
     return chargedWt;
   }
 
@@ -111,9 +112,9 @@ public class DeviceService {
   public String getPower(boolean newApi) throws Exception {
     String result;
     if (newApiForGetPower || newApi) {
-      log.debug("Getting power using new api v1....");
-      result = ewelinkClient.devices().getDevice(deviceId).join().getParams().getPower();
-
+      log.debug("Getting power using new websocket api v1....");
+      Params params = getWSDeviceStatus(deviceId).getParams();
+      result = params != null ? params.getPower() : "0";
     } else {
       log.debug("Getting power using old api v1....");
       result = getDevice().getParams().getPower();

@@ -47,7 +47,7 @@ public class PowerAggregationJob {
     }
 
     try {
-      powerWt = Float.parseFloat(deviceService.getPower(false));
+      powerWt = Float.parseFloat(deviceService.getPower(true));
     } catch (Exception e) {
       e.printStackTrace();
     }

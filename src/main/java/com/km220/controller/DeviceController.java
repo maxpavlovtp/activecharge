@@ -70,7 +70,7 @@ public class DeviceController {
 
   @GetMapping("/getPower")
   public Response getPower() throws Exception {
-    return new Response("getPower", deviceService.getPower(false));
+    return new Response("getPower", deviceService.getPower(true));
   }
 
   @GetMapping("/isPowerLimitOvelrloaded")
