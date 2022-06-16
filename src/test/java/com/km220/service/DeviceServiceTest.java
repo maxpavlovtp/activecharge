@@ -26,10 +26,10 @@ class DeviceServiceTest {
   @Test
   void getPowerTest() throws Exception {
     // given
-    deviceService.on(10000);
+    deviceService.on(10);
 
     // when
-    Thread.sleep(700000000);
+    Thread.sleep(7000);
 
     //then
     float power = Float.parseFloat(deviceService.getPower(false));
