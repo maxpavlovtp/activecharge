@@ -25,7 +25,7 @@ export default function GetPower() {
   useEffect(() => {
     const timerID = setInterval(() => {
       getNumber();
-    }, 1000);
+    }, 4000);
     return () => clearInterval(timerID);
   }, [isDeviceOn]);
 
