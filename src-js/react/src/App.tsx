@@ -6,6 +6,7 @@ import ContractScreen from "./App/contractScreen/ContractScreen";
 import PaymentScreen from "./App/paymentScreen/PaymentScreen";
 import ChargingScreen from "./App/chargingScreen/ChargingScreen";
 import MainOverload from "./components/overload-page/MainOverload";
+import PrivateRoute from "./components/privateRoute/PrivateRoute";
 
 function App() {
   return (
@@ -17,7 +18,14 @@ function App() {
           <Route path="/payment" element={<PaymentScreen />} />
           <Route path="/charging" element={<ChargingScreen />} />
           <Route path="/overload" element={<MainOverload />} />
-          <Route path="/" element={<MainScreen />} />
+          <Route
+            path="/"
+            element={
+              <PrivateRoute>
+                <MainScreen />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </Router>
     </Suspense>
