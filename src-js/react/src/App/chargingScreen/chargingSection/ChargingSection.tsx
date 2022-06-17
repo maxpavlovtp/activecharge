@@ -29,6 +29,15 @@ const MainSection: React.FC = () => {
     (state) => state.fetchReducer
   );
 
+  const hours = (secondsBackend: any) => {
+    setHoursTime(Math.floor(secondsBackend / 60 / 60));
+    if (hoursTime) {
+      setMinuteTime(Math.floor(secondsBackend / 60) - hoursTime * 60);
+      setSecondsTime(secondsBackend % 60);
+      setLoading(false);
+    }
+  };
+
   const start = () => {
     dispatch(getChargingStatus);
     dispatch(getPower());
@@ -49,7 +58,7 @@ const MainSection: React.FC = () => {
           .catch((err) => {
             console.log(err);
           });
-      }, 2500);
+      }, 3000);
     }
   }, [isLoadingCharging]);
 
@@ -64,12 +73,7 @@ const MainSection: React.FC = () => {
 
   useEffect(() => {
     if (secondsBackend >= 3610) {
-      setHoursTime(Math.floor(secondsBackend / 60 / 60));
-      if (hoursTime) {
-        setMinuteTime(Math.floor(secondsBackend / 60) - hoursTime * 60);
-        setSecondsTime(secondsBackend % 60);
-        setLoading(false);
-      }
+      hours(secondsBackend);
     }
     if (secondsBackend < 3610) {
       setMinuteTime(Math.floor(secondsBackend / 60));
@@ -85,7 +89,7 @@ const MainSection: React.FC = () => {
       setLoading(false);
     }
     console.log(secondsTime);
-  }, [secondsBackend]);
+  }, [secondsBackend, hoursTime]);
 
   if (error)
     return (
