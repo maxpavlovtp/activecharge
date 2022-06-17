@@ -11,6 +11,7 @@ import {
   getDeviceIsOnStatus,
   getPower,
 } from "../../../store/reducers/ActionCreators";
+import GetPower from "../../../components/getPower/GetPower";
 
 const MainSection: React.FC = () => {
   const [loading, setLoading] = useState<any>(true);
@@ -39,8 +40,8 @@ const MainSection: React.FC = () => {
   };
 
   const start = () => {
-    dispatch(getChargingStatus);
-    dispatch(getPower());
+    // dispatch(getChargingStatus);
+    // dispatch(getPower());
   };
   useEffect(() => {
     console.log(isLoadingCharging);
@@ -63,13 +64,10 @@ const MainSection: React.FC = () => {
   }, [isLoadingCharging]);
 
   useEffect(() => {
-    console.log(isDeviceOn);
-    console.log(loading);
     if (isDeviceOn === true) {
-      setLoading(true);
       start();
     }
-  }, [isDeviceOn]);
+  }, []);
 
   useEffect(() => {
     if (secondsBackend >= 3610) {
@@ -104,15 +102,16 @@ const MainSection: React.FC = () => {
     <>
       {/* {loading === false && ( */}
       <div className={styles.chargingBox}>
-        <div className={styles.contTimer}>
-          {secondsTime >= 0 && (
+        {secondsTime >= 0 && (
+          <div className={styles.contTimer}>
             <Timer
               hours={hoursTime}
               minutes={minuteTime}
               seconds={secondsTime}
             />
-          )}
-        </div>
+            <GetPower />
+          </div>
+        )}
       </div>
       {/* )} */}
     </>
