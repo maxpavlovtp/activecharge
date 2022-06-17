@@ -50,7 +50,6 @@ const Timer = (props: ITimer) => {
     if (!get) {
       dispatch(getDeviceIsOnStatus());
       dispatch(getChargingStatus());
-      console.log(chargingStatus)
       dispatch(getPower());
     }
   };
@@ -58,10 +57,16 @@ const Timer = (props: ITimer) => {
   useEffect(() => {
     const timerID = setInterval(() => {
       tick();
+      // getNumber();
+    }, 1000);
+    return () => clearInterval(timerID);
+  }, [h, m, s]);
+  useEffect(() => {
+    const timerID = setInterval(() => {
       getNumber();
     }, 1000);
     return () => clearInterval(timerID);
-  });
+  }, [h, m, s]);
 
   // let wtCharged = Math.round(deviceStatus);
   let wtCharged = Math.round(chargingStatus);
