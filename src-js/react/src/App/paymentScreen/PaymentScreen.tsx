@@ -8,7 +8,7 @@ const PaymentScreen: React.FC = () => {
   return (
     <div className={styles.paymentContainer}>
       <div>
-        <Header />
+        <Header linkTo='/'/>
         <PaymentSection />
       </div>
       <Footer />

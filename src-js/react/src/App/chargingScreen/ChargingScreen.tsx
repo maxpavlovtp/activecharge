@@ -8,7 +8,7 @@ const ChargingScreen: React.FC = () => {
   return (
     <div className={styles.chargingContainer}>
       <div>
-        <Header />
+        <Header linkTo='/'/>
         <ChargingSection />
       </div>
 

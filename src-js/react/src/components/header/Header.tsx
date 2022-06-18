@@ -6,7 +6,7 @@ import Navigation from "./Navigation";
 import MobileNavigation from "./MobileNavigation";
 import { useAppSelector } from "../../hooks/reduxHooks";
 
-const Header = () => {
+const Header = ({ linkTo }: { linkTo: string }) => {
   const [fix, setFix] = useState(false);
 
   const { isDeviceOn } = useAppSelector((state) => state.fetchReducer);
@@ -23,21 +23,12 @@ const Header = () => {
   return (
     <header className={styles.headerBox}>
       <nav className={fix ? styles.paddingBoxFixed : styles.paddingBox}>
-        {isDeviceOn === true ? (
-          <div className={styles.homeLink}>
-            <div className={styles.logoContainer}>
-              <img className={styles.logoImg} src={logo} alt="logo" />
-            </div>
-            <h3 className={styles.logoText}>220-km.com</h3>
+        <Link className={styles.homeLink} to={linkTo}>
+          <div className={styles.logoContainer}>
+            <img className={styles.logoImg} src={logo} alt="logo" />
           </div>
-        ) : (
-          <Link className={styles.homeLink} to="/">
-            <div className={styles.logoContainer}>
-              <img className={styles.logoImg} src={logo} alt="logo" />
-            </div>
-            <h3 className={styles.logoText}>220-km.com</h3>
-          </Link>
-        )}
+          <h3 className={styles.logoText}>220-km.com</h3>
+        </Link>
 
         <Navigation />
         <MobileNavigation />

@@ -6,7 +6,7 @@ import Footer from "../../components/footer/Footer";
 function HomeScreen() {
   return (
     <div className={styles.mainContainer}>
-      <Header/>
+      <Header linkTo="/"/>
       <MainSection/>
       <Footer/>
     </div>
