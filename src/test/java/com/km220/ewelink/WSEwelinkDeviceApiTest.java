@@ -1,5 +1,6 @@
 package com.km220.ewelink;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.km220.ewelink.model.ws.WssResponse;
@@ -28,13 +29,40 @@ class WSEwelinkDeviceApiTest {
   }
 
   @Test
-  void getDeviceStatus_ShouldReturnDeviceStatus() {
-    WssResponse response = wsEwelinkDeviceApi.getDeviceStatus(DRYER_DEVICE_ID).join();
+  void getDeviceStatus_shouldReturnDeviceStatus() {
+    WssResponse response = wsEwelinkDeviceApi.getStatus(DRYER_DEVICE_ID).join();
     LOGGER.info("Device id = {}. Response = {}.", DRYER_DEVICE_ID, response);
     assertNotNull(response);
+    assertEquals(0, response.getError());
 
-    response = wsEwelinkDeviceApi.getDeviceStatus(DRYER_DEVICE_ID).join();
+    response = wsEwelinkDeviceApi.getStatus(DRYER_DEVICE_ID).join();
     LOGGER.info("Device id = {}. Response = {}.", DRYER_DEVICE_ID, response);
     assertNotNull(response);
+    assertEquals(0, response.getError());
+  }
+
+  @Test
+  void toggleDeviceOn_shouldSetDeviceStatusToSwitchOn() {
+    WssResponse response = wsEwelinkDeviceApi.toggle(DRYER_DEVICE_ID, true).join();
+    LOGGER.info("Device id = {}. Response = {}.", DRYER_DEVICE_ID, response);
+    assertNotNull(response);
+    assertEquals(0, response.getError());
+
+    response = wsEwelinkDeviceApi.getStatus(DRYER_DEVICE_ID).join();
+    LOGGER.info("Device id = {}. Response = {}.", DRYER_DEVICE_ID, response);
+    assertNotNull(response);
+    assertEquals(0, response.getError());
+    assertEquals("on", response.getParams().get_switch());
+
+    response = wsEwelinkDeviceApi.toggle(DRYER_DEVICE_ID, false).join();
+    LOGGER.info("Device id = {}. Response = {}.", DRYER_DEVICE_ID, response);
+    assertNotNull(response);
+    assertEquals(0, response.getError());
+
+    response = wsEwelinkDeviceApi.getStatus(DRYER_DEVICE_ID).join();
+    LOGGER.info("Device id = {}. Response = {}.", DRYER_DEVICE_ID, response);
+    assertNotNull(response);
+    assertEquals(0, response.getError());
+    assertEquals("off", response.getParams().get_switch());
   }
 }

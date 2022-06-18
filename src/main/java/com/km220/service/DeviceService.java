@@ -145,7 +145,7 @@ public class DeviceService {
 
   public WssResponse getWSDeviceStatus(String deviceId) {
     return ewelinkClient.wsDevices()
-        .getDeviceStatus(Objects.requireNonNull(deviceId))
+        .getStatus(Objects.requireNonNull(deviceId))
         .join();
   }
 }

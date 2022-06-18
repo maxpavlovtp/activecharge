@@ -1,7 +1,7 @@
 package com.km220.ewelink.internal.utils;
 
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -11,6 +11,9 @@ import java.util.function.Function;
 public final class JsonUtils {
 
   private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+  static {
+    OBJECT_MAPPER.setSerializationInclusion(Include.NON_NULL);;
+  }
 
   private JsonUtils() {
   }
