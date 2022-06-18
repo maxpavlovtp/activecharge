@@ -11,6 +11,7 @@ public class CredentialsRequest {
     String email;
     String phoneNumber;
     String password;
+    String countryCode;
     Long ts;
     Integer version;
     String nonce;
