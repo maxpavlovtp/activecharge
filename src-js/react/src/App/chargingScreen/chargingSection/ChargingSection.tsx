@@ -39,11 +39,9 @@ const MainSection: React.FC = () => {
     }
   };
 
-  const start = () => {
-    // dispatch(getChargingStatus);
-    // dispatch(getPower());
-  };
   useEffect(() => {
+    dispatch(getChargingStatus());
+    dispatch(getPower());
     console.log(isLoadingCharging);
     if (isLoadingCharging === false) {
       setTimeout(() => {
@@ -62,12 +60,6 @@ const MainSection: React.FC = () => {
       }, 3000);
     }
   }, [isLoadingCharging]);
-
-  useEffect(() => {
-    if (isDeviceOn === true) {
-      start();
-    }
-  }, []);
 
   useEffect(() => {
     if (secondsBackend >= 3610) {
