@@ -55,7 +55,7 @@ public class DeviceController {
 
   @GetMapping("/getWSDeviceStatus")
   public Response<WssResponse> getWSDeviceStatus() {
-    WssResponse response = deviceService.getWSDeviceStatus(BOILER_DEVICE_ID);
+    WssResponse response = deviceService.getWSDeviceStatus(BOILER_DEVICE_ID).join();
     return new Response<>("getWSDeviceStatus", response);
   }
 

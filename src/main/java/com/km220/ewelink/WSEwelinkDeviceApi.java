@@ -18,7 +18,6 @@ public final class WSEwelinkDeviceApi extends CloseableWSEwelinkApi {
   }
 
   public CompletableFuture<WssResponse> getStatus(String deviceId) {
-
     return sendMessageAsync(JsonUtils.serialize(WssGetDeviceStatus.create(deviceId)));
   }
 

@@ -12,11 +12,13 @@ import com.km220.PowerAggregationJob;
 import com.km220.ewelink.EwelinkClient;
 import com.km220.ewelink.model.device.Device;
 import com.km220.ewelink.model.device.Params;
+import com.km220.ewelink.model.device.SwitchState;
 import com.km220.ewelink.model.ws.WssResponse;
 import com.km220.service.ewelink.EweLink;
 import com.km220.service.ewelink.model.Status;
 import com.km220.service.ewelink.model.devices.DeviceItem;
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 import javax.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -113,7 +115,7 @@ public class DeviceService {
     String result;
     if (newApiForGetPower || newApi) {
       log.debug("Getting power using new websocket api v1....");
-      Params params = getWSDeviceStatus(deviceId).getParams();
+      Params params = getWSDeviceStatus(deviceId).join().getParams();
       result = params != null ? params.getPower() : "0";
     } else {
       log.debug("Getting power using old api v1....");
@@ -143,9 +145,18 @@ public class DeviceService {
     return new ObjectMapper().writeValueAsString(device);
   }
 
-  public WssResponse getWSDeviceStatus(String deviceId) {
+  public CompletableFuture<WssResponse> getWSDeviceStatus(String deviceId) {
     return ewelinkClient.wsDevices()
-        .getStatus(Objects.requireNonNull(deviceId))
-        .join();
+        .getStatus(Objects.requireNonNull(deviceId));
+  }
+
+  public CompletableFuture<WssResponse> wsDeviceToggleOn(String deviceId) {
+    return ewelinkClient.wsDevices()
+        .toggle(Objects.requireNonNull(deviceId), SwitchState.ON);
+  }
+
+  public CompletableFuture<WssResponse> wsDeviceToggleOff(String deviceId) {
+    return ewelinkClient.wsDevices()
+        .toggle(Objects.requireNonNull(deviceId), SwitchState.OFF);
   }
 }
