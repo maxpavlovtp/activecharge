@@ -43,10 +43,6 @@ public abstract class AbstractEwelinkApi {
   private static final String LOGIN_URI = "/api/user/login";
   static final int API_VERSION = 8;
 
-  protected static final String QUERY_ACTION = "query";
-  protected static final String UPDATE_ACTION = "update";
-  protected static final String APP_USER_AGENT = "app";
-
   protected AbstractEwelinkApi(final EwelinkParameters parameters, final String applicationId,
       final String applicationSecret, final HttpClient httpClient) {
     this.parameters = parameters;

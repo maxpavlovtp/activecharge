@@ -17,7 +17,7 @@ import lombok.extern.jackson.Jacksonized;
 public class Do_ {
 
     @JsonProperty("switch")
-    private String _switch;
+    private SwitchState switchState;
     @Default
     private Map<String, Object> additionalProperties = new HashMap<>();
 

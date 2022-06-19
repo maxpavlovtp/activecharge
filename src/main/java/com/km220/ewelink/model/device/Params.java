@@ -22,7 +22,7 @@ public class Params {
   private BindInfos bindInfos;
   private String sledOnline;
   @JsonProperty("switch")
-  private String _switch;
+  private SwitchState switchState;
   private String power;
   private String voltage;
   private String current;
@@ -43,7 +43,8 @@ public class Params {
   private String startup;
   private String pulse;
   private Integer pulseWidth;
-  private List<Timer> timers = null;
+  @Default
+  private List<Timer> timers = new ArrayList<>();
   private String hundredDaysKwh;
   private OnlyDevice onlyDevice;
   private String ssid;

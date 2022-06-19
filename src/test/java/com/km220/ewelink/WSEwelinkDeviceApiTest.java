@@ -3,6 +3,7 @@ package com.km220.ewelink;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import com.km220.ewelink.model.device.SwitchState;
 import com.km220.ewelink.model.ws.WssResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -42,8 +43,8 @@ class WSEwelinkDeviceApiTest {
   }
 
   @Test
-  void toggleDeviceOn_shouldSetDeviceStatusToSwitchOn() {
-    WssResponse response = wsEwelinkDeviceApi.toggle(DRYER_DEVICE_ID, true).join();
+  void toggleDeviceState_shouldChangeDeviceToggleState() {
+    WssResponse response = wsEwelinkDeviceApi.toggle(DRYER_DEVICE_ID, SwitchState.ON).join();
     LOGGER.info("Device id = {}. Response = {}.", DRYER_DEVICE_ID, response);
     assertNotNull(response);
     assertEquals(0, response.getError());
@@ -52,9 +53,9 @@ class WSEwelinkDeviceApiTest {
     LOGGER.info("Device id = {}. Response = {}.", DRYER_DEVICE_ID, response);
     assertNotNull(response);
     assertEquals(0, response.getError());
-    assertEquals("on", response.getParams().get_switch());
+    assertEquals(SwitchState.ON, response.getParams().getSwitchState());
 
-    response = wsEwelinkDeviceApi.toggle(DRYER_DEVICE_ID, false).join();
+    response = wsEwelinkDeviceApi.toggle(DRYER_DEVICE_ID, SwitchState.OFF).join();
     LOGGER.info("Device id = {}. Response = {}.", DRYER_DEVICE_ID, response);
     assertNotNull(response);
     assertEquals(0, response.getError());
@@ -63,6 +64,6 @@ class WSEwelinkDeviceApiTest {
     LOGGER.info("Device id = {}. Response = {}.", DRYER_DEVICE_ID, response);
     assertNotNull(response);
     assertEquals(0, response.getError());
-    assertEquals("off", response.getParams().get_switch());
+    assertEquals(SwitchState.OFF, response.getParams().getSwitchState());
   }
 }
