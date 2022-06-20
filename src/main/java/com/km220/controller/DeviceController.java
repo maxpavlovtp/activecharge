@@ -48,17 +48,6 @@ public class DeviceController {
     return new Response("getDeviceStatus", deviceService.getDeviceStatus());
   }
 
-  @GetMapping("/getDeviceStatusNewAPI")
-  public Response getDeviceStatusNewAPI() throws Exception {
-    return new Response("getDeviceStatusNewAPI", deviceService.getDeviceStatusNewAPI());
-  }
-
-  @GetMapping("/getWSDeviceStatus")
-  public Response<WssResponse> getWSDeviceStatus() {
-    WssResponse response = deviceService.getWSDeviceStatus(BOILER_DEVICE_ID).join();
-    return new Response<>("getWSDeviceStatus", response);
-  }
-
   @GetMapping("/isDeviceOn")
   public Response isDeviceOn() throws Exception {
     return new Response("isDeviceOn", deviceService.isDeviceOn());
