@@ -36,6 +36,10 @@ i18n
           errorBody: "Вибачте! Девайс офлайн. Спробуйте, будь ласка, пізніше",
           offerTitle: "Договір публічної оферти",
           contents: "Зміст",
+          callUs: "Зателефонувати",
+          instagram: "Інстаграм",
+          telegram: "Телеграм",
+          watsapp: "Ватсап",
           overload: {
             waitForLink: "Зачекайте секунду",
             gettingLink: "Отримуємо посилання для оплати",
@@ -74,6 +78,10 @@ i18n
           errorBody: "Sorry! Device is offline. Please, try later",
           offerTitle: "Public offer agreement",
           contents: "Contents",
+          callUs: "Call Us",
+          instagram: "Instagram",
+          telegram: "Telegram",
+          watsapp: "WatsApp",
           overload: {
             waitForLink: "Wait a second",
             gettingLink: "Getting payment link",
