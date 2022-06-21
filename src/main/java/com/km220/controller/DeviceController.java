@@ -40,7 +40,7 @@ public class DeviceController {
 
   @GetMapping("/getChargingStatus")
   public Response getChargingStatus() throws Exception {
-    return new Response("kWtCharged", deviceService.getChargedWt());
+    return new Response("kWtCharged", deviceService.getChargedWt()/1000);
   }
 
   @GetMapping("/getDeviceStatus")

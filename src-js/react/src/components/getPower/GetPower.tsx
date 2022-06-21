@@ -29,8 +29,7 @@ export default function GetPower() {
     return () => clearInterval(timerID);
   }, [isDeviceOn]);
 
-  // let wtCharged = Math.round(deviceStatus);
-  let wtCharged = Math.round(chargingStatus);
+  let kWtCharged = chargingStatus;
   let kWtPower = Number(devicePower) / 1000;
 
   // todo use for car range calculation feature
@@ -38,9 +37,10 @@ export default function GetPower() {
   // tesla model 3 = 100
   let carKwtKmRatio = 150;
   let isZero = chargingStatus === undefined;
-  let chargeStatus = `${isZero ? " " : wtCharged} ${t("wt")}  (${t("around")} ${
-    isZero ? 0 : Math.round(wtCharged / carKwtKmRatio)
+  let chargeStatus = `${isZero ? " " : kWtCharged} ${t("wt")}  (${t("around")} ${
+    isZero ? 0 : Math.round(kWtCharged * 1000 / carKwtKmRatio)
   } km)`;
+
   return (
     <div className={styles.timerBox}>
       <div className={isDeviceOn === false ? styles.overText : styles.endText}>
