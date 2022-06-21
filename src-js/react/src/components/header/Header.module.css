@@ -44,8 +44,7 @@
 
 .logoText {
   color: #393939;
-  font-family: "Open Sans";
-  font-weight: 700;
+  font-family: "OpenSansBold";
   font-size: calc(0.9rem + 1.2vw);
   margin: 0;
 }
@@ -62,7 +61,7 @@
   padding: 4px;
   padding-left: 12px;
   padding-right: 0;
-  font-family: "Open Sans";
+  font-family: "OpenSansRegular";
   text-decoration: none;
   font-size: 16px;
 }
@@ -80,7 +79,7 @@
 }
 
 .btnLang {
-  font-family: "Open Sans";
+  font-family: "OpenSansRegular";
   background-color: transparent;
   border: none;
   cursor: pointer;
