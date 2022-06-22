@@ -3,7 +3,6 @@ package com.km220.service;
 import static com.km220.PowerAggregationJob.CHECK_INTERVAL_MILLIS;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +15,6 @@ class DeviceServiceTest {
 
   @Autowired
   DeviceService deviceService;
-//
-//  @AfterEach
-//  public void teardown() throws Exception {
-//    deviceService.off();
-//  }
 
   // Checks jershik ewelink api bug.
   @Test
@@ -33,6 +27,27 @@ class DeviceServiceTest {
 
     //then
     float power = Float.parseFloat(deviceService.getPower(false));
+    System.out.println("Power is: " + power);
+    assertThat(power > 0).isTrue();
+
+    // and when
+    deviceService.off();
+    Thread.sleep(5000);
+
+    assertThat(deviceService.getPower(false)).isEqualTo("0.00");
+  }
+
+  // Checks jershik ewelink api bug.
+  @Test
+  void getPowerNewApiTest() throws Exception {
+    // given
+    deviceService.on(10);
+
+    // when
+    Thread.sleep(7000);
+
+    //then
+    float power = Float.parseFloat(deviceService.getPower(true));
     System.out.println("Power is: " + power);
     assertThat(power > 0).isTrue();
 

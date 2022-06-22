@@ -18,8 +18,8 @@ public class EwelinkClient {
   private String applicationSecret;
   private HttpClient httpClient;
 
-  private static final String APPLICATION_ID = "4t2Xs57iZQRRwDBPWigvi9qHfQeCfg0X";
-  private static final String APPLICATION_SECRET = "8SKQcsaGbsQMnhiLH3NKdLHNCBt2L8Xz";
+  private static final String APPLICATION_ID = "oeVkj2lYFGnJu5XUtWisfW4utiN4u9Mq";
+  private static final String APPLICATION_SECRET = "6Nz4n0xA8s8qdxQf2GqurZj2Fs55FUvM";
 
   @Builder
   @SuppressWarnings("unused")
