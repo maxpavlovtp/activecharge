@@ -37,6 +37,9 @@ out/
 ### VS Code ###
 .vscode/
 
+# npm
 src-js/node_modules/
 src-js/package-lock.json
+node_modules
+package-lock.json
 
