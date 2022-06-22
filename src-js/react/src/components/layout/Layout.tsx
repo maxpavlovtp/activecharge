@@ -7,6 +7,8 @@ import Navigation from "../header/Navigation";
 import MobileNavigation from "../header/MobileNavigation";
 import { useTranslation } from "react-i18next";
 import { getDeviceIsOnStatus } from "../../store/reducers/ActionCreators";
+import MainImgLoadingLazy from "../lazyLoading/MainImgLoadingLazy";
+import placehoderSrc from "../../assets/logoTiny.png"
 
 export default function Layout() {
   const [fix, setFix] = useState(false);
@@ -35,7 +37,12 @@ export default function Layout() {
         <nav className={fix ? styles.paddingBoxFixed : styles.paddingBox}>
           <Link className={styles.homeLink} to={routeTo}>
             <div className={styles.logoContainer}>
-              <img className={styles.logoImg} src={logo} alt="logo" />
+              <MainImgLoadingLazy src={logo}
+              alt={"logo"}
+              placeholderSrc={placehoderSrc}
+              width="40"
+              heigth="40"
+              />
             </div>
             <h3 className={styles.logoText}>220-km.com</h3>
           </Link>

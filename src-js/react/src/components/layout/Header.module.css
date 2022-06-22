@@ -35,12 +35,7 @@
   display: flex;
 }
 
-.logoImg {
-  margin-right: 10px;
-  max-width: 40px;
-  width: auto;
-  height: auto;
-}
+
 
 .logoText {
   color: #393939;
@@ -48,6 +43,7 @@
   font-weight: 700;
   font-size: calc(0.9rem + 1.2vw);
   margin: 0;
+  margin-left: 10px;
 }
 
 .routeLinks {

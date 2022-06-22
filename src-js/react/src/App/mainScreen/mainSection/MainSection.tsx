@@ -4,12 +4,11 @@ import mainImg from "../../../assets/charging.png";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch } from "../../../hooks/reduxHooks";
-import {
-  fetchChargingData,
-} from "../../../store/reducers/ActionCreators";
+import { fetchChargingData } from "../../../store/reducers/ActionCreators";
+import MainImgLoadingLazy from "../../../components/lazyLoading/MainImgLoadingLazy";
+import placehoderSrc from "../../../assets/chargingTiny.png";
 
 const MainSection: React.FC = () => {
-
   const { t } = useTranslation();
 
   const dispatch = useAppDispatch();
@@ -36,7 +35,13 @@ const MainSection: React.FC = () => {
             </Link>
           </div>
           <div className={styles.imgCont}>
-            <img className={styles.mainImg} src={mainImg} alt="mainImg" />
+            <MainImgLoadingLazy
+              src={mainImg}
+              alt={"station"}
+              placeholderSrc={placehoderSrc}
+              width="256"
+              heigth="256"
+            />
           </div>
         </div>
       </div>
