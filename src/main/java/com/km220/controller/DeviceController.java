@@ -1,9 +1,8 @@
 package com.km220.controller;
 
 import com.km220.PowerAggregationJob;
-import com.km220.ewelink.model.ws.WssResponse;
 import com.km220.service.PowerLimitOverloadService;
-import com.km220.service.ewelink.model.Status;
+import com.km220.service.ewelinkspizdeli.model.Status;
 import com.km220.service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +28,7 @@ public class DeviceController {
 
   @GetMapping("/startSecs")
   public Response startSecs(@RequestParam String secs) throws Exception {
-    Status status = deviceService.on(Integer.parseInt(secs));
+    Status status = deviceService.on(Long.parseLong(secs));
     return status.getError() > 0 ? Response.fail() : Response.success();
   }
 

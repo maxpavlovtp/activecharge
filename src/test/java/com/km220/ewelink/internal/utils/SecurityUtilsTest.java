@@ -3,7 +3,6 @@ package com.km220.ewelink.internal.utils;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.km220.service.ewelink.model.login.LoginRequest;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
