@@ -33,7 +33,7 @@ const MainSection: React.FC = () => {
             <FontAwesomeIcon icon={faWhatsapp} size="4x" />
             <p className="linkName">{t("watsapp")}</p>
           </a>
-          <a href="tel:+380984109626" className="viber social">
+          <a href="tel:+380971983759" className="viber social">
             <FontAwesomeIcon icon={faPhoneSquareAlt} size="4x" />
             <p className="linkName">{t("callUs")}</p>
           </a>

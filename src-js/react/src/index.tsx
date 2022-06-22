@@ -4,13 +4,6 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-import './fonts/OpenSans-Light.ttf';
-import './fonts/OpenSans-Medium.ttf';
-import './fonts/OpenSans-Regular.ttf';
-import './fonts/OpenSans-SemiBold.ttf';
-import './fonts/OpenSans-Bold.ttf';
-import './fonts/OpenSans-ExtraBold.ttf';
-
 import "./i18n";
 import { Provider } from "react-redux";
 import { setupStore } from "./store/store";

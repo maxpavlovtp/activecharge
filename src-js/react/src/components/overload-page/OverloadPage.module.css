@@ -18,7 +18,7 @@
   border: none;
   background-color: #04aa6d;
   color: white;
-  font-family: "OpenSansExtraBold", sans-serif;
+  font-family: "OpenSansExtraBold", Arial, Helvetica, sans-serif;
   font-size: calc(1.5rem + 2vw);
   border-radius: 12px;
   padding: 2px 35px;
@@ -30,7 +30,7 @@
   border: none;
   background-color: #393939;
   color: white;
-  font-family: "OpenSansExtraBold", sans-serif;
+  font-family: "OpenSansExtraBold", Arial, Helvetica, sans-serif;
   font-size: calc(1.5rem + 2vw);
   border-radius: 12px;
   padding: 2px 35px;
@@ -43,7 +43,7 @@
   background-color: #04aa6d;
   opacity: 0.7;
   color: white;
-  font-family: "OpenSansExtraBold", sans-serif;
+  font-family: "OpenSansExtraBold", Arial, Helvetica, sans-serif;
   font-size: calc(1.5rem + 2vw);
   border-radius: 12px;
   padding: 2px 35px;
@@ -51,14 +51,14 @@
   cursor: pointer;
 }
 .waitPay {
-  font-family: "OpenSansExtraBold", sans-serif;
+  font-family: "OpenSansExtraBold", Arial, Helvetica, sans-serif;
   font-size: calc(1.2rem + 1.6vw);
   color: #393939;
   margin-top: 10px;
   text-align: center;
 }
 .waitPayTwo{
-  font-family: "OpenSansExtraBold", sans-serif;
+  font-family: "OpenSansExtraBold", Arial, Helvetica, sans-serif;
   font-size: calc(1.2rem + 1.6vw);
   color: #393939;
   margin-top: 10px;
@@ -88,7 +88,7 @@
   }
 }
 .successCheck {
-  font-family: "OpenSansExtraBold", sans-serif;
+  font-family: "OpenSansExtraBold", Arial, Helvetica, sans-serif;
   font-size: calc(1.5rem + 2vw);
   color: #04aa6d;
   margin-top: 10px;
@@ -105,12 +105,12 @@
 
 
 .checkText {
-  font-family: "OpenSansExtraBold", sans-serif;
+  font-family: "OpenSansExtraBold", Arial, Helvetica, sans-serif;
   font-size: calc(1rem + 1.5vw);
   color: #393939;
 }
 .checkTextOverload {
-  font-family: "OpenSansExtraBold", sans-serif;
+  font-family: "OpenSansExtraBold", Arial, Helvetica, sans-serif;
   font-size: calc(1rem + 1.5vw);
   color: #393939;
   text-align: center;

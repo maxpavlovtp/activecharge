@@ -3,7 +3,7 @@
 }
 
 .timerText {
-  font-family: "OpenSansSemiBold", sans-serif;
+  font-family: "OpenSansSemiBold", Arial, Helvetica, sans-serif;
   font-size: 58px;
   margin: 20px 0 30px 0;
   color: #04aa6d;
@@ -11,24 +11,24 @@
 }
 
 .overTimerText {
-  font-family: "OpenSansSemiBold", sans-serif;
+  font-family: "OpenSansSemiBold", Arial, Helvetica, sans-serif;
   font-size: 58px;
   margin: 20px 0 30px 0;
   color: #000;
 }
 
 .overText {
-  font-family: "OpenSansRegular", sans-serif;
+  font-family: "OpenSansRegular", Arial, Helvetica, sans-serif;
   font-size: 38px;
 }
 
 .endText {
-  font-family: "OpenSansRegular", sans-serif;
+  font-family: "OpenSansRegular", Arial, Helvetica, sans-serif;
   font-size: 38px;
 }
 
 .chargingPower {
-  font-family: "OpenSansMedium", sans-serif;
+  font-family: "OpenSansMedium", Arial, Helvetica, sans-serif;
   font-size: 28px;
   text-align: center;
 }
