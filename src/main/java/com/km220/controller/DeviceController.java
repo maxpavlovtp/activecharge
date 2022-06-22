@@ -2,7 +2,7 @@ package com.km220.controller;
 
 import com.km220.PowerAggregationJob;
 import com.km220.service.PowerLimitOverloadService;
-import com.km220.service.ewelinkspizdeli.model.Status;
+import com.km220.ewelinkspizdeli.model.Status;
 import com.km220.service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

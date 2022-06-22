@@ -3,7 +3,7 @@ package com.km220.ewelink.model.device;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.km220.service.ewelinkspizdeli.model.devices.Do;
+import com.km220.ewelinkspizdeli.model.devices.Do;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.Builder;
