@@ -4,6 +4,7 @@
 
 .timerText {
   font-family: "OpenSansSemiBold", Arial, Helvetica, sans-serif;
+  font-weight: 600;
   font-size: 58px;
   margin: 20px 0 30px 0;
   color: #04aa6d;
@@ -12,6 +13,7 @@
 
 .overTimerText {
   font-family: "OpenSansSemiBold", Arial, Helvetica, sans-serif;
+  font-weight: 600;
   font-size: 58px;
   margin: 20px 0 30px 0;
   color: #000;
@@ -19,16 +21,19 @@
 
 .overText {
   font-family: "OpenSansRegular", Arial, Helvetica, sans-serif;
+  font-weight: 400;
   font-size: 38px;
 }
 
 .endText {
   font-family: "OpenSansRegular", Arial, Helvetica, sans-serif;
+  font-weight: 400;
   font-size: 38px;
 }
 
 .chargingPower {
   font-family: "OpenSansMedium", Arial, Helvetica, sans-serif;
+  font-weight: 500;
   font-size: 28px;
   text-align: center;
 }

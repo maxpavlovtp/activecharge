@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styles from "./OverloadPage.module.css";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { useAppSelector } from "../../hooks/reduxHooks";
 import { useAppDispatch } from "../../hooks/reduxHooks";
 import ErrorPage from "../error-page/ErrorPage";
-import { t } from "i18next";
 import Spinner from "../spinner/Spinner";
 import {
   fetchChargingData,
@@ -136,7 +135,7 @@ const OverloadPage = () => {
   if (isLoadingCharging === true) return <Spinner />;
 
   return (
-    <div>
+    <>
       {isLoadingCharging === false && (
         <div className={styles.checkOverloadContainer}>
           {overload === false && (
@@ -197,7 +196,7 @@ const OverloadPage = () => {
           )}
         </div>
       )}
-    </div>
+    </>
   );
 };
 

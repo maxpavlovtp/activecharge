@@ -1,0 +1,64 @@
+import React, { useEffect, useState } from "react";
+import { Link, Outlet } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
+import styles from "./Header.module.css";
+import logo from "../../assets/logo.png";
+import Navigation from "../header/Navigation";
+import MobileNavigation from "../header/MobileNavigation";
+import { useTranslation } from "react-i18next";
+import { getDeviceIsOnStatus } from "../../store/reducers/ActionCreators";
+
+export default function Layout() {
+  const [fix, setFix] = useState(false);
+  const [routeTo, setRouteTo] = useState<any>("/");
+
+  const dispatch = useAppDispatch();
+  const { isDeviceOn } = useAppSelector((state) => state.fetchReducer);
+  useEffect(() => {
+    dispatch(getDeviceIsOnStatus());
+    isDeviceOn === true ? setRouteTo("/charging") : setRouteTo("/");
+  }, [isDeviceOn]);
+
+  const fixed = () => {
+    if (window.scrollY >= 20) {
+      setFix(true);
+    } else {
+      setFix(false);
+    }
+  };
+
+  window.addEventListener("scroll", fixed);
+  const { t } = useTranslation();
+  return (
+    <>
+      <header className={styles.headerBox}>
+        <nav className={fix ? styles.paddingBoxFixed : styles.paddingBox}>
+          <Link className={styles.homeLink} to={routeTo}>
+            <div className={styles.logoContainer}>
+              <img className={styles.logoImg} src={logo} alt="logo" />
+            </div>
+            <h3 className={styles.logoText}>220-km.com</h3>
+          </Link>
+
+          <Navigation />
+          <MobileNavigation />
+        </nav>
+      </header>
+
+      <Outlet />
+
+      <footer className={styles.footerBox}>
+        <p className={styles.footerText}>
+          ©2022 {t("footer.part1")}. {t("footer.part2")}{" "}
+          <a
+            className={styles.footerLink}
+            href="https://www.facebook.com/zeBoosterLab/"
+          >
+            ZE Booster Lab
+          </a>{" "}
+          {t("footer.part3")}
+        </p>
+      </footer>
+    </>
+  );
+}

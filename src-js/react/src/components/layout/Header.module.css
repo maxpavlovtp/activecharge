@@ -95,6 +95,32 @@
   margin-left: 15px;
 }
 
+.footerBox {
+  display: flex;
+  margin-top: 20px;
+}
+
+.footerText {
+  text-align: center;
+  padding: 10px 12px;
+  border-top: 1px solid #e6e6e6;
+  font-family: "OpenSansRegular", Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  font-size: calc(0.6rem + 0.3vw);
+  color: #6e6e6e;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.footerLink {
+  text-decoration: none;
+  color: #2997ff;
+}
+
+.footerLink:hover {
+  text-decoration: underline;
+}
+
 @media (max-width: 720px) {
   .mobileNavigation {
     display: flex;

@@ -1,17 +1,12 @@
 import MainSection from "./mainSection/MainSection";
-import Header from "../../components/header/Header";
-import styles from './Main.module.css'
-import Footer from "../../components/footer/Footer";
+import styles from "./Main.module.css";
 
-function HomeScreen() {
+function MainScreen() {
   return (
     <div className={styles.mainContainer}>
-      <Header linkTo="/"/>
-      <MainSection/>
-      <Footer/>
+      <MainSection />
     </div>
-
   );
 }
 
-export default HomeScreen;
+export default MainScreen;

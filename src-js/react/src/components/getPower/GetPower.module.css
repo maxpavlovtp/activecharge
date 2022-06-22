@@ -3,10 +3,12 @@
 }
 .overText {
   font-family: "OpenSansRegular", Arial, Helvetica, sans-serif;
+  font-weight: 400;
   font-size: 38px;
 }
 
 .endText {
   font-family: "OpenSansRegular", Arial, Helvetica, sans-serif;
+  font-weight: 400;
   font-size: 38px;
 }

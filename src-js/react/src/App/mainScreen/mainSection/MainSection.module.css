@@ -16,6 +16,7 @@
 .title{
     font-size: calc(2rem + 1.5vw);
     font-family: 'OpenSansBold', Arial, Helvetica, sans-serif;
+    font-weight: 700;
     color: #393939;
     text-align: center;
     margin: 60px 0 50px 0;
@@ -33,6 +34,7 @@
     background-color: #04AA6D;
     color: white;
     font-family: "OpenSansMedium", Arial, Helvetica, sans-serif;
+    font-weight: 500;
     font-size: calc(1.5rem + 2vw);
     border-radius: 12px;
     padding: 15px 15px;
@@ -44,6 +46,7 @@
     background-color: #04AA6D;
     color: white;
     font-family: "OpenSansMedium", Arial, Helvetica, sans-serif;
+    font-weight: 500;
     font-size: calc(1.5rem + 2vw);
     border-radius: 12px;
     padding: 15px 15px;
@@ -57,6 +60,7 @@
     opacity: 0.7;
     color: white;
     font-family: "OpenSansMedium", Arial, Helvetica, sans-serif;
+    font-weight: 500;
     font-size: calc(1.5rem + 2vw);
     border-radius: 12px;
     padding: 15px 15px;

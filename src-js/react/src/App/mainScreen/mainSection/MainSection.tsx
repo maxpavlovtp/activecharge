@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState, useTransition } from "react";
+import React from "react";
 import styles from "./MainSection.module.css";
 import mainImg from "../../../assets/charging.png";
 import { Link } from "react-router-dom";

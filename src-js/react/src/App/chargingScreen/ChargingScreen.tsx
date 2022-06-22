@@ -1,18 +1,11 @@
-import React from 'react';
-import Header from '../../components/header/Header';
-import ChargingSection from './chargingSection/ChargingSection';
-import styles from './ChargingScreen.module.css';
-import Footer from './../../components/footer/Footer';
+import React from "react";
+import ChargingSection from "./chargingSection/ChargingSection";
+import styles from "./ChargingScreen.module.css";
 
 const ChargingScreen: React.FC = () => {
   return (
     <div className={styles.chargingContainer}>
-      <div>
-        <Header linkTo='/'/>
-        <ChargingSection />
-      </div>
-
-      <Footer />
+      <ChargingSection />
     </div>
   );
 };
