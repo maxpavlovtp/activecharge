@@ -39,6 +39,7 @@ class DeviceServiceTest {
 
   // Checks jershik ewelink api bug.
   @Test
+  @Disabled
   void getPowerNewApiTest() throws Exception {
     // given
     deviceService.on(10);
