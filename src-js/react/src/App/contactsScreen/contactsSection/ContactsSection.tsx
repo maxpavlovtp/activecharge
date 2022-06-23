@@ -11,20 +11,18 @@ import { useTranslation } from "react-i18next";
 import Modal from "../../../components/modal/Modal";
 
 const MainSection: React.FC = () => {
-  const [modalActive, setModalActive] = useState(true);
+  const [modalActive, setModalActive] = useState(false);
   const { t } = useTranslation();
 
   return (
     <div className="contactsBox">
       <div className="contactsCont">
         <div className="firstPart">
-          <a
-            href="https://www.instagram.com/_220_km.com_/"
-            className="instagram social"
-          >
-            <FontAwesomeIcon icon={faInstagram} size="4x" />
-            <p className="linkName">{t("instagram")}</p>
-          </a>
+          <div className="viber social" onClick={() => setModalActive(true)}>
+            <FontAwesomeIcon icon={faPhoneSquareAlt} size="4x" />
+            <p className="linkName">{t("callUs")}</p>
+          </div>
+
           <a href="https://telegram.me/maxpavlovdp" className="telegram social">
             <FontAwesomeIcon icon={faTelegram} size="4x" />
             <p className="linkName">{t("telegram")}</p>
@@ -35,10 +33,13 @@ const MainSection: React.FC = () => {
             <FontAwesomeIcon icon={faWhatsapp} size="4x" />
             <p className="linkName">{t("watsapp")}</p>
           </a>
-          <div className="viber social" onClick={() => setModalActive(true)}>
-            <FontAwesomeIcon icon={faPhoneSquareAlt} size="4x" />
-            <p className="linkName">{t("callUs")}</p>
-          </div>
+          <a
+            href="https://www.instagram.com/_220_km.com_/"
+            className="instagram social"
+          >
+            <FontAwesomeIcon icon={faInstagram} size="4x" />
+            <p className="linkName">{t("instagram")}</p>
+          </a>
           <Modal active={modalActive} setActive={setModalActive}>
             <div className="telephoneContainer">
               <a href="tel:+380933235022" className="telephone">
