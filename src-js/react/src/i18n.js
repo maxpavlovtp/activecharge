@@ -40,6 +40,8 @@ i18n
           instagram: "Інстаграм",
           telegram: "Телеграм",
           watsapp: "Ватсап",
+          telDima: "Дмитро",
+          telMax: "Макс",
           overload: {
             waitForLink: "Зачекайте секунду",
             gettingLink: "Отримуємо посилання для оплати",
@@ -82,6 +84,8 @@ i18n
           instagram: "Instagram",
           telegram: "Telegram",
           watsapp: "WatsApp",
+          telDima: "Dima",
+          telMax: "Max",
           overload: {
             waitForLink: "Wait a second",
             gettingLink: "Getting payment link",

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ContactsSection.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -8,8 +8,10 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { faPhoneSquareAlt } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
+import Modal from "../../../components/modal/Modal";
 
 const MainSection: React.FC = () => {
+  const [modalActive, setModalActive] = useState(true);
   const { t } = useTranslation();
 
   return (
@@ -33,10 +35,20 @@ const MainSection: React.FC = () => {
             <FontAwesomeIcon icon={faWhatsapp} size="4x" />
             <p className="linkName">{t("watsapp")}</p>
           </a>
-          <a href="tel:+380971983759" className="viber social">
+          <div className="viber social" onClick={() => setModalActive(true)}>
             <FontAwesomeIcon icon={faPhoneSquareAlt} size="4x" />
             <p className="linkName">{t("callUs")}</p>
-          </a>
+          </div>
+          <Modal active={modalActive} setActive={setModalActive}>
+            <div className="telephoneContainer">
+              <a href="tel:+380933235022" className="telephone">
+                {t("telMax")}: 093-323-50-22
+              </a>
+              <a href="tel:+380978379316" className="telephone">
+                {t("telDima")}: 097-837-93-16
+              </a>
+            </div>
+          </Modal>
         </div>
       </div>
     </div>

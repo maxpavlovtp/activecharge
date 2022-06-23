@@ -48,6 +48,20 @@
   color: #e3a108;
 }
 
+.telephoneContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.telephone {
+  font-family: "OpenSansMedium", Arial, Helvetica, sans-serif;
+  color: #2c2b2b;
+  text-decoration: none;
+}
+.telephone:last-child{
+  margin-top: 15px;
+}
+
 @media (max-width: 900px) {
   .contactsCont {
     padding-right: 50px;
