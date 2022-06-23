@@ -9,6 +9,7 @@ import {
 import { faPhoneSquareAlt } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
 import Modal from "../../../components/modal/Modal";
+import Emoji from "../../../components/emoji/Emoji";
 
 const MainSection: React.FC = () => {
   const [modalActive, setModalActive] = useState(false);
@@ -42,12 +43,19 @@ const MainSection: React.FC = () => {
           </a>
           <Modal active={modalActive} setActive={setModalActive}>
             <div className="telephoneContainer">
-              <a href="tel:+380933235022" className="telephone">
-                {t("telMax")}: 093-323-50-22
-              </a>
-              <a href="tel:+380978379316" className="telephone">
-                {t("telDima")}: 097-837-93-16
-              </a>
+              <p className="tapForCall">{t("tapCall")}:</p>
+              <div className="numberCont">
+                <Emoji symbol="📲" label="phone" />
+                <a href="tel:+380933235022" className="telephone">
+                  {t("telMax")}: 093-323-50-22
+                </a>
+              </div>
+              <div className="numberCont">
+                <Emoji symbol="📲" label="phone" />
+                <a href="tel:+380978379316" className="telephone">
+                  {t("telDima")}: 097-837-93-16
+                </a>
+              </div>
             </div>
           </Modal>
         </div>

@@ -40,6 +40,7 @@ i18n
           instagram: "Інстаграм",
           telegram: "Телеграм",
           watsapp: "Ватсап",
+          tapCall: "Натисніть, щоб зателефонувати",
           telDima: "Дмитро",
           telMax: "Макс",
           overload: {
@@ -84,6 +85,7 @@ i18n
           instagram: "Instagram",
           telegram: "Telegram",
           watsapp: "WatsApp",
+          tapCall: "Tap for calling",
           telDima: "Dima",
           telMax: "Max",
           overload: {
