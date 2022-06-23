@@ -1,14 +1,61 @@
 .timerBox {
   text-align: center;
+  padding: 0 20px 0;
+  width: 100%;
 }
-.overText {
-  font-family: "OpenSansRegular", Arial, Helvetica, sans-serif;
-  font-weight: 400;
-  font-size: 38px;
+.kmCharged {
+  font-family: "OpenSansSemiBold", Arial, Helvetica, sans-serif;
+  font-weight: 600;
+  font-size: calc(1.4rem + 2vw);
+  margin-bottom: 40px;
+  color: #2c2b2b;
+}
+.textTitle {
+  font-family: "OpenSansSemiBold", Arial, Helvetica, sans-serif;
+  font-weight: 600;
+  font-size: calc(1rem + 1.2vw);
+  margin-bottom: 5px;
+  color: #2c2b2b;
 }
 
-.endText {
-  font-family: "OpenSansRegular", Arial, Helvetica, sans-serif;
-  font-weight: 400;
-  font-size: 38px;
+.text {
+  font-family: "OpenSansMedium", Arial, Helvetica, sans-serif;
+  font-weight: 500;
+  font-size: calc(0.8rem + 1.2vw);
+  margin-bottom: 5px;
+  color: #2c2b2b;
+}
+
+.getPowerInfoCont {
+  display: flex;
+  justify-content: space-between;
+}
+.offCont {
+  display: none;
+}
+
+.power {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.finishContainer {
+  width: 100%;
+}
+
+.finishTitle {
+  text-align: center;
+  font-family: "OpenSansBold", Arial, Helvetica, sans-serif;
+  font-weight: 500;
+  font-size: calc(1.2rem + 1.5vw);
+  margin-bottom: 5px;
+  color: #2c2b2b;
+}
+.finishText{
+  text-align: center;
+  font-family: "OpenSansMedium", Arial, Helvetica, sans-serif;
+  font-weight: 500;
+  font-size: calc(1rem + 1.5vw);
+  color: #2c2b2b;
 }

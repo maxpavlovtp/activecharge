@@ -37,21 +37,39 @@ export default function GetPower() {
   // tesla model 3 = 100
   let carKwtKmRatio = 150;
   let isZero = chargingStatus === undefined;
-  let chargeStatus = `${isZero ? " " : kWtCharged.toFixed(2)} ${t("wt")}  (${t(
-    "around"
-  )} ${
-    isZero ? 0 : Math.round((kWtCharged * 1000) / carKwtKmRatio).toFixed(2)
-  } km)`;
+  let chargeStatus = `${isZero ? " " : kWtCharged.toFixed(2)} ${t("wt")}`;
 
   return (
     <div className={styles.timerBox}>
-      <div className={isDeviceOn === false ? styles.overText : styles.endText}>
-        {t("power")}: {kWtPower.toFixed(2)} {t("wt")}
+      <div>
+        <p className={styles.kmCharged}>
+          {isZero
+            ? 0
+            : Math.round((kWtCharged * 1000) / carKwtKmRatio).toFixed(2)}
+          {t("km")}
+        </p>
       </div>
-      <div className={isDeviceOn === false ? styles.overText : styles.endText}>
-        {isDeviceOn
-          ? `${t("charging")}: ${chargeStatus}`
-          : `${t("charged")}${chargeStatus}`}
+      <div className={styles.getPowerInfoCont}>
+        <div className={isDeviceOn ? styles.power : styles.offCont}>
+          <p className={styles.textTitle}>{t("power")}</p>
+          <p className={styles.text}>
+            {kWtPower.toFixed(2)} {t("wt")}
+          </p>
+        </div>
+        {isDeviceOn ? (
+          <div className={styles.power}>
+            <p className={styles.textTitle}>{t("charging")}</p>
+            <p className={styles.text}>{chargeStatus}</p>
+          </div>
+        ) : (
+          <div className={styles.finishContainer}>
+            <p className={styles.finishTitle}>{t("chargedCongrats")} </p>
+            <p className={styles.finishText}>
+              {t("chargedkWt")}
+              {chargeStatus}
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

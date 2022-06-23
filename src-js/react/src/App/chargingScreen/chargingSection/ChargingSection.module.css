@@ -1,5 +1,14 @@
 .chargingBox {
-  padding-top: 120px;
+    padding-top: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.contTimer{
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .load {
   display: flex;

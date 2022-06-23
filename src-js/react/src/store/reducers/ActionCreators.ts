@@ -2,7 +2,7 @@ import { AppDispatch } from "../store";
 import axios from "axios";
 import { FetchSlice } from "./FetchSlice";
 
-const urlOn = `${process.env.REACT_APP_LINK_SERVE}device/start`;
+const urlOn = `${process.env.REACT_APP_LINK_SERVE}device/startSecs?secs=7`;
 const urlIsDeviceOn = `${process.env.REACT_APP_LINK_SERVE}device/isDeviceOn`;
 const urlChargingStatus = `${process.env.REACT_APP_LINK_SERVE}device/getChargingStatus`;
 const urlDeviceStatus = `${process.env.REACT_APP_LINK_SERVE}device/getPower`;
