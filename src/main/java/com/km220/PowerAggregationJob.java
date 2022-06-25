@@ -18,14 +18,14 @@ public class PowerAggregationJob {
   private PowerLimitOverloadService powerLimitOverloadService;
 
   // todo move to DB
-  public static boolean isOn;
-  public static float chargedWt;
-  public static float chargingWtAverageWtH;
-  public static float powerWt;
-  public static long onTime;
-  public static long offTime;
-  public static long chargingDurationSecs;
-  public static long chargingDurationLeftSecs;
+  public static volatile boolean isOn;
+  public static volatile float chargedWt;
+  public static volatile float chargingWtAverageWtH;
+  public static volatile float powerWt;
+  public static volatile long onTime;
+  public static volatile long offTime;
+  public static volatile long chargingDurationSecs;
+  public static volatile long chargingDurationLeftSecs;
 
   public static final long CHECK_INTERVAL_MILLIS = 1000;
 
