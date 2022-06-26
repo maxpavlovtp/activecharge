@@ -26,6 +26,6 @@ jobs:
         java-version: '17'
         distribution: 'adopt'
     - name: Test
-      run: ./gradlew test
+      run: ./gradlew test -i
     - name: Build
       run: ./gradlew clean build -x test
