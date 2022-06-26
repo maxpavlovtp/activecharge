@@ -1,6 +1,6 @@
 package com.km220.controller;
 
-public final class ChargerResponse<T> {
+public class ChargerResponse<T> {
 
   private static final String SUCCESS = "success";
   private static final String ERROR = "error";
@@ -27,6 +27,10 @@ public final class ChargerResponse<T> {
 
   public T getData() {
     return data;
+  }
+
+  public boolean isSuccess() {
+    return SUCCESS.equals(message);
   }
 
   public static ChargerResponse<String> fail(String reason) {

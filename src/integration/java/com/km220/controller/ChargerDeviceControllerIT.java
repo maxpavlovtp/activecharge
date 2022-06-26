@@ -34,7 +34,7 @@ public class ChargerDeviceControllerIT extends BaseIT {
   @Test
   void checkDeviceStatus() {
     ResponseEntity<ChargerResponse<DeviceStatus>> response = restTemplate.exchange(
-        url("/device/getDeviceStatus"),
+        url("/getDeviceStatus"),
         HttpMethod.GET,
         null,
         new ParameterizedTypeReference<>() {
@@ -42,13 +42,14 @@ public class ChargerDeviceControllerIT extends BaseIT {
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertNotNull(response.getBody());
     assertNotNull(response.getBody().getData());
+    assertTrue(response.getBody().isSuccess());
     assertEquals(deviceId, response.getBody().getData().getDeviceId());
   }
 
   @Test
   void checkPower() {
     ResponseEntity<ChargerResponse<Double>> response = restTemplate.exchange(
-        url("/device/getPower"),
+        url("/getPower"),
         HttpMethod.GET,
         null,
         new ParameterizedTypeReference<>() {
@@ -56,10 +57,37 @@ public class ChargerDeviceControllerIT extends BaseIT {
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertNotNull(response.getBody());
     assertNotNull(response.getBody().getData());
+    assertTrue(response.getBody().isSuccess());
     assertTrue(response.getBody().getData() >= 0.d);
   }
 
+  @Test
+  void start() {
+    ResponseEntity<ChargerResponse<Void>> response = restTemplate.exchange(
+        url("/start"),
+        HttpMethod.GET,
+        null,
+        new ParameterizedTypeReference<>() {
+        });
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertNotNull(response.getBody());
+    assertTrue(response.getBody().isSuccess());
+  }
+
+  @Test
+  void startSecs() {
+    ResponseEntity<ChargerResponse<Void>> response = restTemplate.exchange(
+        url("/startSecs?secs=1"),
+        HttpMethod.GET,
+        null,
+        new ParameterizedTypeReference<>() {
+        });
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertNotNull(response.getBody());
+    assertTrue(response.getBody().isSuccess());
+  }
+
   private URI url(String resourcePath) {
-    return URI.create("http://localhost:" + port + resourcePath);
+    return URI.create("http://localhost:" + port + "/device" + resourcePath);
   }
 }
