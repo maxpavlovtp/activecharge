@@ -4,28 +4,37 @@ import static java.lang.System.currentTimeMillis;
 
 import com.km220.service.DeviceService;
 import com.km220.service.PowerLimitOverloadService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.km220.service.ewelink.EwelinkDeviceService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PowerAggregationJob {
 
-  @Autowired
-  private DeviceService deviceService;
+  @Value("${device.chargeTimeSecs}")
+  private int chargeTimeSecs;
 
-  @Autowired
-  private PowerLimitOverloadService powerLimitOverloadService;
+  @Value("${deviceId}")
+  private String deviceId;
 
-  // todo move to DB
-  public static boolean isOn;
-  public static float chargedWt;
-  public static float chargingWtAverageWtH;
-  public static float powerWt;
-  public static long onTime;
-  public static long offTime;
-  public static long chargingDurationSecs;
-  public static long chargingDurationLeftSecs;
+  private final DeviceService deviceService;
+  private final PowerLimitOverloadService powerLimitOverloadService;
+
+  public PowerAggregationJob(final EwelinkDeviceService deviceService,
+      final PowerLimitOverloadService powerLimitOverloadService) {
+    this.deviceService = deviceService;
+    this.powerLimitOverloadService = powerLimitOverloadService;
+  }
+
+  public static volatile boolean isOn;
+  public static volatile float chargedWt;
+  public static volatile float chargingWtAverageWtH;
+  public static volatile float powerWt;
+  public static volatile long onTime;
+  public static volatile long offTime;
+  public static volatile long chargingDurationSecs;
+  public static volatile long chargingDurationLeftSecs;
 
   public static final long CHECK_INTERVAL_MILLIS = 1000;
 
@@ -39,7 +48,7 @@ public class PowerAggregationJob {
     if (isOn && now > offTime) {
       //todo: add error handling
       try {
-        deviceService.off();
+        deviceService.toggleOff(deviceId, chargeTimeSecs);
       } catch (Exception e) {
         e.printStackTrace();
       }
@@ -47,7 +56,7 @@ public class PowerAggregationJob {
     }
 
     try {
-      powerWt = Float.parseFloat(deviceService.getPower(true));
+      powerWt = (float)deviceService.getStatus(deviceId).getPower();
     } catch (Exception e) {
       e.printStackTrace();
     }
