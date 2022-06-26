@@ -21,9 +21,10 @@ public final class WSEwelinkDeviceApi extends CloseableWSEwelinkApi {
     return sendMessageAsync(JsonUtils.serialize(WssGetDeviceStatus.create(deviceId)));
   }
 
-  public CompletableFuture<WssResponse> toggle(String deviceId, SwitchState state) {
+  public CompletableFuture<WssResponse> toggle(String deviceId, SwitchState state, int chargeSeconds) {
     var params = Params.builder()
         .switchState(state)
+        .uiActive(chargeSeconds)
         .build();
     return sendMessageAsync(JsonUtils.serialize(WssSetDeviceStatus.create(deviceId, params)));
   }

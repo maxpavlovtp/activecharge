@@ -3,7 +3,6 @@ package com.km220.ewelink.model.device;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.km220.ewelinkspizdeli.model.devices.Do;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.Builder;
@@ -24,7 +23,7 @@ public class Timer {
   private String at;
   private String coolkitTimerType;
   private Integer enabled;
-  private Do _do;
+  private Do_ _do;
   private String period;
   @Default
   private Map<String, Object> additionalProperties = new HashMap<>();

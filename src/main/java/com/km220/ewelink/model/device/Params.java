@@ -23,6 +23,7 @@ public class Params {
   private String sledOnline;
   @JsonProperty("switch")
   private SwitchState switchState;
+  private Integer uiActive;
   private String power;
   private String voltage;
   private String current;

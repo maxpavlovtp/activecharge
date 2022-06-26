@@ -1,0 +1,11 @@
+ewelink:
+  region: eu
+  email: maxpavlov.dp@gmail.com
+  password: Nopassword1
+  appId: YzfeftUVcZ6twZw1OoVKPRFYTrGEg01Q
+  appSecret: 4G91qSoboqYO4Y0XJ0LPPKIsq8reHdfa
+
+deviceId: 10013bb124
+
+device:
+  chargeTimeSecs: 1200

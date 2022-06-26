@@ -44,7 +44,7 @@ class WSEwelinkDeviceApiTest {
 
   @Test
   void toggleDeviceState_shouldChangeDeviceToggleState() {
-    WssResponse response = wsEwelinkDeviceApi.toggle(DRYER_DEVICE_ID, SwitchState.ON).join();
+    WssResponse response = wsEwelinkDeviceApi.toggle(DRYER_DEVICE_ID, SwitchState.ON, 1).join();
     LOGGER.info("Device id = {}. Response = {}.", DRYER_DEVICE_ID, response);
     assertNotNull(response);
     assertEquals(0, response.getError());
@@ -55,7 +55,7 @@ class WSEwelinkDeviceApiTest {
     assertEquals(0, response.getError());
     assertEquals(SwitchState.ON, response.getParams().getSwitchState());
 
-    response = wsEwelinkDeviceApi.toggle(DRYER_DEVICE_ID, SwitchState.OFF).join();
+    response = wsEwelinkDeviceApi.toggle(DRYER_DEVICE_ID, SwitchState.OFF, 1).join();
     LOGGER.info("Device id = {}. Response = {}.", DRYER_DEVICE_ID, response);
     assertNotNull(response);
     assertEquals(0, response.getError());
