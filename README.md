@@ -9,43 +9,19 @@
 
 ### FE react endpoint:
 
-http://220-km.com/
+1. prod: http://220-km.com/
+2. stage: 
 
 ### BE spring boot endpoints local:
 
 1. http://localhost:8080/device/start
 2. http://localhost:8080/device/startSecs?secs=7
-3. http://localhost:8080/device/getDeviceStatus
-4. http://localhost:8080/device/getDeviceStatusNewAPI
-5. http://localhost:8080/device/getWSDeviceStatus
-6. http://localhost:8080/device/getChargingStatus
-7. http://localhost:8080/device/getChargingDurationLeftSecs
-8. http://localhost:8080/device/isDeviceOn
-
-#### overload check
-
-1. http://localhost:8080/device/getPower
-2. http://localhost:8080/device/isPowerLimitOvelrloaded
-3. http://localhost:8080/device/getPowerLimit
-4. http://localhost:8080/device/isOverloadCheckCompleted
 
 ### BE spring boot endpoints:
-
 1. http://220-km.com:8080/device/start
 2. http://220-km.com:8080/device/startSecs?secs=7
-3. http://220-km.com:8080/device/getDeviceStatus
-4. http://220-km.com:8080/device/getWSDeviceStatus
-5. http://220-km.com:8080/device/getDeviceStatusNewAPI
-6. http://220-km.com:8080/device/getChargingStatus
-7. http://220-km.com:8080/device/getChargingDurationLeftSecs
-8. http://220-km.com:8080/device/isDeviceOn
-
-#### overload check
-
-1. http://220-km.com:8080/device/getPower
-2. http://220-km.com:8080/device/isPowerLimitOvelrloaded
-3. http://220-km.com:8080/device/getPowerLimit
-4. http://220-km.com:8080/device/isOverloadCheckCompleted
+3. http://220-km.com:8080/device/getPower
+4. http://220-km.com:8080/device/getChargingStatus
 
 ### SDLC:
 
