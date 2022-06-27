@@ -3,8 +3,7 @@ package com.km220;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class ChargerApplicationTest {
+class ChargerApplicationTest extends BaseIT {
 
   @Test
   void contextLoads() {
