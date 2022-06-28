@@ -13,4 +13,4 @@ git pull
 nohup ./src-js/nest/run-nest-prod.sh &
 nohup ./src-js/react/run-react-prod.sh &
 ./gradlew clean build -x test
-java -jar build/libs/220-km.com-0.0.1-SNAPSHOT.jar &
+java -jar build/libs/220-km.com-0.0.1-SNAPSHOT.jar
