@@ -1,6 +1,5 @@
 cd "$(dirname "$0")" || exit
 
-
 pkill -f java
 pkill -f react
 pkill -f nest
