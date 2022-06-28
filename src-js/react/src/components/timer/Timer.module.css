@@ -3,11 +3,11 @@
 }
 
 .timerText {
-  font-family: "OpenSansSemiBold", Arial, Helvetica, sans-serif;
-  font-weight: 600;
-  font-size: 58px;
+  font-family: "OpenSansRegular", Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  font-size: calc(1.5rem + 1.5vw);
   margin: 20px 0 30px 0;
-  color: #04aa6d;
+  color: #2c2b2b;
   transition: 0.8s;
 }
 

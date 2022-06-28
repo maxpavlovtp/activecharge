@@ -41,14 +41,6 @@ export default function GetPower() {
 
   return (
     <div className={styles.timerBox}>
-      <div>
-        <p className={styles.kmCharged}>
-          {isZero
-            ? 0
-            : Math.round((kWtCharged * 1000) / carKwtKmRatio).toFixed(2)}
-          {t("km")}
-        </p>
-      </div>
       <div className={styles.getPowerInfoCont}>
         <div className={isDeviceOn ? styles.power : styles.offCont}>
           <p className={styles.textTitle}>{t("power")}</p>
@@ -70,6 +62,14 @@ export default function GetPower() {
             </p>
           </div>
         )}
+      </div>
+      <div>
+        <p className={styles.kmCharged}>
+          {isZero
+            ? 0
+            : Math.round((kWtCharged * 1000) / carKwtKmRatio).toFixed(2)}
+          {t("km")}
+        </p>
       </div>
     </div>
   );

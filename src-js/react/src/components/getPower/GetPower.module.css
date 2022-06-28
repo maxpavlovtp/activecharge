@@ -4,24 +4,24 @@
   width: 100%;
 }
 .kmCharged {
-  font-family: "OpenSansSemiBold", Arial, Helvetica, sans-serif;
-  font-weight: 600;
-  font-size: calc(1.4rem + 2vw);
-  margin-bottom: 40px;
+  font-family: "OpenSansRegular", Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  font-size: calc(1.5rem + 1.5vw);
+  margin-top: 40px;
   color: #2c2b2b;
 }
 .textTitle {
   font-family: "OpenSansSemiBold", Arial, Helvetica, sans-serif;
   font-weight: 600;
-  font-size: calc(1rem + 1.2vw);
+  font-size: calc(1.3rem + 1.9vw);
   margin-bottom: 5px;
-  color: #2c2b2b;
+  color: #04aa6d;
 }
 
 .text {
-  font-family: "OpenSansMedium", Arial, Helvetica, sans-serif;
-  font-weight: 500;
-  font-size: calc(0.8rem + 1.2vw);
+  font-family: "OpenSansSemiBold", Arial, Helvetica, sans-serif;
+  font-weight: 600;
+  font-size: calc(1rem + 1.5vw);
   margin-bottom: 5px;
   color: #2c2b2b;
 }

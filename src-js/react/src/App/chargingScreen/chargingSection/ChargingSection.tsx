@@ -96,12 +96,12 @@ const MainSection: React.FC = () => {
       <div className={styles.chargingBox}>
         {secondsTime >= 0 && (
           <div className={styles.contTimer}>
+            <GetPower />
             <Timer
               hours={hoursTime}
               minutes={minuteTime}
               seconds={secondsTime}
             />
-            <GetPower />
           </div>
         )}
       </div>
