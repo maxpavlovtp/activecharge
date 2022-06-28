@@ -18,6 +18,7 @@ public class EwelinkClient {
   private String applicationSecret;
   private HttpClient httpClient;
 
+//  todo: remove
   private static final String APPLICATION_ID = "oeVkj2lYFGnJu5XUtWisfW4utiN4u9Mq";
   private static final String APPLICATION_SECRET = "6Nz4n0xA8s8qdxQf2GqurZj2Fs55FUvM";
 
@@ -35,6 +36,7 @@ public class EwelinkClient {
     return new EwelinkDeviceApi(parameters, applicationId, applicationSecret, httpClient);
   }
 
+  // todo rename
   public WSEwelinkDeviceApi wsDevices() {
     return new WSEwelinkDeviceApi(parameters, applicationId, applicationSecret, httpClient);
   }
