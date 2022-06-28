@@ -16,7 +16,7 @@
 ### local:
 1. http://localhost:8080/device/start
 2. http://localhost:8080/device/startSecs?secs=7
-3. http://localhost:8080/device/getPower
+3. http://localhost:8080/device/getDeviceStatus
 4. http://localhost:8080/device/getChargingStatus
 ### stage:
 1. http://168.119.177.145:8080/device/start
