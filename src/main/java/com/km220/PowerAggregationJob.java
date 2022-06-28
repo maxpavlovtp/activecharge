@@ -34,7 +34,7 @@ public class PowerAggregationJob {
   public static volatile long chargingDurationSecs;
   public static volatile long chargingDurationLeftSecs;
 
-  public static final long CHECK_INTERVAL_MILLIS = 1000;
+  public static final long CHECK_INTERVAL_MILLIS = 3000;
 
   @Scheduled(fixedDelay = CHECK_INTERVAL_MILLIS)
   public void sumPower() {
