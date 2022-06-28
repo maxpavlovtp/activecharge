@@ -47,6 +47,7 @@ public class PowerAggregationJob {
       //todo: add error handling
       try {
         deviceService.toggleOff(deviceId, chargeTimeSecs);
+        DeviceCache.isOn = false;
       } catch (Exception e) {
         e.printStackTrace();
       }
