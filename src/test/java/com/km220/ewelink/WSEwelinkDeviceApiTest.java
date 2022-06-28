@@ -88,11 +88,11 @@ class WSEwelinkDeviceApiTest {
     Integer failedCalls = errorStat.get("406");
 
     // then
-    assertTrue(successCalls > failedCalls / 2);
+    assertTrue(successCalls > failedCalls);
   }
 
   private void ddosEwelink(String threadName) {
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 20; i++) {
       WssResponse response = EwelinkClient.builder()
           .parameters(new EwelinkParameters(REGION, EMAIL, PASSWORD))
           .build()
