@@ -3,23 +3,19 @@ import styles from "./GetPower.module.css";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import {
   getChargingStatus,
-  getDeviceIsOnStatus,
+  getDeviceStatus,
   getPower,
 } from "../../store/reducers/ActionCreators";
 import { useTranslation } from "react-i18next";
 
 export default function GetPower() {
   const dispatch = useAppDispatch();
-  const { isDeviceOn, chargingStatus, devicePower } = useAppSelector(
-    (state) => state.fetchReducer
-  );
+  const { isGotDeviceStatus, deviceStatus, chargingStatus, devicePower } =
+    useAppSelector((state) => state.fetchReducer);
   const { t } = useTranslation();
   const getNumber = () => {
-    if (isDeviceOn === true) {
-      dispatch(getDeviceIsOnStatus());
-      dispatch(getChargingStatus());
-      dispatch(getPower());
-    }
+    dispatch(getChargingStatus());
+    dispatch(getDeviceStatus());
   };
 
   useEffect(() => {
@@ -27,7 +23,7 @@ export default function GetPower() {
       getNumber();
     }, 4000);
     return () => clearInterval(timerID);
-  }, [isDeviceOn]);
+  }, [isGotDeviceStatus]);
 
   let kWtCharged = chargingStatus;
   let kWtPower = Number(devicePower) / 1000;
@@ -42,13 +38,17 @@ export default function GetPower() {
   return (
     <div className={styles.timerBox}>
       <div className={styles.getPowerInfoCont}>
-        <div className={isDeviceOn ? styles.power : styles.offCont}>
+        <div
+          className={
+            deviceStatus?.data?.switchState ? styles.power : styles.offCont
+          }
+        >
           <p className={styles.textTitle}>{t("power")}</p>
           <p className={styles.text}>
             {kWtPower.toFixed(2)} {t("wt")}
           </p>
         </div>
-        {isDeviceOn ? (
+        {deviceStatus?.data?.switchState ? (
           <div className={styles.power}>
             <p className={styles.textTitle}>{t("charging")}</p>
             <p className={styles.text}>{chargeStatus}</p>

@@ -3,9 +3,10 @@ import axios from "axios";
 import { FetchSlice } from "./FetchSlice";
 
 const urlOn = `${process.env.REACT_APP_LINK_SERVE}device/start`;
+const urlDeviceStatus = `${process.env.REACT_APP_LINK_SERVE}device/getDeviceStatus`
 const urlIsDeviceOn = `${process.env.REACT_APP_LINK_SERVE}device/isDeviceOn`;
 const urlChargingStatus = `${process.env.REACT_APP_LINK_SERVE}device/getChargingStatus`;
-const urlDeviceStatus = `${process.env.REACT_APP_LINK_SERVE}device/getPower`;
+const urlPower = `${process.env.REACT_APP_LINK_SERVE}device/getPower`;
 
 
 export const fetchChargingData = () => async (dispatch: AppDispatch) => {
@@ -20,10 +21,23 @@ export const fetchChargingData = () => async (dispatch: AppDispatch) => {
   }
 };
 
+
+export const getDeviceStatus = () => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(FetchSlice.actions.deviceStatusFetching());
+    const response = await axios.get(urlDeviceStatus);
+    dispatch(FetchSlice.actions.deviceStatusFetchingSuccess(response.data));
+    console.log(response.data);
+  } catch (e: any) {
+    dispatch(FetchSlice.actions.deviceStatusFetchingError(e.message));
+    console.log(e.message);
+  }
+};
+
 export const getPower = () => async (dispatch: AppDispatch) => {
   try {
     dispatch(FetchSlice.actions.devicePowerFetching());
-    const response = await axios(urlDeviceStatus);
+    const response = await axios(urlPower);
     dispatch(FetchSlice.actions.devicePowerFetchingSuccess(response.data.data));
     console.log(response.data);
   } catch (e: any) {
@@ -42,16 +56,6 @@ export const getChargingStatus = () => async (dispatch: AppDispatch) => {
     console.log(response.data);
   } catch (e: any) {
     dispatch(FetchSlice.actions.chargingStatusFetchingError(e.message));
-    console.log(e.message);
-  }
-};
-
-export const getDeviceIsOnStatus = () => async (dispatch: AppDispatch) => {
-  try {
-    const response = await axios.get(urlIsDeviceOn);
-    dispatch(FetchSlice.actions.deviceOnStatus(response.data.data));
-    console.log(response.data);
-  } catch (e: any) {
     console.log(e.message);
   }
 };

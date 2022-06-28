@@ -8,7 +8,7 @@ import Spinner from "../../../components/spinner/Spinner";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 import {
   getChargingStatus,
-  getDeviceIsOnStatus,
+  getDeviceStatus,
   getPower,
 } from "../../../store/reducers/ActionCreators";
 import GetPower from "../../../components/getPower/GetPower";
@@ -26,7 +26,7 @@ const MainSection: React.FC = () => {
 
   const { t } = useTranslation();
 
-  const { isLoadingCharging, isDeviceOn, error } = useAppSelector(
+  const { isLoadingCharging, error } = useAppSelector(
     (state) => state.fetchReducer
   );
 
@@ -40,13 +40,8 @@ const MainSection: React.FC = () => {
   };
 
   useEffect(() => {
-    dispatch(getChargingStatus());
-    dispatch(getPower());
     console.log(isLoadingCharging);
     if (isLoadingCharging === false) {
-      setTimeout(() => {
-        dispatch(getDeviceIsOnStatus());
-      }, 500);
       setTimeout(() => {
         axios
           .get(secondsUrl)
