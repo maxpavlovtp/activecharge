@@ -1,15 +1,14 @@
 package com.km220.service.ewelink;
 
-import static com.km220.PowerAggregationJob.chargedWt;
 import static com.km220.PowerAggregationJob.onTime;
-import static com.km220.service.PowerLimitOverloadService.OVERLOAD_LIMIT_TIMER_SECS;
+import static com.km220.service.ewelink.PowerLimitOverloadService.OVERLOAD_LIMIT_TIMER_SECS;
 import static java.lang.System.currentTimeMillis;
 
 import com.km220.PowerAggregationJob;
 import com.km220.ewelink.EwelinkClient;
 import com.km220.ewelink.model.device.SwitchState;
-import com.km220.ewelink.model.ws.WssResponse;
 import com.km220.model.DeviceStatus;
+import com.km220.service.DeviceCache;
 import com.km220.service.DeviceException;
 import com.km220.service.DeviceService;
 import java.util.Locale;
@@ -34,7 +33,7 @@ public class EwelinkDeviceService implements DeviceService {
 
   @Override
   public float getChargedWt() {
-    return chargedWt;
+    return DeviceCache.chargedWt;
   }
 
   @Override
@@ -49,7 +48,7 @@ public class EwelinkDeviceService implements DeviceService {
   public void toggleOn(String deviceId, int chargeTimeSec) {
     //TODO: refactor this
     PowerAggregationJob.chargingDurationSecs = 0;
-    PowerAggregationJob.chargedWt = 0;
+    DeviceCache.chargedWt = 0;
     PowerAggregationJob.onTime = currentTimeMillis();
     PowerAggregationJob.offTime = onTime + 1000L * chargeTimeSec;
 
@@ -61,8 +60,7 @@ public class EwelinkDeviceService implements DeviceService {
       throw new DeviceException(String.format(Locale.ROOT, "Error on switching device. Device id = %s", deviceId));
     }
 
-    //TODO: refactor this
-    PowerAggregationJob.isOn = true;
+    DeviceCache.isOn = true;
   }
 
   @Override
@@ -74,7 +72,6 @@ public class EwelinkDeviceService implements DeviceService {
       throw new DeviceException(String.format(Locale.ROOT, "Error on switching device. Device id = %s", deviceId));
     }
 
-    //TODO: refactor this
-    PowerAggregationJob.isOn = false;
+    DeviceCache.isOn = false;
   }
 }

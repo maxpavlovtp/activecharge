@@ -1,10 +1,10 @@
 package com.km220.controller;
 
-import com.km220.PowerAggregationJob;
 import com.km220.model.DeviceStatus;
+import com.km220.service.DeviceCache;
 import com.km220.service.DeviceService;
-import com.km220.service.PowerLimitOverloadService;
-import com.km220.service.ewelink.EwelinkDeviceService;
+import com.km220.service.ewelink.PowerLimitOverloadService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/device")
+@RequiredArgsConstructor
 public class ChargerDeviceController {
 
   //TODO; refactor
@@ -25,53 +26,36 @@ public class ChargerDeviceController {
 
   private final DeviceService deviceService;
   private final PowerLimitOverloadService powerLimitOverloadService;
-
-  public ChargerDeviceController(final EwelinkDeviceService deviceService,
-      PowerLimitOverloadService powerLimitOverloadService) {
-    this.deviceService = deviceService;
-    this.powerLimitOverloadService = powerLimitOverloadService;
-  }
+  private final DeviceCache deviceCache;
 
   //TODO: GET HTTP method should not change resource state.
+  // todo remove after payment implementation
   @GetMapping("/start")
   public ChargerResponse<Void> start() {
     deviceService.toggleOn(deviceId, chargeTimeSecs);
-    return ChargerResponse.success();
+    return new ChargerResponse<>("started");
   }
-
+// todo remove after payment implementation
   @GetMapping("/startSecs")
   public ChargerResponse<Void> startSecs(@RequestParam String secs) {
     deviceService.toggleOn(deviceId, Integer.parseInt(secs));
-    return ChargerResponse.success();
+    return new ChargerResponse<>("startedSecs: " + secs);
+  }
+
+  @GetMapping("/getDeviceStatus")
+  public ChargerResponse<DeviceStatus> getDeviceStatus() {
+    return new ChargerResponse<>("getDeviceStatus", deviceCache.getDeviceStatus());
+  }
+
+  @GetMapping("/getChargingStatus")
+  public ChargerResponse<Float> getChargingStatus() {
+    return new ChargerResponse<>("chargedKwt", DeviceCache.chargedWt / 1000);
   }
 
   @GetMapping("/getChargingDurationLeftSecs")
   public ChargerResponse<Long> getChargeTimeLeftSecs() {
     return new ChargerResponse<>("getChargeTimeLeftSecs",
         deviceService.getChargingDurationLeftSecs());
-  }
-
-  @GetMapping("/getChargingStatus")
-  public ChargerResponse<Float> getChargingStatus() {
-    return new ChargerResponse<>("kWtCharged", deviceService.getChargedWt() / 1000);
-  }
-
-  @GetMapping("/getDeviceStatus")
-  public ChargerResponse<DeviceStatus> getDeviceStatus() {
-    var deviceStatus = deviceService.getStatus(deviceId);
-    return new ChargerResponse<>("getDeviceStatus", deviceStatus);
-  }
-
-  @GetMapping("/isDeviceOn")
-  public ChargerResponse<Boolean> isDeviceOn() {
-    var deviceStatus = deviceService.getStatus(deviceId);
-    return new ChargerResponse<>("isDeviceOn", deviceStatus.isSwitchState());
-  }
-
-  @GetMapping("/getPower")
-  public ChargerResponse<Double> getPower() {
-    var deviceStatus = deviceService.getStatus(deviceId);
-    return new ChargerResponse<>("getPower", deviceStatus.getPower());
   }
 
   @GetMapping("/isPowerLimitOvelrloaded")
@@ -88,6 +72,6 @@ public class ChargerDeviceController {
   @GetMapping("/isOverloadCheckCompleted")
   public ChargerResponse<Boolean> isOverloadCheckCompleted() {
     return new ChargerResponse<>("isOverloadCheckCompleted",
-        !PowerAggregationJob.isOn);
+        !DeviceCache.isOn);
   }
 }

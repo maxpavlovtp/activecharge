@@ -1,14 +1,8 @@
 package com.km220;
 
 
-import static com.km220.PowerAggregationJob.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.km220.service.ewelink.EwelinkDeviceService;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 

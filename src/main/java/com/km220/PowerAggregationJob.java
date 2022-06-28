@@ -2,8 +2,10 @@ package com.km220;
 
 import static java.lang.System.currentTimeMillis;
 
+import com.km220.model.DeviceStatus;
+import com.km220.service.DeviceCache;
 import com.km220.service.DeviceService;
-import com.km220.service.PowerLimitOverloadService;
+import com.km220.service.ewelink.PowerLimitOverloadService;
 import com.km220.service.ewelink.EwelinkDeviceService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -27,10 +29,6 @@ public class PowerAggregationJob {
     this.powerLimitOverloadService = powerLimitOverloadService;
   }
 
-  public static volatile boolean isOn;
-  public static volatile float chargedWt;
-  public static volatile float chargingWtAverageWtH;
-  public static volatile float powerWt;
   public static volatile long onTime;
   public static volatile long offTime;
   public static volatile long chargingDurationSecs;
@@ -41,11 +39,11 @@ public class PowerAggregationJob {
   @Scheduled(fixedDelay = CHECK_INTERVAL_MILLIS)
   public void sumPower() {
     long now = currentTimeMillis();
-    if (!isOn) {
+    if (!DeviceCache.isOn) {
       return;
     }
 
-    if (isOn && now > offTime) {
+    if (DeviceCache.isOn && now > offTime) {
       //todo: add error handling
       try {
         deviceService.toggleOff(deviceId, chargeTimeSecs);
@@ -56,22 +54,24 @@ public class PowerAggregationJob {
     }
 
     try {
-      powerWt = (float)deviceService.getStatus(deviceId).getPower();
+      DeviceStatus status = deviceService.getStatus(deviceId);
+      DeviceCache.powerWt = (float) status.getPower();
+      DeviceCache.isOn = status.isSwitchState();
     } catch (Exception e) {
       e.printStackTrace();
     }
-    System.out.println("charging power (watts): " + powerWt);
+    System.out.println("charging power (watts): " + DeviceCache.powerWt);
 
     long apiCallMillis = currentTimeMillis() - now;
     long checkIntervalMillisReal = CHECK_INTERVAL_MILLIS + apiCallMillis;
-    chargedWt += powerWt / (3600 * 1000F / checkIntervalMillisReal);
-    System.out.println("chargedWt: " + chargedWt);
+    DeviceCache.chargedWt += DeviceCache.powerWt / (3600 * 1000F / checkIntervalMillisReal);
+    System.out.println("DeviceCache.chargedWt: " + DeviceCache.chargedWt);
 
     chargingDurationSecs += checkIntervalMillisReal / 1000;
     System.out.println("chargingDurationSecs: " + chargingDurationSecs);
 
-    chargingWtAverageWtH = chargedWt * 3600 / chargingDurationSecs;
-    System.out.println("chargingWtAverageWtH: " + chargingWtAverageWtH);
+    DeviceCache.chargingWtAverageWtH = DeviceCache.chargedWt * 3600 / chargingDurationSecs;
+    System.out.println("DeviceCache.chargingWtAverageWtH: " + DeviceCache.chargingWtAverageWtH);
 
     chargingDurationLeftSecs = (offTime - now) / 1000;
     System.out.println("chargingDurationLeftSecs: " + chargingDurationLeftSecs);
