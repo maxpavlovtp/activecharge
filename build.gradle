@@ -42,6 +42,8 @@ testing {
 		}
 
 		integrationTest(JvmTestSuite) {
+			testType = TestSuiteType.INTEGRATION_TEST
+
 			dependencies {
 				implementation project
 				configurations.integrationTestImplementation.extendsFrom configurations.testImplementation
@@ -65,8 +67,4 @@ testing {
 			}
 		}
 	}
-}
-
-tasks.named('check') {
-	dependsOn(testing.suites.integrationTest)
 }
