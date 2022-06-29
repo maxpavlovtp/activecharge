@@ -4,14 +4,14 @@ import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import {
   getChargingStatus,
   getDeviceStatus,
-  getPower,
 } from "../../store/reducers/ActionCreators";
 import { useTranslation } from "react-i18next";
 
 export default function GetPower() {
   const dispatch = useAppDispatch();
-  const { isGotDeviceStatus, deviceStatus, chargingStatus } =
-    useAppSelector((state) => state.fetchReducer);
+  const { isGotDeviceStatus, deviceStatus, chargingStatus } = useAppSelector(
+    (state) => state.fetchReducer
+  );
   const { t } = useTranslation();
   const getNumber = () => {
     dispatch(getChargingStatus());
@@ -23,7 +23,7 @@ export default function GetPower() {
       getNumber();
     }, 4000);
     return () => clearInterval(timerID);
-  }, [isGotDeviceStatus]);
+  }, [deviceStatus.data.switchState]);
 
   let kWtCharged = chargingStatus;
   let kWtPower = Number(deviceStatus.data.power) / 1000;

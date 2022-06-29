@@ -6,9 +6,7 @@ interface FetchState {
   deviceStatus: any;
   devicePower: string;
   chargingStatus: number;
-  isDeviceOn: boolean;
   isLoadingCharging: boolean;
-  isGotDevicePower: boolean;
   isGotChargingStatus: boolean;
   isGotDeviceStatus: boolean;
   error: string;
@@ -19,9 +17,7 @@ const initialState: FetchState = {
   deviceStatus: null,
   devicePower: "",
   chargingStatus: 0,
-  isDeviceOn: false,
   isLoadingCharging: false,
-  isGotDevicePower: false,
   isGotChargingStatus: false,
   isGotDeviceStatus: false,
   error: "",
@@ -66,22 +62,6 @@ export const FetchSlice = createSlice({
       action: PayloadAction<string>
     ) {
       state.isGotChargingStatus = false;
-      state.error = action.payload;
-    },
-
-    devicePowerFetching(state: FetchState) {
-      state.isGotDevicePower = true;
-    },
-    devicePowerFetchingSuccess(
-      state: FetchState,
-      action: PayloadAction<string>
-    ) {
-      state.isGotDevicePower = false;
-      state.error = "";
-      state.devicePower = action.payload;
-    },
-    devicePowerFetchingError(state: FetchState, action: PayloadAction<string>) {
-      state.isGotDevicePower = false;
       state.error = action.payload;
     },
 

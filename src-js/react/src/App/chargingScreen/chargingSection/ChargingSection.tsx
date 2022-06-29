@@ -9,7 +9,6 @@ import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 import {
   getChargingStatus,
   getDeviceStatus,
-  getPower,
 } from "../../../store/reducers/ActionCreators";
 import GetPower from "../../../components/getPower/GetPower";
 
@@ -26,7 +25,7 @@ const MainSection: React.FC = () => {
 
   const { t } = useTranslation();
 
-  const { isLoadingCharging, error } = useAppSelector(
+  const { isLoadingCharging, startDataCharging, error } = useAppSelector(
     (state) => state.fetchReducer
   );
 
@@ -54,7 +53,7 @@ const MainSection: React.FC = () => {
           .catch((err) => {
             console.log(err);
           });
-      }, 3000);
+      }, 3500);
     }
   }, [isLoadingCharging]);
 
@@ -77,7 +76,7 @@ const MainSection: React.FC = () => {
     }
   }, [secondsBackend, hoursTime]);
 
-  if (error)
+  if (error || startDataCharging?.message === 'error')
     return (
       <ErrorPage errorHeader={t("errorHeader")} errorBody={t("errorBody")} />
     );

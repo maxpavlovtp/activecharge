@@ -34,18 +34,6 @@ export const getDeviceStatus = () => async (dispatch: AppDispatch) => {
   }
 };
 
-export const getPower = () => async (dispatch: AppDispatch) => {
-  try {
-    dispatch(FetchSlice.actions.devicePowerFetching());
-    const response = await axios(urlPower);
-    dispatch(FetchSlice.actions.devicePowerFetchingSuccess(response.data.data));
-    console.log(response.data);
-  } catch (e: any) {
-    dispatch(FetchSlice.actions.devicePowerFetchingError(e.message));
-    console.log(e.message);
-  }
-};
-
 export const getChargingStatus = () => async (dispatch: AppDispatch) => {
   try {
     dispatch(FetchSlice.actions.chargingStatusFetching());
