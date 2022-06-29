@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IFetch } from "../../interfaces";
 
 interface FetchState {
-  startDataCharging: IFetch[];
+  startDataCharging: any;
   deviceStatus: any;
   devicePower: string;
   chargingStatus: number;
@@ -15,7 +15,7 @@ interface FetchState {
 }
 
 const initialState: FetchState = {
-  startDataCharging: [],
+  startDataCharging: null,
   deviceStatus: null,
   devicePower: "",
   chargingStatus: 0,

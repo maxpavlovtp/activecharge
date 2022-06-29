@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 
 export default function GetPower() {
   const dispatch = useAppDispatch();
-  const { isGotDeviceStatus, deviceStatus, chargingStatus, devicePower } =
+  const { isGotDeviceStatus, deviceStatus, chargingStatus } =
     useAppSelector((state) => state.fetchReducer);
   const { t } = useTranslation();
   const getNumber = () => {
@@ -26,7 +26,7 @@ export default function GetPower() {
   }, [isGotDeviceStatus]);
 
   let kWtCharged = chargingStatus;
-  let kWtPower = Number(devicePower) / 1000;
+  let kWtPower = Number(deviceStatus.data.power) / 1000;
 
   // todo use for car range calculation feature
   // nisan leaf = 150
@@ -48,7 +48,7 @@ export default function GetPower() {
             {kWtPower.toFixed(2)} {t("wt")}
           </p>
         </div>
-        {deviceStatus?.data?.switchState ? (
+        {deviceStatus?.data?.switchState === true ? (
           <div className={styles.power}>
             <p className={styles.textTitle}>{t("charging")}</p>
             <p className={styles.text}>{chargeStatus}</p>

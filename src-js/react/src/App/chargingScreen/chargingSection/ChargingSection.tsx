@@ -42,6 +42,8 @@ const MainSection: React.FC = () => {
   useEffect(() => {
     console.log(isLoadingCharging);
     if (isLoadingCharging === false) {
+      dispatch(getChargingStatus());
+      dispatch(getDeviceStatus());
       setTimeout(() => {
         axios
           .get(secondsUrl)
@@ -73,7 +75,6 @@ const MainSection: React.FC = () => {
       setSecondsTime(0);
       setLoading(false);
     }
-    console.log(secondsTime);
   }, [secondsBackend, hoursTime]);
 
   if (error)
