@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./GetPower.module.css";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import {
@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 
 export default function GetPower() {
   const dispatch = useAppDispatch();
-  const { isGotDeviceStatus, deviceStatus, chargingStatus } = useAppSelector(
+  const { deviceStatus, chargingStatus } = useAppSelector(
     (state) => state.fetchReducer
   );
   const { t } = useTranslation();
@@ -20,7 +20,9 @@ export default function GetPower() {
 
   useEffect(() => {
     const timerID = setInterval(() => {
-      getNumber();
+      if (deviceStatus.data.switchState === true) {
+        getNumber();
+      }
     }, 4000);
     return () => clearInterval(timerID);
   }, [deviceStatus.data.switchState]);
