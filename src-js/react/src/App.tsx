@@ -7,6 +7,7 @@ import ChargingScreen from "./App/chargingScreen/ChargingScreen";
 import MainOverload from "./components/overload-page/MainOverload";
 import PrivateRoute from "./components/privateRoute/PrivateRoute";
 import Layout from "./components/layout/Layout";
+import BackToStation from "./components/backToStation/BackToStation";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
                 </PrivateRoute>
               }
             />
+            <Route path="/" element={<BackToStation />} />
           </Route>
         </Routes>
       </Router>
