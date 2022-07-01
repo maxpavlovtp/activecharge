@@ -44,6 +44,7 @@ i18n
           tapCall: "Натисніть, щоб зателефонувати",
           telDima: "Дмитро",
           telMax: "Макс",
+          notFound: "Сторінка не знайдена",
           overload: {
             waitForLink: "Зачекайте секунду",
             gettingLink: "Отримуємо посилання для оплати",
@@ -90,6 +91,7 @@ i18n
           tapCall: "Tap for calling",
           telDima: "Dima",
           telMax: "Max",
+          notFound: "Page not found",
           overload: {
             waitForLink: "Wait a second",
             gettingLink: "Getting payment link",
