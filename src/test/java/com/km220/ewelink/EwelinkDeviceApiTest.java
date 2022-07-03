@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.km220.ewelink.model.device.Device;
 import java.util.function.Function;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,7 @@ class EwelinkDeviceApiTest extends AbstractEwelinkApiTest {
   }
 
   @Test
+  @Disabled
   void getDeviceShouldReturnDeviceInParallelMode() throws InterruptedException {
     Function<String, Void> runnable = deviceId -> {
       for (int i = 0; i < 20; i++) {

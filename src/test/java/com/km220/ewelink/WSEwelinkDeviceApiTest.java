@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.km220.ewelink.model.device.SwitchState;
 import com.km220.ewelink.model.ws.WssResponse;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,7 @@ class WSEwelinkDeviceApiTest extends AbstractEwelinkApiTest {
   private static final Logger LOGGER = LoggerFactory.getLogger(WSEwelinkDeviceApiTest.class);
 
   @Test
+  @Disabled
   void getDeviceStatus_shouldReturnDeviceStatus() {
     var wsEwelinkDeviceApi = ewelinkClient.wsDevices();
 
@@ -29,6 +31,7 @@ class WSEwelinkDeviceApiTest extends AbstractEwelinkApiTest {
   }
 
   @Test
+  @Disabled
   void toggleDeviceState_shouldChangeDeviceToggleState() {
     var wsEwelinkDeviceApi = ewelinkClient.wsDevices();
 
