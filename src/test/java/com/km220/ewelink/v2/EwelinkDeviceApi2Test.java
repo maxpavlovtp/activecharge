@@ -32,9 +32,10 @@ class EwelinkDeviceApi2Test extends AbstractEwelinkApiTest {
   }
 
   @Test
+  @Disabled
   void getDeviceShouldReturnDeviceInParallelMode() throws InterruptedException {
     Function<String, Void> runnable = deviceId -> {
-      for (int i = 0; i < 50; i++) {
+      for (int i = 0; i < 20; i++) {
         EwelinkDeviceApi2 ewelinkDeviceApi = ewelinkClient.devicesV2();
         DeviceV2 device = ewelinkDeviceApi.getDevice(deviceId).join();
 
