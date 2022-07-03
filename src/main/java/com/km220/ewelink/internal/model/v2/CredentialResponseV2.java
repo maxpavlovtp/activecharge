@@ -1,4 +1,4 @@
-package com.km220.ewelink.internal.v2;
+package com.km220.ewelink.internal.model.v2;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.km220.ewelink.internal.CredentialsResponse;

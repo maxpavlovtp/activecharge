@@ -9,4 +9,7 @@ public abstract class EwelinkConstants {
   public static final String UPDATE_ACTION = "update";
 
   public static final String APP_USER_AGENT = "app";
+
+  public static final int DEVICE_TYPE = 1;
+  public static final int GROUP_TYPE = 1;
 }

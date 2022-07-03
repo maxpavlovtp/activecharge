@@ -1,6 +1,6 @@
 package com.km220.ewelink;
 
-import com.km220.ewelink.v2.EwelinkDeviceApi2;
+import com.km220.ewelink.v2.EwelinkDeviceApiV2;
 import java.net.http.HttpClient;
 import java.util.Optional;
 import lombok.Builder;
@@ -34,8 +34,8 @@ public class EwelinkClient {
     return new EwelinkDeviceApi(parameters, applicationId, applicationSecret, httpClient);
   }
 
-  public EwelinkDeviceApi2 devicesV2() {
-    return new EwelinkDeviceApi2(parameters, applicationId, applicationSecret,
+  public EwelinkDeviceApiV2 devicesV2() {
+    return new EwelinkDeviceApiV2(parameters, applicationId, applicationSecret,
         httpClient);
   }
 

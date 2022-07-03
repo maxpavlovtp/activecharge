@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.km220.ewelink.EwelinkApiException;
 import com.km220.ewelink.EwelinkParameters;
 import com.km220.ewelink.internal.CredentialsRequest;
+import com.km220.ewelink.internal.model.v2.CredentialResponseV2;
 import com.km220.ewelink.internal.utils.JsonUtils;
 import com.km220.ewelink.internal.utils.SecurityUtils;
 import java.net.URI;
@@ -34,7 +35,7 @@ import java.util.stream.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class AbstractEwelinkApi2 {
+public abstract class AbstractEwelinkApiV2 {
 
   protected final EwelinkParameters parameters;
   protected final String applicationId;
@@ -47,13 +48,13 @@ public abstract class AbstractEwelinkApi2 {
   private static final String X_CK_NONCE_HEADER = "X-CK-Nonce";
   private static final String X_CK_APPID_HEADER = "X-CK-Appid";
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(AbstractEwelinkApi2.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(AbstractEwelinkApiV2.class);
 
   private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
   private static final Map<String, String> tokenCache = new ConcurrentHashMap<>();
 
-  protected AbstractEwelinkApi2(final EwelinkParameters parameters, final String applicationId,
+  protected AbstractEwelinkApiV2(final EwelinkParameters parameters, final String applicationId,
       final String applicationSecret, final HttpClient httpClient) {
     this.parameters = Objects.requireNonNull(parameters);
     this.applicationId = Objects.requireNonNull(applicationId);

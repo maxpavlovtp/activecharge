@@ -1,10 +1,8 @@
 package com.km220.ewelink;
 
-import org.junit.jupiter.api.BeforeEach;
-
 public abstract class AbstractEwelinkApiTest {
 
-  protected EwelinkClient ewelinkClient;
+  protected final EwelinkClient ewelinkClient;
 
   protected static final String BOILER_DEVICE_ID = "1001323420";
   protected static final String STAGE_DEVICE_ID = "1000d61c41";
@@ -17,10 +15,6 @@ public abstract class AbstractEwelinkApiTest {
   private static final String APP_SECRET = "4G91qSoboqYO4Y0XJ0LPPKIsq8reHdfa";
 
   protected AbstractEwelinkApiTest() {
-  }
-
-  @BeforeEach
-  void setup() {
     ewelinkClient = EwelinkClient.builder()
         .parameters(new EwelinkParameters(REGION, EMAIL, PASSWORD, COUNTRY_CODE))
         .applicationId(APP_ID)
