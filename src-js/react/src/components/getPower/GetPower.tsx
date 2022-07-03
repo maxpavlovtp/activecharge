@@ -1,17 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./GetPower.module.css";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import {
   getChargingStatus,
   getDeviceStatus,
-  getPower,
 } from "../../store/reducers/ActionCreators";
 import { useTranslation } from "react-i18next";
 
 export default function GetPower() {
   const dispatch = useAppDispatch();
-  const { isGotDeviceStatus, deviceStatus, chargingStatus, devicePower } =
-    useAppSelector((state) => state.fetchReducer);
+  const { deviceStatus, chargingStatus } = useAppSelector(
+    (state) => state.fetchReducer
+  );
   const { t } = useTranslation();
   const getNumber = () => {
     dispatch(getChargingStatus());
@@ -20,13 +20,15 @@ export default function GetPower() {
 
   useEffect(() => {
     const timerID = setInterval(() => {
-      getNumber();
+      if (deviceStatus.data.switchState === true) {
+        getNumber();
+      }
     }, 4000);
     return () => clearInterval(timerID);
-  }, [isGotDeviceStatus]);
+  }, [deviceStatus.data.switchState]);
 
   let kWtCharged = chargingStatus;
-  let kWtPower = Number(devicePower) / 1000;
+  let kWtPower = Number(deviceStatus.data.power) / 1000;
 
   // todo use for car range calculation feature
   // nisan leaf = 150
@@ -48,7 +50,7 @@ export default function GetPower() {
             {kWtPower.toFixed(2)} {t("wt")}
           </p>
         </div>
-        {deviceStatus?.data?.switchState ? (
+        {deviceStatus?.data?.switchState === true ? (
           <div className={styles.power}>
             <p className={styles.textTitle}>{t("charging")}</p>
             <p className={styles.text}>{chargeStatus}</p>

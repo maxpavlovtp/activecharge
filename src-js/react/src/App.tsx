@@ -7,6 +7,8 @@ import ChargingScreen from "./App/chargingScreen/ChargingScreen";
 import MainOverload from "./components/overload-page/MainOverload";
 import PrivateRoute from "./components/privateRoute/PrivateRoute";
 import Layout from "./components/layout/Layout";
+import BackToStation from "./components/backToStation/BackToStation";
+import NotFoundPage from "./components/notFoundPage/NotFoundPage";
 
 function App() {
   return (
@@ -14,11 +16,20 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Layout />}>
+            <Route path="*" element={<NotFoundPage />} />
             <Route path="/contract" element={<ContractScreen />} />
             <Route path="/contacts" element={<ContactsScreen />} />
-            <Route path="/charging" element={<ChargingScreen />} />
-            <Route path="/overload" element={<MainOverload />} />
-            <Route path="/" element={<MainScreen />} />
+            <Route path="/charging/:id" element={<ChargingScreen />} />
+            <Route path="/overload/:id" element={<MainOverload />} />
+            <Route
+              path="/:id"
+              element={
+                <PrivateRoute>
+                  <MainScreen />
+                </PrivateRoute>
+              }
+            />
+            <Route path="/" element={<BackToStation />} />
           </Route>
         </Routes>
       </Router>

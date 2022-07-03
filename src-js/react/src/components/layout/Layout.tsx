@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Navigate, Outlet } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import styles from "./Header.module.css";
 import logo from "../../assets/logo.png";
@@ -18,8 +18,8 @@ export default function Layout() {
   );
   useEffect(() => {
     deviceStatus?.data?.switchState === true
-      ? setRouteTo("/charging")
-      : setRouteTo("/");
+      ? setRouteTo("/charging/2")
+      : setRouteTo("/2");
   }, [isGotDeviceStatus]);
 
   const fixed = () => {
