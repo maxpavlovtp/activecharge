@@ -1,6 +1,7 @@
 package com.km220.ewelink.v2;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.km220.ewelink.AbstractEwelinkApiTest;
 import com.km220.ewelink.model.v2.DeviceV2;
@@ -32,7 +33,6 @@ class EwelinkDeviceApi2Test extends AbstractEwelinkApiTest {
   }
 
   @Test
-  @Disabled
   void getDeviceShouldReturnDeviceInParallelMode() throws InterruptedException {
     Function<String, Void> runnable = deviceId -> {
       for (int i = 0; i < 5; i++) {
@@ -40,6 +40,7 @@ class EwelinkDeviceApi2Test extends AbstractEwelinkApiTest {
         DeviceV2 device = ewelinkDeviceApi.getDevice(deviceId).join();
 
         LOGGER.info("Thread: {}. Power: {}", Thread.currentThread().getName(), device.getData().getParams().getPower());
+        assertNotNull(device);
       }
       return null;
     };
