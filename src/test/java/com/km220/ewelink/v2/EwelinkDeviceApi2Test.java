@@ -32,14 +32,13 @@ class EwelinkDeviceApi2Test extends AbstractEwelinkApiTest {
   }
 
   @Test
-  @Disabled
   void getDeviceShouldReturnDeviceInParallelMode() throws InterruptedException {
     Function<String, Void> runnable = deviceId -> {
-      for (int i = 0; i < 20; i++) {
+      for (int i = 0; i < 50; i++) {
         EwelinkDeviceApi2 ewelinkDeviceApi = ewelinkClient.devicesV2();
-        DeviceV2 device = ewelinkDeviceApi.getDevice(STAGE_DEVICE_ID).join();
+        DeviceV2 device = ewelinkDeviceApi.getDevice(deviceId).join();
 
-        LOGGER.info("Thread: {}. Device: {}", Thread.currentThread().getName(), device);
+        LOGGER.info("Thread: {}. Power: {}", Thread.currentThread().getName(), device.getData().getParams().getPower());
       }
       return null;
     };
@@ -48,12 +47,12 @@ class EwelinkDeviceApi2Test extends AbstractEwelinkApiTest {
     Runnable task2 = () -> runnable.apply(BOILER_DEVICE_ID);
 
     Thread t1 = new Thread(task1);
-    //Thread t2 = new Thread(task2);
+    Thread t2 = new Thread(task2);
 
     t1.start();
-    //t2.start();
+    t2.start();
 
     t1.join();
-    //t2.join();
+    t2.join();
   }
 }

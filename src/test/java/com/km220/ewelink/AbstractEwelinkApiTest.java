@@ -7,10 +7,10 @@ public abstract class AbstractEwelinkApiTest {
   protected EwelinkClient ewelinkClient;
 
   protected static final String BOILER_DEVICE_ID = "1001323420";
-  protected static final String STAGE_DEVICE_ID = "1000d61c41";
+  protected static final String STAGE_DEVICE_ID = "10013bb124";
 
-  private static final String EMAIL = "jasper.ua@gmail.com";
-  private static final String PASSWORD = "12345678";
+  private static final String EMAIL = "maxpavlov.dp@gmail.com";
+  private static final String PASSWORD = "Nopassword1";
   private static final String REGION = "eu";
   private static final String COUNTRY_CODE = "+380";
   private static final String APP_ID = "YzfeftUVcZ6twZw1OoVKPRFYTrGEg01Q";

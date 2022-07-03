@@ -1,944 +1,497 @@
 {
-  "error": 0,
-  "devicelist": [
-    {
-      "settings": {
-        "opsNotify": 0,
-        "opsHistory": 1,
-        "alarmNotify": 1,
-        "wxAlarmNotify": 0,
-        "wxOpsNotify": 0,
-        "wxDoorbellNotify": 0,
-        "appDoorbellNotify": 1
-      },
-      "family": {
-        "members": [],
-        "id": "619a0f711a68c30008e4d866",
-        "index": 0
-      },
-      "group": "",
-      "online": false,
-      "shareUsersInfo": [],
-      "groups": [],
-      "devGroups": [],
-      "_id": "61bc6a4cd701d20009f37f6f",
-      "relational": [],
-      "deviceid": "100136f129",
-      "name": "Елку",
-      "type": "10",
-      "apikey": "d1c20fe0-3d1a-4651-9844-c795f85281e6",
-      "extra": {
-        "extra": {
-          "uiid": 1,
-          "description": "20210520005",
-          "brandId": "5c4c1aee3a7d24c7100be054",
-          "apmac": "d0:27:02:6d:df:a3",
-          "mac": "d0:27:02:6d:df:a2",
-          "ui": "单通道插座",
-          "modelInfo": "5c700fd5cc248c47441fd24a",
-          "model": "PSF-BD1-GL",
-          "manufacturer": "深圳松诺技术有限公司",
-          "chipid": "007614E5",
-          "staMac": "70:03:9F:76:14:E5"
-        },
-        "_id": "60a70b5a64072b109c4a3b54"
-      },
-      "params": {
-        "bindInfos": {
-          "gaction": [
-            "d1c20fe0-3d1a-4651-9844-c795f85281e6_ewelinkGoogleHome"
-          ],
-          "scene": 2,
-          "miot": [
-            "d1c20fe0-3d1a-4651-9844-c795f85281e6_ewelink-miot-v1"
-          ]
-        },
-        "version": 8,
-        "sledOnline": "on",
-        "switch": "off",
-        "fwVersion": "3.6.0",
-        "rssi": -86,
-        "staMac": "70:03:9F:76:14:E5",
-        "startup": "off",
-        "init": 1,
-        "pulse": "on",
-        "pulseWidth": 10000,
-        "swMode": 2,
-        "swCtrlReverse": "off",
-        "timers": [
-          {
-            "mId": "7fe697b7-fd7b-afda-854d-2cb5035dacbd",
-            "type": "repeat",
-            "at": "30 8 * * 0,1,2,3,4,5,6",
-            "coolkit_timer_type": "repeat",
-            "enabled": 1,
-            "do": {
-              "switch": "on"
-            }
-          },
-          {
-            "mId": "07fd969a-a784-8930-f5c8-2922118806a8",
-            "type": "repeat",
-            "at": "0 19 * * 0,1,2,3,4,5,6",
-            "coolkit_timer_type": "repeat",
-            "enabled": 1,
-            "do": {
-              "switch": "off"
-            }
-          }
-        ]
-      },
-      "createdAt": "2021-12-17T10:45:32.140Z",
-      "__v": 0,
-      "onlineTime": "2022-02-19T15:26:05.771Z",
-      "ip": "185.237.75.9",
-      "location": "",
-      "tags": {
-        "m_81e6_maxp": "on",
-        "disable_timers": []
-      },
-      "offlineTime": "2022-02-19T16:18:39.826Z",
-      "sharedTo": [],
-      "devicekey": "24bfcae5-3e36-4816-9c36-e1c93a30cf1b",
-      "deviceUrl": "https://eu-api.coolkit.cc/api/detail/5c700fd5cc248c47441fd24a_en.html",
-      "brandName": "SONOFF",
-      "showBrand": true,
-      "brandLogoUrl": "https://eu-ota.coolkit.cc/logo/q62PevoglDNmwUJ9oPE7kRrpt1nL1CoA.png",
-      "productModel": "BASIC",
-      "devConfig": {},
-      "uiid": 1
-    },
-    {
-      "settings": {
-        "opsNotify": 1,
-        "opsHistory": 1,
-        "alarmNotify": 1,
-        "wxAlarmNotify": 0,
-        "wxOpsNotify": 0,
-        "wxDoorbellNotify": 0,
-        "appDoorbellNotify": 1
-      },
-      "family": {
-        "members": [],
-        "id": "619a0f711a68c30008e4d866",
-        "index": -1
-      },
-      "group": "",
-      "online": true,
-      "shareUsersInfo": [],
-      "groups": [],
-      "devGroups": [],
-      "_id": "61bdd3ec940e170009b40f29",
-      "relational": [],
-      "deviceid": "1001323420",
-      "name": "Бойлер",
-      "type": "10",
-      "apikey": "d1c20fe0-3d1a-4651-9844-c795f85281e6",
-      "extra": {
-        "extra": {
-          "uiid": 32,
-          "description": "2021-04-02 蒲玖云 WW210397",
-          "brandId": "59e0dbc25c1af3a660cc1ac0",
-          "apmac": "d0:27:02:64:65:91",
-          "mac": "d0:27:02:64:65:90",
-          "ui": "功率检测插座过载告警",
-          "modelInfo": "5ae946f8583ae7fb0c3e5a69",
-          "model": "PSF-B67-GL",
-          "manufacturer": "深圳酷宅科技有限公司",
-          "chipid": "0081911B",
-          "staMac": "3C:61:05:81:91:1B"
-        },
-        "_id": "6066869c091acbfa78927270"
-      },
-      "params": {
-        "bindInfos": {
-          "gaction": [
-            "d1c20fe0-3d1a-4651-9844-c795f85281e6_ewelinkGoogleHome"
-          ],
-          "scene": 3,
-          "miot": [
-            "d1c20fe0-3d1a-4651-9844-c795f85281e6_ewelink-miot-v1"
-          ]
-        },
-        "version": 8,
-        "sledOnline": "on",
-        "ssid": "active",
-        "bssid": "9c:9d:7e:49:44:12",
-        "fwVersion": "3.5.0",
-        "staMac": "3C:61:05:81:91:1B",
-        "rssi": -50,
-        "init": 1,
-        "alarmType": "pcv",
-        "alarmVValue": [
-          -1,
-          -1
-        ],
-        "alarmCValue": [
-          -1,
-          -1
-        ],
-        "alarmPValue": [
-          -1,
-          3000
-        ],
-        "switch": "off",
-        "startup": "stay",
-        "pulse": "off",
-        "pulseWidth": 4000,
-        "power": "0.00",
-        "voltage": "236.19",
-        "current": "0.00",
-        "oneKwh": "start",
-        "uiActive": 60,
-        "timeZone": 2,
-        "hundredDaysKwh": "get",
-        "endTime": "",
-        "startTime": "2022-02-18T13:25:15.231Z",
-        "onKwh": "start",
-        "timers": []
-      },
-      "createdAt": "2021-12-18T12:28:28.563Z",
-      "__v": 0,
-      "onlineTime": "2022-05-13T18:10:09.424Z",
-      "ip": "185.237.75.2",
-      "location": "",
-      "tags": {
-        "m_81e6_maxp": "on",
-        "disable_timers": [
-          {
-            "mId": "ab5c9732-1b12-2a19-5c64-2bd02de3b052",
-            "type": "duration",
-            "at": "2022-01-06T22:19:00.735Z 1",
-            "coolkit_timer_type": "duration",
-            "enabled": 1,
-            "do": {
-              "switch": "on"
-            }
-          }
-        ]
-      },
-      "offlineTime": "2022-05-13T18:08:14.739Z",
-      "sharedTo": [],
-      "devicekey": "0c0b8035-156e-4b0c-91f5-fb2c77519c85",
-      "deviceUrl": "",
-      "brandName": "coolkit",
-      "showBrand": false,
-      "brandLogoUrl": "",
-      "productModel": "PSF-X67",
-      "devConfig": {},
-      "uiid": 32
-    },
-    {
-      "settings": {
-        "opsNotify": 0,
-        "opsHistory": 1,
-        "alarmNotify": 1,
-        "wxAlarmNotify": 0,
-        "wxOpsNotify": 0,
-        "wxDoorbellNotify": 0,
-        "appDoorbellNotify": 1
-      },
-      "family": {
-        "room": {
-          "id": "619a0f711a68c30008e4d865"
-        },
-        "members": [],
-        "id": "619a0f711a68c30008e4d866",
-        "index": -3
-      },
-      "group": "",
-      "online": true,
-      "shareUsersInfo": [],
-      "groups": [],
-      "devGroups": [],
-      "_id": "61f05f0a9de0560009747bea",
-      "relational": [],
-      "deviceid": "10014a7247",
-      "name": "Komariv main",
-      "type": "10",
-      "apikey": "d1c20fe0-3d1a-4651-9844-c795f85281e6",
-      "extra": {
-        "extra": {
-          "uiid": 128,
-          "description": "20210908002",
-          "brandId": "5c4c1aee3a7d24c7100be054",
-          "apmac": "d0:27:02:94:e1:df",
-          "mac": "d0:27:02:94:e1:de",
-          "ui": "堆叠式电表",
-          "modelInfo": "5f1e478d08bb4f51db013bc6",
-          "model": "E32-MNG-00",
-          "manufacturer": "深圳松诺技术有限公司",
-          "chipid": "E0E2E60BB354"
-        },
-        "_id": "6138650e5c5dabf555d36197"
-      },
-      "params": {
-        "bindInfos": {
-          "gaction": [
-            "d1c20fe0-3d1a-4651-9844-c795f85281e6_ewelinkGoogleHome"
-          ],
-          "miot": [
-            "d1c20fe0-3d1a-4651-9844-c795f85281e6_ewelink-miot-v1"
-          ]
-        },
-        "version": 8,
-        "rssi": -23,
-        "sledOnline": "on",
-        "fwVersion": "1.2.0",
-        "subChipFwVer": "1.2.0",
-        "subDevices": [
-          {
-            "subDevId": "5865464e3635361735363236",
-            "deviceid": "ab30000079",
-            "uiid": "130"
-          }
-        ],
-        "timeZone": 2,
-        "only_device": {
-          "ota": "success"
-        }
-      },
-      "createdAt": "2022-01-25T20:35:22.559Z",
-      "__v": 0,
-      "onlineTime": "2022-05-20T00:02:16.894Z",
-      "ip": "91.235.226.243",
-      "location": "",
-      "tags": {
-        "m_81e6_maxp": "off",
-        "showOnDashboard": false
-      },
-      "offlineTime": "2022-05-20T00:01:54.534Z",
-      "sharedTo": [],
-      "devicekey": "f3830959-6696-4b5b-bc3f-e11509de045f",
-      "deviceUrl": "",
-      "brandName": "SONOFF",
-      "showBrand": true,
-      "brandLogoUrl": "https://eu-ota.coolkit.cc/logo/q62PevoglDNmwUJ9oPE7kRrpt1nL1CoA.png",
-      "productModel": "SPM-Main",
-      "devConfig": {},
-      "uiid": 128
-    },
-    {
-      "settings": {
-        "opsNotify": 1,
-        "opsHistory": 1,
-        "alarmNotify": 1,
-        "wxAlarmNotify": 0,
-        "wxOpsNotify": 0,
-        "wxDoorbellNotify": 0,
-        "appDoorbellNotify": 1
-      },
-      "family": {
-        "room": {
-          "id": "619a0f711a68c30008e4d865"
-        },
-        "members": [],
-        "id": "619a0f711a68c30008e4d866",
-        "index": -5
-      },
-      "group": "",
-      "online": false,
-      "groups": [],
-      "devGroups": [],
-      "_id": "6207f37fef73b30009fc2c4b",
-      "relational": [],
-      "deviceid": "1000d61c41",
-      "name": "комарово",
-      "type": "10",
-      "apikey": "d1c20fe0-3d1a-4651-9844-c795f85281e6",
-      "extra": {
-        "extra": {
-          "uiid": 32,
-          "description": "WO183892",
-          "brandId": "59e0dbc25c1af3a660cc1ac0",
-          "apmac": "d0:27:01:ac:35:d3",
-          "mac": "d0:27:01:ac:35:d2",
-          "ui": "功率检测插座过载告警",
-          "modelInfo": "5ae946f8583ae7fb0c3e5a69",
-          "model": "PSF-B67-GL",
-          "manufacturer": "深圳酷宅科技有限公司",
-          "chipid": "00E847C6",
-          "staMac": "D8:F1:5B:E8:47:C6"
-        },
-        "_id": "5df9c1f7ced9779cc7f21bd6"
-      },
-      "params": {
-        "bindInfos": {
-          "gaction": [
-            "d1c20fe0-3d1a-4651-9844-c795f85281e6_ewelinkGoogleHome",
-            "4c0456ae-b30e-4b51-a126-ae873a3b6699_ewelinkGoogleHome"
-          ],
-          "miot": [
-            "d1c20fe0-3d1a-4651-9844-c795f85281e6_ewelink-miot-v1"
-          ]
-        },
-        "version": 8,
-        "sledOnline": "on",
-        "fwVersion": "3.5.0",
-        "staMac": "D8:F1:5B:E8:47:C6",
-        "rssi": -44,
-        "init": 1,
-        "alarmType": "pcv",
-        "alarmVValue": [
-          -1,
-          260
-        ],
-        "alarmCValue": [
-          -1,
-          40
-        ],
-        "alarmPValue": [
-          -1,
-          -1
-        ],
-        "switch": "on",
-        "startup": "on",
-        "pulse": "off",
-        "pulseWidth": 60000,
-        "power": "1440.05",
-        "voltage": "238.71",
-        "current": "5.71",
-        "oneKwh": "start",
-        "uiActive": 60,
-        "timeZone": 2,
-        "only_device": {
-          "ota": "success"
-        },
-        "ssid": "shelter 45",
-        "bssid": "3c:84:6a:54:c6:79",
-        "hundredDaysKwh": "get",
-        "endTime": "2022-04-29T08:36:05.799Z",
-        "startTime": "2022-03-17T07:52:19.289Z",
-        "onKwh": "stop"
-      },
-      "createdAt": "2022-02-12T17:50:55.981Z",
-      "__v": 0,
-      "onlineTime": "2022-05-06T06:36:51.575Z",
-      "ip": "91.235.226.223",
-      "location": "",
-      "tags": {
-        "m_81e6_maxp": "on",
-        "m_6699_alex": "on"
-      },
-      "offlineTime": "2022-05-08T11:19:38.165Z",
-      "sharedTo": [
-        {
-          "phoneNumber": "alexnik0888@gmail.com",
-          "permit": 15,
-          "note": ""
-        }
-      ],
-      "devicekey": "07f44415-2071-47ab-a56c-8b8ce8ffcf2a",
-      "deviceUrl": "",
-      "brandName": "coolkit",
-      "showBrand": false,
-      "brandLogoUrl": "",
-      "productModel": "PSF-X67",
-      "devConfig": {},
-      "uiid": 32
-    },
-    {
-      "settings": {
-        "opsNotify": 1
-      },
-      "family": {
-        "id": "619a0f711a68c30008e4d866",
-        "index": -6,
-        "members": []
-      },
-      "group": "",
-      "online": true,
-      "shareUsersInfo": [],
-      "groups": [],
-      "devGroups": [],
-      "_id": "620a08427c2b4e7073f65fcd",
-      "name": "Komariv",
-      "type": "ab",
-      "apikey": "d1c20fe0-3d1a-4651-9844-c795f85281e6",
-      "deviceid": "ab30000079",
-      "createdAt": "2022-02-14T07:44:02.349Z",
-      "extra": {
-        "extra": {
-          "mac": "5865464e3635361735363236",
-          "apmac": "00:00:00:00:00:00",
-          "model": "GD32-SM4",
-          "modelInfo": "601117ba5b6a29eb41b1f6c0",
-          "manufacturer": "深圳松诺技术有限公司",
-          "brandId": "59e0dbc25c1af3a660cc1ac0",
-          "uiid": 130,
-          "ui": "堆叠式电表四通道开关子设备"
-        },
-        "_id": "61f05f13a21f0966e8031661"
-      },
-      "params": {
-        "bindInfos": {
-          "gaction": [
-            "d1c20fe0-3d1a-4651-9844-c795f85281e6_ewelinkGoogleHome"
-          ],
-          "miot": [
-            "d1c20fe0-3d1a-4651-9844-c795f85281e6_ewelink-miot-v1"
-          ]
-        },
-        "subDevId": "5865464e3635361735363236",
-        "parentid": "10014a7247",
-        "fwVersion": "1.0.0",
-        "overload_00": {
-          "delayTime": 0,
-          "maxAP": {
-            "en": 1,
-            "val": 70000
-          },
-          "maxC": {
-            "en": 0,
-            "val": 700
-          },
-          "maxV": {
-            "en": 0,
-            "val": 24000
-          },
-          "minAP": {
-            "en": 0,
-            "val": 10
-          },
-          "minV": {
-            "en": 0,
-            "val": 10
-          }
-        },
-        "overload_01": {
-          "delayTime": 60,
-          "maxAP": {
-            "en": 0,
-            "val": 440000
-          },
-          "maxC": {
-            "en": 1,
-            "val": 2000
-          },
-          "maxV": {
-            "en": 0,
-            "val": 24000
-          },
-          "minAP": {
-            "en": 0,
-            "val": 10
-          },
-          "minV": {
-            "en": 0,
-            "val": 10
-          }
-        },
-        "overload_02": {
-          "delayTime": 0,
-          "maxAP": {
-            "en": 0,
-            "val": 440000
-          },
-          "maxC": {
-            "en": 1,
-            "val": 2000
-          },
-          "maxV": {
-            "en": 0,
-            "val": 24000
-          },
-          "minAP": {
-            "en": 0,
-            "val": 10
-          },
-          "minV": {
-            "en": 0,
-            "val": 10
-          }
-        },
-        "overload_03": {
-          "delayTime": 20,
-          "maxAP": {
-            "en": 0,
-            "val": 440000
-          },
-          "maxC": {
-            "en": 1,
-            "val": 2000
-          },
-          "maxV": {
-            "en": 0,
-            "val": 24000
-          },
-          "minAP": {
-            "en": 0,
-            "val": 10
-          },
-          "minV": {
-            "en": 0,
-            "val": 10
-          }
-        },
-        "switches": [
-          {
-            "switch": "on",
-            "outlet": 0
-          },
-          {
-            "switch": "on",
-            "outlet": 1
-          },
-          {
-            "switch": "on",
-            "outlet": 2
-          },
-          {
-            "switch": "on",
-            "outlet": 3
-          }
-        ],
-        "threshold": {
-          "actPow": {
-            "min": 10,
-            "max": 440000
-          },
-          "current": {
-            "min": 10,
-            "max": 2000
-          },
-          "voltage": {
-            "min": 10,
-            "max": 24000
-          }
-        },
-        "timers": [
-          {
-            "at": "0 22 * * 0,1,2,3,4,5,6",
-            "type": "repeat",
-            "coolkit_timer_type": "repeat",
-            "mId": "28761dfd-48fd-84fd-79fd-dfecccbd4bd0",
-            "enabled": 1,
-            "do": {
-              "switch": "off",
-              "outlet": 3
-            }
-          },
-          {
-            "at": "0 3 * * 0,1,2,3,4,5,6",
-            "type": "repeat",
-            "coolkit_timer_type": "repeat",
-            "mId": "85fcc789-cb4d-fb43-39e5-46b3b2588fd0",
-            "enabled": 1,
-            "do": {
-              "switch": "on",
-              "outlet": 3
-            }
-          }
-        ],
-        "uiActive": {
-          "outlet": 3,
-          "time": 60
-        },
-        "getKwh_00": 2,
-        "actPow_00": 4927,
-        "apparentPow_00": 7626,
-        "current_00": 32,
-        "reactPow_00": 5848,
-        "voltage_00": 23591,
-        "getKwh_01": 2,
-        "actPow_01": 3656,
-        "apparentPow_01": 6125,
-        "current_01": 25,
-        "reactPow_01": 4842,
-        "voltage_01": 24034,
-        "faultState": {
-          "cse7761Com": [
-            1,
-            1,
-            1,
-            1
-          ],
-          "subDevCom": 1,
-          "overLimit": [
-            {
-              "outlet": 0,
-              "rsn": [
-                0
-              ]
-            }
-          ],
-          "overloadTrig": [
-            {
-              "outlet": 0,
-              "rsn": [
-                3
-              ]
-            }
-          ]
-        },
-        "actPow_03": 31,
-        "apparentPow_03": 1951,
-        "current_03": 8,
-        "reactPow_03": 1948,
-        "voltage_03": 23693,
-        "endTime_00": "",
-        "startTime_00": "2022-02-17T20:47:33.338Z",
-        "endTime_01": "",
-        "startTime_01": "2022-02-14T14:11:09.443Z",
-        "actPow_02": 83,
-        "apparentPow_02": 696,
-        "current_02": 2,
-        "reactPow_02": 680,
-        "voltage_02": 23827,
-        "iAmHere": 1,
-        "configure": [
-          {
-            "outlet": 0,
-            "startup": "off"
-          },
-          {
-            "outlet": 1,
-            "startup": "off"
-          },
-          {
-            "outlet": 2,
-            "startup": "off"
-          },
-          {
-            "outlet": 3,
-            "startup": "off"
-          }
-        ],
-        "getKwh_03": 2,
-        "getKwh_02": 2
-      },
-      "ip": "46.211.69.218",
-      "location": "",
-      "offlineTime": "2022-05-20T00:01:54.538Z",
-      "tags": {
-        "ck_channel_name": {
-          "0": "Старую проводку",
-          "1": "Фазенду",
-          "2": "Кухню",
-          "3": "Ванную"
-        }
-      },
-      "sharedTo": [],
-      "devicekey": "649da96a-3e65-426e-984d-9ac9b89581ec",
-      "deviceUrl": "",
-      "brandName": "coolkit",
-      "showBrand": false,
-      "brandLogoUrl": "",
-      "productModel": "GD32-SM4(130)",
-      "devConfig": {},
-      "uiid": 130
-    },
-    {
-      "settings": {
-        "opsNotify": 0,
-        "opsHistory": 1,
-        "alarmNotify": 1,
-        "wxAlarmNotify": 0,
-        "wxOpsNotify": 0,
-        "wxDoorbellNotify": 0,
-        "appDoorbellNotify": 1,
-        "webOpsNotify": 0
-      },
-      "family": {
-        "room": {
-          "id": "619a0f711a68c30008e4d863"
-        },
-        "members": [],
-        "id": "619a0f711a68c30008e4d866",
-        "index": -7
-      },
-      "group": "",
-      "online": true,
-      "shareUsersInfo": [],
-      "groups": [],
-      "devGroups": [],
-      "_id": "625eaea83cb3720009e4219b",
-      "relational": [],
-      "deviceid": "100136f1a4",
-      "name": "Монитор",
-      "type": "10",
-      "apikey": "d1c20fe0-3d1a-4651-9844-c795f85281e6",
-      "extra": {
-        "extra": {
-          "uiid": 1,
-          "description": "20210520005",
-          "brandId": "5c4c1aee3a7d24c7100be054",
-          "apmac": "d0:27:02:6d:e0:99",
-          "mac": "d0:27:02:6d:e0:98",
-          "ui": "单通道插座",
-          "modelInfo": "5c700fd5cc248c47441fd24a",
-          "model": "PSF-BD1-GL",
-          "manufacturer": "深圳松诺技术有限公司",
-          "chipid": "0076A033",
-          "staMac": "70:03:9F:76:A0:33"
-        },
-        "_id": "60a70b5a64072b109c4a3bcf"
-      },
-      "params": {
-        "bindInfos": {
-          "gaction": [
-            "d1c20fe0-3d1a-4651-9844-c795f85281e6_ewelinkGoogleHome"
-          ],
-          "miot": [
-            "d1c20fe0-3d1a-4651-9844-c795f85281e6_ewelink-miot-v1"
-          ]
-        },
-        "version": 8,
-        "sledOnline": "on",
-        "switch": "on",
-        "fwVersion": "3.6.0",
-        "rssi": -67,
-        "staMac": "70:03:9F:76:A0:33",
-        "startup": "on",
-        "init": 1,
-        "pulse": "off",
-        "pulseWidth": 500,
-        "swMode": 2,
-        "swCtrlReverse": "off"
-      },
-      "createdAt": "2022-04-19T12:44:24.037Z",
-      "__v": 0,
-      "onlineTime": "2022-05-20T16:37:20.952Z",
-      "ip": "91.235.226.243",
-      "location": "",
-      "tags": {
-        "m_81e6_maxp": "on"
-      },
-      "offlineTime": "2022-05-20T16:20:02.182Z",
-      "sharedTo": [],
-      "devicekey": "606f3c3f-9761-4f0a-b864-6fa329760066",
-      "deviceUrl": "https://eu-api.coolkit.cc/api/detail/5c700fd5cc248c47441fd24a_en.html",
-      "brandName": "SONOFF",
-      "showBrand": true,
-      "brandLogoUrl": "https://eu-ota.coolkit.cc/logo/q62PevoglDNmwUJ9oPE7kRrpt1nL1CoA.png",
-      "productModel": "BASIC",
-      "devConfig": {},
-      "uiid": 1
-    },
-    {
-      "settings": {
-        "opsNotify": 1,
-        "opsHistory": 1,
-        "alarmNotify": 1,
-        "wxAlarmNotify": 0,
-        "wxOpsNotify": 0,
-        "wxDoorbellNotify": 0,
-        "appDoorbellNotify": 1
-      },
-      "family": {
-        "room": {
-          "id": "619a0f711a68c30008e4d865"
-        },
-        "members": [],
-        "id": "619a0f711a68c30008e4d866",
-        "index": -8
-      },
-      "group": "",
-      "online": true,
-      "shareUsersInfo": [],
-      "groups": [],
-      "devGroups": [],
-      "_id": "62685cdc5f9b44000920bbe1",
-      "relational": [],
-      "deviceid": "10013bb124",
-      "name": "Diff",
-      "type": "10",
-      "apikey": "d1c20fe0-3d1a-4651-9844-c795f85281e6",
-      "extra": {
-        "extra": {
-          "model": "PSF-B67-GL",
-          "ui": "功率检测插座过载告警",
-          "uiid": 32,
-          "description": "2021-06-23 蒲玖云 SC210525",
-          "manufacturer": "深圳酷宅科技有限公司",
-          "mac": "d0:27:02:77:5f:98",
-          "apmac": "d0:27:02:77:5f:99",
-          "modelInfo": "5ae946f8583ae7fb0c3e5a69",
-          "brandId": "59e0dbc25c1af3a660cc1ac0",
-          "chipid": "0076A87A",
-          "staMac": "70:03:9F:76:A8:7A"
-        },
-        "_id": "60d321a0f2b4aa90e56b84e8"
-      },
-      "params": {
-        "bindInfos": {
-          "gaction": [
-            "d1c20fe0-3d1a-4651-9844-c795f85281e6_ewelinkGoogleHome"
-          ],
-          "miot": [
-            "d1c20fe0-3d1a-4651-9844-c795f85281e6_ewelink-miot-v1"
-          ]
-        },
-        "version": 8,
-        "sledOnline": "on",
-        "ssid": "TP_Link-EEF9",
-        "bssid": "6c:5a:b0:45:ee:f9",
-        "fwVersion": "3.5.0",
-        "staMac": "70:03:9F:76:A8:7A",
-        "rssi": -79,
-        "init": 1,
-        "alarmType": "pcv",
-        "alarmVValue": [
-          -1,
-          -1
-        ],
-        "alarmCValue": [
-          -1,
-          16
-        ],
-        "alarmPValue": [
-          -1,
-          -1
-        ],
-        "switch": "on",
-        "startup": "off",
-        "pulse": "off",
-        "pulseWidth": 500,
-        "power": "23.45",
-        "voltage": "247.13",
-        "current": "0.23",
-        "oneKwh": "start",
-        "uiActive": 60,
-        "timeZone": 3,
-        "hundredDaysKwh": "get",
-        "endTime": "",
-        "startTime": "2022-05-12T08:50:13.404Z",
-        "timers": [],
-        "onKwh": "start"
-      },
-      "createdAt": "2022-04-26T20:58:04.912Z",
-      "__v": 0,
-      "onlineTime": "2022-05-20T16:26:29.027Z",
-      "ip": "91.235.226.244",
-      "location": "",
-      "tags": {
-        "m_81e6_maxp": "on",
-        "disable_timers": [
-          {
-            "mId": "794fe1be-c806-fc92-f9d1-254a47f643ea",
-            "type": "duration",
-            "at": "2022-04-26T21:01:00.656Z 60 30",
-            "coolkit_timer_type": "duration",
-            "enabled": 1,
-            "startDo": {
-              "switch": "on"
-            },
-            "endDo": {
-              "switch": "off"
-            }
-          }
-        ]
-      },
-      "offlineTime": "2022-05-20T16:26:00.099Z",
-      "sharedTo": [],
-      "devicekey": "3a4928ee-a2de-4313-baab-231e104add00",
-      "deviceUrl": "",
-      "brandName": "coolkit",
-      "showBrand": false,
-      "brandLogoUrl": "",
-      "productModel": "PSF-X67",
-      "devConfig": {},
-      "uiid": 32
-    }
-  ]
+  settings: {
+    opsNotify: 0,
+    opsHistory: 1,
+    alarmNotify: 1,
+    wxAlarmNotify: 0,
+    wxOpsNotify: 0,
+    wxDoorbellNotify: 0,
+    appDoorbellNotify: 1
+  },
+  family: {
+    members: [],
+    id: '619a0f711a68c30008e4d866',
+    index: 0
+  },
+  group: '',
+  online: false,
+  shareUsersInfo: [],
+  groups: [],
+  devGroups: [],
+  _id: '61bc6a4cd701d20009f37f6f',
+  relational: [],
+  deviceid: '100136f129',
+  name: 'Елку',
+  type: '10',
+  apikey: 'd1c20fe0-3d1a-4651-9844-c795f85281e6',
+  extra: {
+    extra: [
+      Object
+    ],
+    _id: '60a70b5a64072b109c4a3b54'
+  },
+  params: {
+    bindInfos: [
+      Object
+    ],
+    version: 8,
+    sledOnline: 'on',
+    switch: 'off',
+    fwVersion: '3.6.0',
+    rssi: -86,
+    staMac: '70:03:9F:76:14:E5',
+    startup: 'off',
+    init: 1,
+    pulse: 'on',
+    pulseWidth: 10000,
+    swMode: 2,
+    swCtrlReverse: 'off',
+    timers: [
+      Array
+    ]
+  },
+  createdAt: '2021-12-17T10:45:32.140Z',
+  __v: 0,
+  onlineTime: '2022-02-19T15:26:05.771Z',
+  ip: '185.237.75.9',
+  location: '',
+  tags: {
+    m_81e6_maxp: 'on',
+    disable_timers: []
+  },
+  offlineTime: '2022-02-19T16:18:39.826Z',
+  sharedTo: [],
+  devicekey: '24bfcae5-3e36-4816-9c36-e1c93a30cf1b',
+  deviceUrl: 'https://eu-api.coolkit.cc/api/detail/5c700fd5cc248c47441fd24a_en.html',
+  brandName: 'SONOFF',
+  showBrand: true,
+  brandLogoUrl: 'https://eu-ota.coolkit.cc/logo/q62PevoglDNmwUJ9oPE7kRrpt1nL1CoA.png',
+  productModel: 'BASIC',
+  devConfig: {},
+  uiid: 1
+},
+{
+settings: {
+opsNotify: 1,
+opsHistory: 1,
+alarmNotify: 1,
+wxAlarmNotify: 0,
+wxOpsNotify: 0,
+wxDoorbellNotify: 0,
+appDoorbellNotify: 1
+},
+family: {members: [], id: '619a0f711a68c30008e4d866', index: -1},
+group: '',
+online: true,
+shareUsersInfo: [],
+groups: [],
+devGroups: [],
+_id: '61bdd3ec940e170009b40f29',
+relational: [],
+deviceid: '1001323420',
+name: 'Бойлер',
+type: '10',
+apikey: 'd1c20fe0-3d1a-4651-9844-c795f85281e6',
+extra: { extra: [Object], _id: '6066869c091acbfa78927270'
+},
+params: {
+bindInfos: [Object],
+version: 8,
+sledOnline: 'on',
+ssid: 'active',
+bssid: '9c:9d:7e:49:44:12',
+fwVersion: '3.5.0',
+staMac: '3C:61:05:81:91:1B',
+rssi: -51,
+init: 1,
+alarmType: 'pcv',
+alarmVValue: [],
+alarmCValue: [],
+alarmPValue: [],
+switch: 'on',
+startup: 'stay',
+pulse: 'off',
+pulseWidth: 600000,
+power: '1.52',
+voltage: '238.00',
+current: '0.02',
+oneKwh: 'get',
+uiActive: 120,
+timeZone: 2,
+hundredDaysKwh: 'get',
+endTime: '2022-06-28T18:27:56.050Z',
+startTime: '2022-06-26T08:33:53.050Z',
+onKwh: 'start',
+timers: []
+},
+createdAt: '2021-12-18T12:28:28.563Z',
+__v: 0,
+onlineTime: '2022-06-24T20:02:57.436Z',
+ip: '185.237.75.7',
+location: '',
+tags: {
+m_81e6_maxp: 'on',
+disable_timers: [Array],
+rate: 1.68,
+showOnDashboard: true
+},
+offlineTime: '2022-06-24T20:02:48.350Z',
+sharedTo: [],
+devicekey: '0c0b8035-156e-4b0c-91f5-fb2c77519c85',
+deviceUrl: '',
+brandName: 'coolkit',
+showBrand: false,
+brandLogoUrl: '',
+productModel: 'PSF-X67',
+devConfig: {
+},
+uiid: 32
+},
+{
+settings: {
+opsNotify: 0,
+opsHistory: 1,
+alarmNotify: 1,
+wxAlarmNotify: 0,
+wxOpsNotify: 0,
+wxDoorbellNotify: 0,
+appDoorbellNotify: 1
+},
+family: {
+room: [Object],
+members: [],
+id: '619a0f711a68c30008e4d866',
+index: -3
+},
+group: '',
+online: true,
+shareUsersInfo: [],
+groups: [],
+devGroups: [],
+_id: '61f05f0a9de0560009747bea',
+relational: [],
+deviceid: '10014a7247',
+name: 'Komariv main',
+type: '10',
+apikey: 'd1c20fe0-3d1a-4651-9844-c795f85281e6',
+extra: { extra: [Object], _id: '6138650e5c5dabf555d36197'
+},
+params: {
+bindInfos: [Object],
+version: 8,
+rssi: -32,
+sledOnline: 'on',
+fwVersion: '1.2.0',
+subChipFwVer: '1.2.0',
+subDevices: [Array],
+timeZone: 2,
+only_device: [Object]
+},
+createdAt: '2022-01-25T20:35:22.559Z',
+__v: 0,
+onlineTime: '2022-07-03T00:02:46.930Z',
+ip: '91.235.226.200',
+location: '',
+tags: {m_81e6_maxp: 'off', showOnDashboard: false
+},
+offlineTime: '2022-07-03T00:02:38.477Z',
+sharedTo: [],
+devicekey: 'f3830959-6696-4b5b-bc3f-e11509de045f',
+deviceUrl: '',
+brandName: 'SONOFF',
+showBrand: true,
+brandLogoUrl: 'https://eu-ota.coolkit.cc/logo/q62PevoglDNmwUJ9oPE7kRrpt1nL1CoA.png',
+productModel: 'SPM-Main',
+devConfig: {
+},
+uiid: 128
+},
+{
+settings: {opsNotify: 1
+},
+family: {
+id: '619a0f711a68c30008e4d866', index: -6, members: [] },
+group: '',
+online: true,
+shareUsersInfo: [],
+groups: [],
+devGroups: [],
+_id: '620a08427c2b4e7073f65fcd',
+name: 'Komariv',
+type: 'ab',
+apikey: 'd1c20fe0-3d1a-4651-9844-c795f85281e6',
+deviceid: 'ab30000079',
+createdAt: '2022-02-14T07:44:02.349Z',
+extra: {
+extra: [Object], _id: '61f05f13a21f0966e8031661'
+},
+params: {
+bindInfos: [Object],
+subDevId: '5865464e3635361735363236',
+parentid: '10014a7247',
+fwVersion: '1.0.0',
+overload_00: [Object],
+overload_01: [Object],
+overload_02: [Object],
+overload_03: [Object],
+switches: [Array],
+threshold: [Object],
+timers: [Array],
+uiActive: [Object],
+getKwh_00: 2,
+actPow_00: 21270,
+apparentPow_00: 22591,
+current_00: 99,
+reactPow_00: 3675,
+voltage_00: 22708,
+getKwh_01: 2,
+actPow_01: 26536,
+apparentPow_01: 28229,
+current_01: 134,
+reactPow_01: 6119,
+voltage_01: 20917,
+faultState: [Object],
+actPow_03: 1048,
+apparentPow_03: 4175,
+current_03: 18,
+reactPow_03: 3876,
+voltage_03: 22846,
+endTime_00: '',
+startTime_00: '2022-02-17T20:47:33.338Z',
+endTime_01: '',
+startTime_01: '2022-02-14T14:11:09.443Z',
+actPow_02: 132138,
+apparentPow_02: 154170,
+current_02: 724,
+reactPow_02: 3140,
+voltage_02: 21299,
+iAmHere: 1,
+configure: [Array],
+getKwh_03: 2,
+getKwh_02: 2
+},
+ip: '46.211.69.218',
+location: '',
+offlineTime: '2022-07-03T00:02:38.480Z',
+tags: {ck_channel_name: [Object], disable_timers: [] },
+sharedTo: [],
+devicekey: '649da96a-3e65-426e-984d-9ac9b89581ec',
+deviceUrl: '',
+brandName: 'coolkit',
+showBrand: false,
+brandLogoUrl: '',
+productModel: 'GD32-SM4(130)',
+devConfig: {
+},
+uiid: 130
+},
+{
+settings: {
+opsNotify: 0,
+opsHistory: 1,
+alarmNotify: 1,
+wxAlarmNotify: 0,
+wxOpsNotify: 0,
+wxDoorbellNotify: 0,
+appDoorbellNotify: 1,
+webOpsNotify: 0
+},
+family: {
+room: [Object],
+members: [],
+id: '619a0f711a68c30008e4d866',
+index: -7
+},
+group: '',
+online: true,
+shareUsersInfo: [],
+groups: [],
+devGroups: [],
+_id: '625eaea83cb3720009e4219b',
+relational: [],
+deviceid: '100136f1a4',
+name: 'Монитор',
+type: '10',
+apikey: 'd1c20fe0-3d1a-4651-9844-c795f85281e6',
+extra: { extra: [Object], _id: '60a70b5a64072b109c4a3bcf'
+},
+params: {
+bindInfos: [Object],
+version: 8,
+sledOnline: 'on',
+switch: 'on',
+fwVersion: '3.6.0',
+rssi: -70,
+staMac: '70:03:9F:76:A0:33',
+startup: 'on',
+init: 1,
+pulse: 'off',
+pulseWidth: 500,
+swMode: 2,
+swCtrlReverse: 'off'
+},
+createdAt: '2022-04-19T12:44:24.037Z',
+__v: 0,
+onlineTime: '2022-07-03T18:40:11.486Z',
+ip: '91.235.226.200',
+location: '',
+tags: {m_81e6_maxp: 'on'},
+offlineTime: '2022-07-03T10:15:32.692Z',
+sharedTo: [],
+devicekey: '606f3c3f-9761-4f0a-b864-6fa329760066',
+deviceUrl: 'https://eu-api.coolkit.cc/api/detail/5c700fd5cc248c47441fd24a_en.html',
+brandName: 'SONOFF',
+showBrand: true,
+brandLogoUrl: 'https://eu-ota.coolkit.cc/logo/q62PevoglDNmwUJ9oPE7kRrpt1nL1CoA.png',
+productModel: 'BASIC',
+devConfig: {
+},
+uiid: 1
+},
+{
+settings: {
+opsNotify: 0,
+opsHistory: 1,
+alarmNotify: 1,
+wxAlarmNotify: 0,
+wxOpsNotify: 0,
+wxDoorbellNotify: 0,
+appDoorbellNotify: 1
+},
+family: {members: [], id: '619a0f711a68c30008e4d866', index: -8},
+group: '',
+online: true,
+shareUsersInfo: [],
+groups: [],
+devGroups: [],
+_id: '6293455f6df8d2000962cd91',
+relational: [],
+deviceid: '10013bb124',
+name: '220-stage',
+type: '10',
+apikey: 'd1c20fe0-3d1a-4651-9844-c795f85281e6',
+extra: { extra: [Object], _id: '60d321a0f2b4aa90e56b84e8'
+},
+params: {
+bindInfos: [Object],
+version: 8,
+sledOnline: 'on',
+ssid: 'shelter 45',
+bssid: '3c:84:6a:54:c6:79',
+fwVersion: '3.5.0',
+staMac: '70:03:9F:76:A8:7A',
+rssi: -87,
+init: 1,
+alarmType: 'pcv',
+alarmVValue: [],
+alarmCValue: [],
+alarmPValue: [],
+switch: 'off',
+startup: 'off',
+pulse: 'off',
+pulseWidth: 500,
+power: '0.00',
+voltage: '231.03',
+current: '0.00',
+oneKwh: 'start',
+startTime: '2022-06-26T08:33:28.246Z',
+uiActive: 120,
+timeZone: 3,
+onKwh: 'start',
+endTime: '',
+hundredDaysKwh: 'get',
+timers: []
+},
+createdAt: '2022-05-29T10:05:19.730Z',
+__v: 0,
+onlineTime: '2022-07-03T15:18:16.019Z',
+ip: '91.235.226.200',
+location: '',
+tags: {m_81e6_maxp: 'on'},
+offlineTime: '2022-07-03T00:01:23.445Z',
+sharedTo: [],
+devicekey: '3a4928ee-a2de-4313-baab-231e104add00',
+deviceUrl: '',
+brandName: 'coolkit',
+showBrand: false,
+brandLogoUrl: '',
+productModel: 'PSF-X67',
+devConfig: {
+},
+uiid: 32
+},
+{
+settings: {
+opsNotify: 0,
+opsHistory: 1,
+alarmNotify: 1,
+wxAlarmNotify: 0,
+wxOpsNotify: 0,
+wxDoorbellNotify: 0,
+appDoorbellNotify: 1
+},
+family: {
+room: [Object],
+members: [],
+id: '619a0f711a68c30008e4d866',
+index: -9
+},
+group: '',
+online: false,
+shareUsersInfo: [],
+groups: [],
+devGroups: [],
+_id: '62ae41428984d20009fee9b2',
+relational: [],
+deviceid: '1001323877',
+name: '220-prod',
+type: '10',
+apikey: 'd1c20fe0-3d1a-4651-9844-c795f85281e6',
+extra: { extra: [Object], _id: '6066869c091acbfa789276c7'
+},
+params: {
+bindInfos: [Object],
+version: 8,
+sledOnline: 'on',
+ssid: 'active',
+bssid: '00:00:00:00:00:00',
+fwVersion: '3.5.0',
+staMac: '3C:61:05:81:97:60',
+rssi: -60,
+init: 1,
+alarmType: 'pcv',
+alarmVValue: [Array],
+alarmCValue: [Array],
+alarmPValue: [Array],
+switch: 'off',
+startup: 'off',
+pulse: 'off',
+pulseWidth: 500,
+power: '0.00',
+voltage: '236.53',
+current: '0.00',
+oneKwh: 'stop',
+uiActive: 120,
+timeZone: 3,
+hundredDaysKwh: 'get',
+endTime: '2022-06-28T18:24:46.012Z',
+startTime: '2022-06-28T18:24:42.090Z'
+},
+createdAt: '2022-06-18T21:18:58.803Z',
+__v: 0,
+onlineTime: '2022-06-29T21:54:49.971Z',
+ip: '46.211.255.66',
+location: '',
+tags: {m_81e6_maxp: 'on' },
+offlineTime: '2022-06-29T21:57:33.064Z',
+sharedTo: [],
+devicekey: 'dd8f4026-915d-40fd-8f53-6d45da1dac6e',
+deviceUrl: '',
+brandName: 'coolkit',
+showBrand: false,
+brandLogoUrl: '',
+productModel: 'PSF-X67',
+devConfig: {
+},
+uiid: 32
 }
