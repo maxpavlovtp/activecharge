@@ -1,5 +1,6 @@
 package com.km220.ewelink;
 
+import com.km220.ewelink.v2.EwelinkDeviceApi2;
 import java.net.http.HttpClient;
 import java.util.Optional;
 import lombok.Builder;
@@ -18,17 +19,14 @@ public class EwelinkClient {
   private String applicationSecret;
   private HttpClient httpClient;
 
-//  todo: remove
-  private static final String APPLICATION_ID = "oeVkj2lYFGnJu5XUtWisfW4utiN4u9Mq";
-  private static final String APPLICATION_SECRET = "6Nz4n0xA8s8qdxQf2GqurZj2Fs55FUvM";
-
   @Builder
   @SuppressWarnings("unused")
-  private EwelinkClient(@NonNull final EwelinkParameters parameters, final String applicationId,
-      final String applicationSecret, final HttpClient httpClient) {
+  private EwelinkClient(@NonNull final EwelinkParameters parameters,
+      @NonNull final String applicationId,
+      @NonNull final String applicationSecret, final HttpClient httpClient) {
     this.parameters = parameters;
-    this.applicationId = Optional.ofNullable(applicationId).orElse(APPLICATION_ID);
-    this.applicationSecret = Optional.ofNullable(applicationSecret).orElse(APPLICATION_SECRET);
+    this.applicationId = applicationId;
+    this.applicationSecret = applicationSecret;
     this.httpClient = Optional.ofNullable(httpClient).orElseGet(HttpClient::newHttpClient);
   }
 
@@ -36,7 +34,11 @@ public class EwelinkClient {
     return new EwelinkDeviceApi(parameters, applicationId, applicationSecret, httpClient);
   }
 
-  // todo rename
+  public EwelinkDeviceApi2 devicesV2() {
+    return new EwelinkDeviceApi2(parameters, applicationId, applicationSecret,
+        httpClient);
+  }
+
   public WSEwelinkDeviceApi wsDevices() {
     return new WSEwelinkDeviceApi(parameters, applicationId, applicationSecret, httpClient);
   }

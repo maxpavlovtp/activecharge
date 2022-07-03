@@ -17,4 +17,6 @@ public class EwelinkParameters {
   String email;
   @NonNull
   String password;
+  @NonNull
+  String countryCode;
 }
