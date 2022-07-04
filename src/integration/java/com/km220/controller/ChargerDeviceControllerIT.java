@@ -2,7 +2,6 @@ package com.km220.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.km220.BaseIT;
 import com.km220.model.DeviceStatus;
@@ -51,20 +50,6 @@ class ChargerDeviceControllerIT extends BaseIT {
     assertNotNull(response.getBody());
     assertNotNull(response.getBody().getData());
     assertEquals(deviceId, response.getBody().getData().getDeviceId());
-  }
-
-  @Test
-  void checkPower() {
-    ResponseEntity<ChargerResponse<Double>> response = restTemplate.exchange(
-        url("/getPower"),
-        HttpMethod.GET,
-        null,
-        new ParameterizedTypeReference<>() {
-        });
-    assertEquals(HttpStatus.OK, response.getStatusCode());
-    assertNotNull(response.getBody());
-    assertNotNull(response.getBody().getData());
-    assertTrue(response.getBody().getData() >= 0.d);
   }
 
   @Test
