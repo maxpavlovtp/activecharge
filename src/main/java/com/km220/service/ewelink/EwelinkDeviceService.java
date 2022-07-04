@@ -7,6 +7,7 @@ import static java.lang.System.currentTimeMillis;
 import com.km220.PowerAggregationJob;
 import com.km220.ewelink.EwelinkClient;
 import com.km220.ewelink.model.device.SwitchState;
+import com.km220.ewelink.model.v2.DeviceV2;
 import com.km220.model.DeviceStatus;
 import com.km220.service.DeviceCache;
 import com.km220.service.DeviceException;
@@ -38,9 +39,9 @@ public class EwelinkDeviceService implements DeviceService {
 
   @Override
   public DeviceStatus getStatus(String deviceId) {
-    return ewelinkClient.wsDevices()
+    return ewelinkClient.devicesV2()
         .getStatus(Objects.requireNonNull(deviceId))
-        .thenApply(DeviceUtils::convert)
+        .thenApply(response -> DeviceUtils.convert(deviceId, response))
         .join();
   }
 
@@ -52,12 +53,13 @@ public class EwelinkDeviceService implements DeviceService {
     PowerAggregationJob.onTime = currentTimeMillis();
     PowerAggregationJob.offTime = onTime + 1000L * chargeTimeSec;
 
-    var wssResponse = ewelinkClient.wsDevices()
+    DeviceV2 response = ewelinkClient.devicesV2()
         .toggle(Objects.requireNonNull(deviceId), SwitchState.ON,
             OVERLOAD_LIMIT_TIMER_SECS + chargeTimeSec)
         .join();
-    if (wssResponse.getError() > 0) {
-      throw new DeviceException(String.format(Locale.ROOT, "Error on switching device. Device id = %s", deviceId));
+    if (response.getError() > 0) {
+      throw new DeviceException(
+          String.format(Locale.ROOT, "Error on switching device. Device id = %s", deviceId));
     }
 
     DeviceCache.isOn = true;
@@ -65,11 +67,12 @@ public class EwelinkDeviceService implements DeviceService {
 
   @Override
   public void toggleOff(String deviceId, int chargeTimeSec) {
-    var wssResponse = ewelinkClient.wsDevices()
+    DeviceV2 response = ewelinkClient.devicesV2()
         .toggle(Objects.requireNonNull(deviceId), SwitchState.OFF, chargeTimeSec)
         .join();
-    if (wssResponse.getError() > 0) {
-      throw new DeviceException(String.format(Locale.ROOT, "Error on switching device. Device id = %s", deviceId));
+    if (response.getError() > 0) {
+      throw new DeviceException(
+          String.format(Locale.ROOT, "Error on switching device. Device id = %s", deviceId));
     }
 
     DeviceCache.isOn = false;

@@ -18,6 +18,8 @@ public final class HttpUtils {
 
   public static final String AUTHORIZATION_HEADER = "Authorization";
 
+  public static final String HOST_HEADER = "Host";
+
   private HttpUtils() {
   }
 }

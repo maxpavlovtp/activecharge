@@ -25,8 +25,8 @@ class SecurityUtilsTest {
 
     String jsonBody = JsonUtils.serialize(body);
 
-    String auth = SecurityUtils.makeAuthorizationSign("8SKQcsaGbsQMnhiLH3NKdLHNCBt2L8Xz", jsonBody);
+    String auth = SecurityUtils.makeAuthorizationSign("4G91qSoboqYO4Y0XJ0LPPKIsq8reHdfa", jsonBody);
 
-    assertEquals("CDvHMUPigtv8RVX3t6Qlni2ur6riSomagUERmzL6zFw=", auth);
+    assertEquals("6a+NXrTzfYadtmH+zAcPTSYQ1EnVjg3ScImArXK306k=", auth);
   }
 }

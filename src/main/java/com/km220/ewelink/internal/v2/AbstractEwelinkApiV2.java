@@ -1,4 +1,4 @@
-package com.km220.ewelink.internal;
+package com.km220.ewelink.internal.v2;
 
 import static com.km220.ewelink.internal.utils.HttpUtils.ACCEPT_HEADER;
 import static com.km220.ewelink.internal.utils.HttpUtils.AUTHORIZATION_HEADER;
@@ -14,6 +14,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.km220.ewelink.EwelinkApiException;
 import com.km220.ewelink.EwelinkParameters;
+import com.km220.ewelink.internal.CredentialsRequest;
+import com.km220.ewelink.internal.model.v2.CredentialResponseV2;
 import com.km220.ewelink.internal.utils.JsonUtils;
 import com.km220.ewelink.internal.utils.SecurityUtils;
 import java.net.URI;
@@ -21,72 +23,80 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse;
-import java.time.Instant;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class AbstractEwelinkApi {
+public abstract class AbstractEwelinkApiV2 {
 
   protected final EwelinkParameters parameters;
   protected final String applicationId;
   protected final String applicationSecret;
   protected final HttpClient httpClient;
 
+  private static final String API_BASE_URI = "https://%s-apia.coolkit.cc/v2";
+  private static final String LOGIN_URI = "/user/login";
+
+  private static final String X_CK_NONCE_HEADER = "X-CK-Nonce";
+  private static final String X_CK_APPID_HEADER = "X-CK-Appid";
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(AbstractEwelinkApiV2.class);
+
   private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-  private static final String API_BASE_URI = "https://%s-api.coolkit.cc:8080";
-  private static final String LOGIN_URI = "/api/user/login";
-  static final int API_VERSION = 8;
+  private static final Map<String, String> tokenCache = new ConcurrentHashMap<>();
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(AbstractEwelinkApi.class);
-
-  protected AbstractEwelinkApi(final EwelinkParameters parameters, final String applicationId,
+  protected AbstractEwelinkApiV2(final EwelinkParameters parameters, final String applicationId,
       final String applicationSecret, final HttpClient httpClient) {
-    this.parameters = parameters;
-    this.applicationId = applicationId;
-    this.applicationSecret = applicationSecret;
-    this.httpClient = httpClient;
+    this.parameters = Objects.requireNonNull(parameters);
+    this.applicationId = Objects.requireNonNull(applicationId);
+    this.applicationSecret = Objects.requireNonNull(applicationSecret);
+    this.httpClient = Objects.requireNonNull(httpClient);
   }
 
-  protected final CompletableFuture<CredentialsResponse> getCredentials() {
-    String jsonRequestBody = JsonUtils.serialize(
-        CredentialsRequest.builder()
-            .appid(applicationId)
-            .email(parameters.getEmail())
-            .password(parameters.getPassword())
-            .nonce(SecurityUtils.generateNonce())
-            .version(API_VERSION)
-            .ts(Instant.now().getEpochSecond())
-            .build()
-    );
-    return apiJsonRequest(HTTP_POST,
-        BodyPublishers.ofString(jsonRequestBody),
-        LOGIN_URI,
-        generateHeaders("Sign",
-            SecurityUtils.makeAuthorizationSign(applicationSecret, jsonRequestBody)),
-        Map.of(),
-        HTTP_STATUS_OK).thenApply(JsonUtils.jsonDataConverter(CredentialsResponse.class));
+  protected final String getAccessToken() {
+    Supplier<CompletableFuture<String>> tokenExtractor = () -> {
+      String jsonRequestBody = JsonUtils.serialize(
+          CredentialsRequest.builder()
+              .email(parameters.getEmail())
+              .password(parameters.getPassword())
+              .countryCode(parameters.getCountryCode())
+              .build()
+      );
+      CompletableFuture<JsonNode> jsonResponse = apiJsonRequest(HTTP_POST,
+          BodyPublishers.ofString(jsonRequestBody),
+          LOGIN_URI,
+          generateHeaders("Sign",
+              SecurityUtils.makeAuthorizationSign(applicationSecret, jsonRequestBody)),
+          Map.of(),
+          HTTP_STATUS_OK);
+      return jsonResponse
+          .thenApply(JsonUtils.jsonDataConverter(CredentialResponseV2.class))
+          .thenApply(r -> r.getData().getAt());
+    };
+
+    return tokenCache.computeIfAbsent("token", key -> tokenExtractor.get().join());
   }
 
   protected final <T> CompletableFuture<T> apiGetObjectRequest(final String apiUri,
       final Map<String, String> parameters,
       final Function<JsonNode, T> dataConverter) {
     return
-        getCredentials().thenCompose(credentials ->
-            apiResourceRequest(HTTP_GET,
-                noBody(),
-                apiUri,
-                Map.of(),
-                parameters,
-                credentials.getAt(),
-                HTTP_STATUS_OK).thenApply(dataConverter));
+        apiResourceRequest(HTTP_GET,
+            noBody(),
+            apiUri,
+            Map.of(),
+            parameters,
+            getAccessToken(),
+            HTTP_STATUS_OK).thenApply(dataConverter);
   }
 
   protected final <T> CompletableFuture<T> apiPostObjectRequest(final String apiUri,
@@ -94,14 +104,13 @@ public abstract class AbstractEwelinkApi {
       final Supplier<String> bodySupplier,
       final Function<JsonNode, T> dataConverter) {
     return
-        getCredentials().thenCompose(credentials ->
-            apiResourceRequest(HTTP_POST,
-                BodyPublishers.ofString(bodySupplier.get()),
-                apiUri,
-                Map.of(),
-                parameters,
-                credentials.getAt(),
-                HTTP_STATUS_OK).thenApply(dataConverter));
+        apiResourceRequest(HTTP_POST,
+            BodyPublishers.ofString(bodySupplier.get()),
+            apiUri,
+            Map.of(),
+            parameters,
+            getAccessToken(),
+            HTTP_STATUS_OK).thenApply(dataConverter);
   }
 
   protected final CompletableFuture<JsonNode> apiResourceRequest(
@@ -116,11 +125,9 @@ public abstract class AbstractEwelinkApi {
     Map<String, String> allHeaders = new HashMap<>(
         generateHeaders("Bearer", accessToken));
     allHeaders.putAll(headers);
-    Map<String, String> allParameters = new HashMap<>(generateParameters());
-    allParameters.putAll(parameters);
 
     return apiJsonRequest(httpMethod, httpRequestBodyPublisher, apiUrl, allHeaders,
-        allParameters, expectedStatus);
+        parameters, expectedStatus);
   }
 
   protected final CompletableFuture<JsonNode> apiJsonRequest(
@@ -186,21 +193,13 @@ public abstract class AbstractEwelinkApi {
   }
 
   private Map<String, String> generateHeaders(String authSchema, String token) {
+    final var nonce = SecurityUtils.generateNonce();
     return Map.of(
         AUTHORIZATION_HEADER, authSchema + " " + token,
         CONTENT_TYPE_HEADER, "application/json",
-        ACCEPT_HEADER, "application/json"
-    );
-  }
-
-  private Map<String, String> generateParameters() {
-    final var timestamp = Long.toString(Instant.now().getEpochSecond());
-    final var nonce = SecurityUtils.generateNonce();
-    return Map.of(
-        "appid", applicationId,
-        "nonce", nonce,
-        "ts", timestamp,
-        "version", String.valueOf(API_VERSION)
+        ACCEPT_HEADER, "application/json",
+        X_CK_NONCE_HEADER, nonce,
+        X_CK_APPID_HEADER, applicationId
     );
   }
 
