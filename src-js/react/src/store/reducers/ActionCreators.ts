@@ -3,10 +3,8 @@ import axios from "axios";
 import { FetchSlice } from "./FetchSlice";
 
 const urlOn = `${process.env.REACT_APP_LINK_SERVE}device/start`;
-const urlDeviceStatus = `${process.env.REACT_APP_LINK_SERVE}device/getDeviceStatus`
-const urlIsDeviceOn = `${process.env.REACT_APP_LINK_SERVE}device/isDeviceOn`;
+const urlDeviceStatus = `${process.env.REACT_APP_LINK_SERVE}device/getDeviceStatus`;
 const urlChargingStatus = `${process.env.REACT_APP_LINK_SERVE}device/getChargingStatus`;
-const urlPower = `${process.env.REACT_APP_LINK_SERVE}device/getPower`;
 
 
 export const fetchChargingData = () => async (dispatch: AppDispatch) => {

@@ -4,6 +4,6 @@ npm i
 npm install -g serve
 
 
-npm run build
+npm run stage
 export PORT=80
 serve -s build
