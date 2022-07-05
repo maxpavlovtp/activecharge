@@ -1,6 +1,7 @@
 package com.km220.ewelink.internal;
 
 import com.km220.ewelink.EwelinkApiException;
+import com.km220.ewelink.EwelinkClientException;
 import com.km220.ewelink.EwelinkParameters;
 import com.km220.ewelink.WSClientListener;
 import com.km220.ewelink.model.ws.WssResponse;
@@ -47,15 +48,15 @@ public class CloseableWSEwelinkApi extends AbstractWSEwelinkApi {
       return CompletableFuture.supplyAsync(() -> {
         try {
           if (!latch.await(5, TimeUnit.SECONDS)) {
-            throw new EwelinkApiException("Websocket did not response. Timeout = 5 sec.");
+            throw new EwelinkClientException("Websocket did not response. Timeout = 5 sec.");
           }
           if (errorRef.get() != null) {
-            throw new EwelinkApiException(errorRef.get());
+            throw new EwelinkClientException(errorRef.get());
           }
           return wssResponseRef.get();
         } catch (InterruptedException e) {
           Thread.currentThread().interrupt();
-          throw new EwelinkApiException(e);
+          throw new EwelinkClientException(e);
         } finally {
           closeWebSocket();
         }

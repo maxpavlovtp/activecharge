@@ -12,7 +12,7 @@ import static java.util.stream.Collectors.joining;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.km220.ewelink.EwelinkApiException;
+import com.km220.ewelink.EwelinkClientException;
 import com.km220.ewelink.EwelinkParameters;
 import com.km220.ewelink.internal.utils.JsonUtils;
 import com.km220.ewelink.internal.utils.SecurityUtils;
@@ -140,7 +140,7 @@ public abstract class AbstractEwelinkApi {
                 checkSuccessResponse(responseJson);
                 return responseJson;
               } catch (final JsonProcessingException e) {
-                throw new EwelinkApiException(e);
+                throw new EwelinkClientException(e);
               }
             });
   }
@@ -173,7 +173,7 @@ public abstract class AbstractEwelinkApi {
             .sendAsync(apiHttpRequest, httpResponseBodyHandler).thenApply(httpResponse -> {
               final int httpStatus = httpResponse.statusCode();
               if (httpStatus != expectedStatus) {
-                throw new EwelinkApiException(String.format(Locale.ROOT,
+                throw new EwelinkClientException(String.format(Locale.ROOT,
                     "Expected status=%d, but API responded with status=%d", expectedStatus,
                     httpStatus));
               }
@@ -212,7 +212,7 @@ public abstract class AbstractEwelinkApi {
     var error = errorNode.asInt();
     if (error > 0) {
       String msg = responseJson.get("msg").asText();
-      throw new EwelinkApiException(
+      throw new EwelinkClientException(
           String.format(Locale.ROOT, "API responded with error=%d, msg=%s", error, msg));
     }
   }

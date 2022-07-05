@@ -5,7 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.km220.ewelink.EwelinkApiException;
+import com.km220.ewelink.EwelinkClientException;
 import java.util.function.Function;
 
 public final class JsonUtils {
@@ -22,7 +22,7 @@ public final class JsonUtils {
     try {
       return OBJECT_MAPPER.writeValueAsString(objectToSerialize);
     } catch (JsonProcessingException e) {
-      throw new EwelinkApiException(e);
+      throw new EwelinkClientException(e);
     }
   }
 
@@ -30,7 +30,7 @@ public final class JsonUtils {
     try {
       return OBJECT_MAPPER.readValue(body, clazz);
     } catch (JsonProcessingException e) {
-      throw new EwelinkApiException(e);
+      throw new EwelinkClientException(e);
     }
   }
 
@@ -39,7 +39,7 @@ public final class JsonUtils {
       try {
         return OBJECT_MAPPER.treeToValue(jsonData, clazz);
       } catch (JsonProcessingException e) {
-        throw new EwelinkApiException(e);
+        throw new EwelinkClientException(e);
       }
     };
   }
@@ -50,7 +50,7 @@ public final class JsonUtils {
       ((ObjectNode) jsonNode).put(key, value);
       return OBJECT_MAPPER.writeValueAsString(jsonNode);
     } catch (JsonProcessingException e) {
-      throw new EwelinkApiException(e);
+      throw new EwelinkClientException(e);
     }
   }
 }
