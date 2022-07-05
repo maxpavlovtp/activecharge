@@ -9,7 +9,7 @@ const lngs: any = {
   en: { nativeName: "Eng" },
 };
 
-export default function Links({closeMenu}: {closeMenu?:any}) {
+export default function LinksTeblet() {
   const { t, i18n } = useTranslation();
 
   const animateFrom = { opacity: 0, y: -40 };
@@ -23,7 +23,7 @@ export default function Links({closeMenu}: {closeMenu?:any}) {
         transition={{ delay: 0.1 }}
         className={styles.list}
       >
-        <Link className={styles.links} to="/contacts" onClick={() => closeMenu(false)}>
+        <Link className={styles.links} to="/contacts">
           {t("contacts")}
         </Link>
       </motion.li>
@@ -33,7 +33,7 @@ export default function Links({closeMenu}: {closeMenu?:any}) {
         transition={{ delay: 0.15 }}
         className={styles.list}
       >
-        <Link className={styles.links} to="/contract" onClick={() => closeMenu(false)}>
+        <Link className={styles.links} to="/contract">
           {t("offer")}
         </Link>
       </motion.li>

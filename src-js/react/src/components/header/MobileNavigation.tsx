@@ -1,10 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Links from './Links';
 import styles from './Header.module.css';
 import { IoClose, IoMenu } from 'react-icons/io5';
 
 export default function MobileNavigation() {
   const [open, setOpen] = useState(false);
+  const ref = useRef<any>();
+
+  useEffect(() => {
+    const closeDropdown = (e: any )=> {
+      if(!ref.current.contains(e.target)) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', closeDropdown)
+
+    return () => document.removeEventListener('mousedown', closeDropdown)
+  }, [open])
 
   const openIcon = (
     <IoMenu
@@ -25,9 +37,9 @@ export default function MobileNavigation() {
   );
 
   return (
-    <div className={styles.mobileNavigation}>
+    <div className={styles.mobileNavigation} ref={ref}>
       {open ? closeIcon : openIcon}
-      {open && <Links />}
+      {open && <Links closeMenu={setOpen}/>}
     </div>
   );
 }
