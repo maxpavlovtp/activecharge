@@ -32,9 +32,11 @@ jobs:
       uses: fifsky/ssh-action@master
       with:
         command: |
-          systemctl start run-220-nest.service
-          systemctl start run-220-spring.service
-          systemctl start run-220.service
+          cd /git/activecharge/
+          git pull
+          systemctl restart run-220-nest.service
+          systemctl restart run-220-spring.service
+          systemctl restart run-220.service
         host: ${{ secrets.HOST }}
         user: root
         key: ${{ secrets.PRIVATE_KEY}}
