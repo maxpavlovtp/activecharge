@@ -24,10 +24,11 @@ jobs:
       with:
         java-version: '17'
         distribution: 'adopt'
-    - name: Test
-      run: ./gradlew test -i
+
     - name: Build
       run: ./gradlew clean build -x test
+    - name: Test
+      run: ./gradlew test -i
     - name: Deploy to Stage
       uses: fifsky/ssh-action@master
       with:
