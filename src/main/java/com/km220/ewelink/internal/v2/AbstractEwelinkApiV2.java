@@ -13,6 +13,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.km220.ewelink.EwelinkApiException;
+import com.km220.ewelink.EwelinkClientException;
 import com.km220.ewelink.EwelinkParameters;
 import com.km220.ewelink.internal.CredentialsRequest;
 import com.km220.ewelink.internal.model.v2.CredentialResponseV2;
@@ -52,6 +53,7 @@ public abstract class AbstractEwelinkApiV2 {
 
   private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
+  //TODO: this works only for single node
   private static final Map<String, String> tokenCache = new ConcurrentHashMap<>();
 
   protected AbstractEwelinkApiV2(final EwelinkParameters parameters, final String applicationId,
@@ -62,7 +64,7 @@ public abstract class AbstractEwelinkApiV2 {
     this.httpClient = Objects.requireNonNull(httpClient);
   }
 
-  protected final String getAccessToken() {
+  protected final String getAccessToken(String invalidToken) {
     Supplier<CompletableFuture<String>> tokenExtractor = () -> {
       String jsonRequestBody = JsonUtils.serialize(
           CredentialsRequest.builder()
@@ -83,7 +85,12 @@ public abstract class AbstractEwelinkApiV2 {
           .thenApply(r -> r.getData().getAt());
     };
 
-    return tokenCache.computeIfAbsent("token", key -> tokenExtractor.get().join());
+    return tokenCache.compute("token", (key, value) -> {
+      if (Objects.equals(value, invalidToken)) {
+        return tokenExtractor.get().join();
+      }
+      return value;
+    });
   }
 
   protected final <T> CompletableFuture<T> apiGetObjectRequest(final String apiUri,
@@ -95,7 +102,6 @@ public abstract class AbstractEwelinkApiV2 {
             apiUri,
             Map.of(),
             parameters,
-            getAccessToken(),
             HTTP_STATUS_OK).thenApply(dataConverter);
   }
 
@@ -109,7 +115,6 @@ public abstract class AbstractEwelinkApiV2 {
             apiUri,
             Map.of(),
             parameters,
-            getAccessToken(),
             HTTP_STATUS_OK).thenApply(dataConverter);
   }
 
@@ -119,15 +124,32 @@ public abstract class AbstractEwelinkApiV2 {
       final String apiUrl,
       final Map<String, String> headers,
       final Map<String, String> parameters,
-      final String accessToken,
       final int expectedStatus) {
 
-    Map<String, String> allHeaders = new HashMap<>(
-        generateHeaders("Bearer", accessToken));
-    allHeaders.putAll(headers);
+    Function<String, CompletableFuture<JsonNode>> requestExecutor = token -> {
+      Map<String, String> allHeaders = new HashMap<>(
+          generateHeaders("Bearer", token));
+      allHeaders.putAll(headers);
 
-    return apiJsonRequest(httpMethod, httpRequestBodyPublisher, apiUrl, allHeaders,
-        parameters, expectedStatus);
+      return apiJsonRequest(httpMethod, httpRequestBodyPublisher, apiUrl,
+          allHeaders, parameters, expectedStatus);
+    };
+
+    var accessToken = getAccessToken(null);
+    CompletableFuture<JsonNode> requestCompletableFuture = requestExecutor.apply(accessToken);
+
+    return requestCompletableFuture.exceptionallyCompose(e -> {
+      Throwable cause = e.getCause();
+      if (cause instanceof EwelinkApiException && ((EwelinkApiException) cause).getCode() == 401) {
+        LOGGER.info("Auth error. {}", e.getMessage());
+        LOGGER.info("Retry to get new access token");
+
+        return requestExecutor.apply(getAccessToken(accessToken));
+      }
+
+      return requestCompletableFuture;
+    });
+
   }
 
   protected final CompletableFuture<JsonNode> apiJsonRequest(
@@ -147,7 +169,7 @@ public abstract class AbstractEwelinkApiV2 {
                 checkSuccessResponse(responseJson);
                 return responseJson;
               } catch (final JsonProcessingException e) {
-                throw new EwelinkApiException(e);
+                throw new EwelinkClientException(e);
               }
             });
   }
@@ -180,7 +202,7 @@ public abstract class AbstractEwelinkApiV2 {
             .sendAsync(apiHttpRequest, httpResponseBodyHandler).thenApply(httpResponse -> {
               final int httpStatus = httpResponse.statusCode();
               if (httpStatus != expectedStatus) {
-                throw new EwelinkApiException(String.format(Locale.ROOT,
+                throw new EwelinkClientException(String.format(Locale.ROOT,
                     "Expected status=%d, but API responded with status=%d", expectedStatus,
                     httpStatus));
               }
@@ -212,7 +234,7 @@ public abstract class AbstractEwelinkApiV2 {
     if (error > 0) {
       String msg = responseJson.get("msg").asText();
       throw new EwelinkApiException(
-          String.format(Locale.ROOT, "API responded with error=%d, msg=%s", error, msg));
+          String.format(Locale.ROOT, "API responded with error=%d, msg=%s", error, msg), error);
     }
   }
 }

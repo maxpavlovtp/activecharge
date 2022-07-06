@@ -1,6 +1,6 @@
 package com.km220.ewelink.internal.utils;
 
-import com.km220.ewelink.EwelinkApiException;
+import com.km220.ewelink.EwelinkClientException;
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.util.Base64;
@@ -32,7 +32,7 @@ public final class SecurityUtils {
       byte[] macData = sha256HMAC.doFinal(data.getBytes(StandardCharsets.UTF_8));
       return Base64.getEncoder().encodeToString(macData);
     } catch (Exception e) {
-      throw new EwelinkApiException(e);
+      throw new EwelinkClientException(e);
     }
   }
 }
