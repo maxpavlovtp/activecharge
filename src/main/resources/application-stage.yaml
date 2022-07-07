@@ -31,8 +31,8 @@ ewelink:
   appSecret: 4G91qSoboqYO4Y0XJ0LPPKIsq8reHdfa
 
 device:
-  chargeTimeSecs: 20
-deviceId: 1000d61c41
+  chargeTimeSecs: 36000
+deviceId: 10013bb124
 
 spring:
   datasource:
