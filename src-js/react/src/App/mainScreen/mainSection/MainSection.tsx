@@ -12,7 +12,7 @@ const MainSection: React.FC = () => {
   const [searchParams] = useSearchParams();
   let stationNumber: any = searchParams.get('station');
   console.log(stationNumber);
-  localStorage.setItem('stationNumber', stationNumber);
+  localStorage.setItem('stationNumber', stationNumber ? stationNumber : '2');
 
   const { t } = useTranslation();
 
