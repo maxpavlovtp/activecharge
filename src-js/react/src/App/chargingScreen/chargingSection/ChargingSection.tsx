@@ -44,8 +44,9 @@ const MainSection: React.FC = () => {
       dispatch(getChargingStatus());
       dispatch(getDeviceStatus());
       setTimeout(() => {
+        let stationNumber = localStorage.getItem('stationNumber');
         axios
-          .get(secondsUrl)
+          .get(secondsUrl + "?station=" + stationNumber)
           .then((response) => {
             setSecondsBackend(response.data.data);
             console.log(response.data);
