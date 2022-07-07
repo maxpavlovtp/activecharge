@@ -23,7 +23,8 @@ export const fetchChargingData = () => async (dispatch: AppDispatch) => {
 export const getDeviceStatus = () => async (dispatch: AppDispatch) => {
   try {
     dispatch(FetchSlice.actions.deviceStatusFetching());
-    const response = await axios.get(urlDeviceStatus);
+    let stationNumber = localStorage.getItem('stationNumber');
+    const response = await axios.get(urlDeviceStatus + "?station=" + stationNumber);
     dispatch(FetchSlice.actions.deviceStatusFetchingSuccess(response.data));
     console.log(response.data);
   } catch (e: any) {
