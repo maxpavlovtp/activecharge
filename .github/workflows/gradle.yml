@@ -15,7 +15,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -25,7 +24,19 @@ jobs:
       with:
         java-version: '17'
         distribution: 'adopt'
-    - name: Test
-      run: ./gradlew test -i
+
     - name: Build
       run: ./gradlew clean build -x test
+    - name: Test
+      run: ./gradlew test -i
+    - name: Deploy to Stage
+      uses: fifsky/ssh-action@master
+      with:
+        command: |
+          cd /git/activecharge/
+          git pull
+          systemctl restart run-220-spring.service
+          systemctl restart run-220.service
+        host: ${{ secrets.HOST }}
+        user: root
+        key: ${{ secrets.PRIVATE_KEY}}

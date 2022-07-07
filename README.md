@@ -31,7 +31,7 @@
 
 ## SDLC:
 1. We push to master
-2. We deploy FE every 20 mins BE every day from master using crontab + systemctl.
+2. We deploy every push to master using git actions ssh + systemctl.
 3. If deployment broken revert or use last tag https://github.com/maxpavlovdp/activecharge/releases/tag/v1.1
 4. Kanban board: https://esound.youtrack.cloud/youtrack/agiles/87-6/current
 
