@@ -54,7 +54,7 @@ const MainSection: React.FC = () => {
           .catch((err) => {
             console.log(err);
           });
-      }, 4000);
+      }, 3000);
     }
   }, [isLoadingCharging]);
 

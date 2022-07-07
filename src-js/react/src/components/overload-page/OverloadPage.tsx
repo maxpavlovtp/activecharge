@@ -23,7 +23,7 @@ const OverloadPage = () => {
   );
 
   const urlPowerLimit = `${process.env.REACT_APP_LINK_SERVE}device/getPowerLimit`;
-  const urlPowerDevice = `${process.env.REACT_APP_LINK_SERVE}device/getPower`;
+  const urlDeviceStatus = `${process.env.REACT_APP_LINK_SERVE}device/getDeviceStatus`;
   const urlCheckCompleted = `${process.env.REACT_APP_LINK_SERVE}device/isOverloadCheckCompleted`;
   const urlIsOverloaded = `${process.env.REACT_APP_LINK_SERVE}device/isPowerLimitOvelrloaded`;
   const urlPayment = `http://220-km.com:5000`;
@@ -74,14 +74,14 @@ const OverloadPage = () => {
 
   const getPower = async () => {
     await axios
-      .get(urlPowerDevice)
+      .get(urlDeviceStatus)
       .then((response) => {
-        setPower(response.data.data);
+        setPower(response.data.data.power);
+        console.log(response.data.data.power)
       })
       .catch((err) => {
         console.log(err);
       });
-    console.log(power);
   };
 
   const checkPowerLimit = () => {
@@ -120,7 +120,7 @@ const OverloadPage = () => {
       getPayLink();
       const overloadTimer = setInterval(() => {
         checkPowerLimit();
-      }, 1000);
+      }, 3000);
       return () => clearInterval(overloadTimer);
     }
   });
