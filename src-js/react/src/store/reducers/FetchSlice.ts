@@ -11,6 +11,7 @@ interface FetchState {
   isGotChargingStatus: boolean;
   isGotDeviceStatus: boolean;
   error: string;
+  station: string;
 }
 
 const initialState: FetchState = {
@@ -23,6 +24,7 @@ const initialState: FetchState = {
   isGotChargingStatus: false,
   isGotDeviceStatus: false,
   error: "",
+  station: "2"
 };
 
 export const FetchSlice = createSlice({
