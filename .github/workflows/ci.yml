@@ -19,8 +19,8 @@ jobs:
         distribution: 'adopt'
     - name: Build
       run: ./gradlew clean build -x test
-    - name: Test
-      run: ./gradlew test -i
+#    - name: Test
+#      run: ./gradlew test -i
     - name: Deploy to Dev. Copy jar
       uses: appleboy/scp-action@master
       with:
