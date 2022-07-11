@@ -1,5 +1,5 @@
 # Project to transform you garage or any public spot to electric car charging station.
-[![Java CI with Gradle](https://github.com/maxpavlovdp/activecharge/actions/workflows/gradle.yml/badge.svg)](https://github.com/maxpavlovdp/activecharge/actions/workflows/gradle.yml)
+[![CI](https://github.com/maxpavlovdp/activecharge/actions/workflows/ci.yml/badge.svg)](https://github.com/maxpavlovdp/activecharge/actions/workflows/ci.yml)
 
 ## Setup dev env:
 
@@ -9,8 +9,9 @@
 
 ## FE react endpoint:
 1. local: http://localhost:3000/
-2. stage: http://168.119.177.145/
-2. prod: http://220-km.com/2
+2. dev: http://http://178.18.251.90/
+3. stage: http://168.119.177.145/
+4. prod: http://220-km.com/2
 
 ## BE spring boot endpoints:
 ### local:

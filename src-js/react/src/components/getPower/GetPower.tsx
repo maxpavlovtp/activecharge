@@ -69,7 +69,7 @@ export default function GetPower() {
         <p className={styles.kmCharged}>
           {isZero
             ? 0
-            : Math.round((kWtCharged * 1000) / carKwtKmRatio).toFixed(2)}
+            : Math.round((kWtCharged * 1000) / Math.round(carKwtKmRatio))} 
           {t("km")}
         </p>
       </div>
