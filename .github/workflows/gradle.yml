@@ -31,14 +31,14 @@ jobs:
       run: ./gradlew test -i
     - name: Deploy to Dev copy
       run: scp build/libs/220-km.com-0.0.1-SNAPSHOT.jar root@178.18.251.90:/220/
-     -name: Deploy to Dev run
-      uses: fifsky/ssh-action@master
-      with:
-        command: |
-          ls -la
-        host: 178.18.251.90
-        user: root
-        key: ${{ secrets.PRIVATE_KEY}}
+#     -name: Deploy to Dev run
+#      uses: fifsky/ssh-action@master
+#      with:
+#        command: |
+#          ls -la
+#        host: 178.18.251.90
+#        user: root
+#        key: ${{ secrets.PRIVATE_KEY}}
     - name: Deploy to Stage
       uses: fifsky/ssh-action@master
       with:
