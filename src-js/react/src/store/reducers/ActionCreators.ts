@@ -10,7 +10,8 @@ const urlChargingStatus = `${process.env.REACT_APP_LINK_SERVE}device/getCharging
 export const fetchChargingData = () => async (dispatch: AppDispatch) => {
   try {
     dispatch(FetchSlice.actions.chargingDataFetching());
-    const response = await axios.get(urlOn);
+    let stationNumber = localStorage.getItem('stationNumber');
+    const response = await axios.get(urlOn + "?station=" + stationNumber);
     dispatch(FetchSlice.actions.chargingDataFetchingSuccess(response.data));
     console.log(response.data);
   } catch (e: any) {
@@ -36,7 +37,8 @@ export const getDeviceStatus = () => async (dispatch: AppDispatch) => {
 export const getChargingStatus = () => async (dispatch: AppDispatch) => {
   try {
     dispatch(FetchSlice.actions.chargingStatusFetching());
-    const response = await axios.get(urlChargingStatus);
+    let stationNumber = localStorage.getItem('stationNumber');
+    const response = await axios.get(urlChargingStatus + "?station=" + stationNumber);
     dispatch(
       FetchSlice.actions.chargingStatusFetchingSuccess(response.data.data)
     );
