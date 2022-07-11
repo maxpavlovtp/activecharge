@@ -11,7 +11,8 @@ create table charging_job
     station_id      uuid                        not null,
     charging_wt     numeric                     not null default 0,
     charged_wt      numeric                     not null default 0,
-    reason          varchar(255),
+    reason          varchar(255)                default '',
+    period_sec      integer                     not null,
     constraint      fk_station                  foreign key (station_id) REFERENCES station (id)
 );
 

@@ -41,7 +41,7 @@ class ChargingJobRepositoryTest {
   void add_shouldAddChargingJob() {
     Instant now = Instant.now();
 
-    UUID uuid = chargingJobRepository.add(STATION_NUMBER);
+    UUID uuid = chargingJobRepository.add(STATION_NUMBER, 10);
 
     assertNotNull(uuid);
 
@@ -53,6 +53,7 @@ class ChargingJobRepositoryTest {
     assertEquals(ChargingJobState.IN_PROGRESS, job.getState());
     assertEquals(0f, job.getChargingWt(), 0.00001f);
     assertEquals(0f, job.getChargedWt(), 0.00001f);
+    assertEquals(10, job.getPeriodSec());
     assertTrue(job.getCreatedOn().isAfter(now.atOffset(ZoneOffset.UTC)));
     assertTrue(job.getUpdatedOn().isAfter(now.atOffset(ZoneOffset.UTC)));
 
@@ -66,7 +67,7 @@ class ChargingJobRepositoryTest {
   void update_shouldUpdateChargingJob() {
     Instant onCreate = Instant.now();
 
-    UUID uuid = chargingJobRepository.add(STATION_NUMBER);
+    UUID uuid = chargingJobRepository.add(STATION_NUMBER, 10);
 
     assertNotNull(uuid);
 
@@ -78,6 +79,7 @@ class ChargingJobRepositoryTest {
     assertEquals(ChargingJobState.IN_PROGRESS, job.getState());
     assertEquals(0f, job.getChargingWt(), 0.00001f);
     assertEquals(0f, job.getChargedWt(), 0.00001f);
+    assertEquals(10, job.getPeriodSec());
     assertTrue(job.getCreatedOn().isAfter(onCreate.atOffset(ZoneOffset.UTC)));
     assertTrue(job.getUpdatedOn().isAfter(onCreate.atOffset(ZoneOffset.UTC)));
 
@@ -116,6 +118,7 @@ class ChargingJobRepositoryTest {
                 hasProperty("state", is(ChargingJobState.IN_PROGRESS)),
                 hasProperty("chargingWt", is(1.0f)),
                 hasProperty("chargedWt", is(2.0f)),
+                hasProperty("periodSec", is(10)),
                 hasProperty("station",
                     allOf(
                         hasProperty("name", is("test1")),
@@ -129,6 +132,7 @@ class ChargingJobRepositoryTest {
                 hasProperty("state", is(ChargingJobState.IN_PROGRESS)),
                 hasProperty("chargingWt", is(5.0f)),
                 hasProperty("chargedWt", is(6.0f)),
+                hasProperty("periodSec", is(10)),
                 hasProperty("station",
                     allOf(
                         hasProperty("name", is("test2")),
@@ -142,6 +146,7 @@ class ChargingJobRepositoryTest {
                 hasProperty("state", is(ChargingJobState.IN_PROGRESS)),
                 hasProperty("chargingWt", is(7.0f)),
                 hasProperty("chargedWt", is(8.0f)),
+                hasProperty("periodSec", is(10)),
                 hasProperty("station",
                     allOf(
                         hasProperty("name", is("test3")),

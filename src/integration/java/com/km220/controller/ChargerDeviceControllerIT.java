@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.km220.BaseIT;
-import com.km220.model.DeviceStatus;
+import com.km220.service.device.DeviceState;
 import java.net.URI;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -40,7 +40,7 @@ class ChargerDeviceControllerIT extends BaseIT {
 
   @Test
   void checkDeviceStatus() {
-    ResponseEntity<ChargerResponse<DeviceStatus>> response = restTemplate.exchange(
+    ResponseEntity<ChargerResponse<DeviceState>> response = restTemplate.exchange(
         url("/getDeviceStatus"),
         HttpMethod.GET,
         null,

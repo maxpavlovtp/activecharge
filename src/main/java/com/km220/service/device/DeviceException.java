@@ -1,4 +1,4 @@
-package com.km220.service;
+package com.km220.service.device;
 
 public class DeviceException extends RuntimeException {
 

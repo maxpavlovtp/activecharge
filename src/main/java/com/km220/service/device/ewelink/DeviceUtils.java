@@ -1,18 +1,18 @@
-package com.km220.service.ewelink;
+package com.km220.service.device.ewelink;
 
 import com.km220.ewelink.model.v2.DeviceV2;
 import com.km220.ewelink.model.ws.WssResponse;
-import com.km220.model.DeviceStatus;
-import com.km220.service.DeviceException;
+import com.km220.service.device.DeviceState;
+import com.km220.service.device.DeviceException;
 import java.util.Locale;
 import java.util.Objects;
 
-public final class DeviceUtils {
+final class DeviceUtils {
 
   private DeviceUtils() {
   }
 
-  public static DeviceStatus convert(WssResponse wssResponse) {
+  public static DeviceState convert(WssResponse wssResponse) {
     Objects.requireNonNull(wssResponse);
 
     if (wssResponse.getError() > 0) {
@@ -28,7 +28,7 @@ public final class DeviceUtils {
           wssResponse.getDeviceid()));
     }
 
-    return DeviceStatus.builder()
+    return DeviceState.builder()
         .deviceId(wssResponse.getDeviceid())
         .switchState(params.getSwitchState().isOn())
         .power(Double.parseDouble(params.getPower()))
@@ -36,7 +36,7 @@ public final class DeviceUtils {
         .build();
   }
 
-  public static DeviceStatus convert(String deviceId, DeviceV2 deviceV2) {
+  public static DeviceState convert(String deviceId, DeviceV2 deviceV2) {
     Objects.requireNonNull(deviceV2);
 
     if (deviceV2.getError() > 0) {
@@ -52,7 +52,7 @@ public final class DeviceUtils {
           deviceId));
     }
 
-    return DeviceStatus.builder()
+    return DeviceState.builder()
         .deviceId(deviceId)
         .switchState(params.getSwitchState().isOn())
         .power(Double.parseDouble(params.getPower()))

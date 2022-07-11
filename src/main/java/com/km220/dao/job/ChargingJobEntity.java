@@ -19,11 +19,13 @@ public final class ChargingJobEntity extends DatabaseEntity {
   public static final String CHARGING_WT = "charging_wt";
   public static final String CHARGED_WT = "charged_wt";
   public static final String REASON = "reason";
+  public static final String PERIOD = "period_sec";
 
   long number;
   ChargingJobState state;
   float chargingWt;
   float chargedWt;
   String reason;
+  int periodSec;
   StationEntity station;
 }

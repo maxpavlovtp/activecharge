@@ -1,7 +1,5 @@
-package com.km220.service;
+package com.km220.service.device;
 
-import com.km220.model.DeviceStatus;
-import lombok.extern.jackson.Jacksonized;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -18,8 +16,8 @@ public class DeviceCache {
   public static volatile float chargedWt;
   public static volatile float chargingWtAverageWtH;
 
-  public DeviceStatus getDeviceStatus() {
-    return  DeviceStatus.builder()
+  public DeviceState getDeviceStatus() {
+    return  DeviceState.builder()
         .deviceId(deviceId)
         .switchState(isOn)
         .power(powerWt)
