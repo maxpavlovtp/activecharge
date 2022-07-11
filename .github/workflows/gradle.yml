@@ -5,13 +5,13 @@
 # This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-gradle
 
-name: Java CI with Gradle
+name: CI
 
 on:
   push:
     branches: [ '**' ]
   pull_request:
-    branches: [ master ]
+    branches: [ develop ]
 
 jobs:
   build:
@@ -29,6 +29,15 @@ jobs:
       run: ./gradlew clean build -x test
     - name: Test
       run: ./gradlew test -i
+    - name: Deploy to Dev
+      run: scp build/libs/220-km.com-0.0.1-SNAPSHOT.jar root@178.18.251.90:/220/
+      uses: fifsky/ssh-action@master
+      with:
+        command: |
+          ls -la
+        host: 178.18.251.90
+        user: root
+        key: ${{ secrets.PRIVATE_KEY}}
     - name: Deploy to Stage
       uses: fifsky/ssh-action@master
       with:
