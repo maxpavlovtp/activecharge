@@ -40,7 +40,7 @@ jobs:
         key: ${{ secrets.PRIVATE_KEY }}
         source: "build/libs/220-km.com-0.0.1-SNAPSHOT.jar, systemctl-run-be-dev.sh, src-js/react/build, systemctl-run-fe.sh"
         target: "/220/"
-    - name: 220 restart FE and BR on Dev
+    - name: 220 restart FE and BE on dev
       uses: fifsky/ssh-action@master
       with:
         command: |
