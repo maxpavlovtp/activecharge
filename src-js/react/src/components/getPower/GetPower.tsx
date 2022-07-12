@@ -6,8 +6,12 @@ import {
   getDeviceStatus,
 } from "../../store/reducers/ActionCreators";
 import { useTranslation } from "react-i18next";
+import axios from "axios";
 
 export default function GetPower() {
+  const [idDevice, setIdDevice] = useState<any>(null);
+  const [idDeviceInfo, setIdDeviceInfo] = useState<any>(null);
+  const [toggle, setToggle] = useState<any>(false);
   const dispatch = useAppDispatch();
   const { deviceStatus, chargingStatus } = useAppSelector(
     (state) => state.fetchReducer
@@ -17,6 +21,51 @@ export default function GetPower() {
     dispatch(getChargingStatus());
     dispatch(getDeviceStatus());
   };
+
+  const urlV2Status = `http://localhost:8080/device/v2/status?id=${idDevice}`;
+  const urlV2Start = `http://localhost:8080/device/v2/start`;
+
+  const idStart = async () => {
+    const data = JSON.stringify({
+      station_number: "2",
+      period_s: 60,
+    });
+
+    const config = {
+      method: "post",
+      url: urlV2Start,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+    await axios(config)
+      .then(function (response: any) {
+        setIdDevice(response.data);
+        setToggle(true);
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error: any) {
+        console.log(error);
+      });
+  };
+
+  const getStationInfo = () => {
+    if (idDevice !== null) {
+      axios.get(urlV2Status).then(function (result: any) {
+        setIdDeviceInfo(result);
+        console.log(result);
+      });
+    }
+  };
+
+  useEffect(() => {
+    idStart();
+  }, []);
+  useEffect(() => {
+    getStationInfo();
+  }, [toggle]);
 
   useEffect(() => {
     const timerID = setInterval(() => {
@@ -69,7 +118,7 @@ export default function GetPower() {
         <p className={styles.kmCharged}>
           {isZero
             ? 0
-            : Math.round((kWtCharged * 1000) / Math.round(carKwtKmRatio))} 
+            : Math.round((kWtCharged * 1000) / Math.round(carKwtKmRatio))}
           {t("km")}
         </p>
       </div>
