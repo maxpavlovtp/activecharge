@@ -1,4 +1,4 @@
-package com.km220.model;
+package com.km220.service.device;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -10,7 +10,7 @@ import lombok.extern.jackson.Jacksonized;
 @Builder
 @Getter
 @ToString
-public class DeviceStatus {
+public class DeviceState {
 
   @NonNull
   private final String deviceId;

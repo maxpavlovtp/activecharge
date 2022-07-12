@@ -1,12 +1,18 @@
 package com.km220.controller;
 
-import com.km220.model.DeviceStatus;
-import com.km220.service.DeviceCache;
-import com.km220.service.DeviceService;
-import com.km220.service.ewelink.PowerLimitOverloadService;
+import com.km220.model.ChargingJob;
+import com.km220.service.ChargingService;
+import com.km220.service.device.DeviceCache;
+import com.km220.service.device.DeviceService;
+import com.km220.service.device.DeviceState;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,7 +31,6 @@ public class ChargerDeviceController {
   private String deviceId;
 
   private final DeviceService deviceService;
-  private final PowerLimitOverloadService powerLimitOverloadService;
   private final DeviceCache deviceCache;
 
   //TODO: GET HTTP method should not change resource state.
@@ -35,7 +40,8 @@ public class ChargerDeviceController {
     deviceService.toggleOn(deviceId, chargeTimeSecs);
     return new ChargerResponse<>("started");
   }
-// todo remove after payment implementation
+
+  // todo remove after payment implementation
   @GetMapping("/startSecs")
   public ChargerResponse<Void> startSecs(@RequestParam String secs) {
     deviceService.toggleOn(deviceId, Integer.parseInt(secs));
@@ -43,7 +49,7 @@ public class ChargerDeviceController {
   }
 
   @GetMapping("/getDeviceStatus")
-  public ChargerResponse<DeviceStatus> getDeviceStatus() {
+  public ChargerResponse<DeviceState> getDeviceStatus() {
     return new ChargerResponse<>("getDeviceStatus", deviceCache.getDeviceStatus());
   }
 
@@ -54,24 +60,37 @@ public class ChargerDeviceController {
 
   @GetMapping("/getChargingDurationLeftSecs")
   public ChargerResponse<Long> getChargeTimeLeftSecs() {
-    return new ChargerResponse<>("getChargeTimeLeftSecs",
-        deviceService.getChargingDurationLeftSecs());
+    return new ChargerResponse<>("getChargeTimeLeftSecs", 0L);
   }
 
   @GetMapping("/isPowerLimitOvelrloaded")
   public ChargerResponse<Boolean> isPowerLimitOvelrloaded() {
-    return new ChargerResponse<>("isPowerLimitOvelrloaded",
-        powerLimitOverloadService.isPowerLimitOvelrloaded());
+    return new ChargerResponse<>("isPowerLimitOvelrloaded", false);
   }
 
   @GetMapping("/getPowerLimit")
   public ChargerResponse<Integer> getPowerLimit() {
-    return new ChargerResponse<>("getPowerLimit", powerLimitOverloadService.getPowerLimit());
+    return new ChargerResponse<>("getPowerLimit", 0);
   }
 
   @GetMapping("/isOverloadCheckCompleted")
   public ChargerResponse<Boolean> isOverloadCheckCompleted() {
     return new ChargerResponse<>("isOverloadCheckCompleted",
         !DeviceCache.isOn);
+  }
+
+  private final ChargingService chargingService;
+
+  @PostMapping("/v2/start")
+  public ResponseEntity<String> start(@RequestBody ChargeRequest chargeRequest) {
+    UUID id = chargingService.start(chargeRequest.getStationNumber(),
+        chargeRequest.getChargePeriodInSeconds());
+    return ResponseEntity.status(HttpStatus.CREATED).body(id.toString());
+  }
+
+  @GetMapping("/v2/status")
+  public ResponseEntity<ChargingJob> getStatus(@RequestParam String id) {
+    ChargingJob job = chargingService.get(UUID.fromString(id));
+    return ResponseEntity.status(HttpStatus.OK).body(job);
   }
 }

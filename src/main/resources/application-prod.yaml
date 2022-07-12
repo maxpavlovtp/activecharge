@@ -39,3 +39,6 @@ spring:
     url: jdbc:postgresql://localhost:5432/220-km
     username: 220-km
     password: 12345678
+
+flyway:
+  locations: "classpath:db/migration/pg"
