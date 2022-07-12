@@ -42,3 +42,6 @@ spring:
 
 flyway:
   locations: "classpath:db/migration/pg"
+
+station:
+  scanIntervalMs: 2000
