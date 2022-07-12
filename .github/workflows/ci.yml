@@ -12,17 +12,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up JDK 17
-      uses: actions/setup-java@v2
+    - uses: actions/setup-java@v2
       with:
         java-version: '17'
         distribution: 'adopt'
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '18.x'
     - name: Build BE
       run: ./gradlew clean build -i
     - name: Build FE
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18.x'
       run: cd src-js/react && npm i && npm run dev
     - name: Clean old deployments on dev
       uses: fifsky/ssh-action@master
