@@ -18,7 +18,7 @@ jobs:
         java-version: '17'
         distribution: 'adopt'
     - name: Build BE
-      run: ./gradlew clean build -x test
+      run: ./gradlew clean build -i
     - name: Build FE
       uses: actions/setup-node@v3
       with:
@@ -43,5 +43,3 @@ jobs:
         host: 178.18.251.90
         user: root
         key: ${{ secrets.PRIVATE_KEY}}
-    - name: Test BE
-      run: ./gradlew test -i
