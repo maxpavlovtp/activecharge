@@ -23,10 +23,7 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: '18.x'
-        command: |
-          cd src-js/react
-          npm i
-          npm run dev
+      run: cd src-js/react && npm i && npm run dev
     - name: Clean old deployments on dev
       uses: fifsky/ssh-action@master
       with:
