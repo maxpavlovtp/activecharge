@@ -23,7 +23,8 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: '18.x'
-    - run: cd src-js/react && npm i && npm run dev
+        command: |
+          cd src-js/react && npm i && npm run dev
     - name: Copy FE and BE artifacts to dev
       uses: appleboy/scp-action@master
       with:
