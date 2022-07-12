@@ -11,8 +11,8 @@ lsof -ti tcp:3000 | xargs kill -kill
 nohup ./src-js/nest/run-nest-dev.sh &
 nohup ./src-js/react/run-react-dev.sh &
 
-docker-compose down && rm -r ./db-data
-nohup "docker compose up" &
+#docker-compose down && rm -r ./db-data
+#docker compose up
 ./gradlew clean build -x test
 #java -jar build/libs/220-km.com-0.0.1-SNAPSHOT.jar
 java -Dspring.profiles.active=dev -jar build/libs/220-km.com-0.0.1-SNAPSHOT.jar
