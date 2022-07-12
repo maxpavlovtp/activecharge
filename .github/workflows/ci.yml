@@ -27,15 +27,23 @@ jobs:
           cd src-js/react
           npm i
           npm run dev
-    - name: Copy FE and BE artifacts to dev
-      uses: appleboy/scp-action@master
+    - name: Clean old deployments on dev
+      uses: fifsky/ssh-action@master
       with:
+        command: |
+          rm -rf /220/**
         host: 178.18.251.90
-        username: root
-        port: 22
-        key: ${{ secrets.PRIVATE_KEY }}
-        source: "build/libs/220-km.com-0.0.1-SNAPSHOT.jar, systemctl-run-be-dev.sh, src-js/react/build, systemctl-run-fe.sh"
-        target: "/220/"
+        user: root
+        key: ${{ secrets.PRIVATE_KEY}}
+#    - name: Copy FE and BE artifacts to dev
+#      uses: appleboy/scp-action@master
+#      with:
+#        host: 178.18.251.90
+#        username: root
+#        port: 22
+#        key: ${{ secrets.PRIVATE_KEY }}
+#        source: "build/libs/220-km.com-0.0.1-SNAPSHOT.jar, systemctl-run-be-dev.sh, src-js/react/build, systemctl-run-fe.sh"
+#        target: "/220/"
     - name: Redeploy Dev
       uses: fifsky/ssh-action@master
       with:
