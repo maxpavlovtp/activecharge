@@ -1,16 +1,11 @@
 import { useEffect, useState } from "react";
 import styles from "./ChargingSection.module.css";
 import Timer from "../../../components/timer/Timer";
-import axios from "axios";
 import ErrorPage from "../../../components/error-page/ErrorPage";
 import { useTranslation } from "react-i18next";
 import Spinner from "../../../components/spinner/Spinner";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
-import {
-  getChargingStatus,
-  getDeviceStatus,
-  getStationInfo,
-} from "../../../store/reducers/ActionCreators";
+import { getStationInfo } from "../../../store/reducers/ActionCreators";
 import GetPower from "../../../components/getPower/GetPower";
 
 const MainSection: React.FC = () => {
@@ -20,13 +15,11 @@ const MainSection: React.FC = () => {
   const [minuteTime, setMinuteTime] = useState<any>();
   const [secondsTime, setSecondsTime] = useState<any>(0);
 
-  const secondsUrl = `${process.env.REACT_APP_LINK_SERVE}device/getChargingDurationLeftSecs`;
-
   const dispatch = useAppDispatch();
 
   const { t } = useTranslation();
 
-  const { isLoadingCharging, startDataCharging, error } = useAppSelector(
+  const { isLoadingCharging, deviceStatus, error } = useAppSelector(
     (state) => state.fetchReducer
   );
 
@@ -42,23 +35,15 @@ const MainSection: React.FC = () => {
   useEffect(() => {
     console.log(isLoadingCharging);
     if (isLoadingCharging === false) {
-      dispatch(getChargingStatus());
-      dispatch(getDeviceStatus());
-      dispatch(getStationInfo());
       setTimeout(() => {
-        let stationNumber = localStorage.getItem('stationNumber');
-        axios
-          .get(secondsUrl + "?station=" + stationNumber)
-          .then((response) => {
-            setSecondsBackend(response.data.data);
-            console.log(response.data);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }, 3000);
+        dispatch(getStationInfo());
+      }, 5000);
     }
   }, [isLoadingCharging]);
+
+  useEffect(() => {
+    setSecondsBackend(deviceStatus?.leftS);
+  }, [deviceStatus]);
 
   useEffect(() => {
     if (secondsBackend >= 3610) {
@@ -79,7 +64,7 @@ const MainSection: React.FC = () => {
     }
   }, [secondsBackend, hoursTime]);
 
-  if (error || startDataCharging?.message === 'error')
+  if (error)
     return (
       <ErrorPage errorHeader={t("errorHeader")} errorBody={t("errorBody")} />
     );
