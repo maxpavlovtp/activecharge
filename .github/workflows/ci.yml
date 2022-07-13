@@ -46,7 +46,7 @@ jobs:
         command: |
           systemctl restart run-220-be-dev.service
           rm -rf /var/www/html/*
-          cp -R /220/build/* /var/www/html/
+          cp -R /220/src-js/react/build/* /var/www/html/
         host: 178.18.251.90
         user: root
         key: ${{ secrets.PRIVATE_KEY}}
