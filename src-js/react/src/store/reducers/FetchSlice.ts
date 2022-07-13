@@ -4,27 +4,29 @@ import { IFetch } from "../../interfaces";
 interface FetchState {
   startDataCharging: any;
   deviceStatus: any;
+  deviceStatusOLD: any
   whichStation: any;
   devicePower: string;
   chargingStatus: number;
   isLoadingCharging: boolean;
   isGotChargingStatus: boolean;
   isGotDeviceStatus: boolean;
+  isGotOLDDeviceStatus: boolean;
   error: string;
-  station: string;
 }
 
 const initialState: FetchState = {
   startDataCharging: null,
   deviceStatus: null,
+  deviceStatusOLD: null,
   devicePower: "",
   whichStation: null,
   chargingStatus: 0,
   isLoadingCharging: false,
   isGotChargingStatus: false,
   isGotDeviceStatus: false,
-  error: "",
-  station: "2"
+  isGotOLDDeviceStatus: false,
+  error: ""
 };
 
 export const FetchSlice = createSlice({
@@ -36,11 +38,9 @@ export const FetchSlice = createSlice({
     },
     chargingDataFetchingSuccess(
       state: FetchState,
-      action: PayloadAction<IFetch[]>
     ) {
       state.isLoadingCharging = false;
       state.error = "";
-      state.startDataCharging = action.payload;
     },
     chargingDataFetchingError(
       state: FetchState,
@@ -84,9 +84,20 @@ export const FetchSlice = createSlice({
       state.error = action.payload;
     },
 
-    whichStationIs(state: FetchState, action: PayloadAction<any>) {
-      state.whichStation = action.payload;
-    }
+    deviceOLDStatusFetching(state: FetchState) {
+      state.isGotOLDDeviceStatus = true;
+    },
+    deviceOLDStatusFetchingSuccess(state: FetchState, action: PayloadAction<any>) {
+      state.isGotOLDDeviceStatus = false;
+      state.error = "";
+      state.deviceStatusOLD = action.payload;
+    },
+    deviceOLDStatusFetchingError(
+      state: FetchState,
+      action: PayloadAction<string>
+    ) {
+      state.error = action.payload;
+    },
   },
 });
 

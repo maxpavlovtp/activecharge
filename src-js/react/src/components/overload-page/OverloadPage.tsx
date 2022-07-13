@@ -5,9 +5,6 @@ import { useAppSelector } from "../../hooks/reduxHooks";
 import { useAppDispatch } from "../../hooks/reduxHooks";
 import ErrorPage from "../error-page/ErrorPage";
 import Spinner from "../spinner/Spinner";
-import {
-  fetchChargingData,
-} from "../../store/reducers/ActionCreators";
 import { useTranslation } from "react-i18next";
 
 const OverloadPage = () => {
@@ -32,9 +29,9 @@ const OverloadPage = () => {
 
   const dispatch = useAppDispatch();
 
-  const startOverloadChecing = () => {
-    dispatch(fetchChargingData());
-  };
+  // const startOverloadChecing = () => {
+  //   dispatch(fetchChargingData());
+  // };
 
   const getPowerLimit = async () => {
     await axios
@@ -185,7 +182,7 @@ const OverloadPage = () => {
               <button
                 className={styles.btnPayOverload}
                 onClick={() => {
-                  startOverloadChecing();
+                  // startOverloadChecing();
                   setOverload(false);
                   setCompleted(false);
                 }}

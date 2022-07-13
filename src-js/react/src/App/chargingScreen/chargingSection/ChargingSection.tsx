@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 import {
   getChargingStatus,
   getDeviceStatus,
+  getStationInfo,
 } from "../../../store/reducers/ActionCreators";
 import GetPower from "../../../components/getPower/GetPower";
 
@@ -43,6 +44,7 @@ const MainSection: React.FC = () => {
     if (isLoadingCharging === false) {
       dispatch(getChargingStatus());
       dispatch(getDeviceStatus());
+      dispatch(getStationInfo());
       setTimeout(() => {
         let stationNumber = localStorage.getItem('stationNumber');
         axios

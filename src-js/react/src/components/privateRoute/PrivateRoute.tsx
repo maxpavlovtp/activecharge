@@ -6,7 +6,7 @@ import Spinner from "../spinner/Spinner";
 
 export default function PrivateRoute({ children }: { children: any }) {
   const [loading, setLoading] = useState<boolean>(true);
-  const { deviceStatus } = useAppSelector((state) => state.fetchReducer);
+  const { deviceStatus, deviceStatusOLD } = useAppSelector((state) => state.fetchReducer);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -15,8 +15,8 @@ export default function PrivateRoute({ children }: { children: any }) {
   }, [dispatch]);
 
   if (loading) return <Spinner />;
-  console.log(deviceStatus?.data?.switchState);
-  return deviceStatus?.data?.switchState === true ? (
+  console.log(deviceStatusOLD?.data?.switchState);
+  return deviceStatusOLD?.data?.switchState === true ? (
     <Navigate to="/charging" />
   ) : (
     children
