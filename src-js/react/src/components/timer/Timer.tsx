@@ -18,7 +18,11 @@ const Timer = (props: ITimer) => {
 
     if (h === 0 && m === 0 && s === 0) {
       setOver(true);
-    } else if (deviceStatus?.state === 'DONE' || deviceStatus?.state === 'FAILED') {
+    } else if (
+      deviceStatus?.state === "DONE" ||
+      deviceStatus?.state === "FAILED" ||
+      deviceStatus?.leftS <= 3
+    ) {
       setTime([0, 0, 0]);
     } else if (m === 0 && s === 0) {
       setTime([h - 1, 59, 59]);

@@ -33,7 +33,6 @@ const MainSection: React.FC = () => {
   };
 
   useEffect(() => {
-    console.log(isLoadingCharging);
     if (isLoadingCharging === false) {
       setTimeout(() => {
         dispatch(getStationInfo());
@@ -46,6 +45,7 @@ const MainSection: React.FC = () => {
   }, [deviceStatus]);
 
   useEffect(() => {
+    console.log('leftSec: ' + secondsBackend);
     if (secondsBackend >= 3610) {
       hours(secondsBackend);
     }
@@ -58,8 +58,9 @@ const MainSection: React.FC = () => {
       setSecondsTime(secondsBackend);
       setLoading(false);
     }
-    if (secondsBackend <= 2) {
+    if (secondsBackend <= 3) {
       setSecondsTime(0);
+      setMinuteTime(0);
       setLoading(false);
     }
   }, [secondsBackend, hoursTime]);
@@ -71,11 +72,8 @@ const MainSection: React.FC = () => {
 
   if (loading === true) return <Spinner />;
 
-  // todo fetch from BE
-  // let seconds = 20;
   return (
     <>
-      {/* {loading === false && ( */}
       <div className={styles.chargingBox}>
         {secondsTime >= 0 && (
           <div className={styles.contTimer}>
@@ -88,7 +86,6 @@ const MainSection: React.FC = () => {
           </div>
         )}
       </div>
-      {/* )} */}
     </>
   );
 };

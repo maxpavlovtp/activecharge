@@ -8,14 +8,11 @@ export default function GetPower() {
   const dispatch = useAppDispatch();
   const { deviceStatus } = useAppSelector((state) => state.fetchReducer);
   const { t } = useTranslation();
-  const getNumber = () => {
-    dispatch(getStationInfo());
-  };
 
   useEffect(() => {
     const timerID = setInterval(() => {
       if (deviceStatus?.state === "IN_PROGRESS") {
-        getNumber();
+        dispatch(getStationInfo());
       }
     }, 4000);
     return () => clearInterval(timerID);
@@ -36,9 +33,11 @@ export default function GetPower() {
       <div className={styles.getPowerInfoCont}>
         <div
           className={
-            deviceStatus?.state === "IN_PROGRESS"
-              ? styles.power
-              : styles.offCont
+            deviceStatus?.state === "DONE" ||
+            deviceStatus?.state === "FAILED" ||
+            deviceStatus?.leftS <= 3
+              ? styles.offCont
+              : styles.power
           }
         >
           <p className={styles.textTitle}>{t("power")}</p>
@@ -46,18 +45,20 @@ export default function GetPower() {
             {kWtPower.toFixed(2)} {t("wt")}
           </p>
         </div>
-        {deviceStatus?.state === "IN_PROGRESS" ? (
-          <div className={styles.power}>
-            <p className={styles.textTitle}>{t("charging")}</p>
-            <p className={styles.text}>{chargeStatus}</p>
-          </div>
-        ) : (
+        {deviceStatus?.state === "DONE" ||
+        deviceStatus?.state === "FAILED" ||
+        deviceStatus?.leftS <= 3 ? (
           <div className={styles.finishContainer}>
             <p className={styles.finishTitle}>{t("chargedCongrats")} </p>
             <p className={styles.finishText}>
               {t("chargedkWt")}
               {chargeStatus}
             </p>
+          </div>
+        ) : (
+          <div className={styles.power}>
+            <p className={styles.textTitle}>{t("charging")}</p>
+            <p className={styles.text}>{chargeStatus}</p>
           </div>
         )}
       </div>
