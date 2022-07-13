@@ -38,14 +38,15 @@ jobs:
         username: root
         port: 22
         key: ${{ secrets.PRIVATE_KEY }}
-        source: "build/libs/220-km.com-0.0.1-SNAPSHOT.jar, systemctl-run-be-dev.sh, src-js/react/build, systemctl-run-fe.sh"
+        source: "build/libs/220-km.com-0.0.1-SNAPSHOT.jar, systemctl-run-be-dev.sh, src-js/react/build"
         target: "/220/"
     - name: 220 restart FE and BE on dev
       uses: fifsky/ssh-action@master
       with:
         command: |
           systemctl restart run-220-be-dev.service
-          systemctl restart run-220-fe-dev.service
+          rm -rf /var/www/html/*
+          cp -R /220/build/* /var/www/html/
         host: 178.18.251.90
         user: root
         key: ${{ secrets.PRIVATE_KEY}}
