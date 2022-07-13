@@ -1,20 +1,5 @@
-ewelink:
-  region: eu
-  email: maxpavlov.dp@gmail.com
-  password: Nopassword1
-  countryCode: "+380"
-  appId: YzfeftUVcZ6twZw1OoVKPRFYTrGEg01Q
-  appSecret: 4G91qSoboqYO4Y0XJ0LPPKIsq8reHdfa
-
-device:
-  chargeTimeSecs: 20
-deviceId: 10013bb124
-
 spring:
   datasource:
-    url: jdbc:postgresql://178.18.251.90:5432/220km
-    username: 220km
+    url: jdbc:postgresql://178.18.251.90:5432/postgres
+    username: km220
     password: 12345678
-
-flyway:
-  locations: "classpath:db/migration/pg"

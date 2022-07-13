@@ -1,3 +1,25 @@
+ewelink:
+  region: eu
+  email: maxpavlov.dp@gmail.com
+  password: Nopassword1
+  countryCode: "+380"
+  appId: YzfeftUVcZ6twZw1OoVKPRFYTrGEg01Q
+  appSecret: 4G91qSoboqYO4Y0XJ0LPPKIsq8reHdfa
+
+device:
+  chargeTimeSecs: 30
+deviceId: 10013bb124
+
+# docker
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/220-km
+    username: 220-km
+    password: 12345678
+
+flyway:
+  locations: "classpath:db/migration/pg"
+
 # ewelink.region=eu
 # ewelink.email=maxpavlov.dp@gmail.com
 # ewelink.password=Nopassword1
@@ -17,28 +39,5 @@
 # deviceId=10013bb124
 # device.chargeTimeSecs=20
 
-
-
-
-
-
-ewelink:
-  region: eu
-  email: maxpavlov.dp@gmail.com
-  password: Nopassword1
-  countryCode: "+380"
-  appId: YzfeftUVcZ6twZw1OoVKPRFYTrGEg01Q
-  appSecret: 4G91qSoboqYO4Y0XJ0LPPKIsq8reHdfa
-
-device:
-  chargeTimeSecs: 36000
-deviceId: 10013bb124
-
-spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/220-km
-    username: 220-km
-    password: 12345678
-
-flyway:
-  locations: "classpath:db/migration/pg"
+#name: '220-prod',
+#deviceid: '1001323877',
