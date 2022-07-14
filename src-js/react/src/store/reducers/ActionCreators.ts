@@ -7,8 +7,9 @@ const urlV2Status = `${process.env.REACT_APP_LINK_SERVE}device/v2/status?id=`;
 
 
 export const idStart = () => async (dispatch: AppDispatch) => {
+  let stationNumber = localStorage.getItem('stationNumber');
   const data = JSON.stringify({
-    station_number: "2",
+    station_number: stationNumber,
     period_s: 60,
   });
 
