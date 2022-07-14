@@ -36,7 +36,7 @@ const MainSection: React.FC = () => {
     if (isLoadingCharging === false) {
       setTimeout(() => {
         dispatch(getStationInfo());
-      }, 5000);
+      }, 5500);
     }
   }, [isLoadingCharging]);
 
