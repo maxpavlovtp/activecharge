@@ -117,7 +117,7 @@ public class ChargingJobRepository {
 
     var sql = """
         UPDATE charging_job SET state = :state, reason = :reason, charging_wt = :charging_wt,
-        charged_wt = :charged_wt where number = :number
+        charged_wt = :charged_wt, stopped_on = :stopped_on where number = :number
         """;
     var parameters = new HashMap<String, Object>();
     parameters.put(STATE, chargingJob.getState().toString());
