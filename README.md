@@ -9,7 +9,7 @@
 
 ## FE react endpoint:
 1. local: http://localhost:3000/
-2. dev: http://http://178.18.251.90/
+2. dev: http://178.18.251.90/
 3. stage: http://168.119.177.145/
 4. prod: http://220-km.com/2
 
