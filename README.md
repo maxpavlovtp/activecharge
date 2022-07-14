@@ -4,8 +4,10 @@
 ## Setup dev env:
 
 1. install java 17 from https://www.azul.com/downloads/?version=java-17-lts&package=jdk
-2. install npm
-3. run: sh run-220-dev.sh
+2. set JAVA_HOME
+3. install npm
+4. install docker
+5. run: sh run-220-local.sh
 
 ## FE react endpoint:
 1. local: http://localhost:3000/
