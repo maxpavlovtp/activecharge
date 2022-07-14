@@ -44,4 +44,5 @@ flyway:
   locations: "classpath:db/migration/pg"
 
 station:
-  scanIntervalMs: 2000
+  scanIntervalMs: 1000
+  scanThreads: 1

@@ -5,10 +5,12 @@ import static com.km220.dao.job.ChargingJobEntity.CHARGING_WT;
 import static com.km220.dao.job.ChargingJobEntity.NUMBER;
 import static com.km220.dao.job.ChargingJobEntity.REASON;
 import static com.km220.dao.job.ChargingJobEntity.STATE;
+import static com.km220.dao.job.ChargingJobEntity.STOPPED_ON;
 
 import com.km220.dao.ChargerDatabaseException;
 import com.km220.dao.station.StationRowMapper;
 import java.sql.Types;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -37,6 +39,7 @@ public class ChargingJobRepository {
       SELECT j.id as j_id, j.number as j_number, j.charged_wt as j_charged_wt,
           j.charging_wt as j_charging_wt, j.reason as j_reason, j.state as j_state,
           j.created_on as j_created_on, j.updated_on as j_updated_on, j.period_sec as j_period_sec,
+          j.stopped_on as j_stopped_on,
           s.id as s_id, s.number as s_number, s.name as s_name, s.provider_device_id as s_provider_device_id,
           s.updated_on as s_updated_on, s.created_on as s_created_on
         FROM charging_job j
@@ -98,7 +101,8 @@ public class ChargingJobRepository {
     final KeyHolder keyHolder = new GeneratedKeyHolder();
 
     if (jdbcTemplate.update(sql, parameters, keyHolder) > 0) {
-      logger.info("Charging job created in DB. Station number = {}, period = {} seconds", stationNumber,
+      logger.info("Charging job created in DB. Station number = {}, period = {} seconds",
+          stationNumber,
           periodSeconds);
 
       return (UUID) keyHolder.getKeyList().get(0).get("id");
@@ -115,12 +119,13 @@ public class ChargingJobRepository {
         UPDATE charging_job SET state = :state, reason = :reason, charging_wt = :charging_wt,
         charged_wt = :charged_wt where number = :number
         """;
-    var parameters = Map.of(
-        STATE, chargingJob.getState().toString(),
-        REASON, chargingJob.getReason(),
-        CHARGING_WT, chargingJob.getChargingWt(),
-        CHARGED_WT, chargingJob.getChargedWt(),
-        NUMBER, chargingJob.getNumber());
+    var parameters = new HashMap<String, Object>();
+    parameters.put(STATE, chargingJob.getState().toString());
+    parameters.put(REASON, chargingJob.getReason());
+    parameters.put(CHARGING_WT, chargingJob.getChargingWt());
+    parameters.put(CHARGED_WT, chargingJob.getChargedWt());
+    parameters.put(NUMBER, chargingJob.getNumber());
+    parameters.put(STOPPED_ON, chargingJob.getStoppedOn());
 
     if (jdbcTemplate.update(sql, parameters) <= 0) {
       throw new ChargerDatabaseException("Couldn't update charging job. Job number = "

@@ -8,12 +8,18 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
 @Configuration
 @EnableScheduling
-public class JobConfiguration {
+public class StationScanJobConfiguration {
+
+  private final StationScanProperties stationScanProperties;
+
+  public StationScanJobConfiguration(final StationScanProperties stationScanProperties) {
+    this.stationScanProperties = stationScanProperties;
+  }
 
   @Bean
   public TaskScheduler taskScheduler() {
     var threadPoolTaskScheduler = new ThreadPoolTaskScheduler();
-    threadPoolTaskScheduler.setPoolSize(1);
+    threadPoolTaskScheduler.setPoolSize(stationScanProperties.getScanThreads());
     threadPoolTaskScheduler.setThreadNamePrefix("ThreadPoolTaskScheduler");
     return threadPoolTaskScheduler;
   }

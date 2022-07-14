@@ -26,6 +26,8 @@ public class ChargingService {
 
   private final ChargingJobRunner jobRunner;
 
+  private static final ChargingJobConverter jobConverter = new ChargingJobConverter();
+
   private static final Logger logger = LoggerFactory.getLogger(ChargingService.class);
 
   public ChargingService(final ChargingJobRepository chargingJobRepository,
@@ -66,7 +68,7 @@ public class ChargingService {
       try {
         jobRunner.run(job);
         chargingJobRepository.update(job);
-        chargingJobCache.put(job.getId(), ChargingJobConverter.converter.apply(job));
+        chargingJobCache.put(job.getId(), job);
       } catch (Exception e) {
         logger.error("Failing", e);
       }
@@ -74,6 +76,6 @@ public class ChargingService {
   }
 
   public ChargingJob get(UUID key) {
-    return chargingJobCache.get(key);
+    return jobConverter.apply(chargingJobCache.get(key));
   }
 }

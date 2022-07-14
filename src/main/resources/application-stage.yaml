@@ -45,3 +45,4 @@ flyway:
 
 station:
   scanIntervalMs: 2000
+  scanThreads: 1
