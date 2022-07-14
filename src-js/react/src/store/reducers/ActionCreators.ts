@@ -5,9 +5,8 @@ import { FetchSlice } from "./FetchSlice";
 const urlV2Start = `${process.env.REACT_APP_LINK_SERVE}device/v2/start`;
 const urlV2Status = `${process.env.REACT_APP_LINK_SERVE}device/v2/status?id=`;
 
-
 export const idStart = () => async (dispatch: AppDispatch) => {
-  let stationNumber = localStorage.getItem('stationNumber');
+  let stationNumber = localStorage.getItem("stationNumber");
   const data = JSON.stringify({
     station_number: stationNumber,
     period_s: 60,
@@ -25,14 +24,14 @@ export const idStart = () => async (dispatch: AppDispatch) => {
   dispatch(FetchSlice.actions.chargingDataFetching());
   await axios(config)
     .then(function (response: any) {
-      localStorage.setItem("idDevice", response.data ? response.data : null);
-      console.log(JSON.stringify(response));
+      localStorage.setItem("idDevice", response.data ? response.data.id : null);
+      console.log(JSON.stringify(response.data));
+      dispatch(FetchSlice.actions.chargingDataFetchingSuccess(response.data.scan_interval_ms));
     })
     .catch(function (error: any) {
       console.log(error);
       dispatch(FetchSlice.actions.chargingDataFetchingError(error.message));
     });
-  dispatch(FetchSlice.actions.chargingDataFetchingSuccess());
 };
 
 export const getStationInfo = () => async (dispatch: AppDispatch) => {
