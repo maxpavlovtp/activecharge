@@ -2,8 +2,8 @@ import { AppDispatch } from "../store";
 import axios from "axios";
 import { FetchSlice } from "./FetchSlice";
 
-const urlV2Start = `http://localhost:8080/device/v2/start`;
-const urlV2Status = `http://localhost:8080/device/v2/status?id=`;
+const urlV2Start = `${process.env.REACT_APP_LINK_SERVE}device/v2/start`;
+const urlV2Status = `${process.env.REACT_APP_LINK_SERVE}device/v2/status?id=`;
 
 
 export const idStart = () => async (dispatch: AppDispatch) => {
