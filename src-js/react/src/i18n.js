@@ -75,7 +75,7 @@ i18n
           offer: "Terms of use",
           wt: "kWt",
           km: " km",
-          chargedCongrats: "Congrats!",
+          chargedCongrats: "Congrats!!!",
           chargedkWt: "Charged your car by ",
           power: "Power",
           charging: "Charged",
