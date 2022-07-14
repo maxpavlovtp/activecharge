@@ -26,7 +26,7 @@ export const idStart = () => async (dispatch: AppDispatch) => {
   await axios(config)
     .then(function (response: any) {
       localStorage.setItem("idDevice", response.data ? response.data : null);
-      console.log(JSON.stringify(response.data));
+      console.log(JSON.stringify(response));
     })
     .catch(function (error: any) {
       console.log(error);
