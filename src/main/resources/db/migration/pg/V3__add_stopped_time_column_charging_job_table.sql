@@ -1,0 +1,1 @@
+alter table charging_job add column stopped_on timestamptz;

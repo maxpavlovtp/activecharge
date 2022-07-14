@@ -1,10 +1,8 @@
 package com.km220.cache;
 
-import java.util.UUID;
+public interface Cache<K, V> {
 
-public interface Cache<T> {
+  V get(K id);
 
-  T get(UUID id);
-
-  T put(UUID id, T value);
+  V put(K id, V value);
 }

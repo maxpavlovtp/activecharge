@@ -16,8 +16,8 @@ public final class StationEntity extends DatabaseEntity {
   public static final String NAME = "name";
   public static final String PROVIDER_DEVICE_ID = "provider_device_id";
 
-  String name;
-  String number;
-  String deviceId;
+  private String name;
+  private String number;
+  private String deviceId;
 
 }

@@ -6,6 +6,8 @@ import com.km220.dao.job.ChargingJobEntity;
 import com.km220.dao.job.ChargingJobState;
 import com.km220.service.device.DeviceService;
 import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,10 +39,12 @@ class ChargingJobRunner {
       deviceService.toggleOff(job.getStation().getDeviceId(), job.getPeriodSec());
       job.setReason(COMPLETED);
       job.setState(ChargingJobState.DONE);
+      job.setStoppedOn(OffsetDateTime.now(ZoneOffset.UTC));
     }
     if (!completed && !deviceStatus.isSwitchState()) {
       job.setReason(DEVICE_IS_OFF);
       job.setState(ChargingJobState.FAILED);
+      job.setStoppedOn(OffsetDateTime.now(ZoneOffset.UTC));
     }
   }
 }

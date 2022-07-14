@@ -21,9 +21,9 @@ public class DatabaseEntityRowMapper<T extends DatabaseEntity> implements RowMap
   private final Supplier<T> databaseEntitySupplier;
   private String alias = "";
 
-  private static final DateTimeFormatter dateTimeFormatter = new DateTimeFormatterBuilder()
+  protected static final DateTimeFormatter dateTimeFormatter = new DateTimeFormatterBuilder()
       .appendPattern("yyyy-MM-dd HH:mm:ss")
-      .appendFraction(ChronoField.MILLI_OF_SECOND, 1, 6, true)
+      .appendFraction(ChronoField.MILLI_OF_SECOND, 0, 6, true)
       .appendPattern("X")
       .toFormatter(Locale.ROOT);
 

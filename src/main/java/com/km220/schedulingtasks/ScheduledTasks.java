@@ -2,7 +2,6 @@ package com.km220.schedulingtasks;
 
 import com.km220.service.ChargingService;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +21,7 @@ public class ScheduledTasks {
     this.chargingService = chargingService;
   }
 
-  @Scheduled(fixedRate = 5000)
+  @Scheduled(fixedRateString = "${station.scanIntervalMs}", initialDelay = 1000)
   public void scanChargingJobs() {
     logger.info("Scan charging jobs {}", dateFormat.format(new Date()));
 
