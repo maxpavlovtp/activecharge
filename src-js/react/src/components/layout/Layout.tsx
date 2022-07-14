@@ -17,7 +17,7 @@ export default function Layout() {
     (state) => state.fetchReducer
   );
   useEffect(() => {
-    deviceStatus?.data?.switchState === true
+    deviceStatus?.state === 'IN_PROGRESS'
       ? setRouteTo("/charging")
       : setRouteTo("/");
   }, [isGotDeviceStatus]);

@@ -12,33 +12,39 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up JDK 17
-      uses: actions/setup-java@v2
+    - uses: actions/setup-java@v2
       with:
         java-version: '17'
         distribution: 'adopt'
-    - name: Build BE
-      run: ./gradlew clean build -i
-    - name: Build FE
-      uses: actions/setup-node@v3
+    - uses: actions/setup-node@v3
       with:
         node-version: '18.x'
-    - run: cd src-js/react && npm i && npm run dev
-    - name: Copy FE and BE artifacts to dev
+    - name: 220 build BE
+      run: ./gradlew clean build -i
+    - name: 220 build FE
+      run: cd src-js/react && npm i && npm run dev
+    - name: 220 clean old deployments on dev
+      uses: fifsky/ssh-action@master
+      with:
+        command: |
+          rm -rf /220/**
+        host: 178.18.251.90
+        user: root
+        key: ${{ secrets.PRIVATE_KEY}}
+    - name: 220 copy artifacts to dev
       uses: appleboy/scp-action@master
       with:
         host: 178.18.251.90
         username: root
         port: 22
         key: ${{ secrets.PRIVATE_KEY }}
-        source: "build/libs/220-km.com-0.0.1-SNAPSHOT.jar, systemctl-run-be-dev.sh, src-js/react/build, systemctl-run-fe.sh"
+        source: "build/libs/220-km.com-0.0.1-SNAPSHOT.jar, systemctl-run-be-dev.sh, src-js/react/build"
         target: "/220/"
-    - name: Redeploy Dev
+    - name: 220 restart BE on dev
       uses: fifsky/ssh-action@master
       with:
         command: |
           systemctl restart run-220-be-dev.service
-          systemctl restart run-220-fe-dev.service
         host: 178.18.251.90
         user: root
         key: ${{ secrets.PRIVATE_KEY}}
