@@ -36,7 +36,7 @@ const MainSection: React.FC = () => {
     if (isLoadingCharging === false) {
       setTimeout(() => {
         dispatch(getStationInfo());
-      }, 5000);
+      }, 5500);
     }
   }, [isLoadingCharging]);
 
@@ -72,7 +72,7 @@ const MainSection: React.FC = () => {
 
   if (loading === true) return <Spinner />;
 
-  return (
+  return ( 
     <>
       <div className={styles.chargingBox}>
         {secondsTime >= 0 && (

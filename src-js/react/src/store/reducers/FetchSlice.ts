@@ -3,6 +3,7 @@ import { IFetch } from "../../interfaces";
 
 interface FetchState {
   deviceStatus: any;
+  interval: any;
   isLoadingCharging: boolean;
   isGotDeviceStatus: boolean;
   error: string;
@@ -10,6 +11,7 @@ interface FetchState {
 
 const initialState: FetchState = {
   deviceStatus: null,
+  interval: null,
   isLoadingCharging: false,
   isGotDeviceStatus: false,
   error: ""
@@ -24,8 +26,10 @@ export const FetchSlice = createSlice({
     },
     chargingDataFetchingSuccess(
       state: FetchState,
+      action: PayloadAction<any>
     ) {
       state.isLoadingCharging = false;
+      state.interval = action.payload
       state.error = "";
     },
     chargingDataFetchingError(

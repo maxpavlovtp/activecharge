@@ -17,4 +17,4 @@ sleep 50s
 ./gradlew clean build -x test
 java -Dspring.profiles.active=local -jar build/libs/220-km.com-0.0.1-SNAPSHOT.jar
 
-#tail -f nohup.out
+#tail -f nohup.out 
