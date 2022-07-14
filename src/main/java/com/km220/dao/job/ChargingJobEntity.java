@@ -2,6 +2,7 @@ package com.km220.dao.job;
 
 import com.km220.dao.DatabaseEntity;
 import com.km220.dao.station.StationEntity;
+import java.time.OffsetDateTime;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -20,12 +21,14 @@ public final class ChargingJobEntity extends DatabaseEntity {
   public static final String CHARGED_WT = "charged_wt";
   public static final String REASON = "reason";
   public static final String PERIOD = "period_sec";
+  public static final String STOPPED_ON = "stopped_on";
 
-  long number;
-  ChargingJobState state;
-  float chargingWt;
-  float chargedWt;
-  String reason;
-  int periodSec;
-  StationEntity station;
+  private long number;
+  private ChargingJobState state;
+  private float chargingWt;
+  private float chargedWt;
+  private String reason;
+  private int periodSec;
+  private StationEntity station;
+  private OffsetDateTime stoppedOn;
 }
