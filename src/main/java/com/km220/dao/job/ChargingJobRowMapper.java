@@ -6,12 +6,14 @@ import static com.km220.dao.job.ChargingJobEntity.NUMBER;
 import static com.km220.dao.job.ChargingJobEntity.PERIOD;
 import static com.km220.dao.job.ChargingJobEntity.REASON;
 import static com.km220.dao.job.ChargingJobEntity.STATE;
+import static com.km220.dao.job.ChargingJobEntity.STOPPED_ON;
 
 import com.km220.dao.DatabaseEntityRowMapper;
 import com.km220.dao.station.StationEntity;
 import com.km220.dao.station.StationRowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.OffsetDateTime;
 import java.util.function.Supplier;
 
 public class ChargingJobRowMapper extends DatabaseEntityRowMapper<ChargingJobEntity> {
@@ -40,6 +42,11 @@ public class ChargingJobRowMapper extends DatabaseEntityRowMapper<ChargingJobEnt
     job.setChargedWt(rs.getFloat(name(CHARGED_WT)));
     job.setChargingWt(rs.getFloat(name(CHARGING_WT)));
     job.setPeriodSec(rs.getInt(name(PERIOD)));
+
+    String stoppedOn = rs.getString(name(STOPPED_ON));
+    if (stoppedOn != null) {
+      job.setStoppedOn(OffsetDateTime.parse(stoppedOn, dateTimeFormatter));
+    }
 
     StationEntity station = stationRowMapper.mapRow(rs, rowNum);
     job.setStation(station);

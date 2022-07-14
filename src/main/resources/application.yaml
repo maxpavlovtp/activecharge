@@ -10,6 +10,10 @@ device:
   chargeTimeSecs: 30
 deviceId: 10013bb124
 
+station:
+  scanIntervalMs: 1000
+  scanThreads: 1
+
 # docker
 spring:
   datasource:

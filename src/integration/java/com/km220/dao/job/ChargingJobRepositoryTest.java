@@ -3,6 +3,7 @@ package com.km220.dao.job;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -11,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.Instant;
+import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
 import java.util.UUID;
@@ -49,11 +51,12 @@ class ChargingJobRepositoryTest {
 
     assertNotNull(job);
     assertTrue(job.getNumber() > 0);
-    assertNull(job.reason);
+    assertEquals("", job.getReason());
     assertEquals(ChargingJobState.IN_PROGRESS, job.getState());
     assertEquals(0f, job.getChargingWt(), 0.00001f);
     assertEquals(0f, job.getChargedWt(), 0.00001f);
     assertEquals(10, job.getPeriodSec());
+    assertNull(job.getStoppedOn());
     assertTrue(job.getCreatedOn().isAfter(now.atOffset(ZoneOffset.UTC)));
     assertTrue(job.getUpdatedOn().isAfter(now.atOffset(ZoneOffset.UTC)));
 
@@ -75,29 +78,32 @@ class ChargingJobRepositoryTest {
 
     assertNotNull(job);
     assertTrue(job.getNumber() > 0);
-    assertNull(job.reason);
+    assertEquals("", job.getReason());
     assertEquals(ChargingJobState.IN_PROGRESS, job.getState());
     assertEquals(0f, job.getChargingWt(), 0.00001f);
     assertEquals(0f, job.getChargedWt(), 0.00001f);
     assertEquals(10, job.getPeriodSec());
+    assertNull(job.getStoppedOn());
     assertTrue(job.getCreatedOn().isAfter(onCreate.atOffset(ZoneOffset.UTC)));
     assertTrue(job.getUpdatedOn().isAfter(onCreate.atOffset(ZoneOffset.UTC)));
 
-    Instant onUpdate = Instant.now();
     job.setChargingWt(1f);
     job.setChargedWt(2f);
     job.setReason("OK");
     job.setState(ChargingJobState.DONE);
+    job.setStoppedOn(OffsetDateTime.parse("2007-12-03T10:15:30+00:00"));
+
     chargingJobRepository.update(job);
 
     job = chargingJobRepository.getById(uuid);
 
     assertNotNull(job);
     assertTrue(job.getNumber() > 0);
-    assertEquals("OK", job.reason);
+    assertEquals("OK", job.getReason());
     assertEquals(ChargingJobState.DONE, job.getState());
     assertEquals(1f, job.getChargingWt(), 0.00001f);
     assertEquals(2f, job.getChargedWt(), 0.00001f);
+    assertEquals(OffsetDateTime.parse("2007-12-03T12:15:30+02:00"), job.getStoppedOn());
 
     assertNotNull(job.getStation());
     assertEquals("stage", job.getStation().getName());
@@ -119,6 +125,7 @@ class ChargingJobRepositoryTest {
                 hasProperty("chargingWt", is(1.0f)),
                 hasProperty("chargedWt", is(2.0f)),
                 hasProperty("periodSec", is(10)),
+                hasProperty("stoppedOn", is(nullValue())),
                 hasProperty("station",
                     allOf(
                         hasProperty("name", is("test1")),
@@ -133,6 +140,7 @@ class ChargingJobRepositoryTest {
                 hasProperty("chargingWt", is(5.0f)),
                 hasProperty("chargedWt", is(6.0f)),
                 hasProperty("periodSec", is(10)),
+                hasProperty("stoppedOn", is(nullValue())),
                 hasProperty("station",
                     allOf(
                         hasProperty("name", is("test2")),
@@ -147,6 +155,7 @@ class ChargingJobRepositoryTest {
                 hasProperty("chargingWt", is(7.0f)),
                 hasProperty("chargedWt", is(8.0f)),
                 hasProperty("periodSec", is(10)),
+                hasProperty("stoppedOn", is(nullValue())),
                 hasProperty("station",
                     allOf(
                         hasProperty("name", is("test3")),

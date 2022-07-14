@@ -1,10 +1,12 @@
 package com.km220.controller;
 
+import com.km220.config.StationScanProperties;
 import com.km220.model.ChargingJob;
 import com.km220.service.ChargingService;
 import com.km220.service.device.DeviceCache;
 import com.km220.service.device.DeviceService;
 import com.km220.service.device.DeviceState;
+import java.util.Map;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,6 +34,8 @@ public class ChargerDeviceController {
 
   private final DeviceService deviceService;
   private final DeviceCache deviceCache;
+
+  private final StationScanProperties stationScanProperties;
 
   //TODO: GET HTTP method should not change resource state.
   // todo remove after payment implementation
@@ -82,10 +86,13 @@ public class ChargerDeviceController {
   private final ChargingService chargingService;
 
   @PostMapping("/v2/start")
-  public ResponseEntity<String> start(@RequestBody ChargeRequest chargeRequest) {
+  public ResponseEntity<Map<String, Object>> start(@RequestBody ChargeRequest chargeRequest) {
     UUID id = chargingService.start(chargeRequest.getStationNumber(),
         chargeRequest.getChargePeriodInSeconds());
-    return ResponseEntity.status(HttpStatus.CREATED).body(id.toString());
+    return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(
+        "id", id.toString(),
+        "scan_interval_ms", stationScanProperties.getScanIntervalMs())
+    );
   }
 
   @GetMapping("/v2/status")
