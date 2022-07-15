@@ -6,9 +6,9 @@ import { useTranslation } from "react-i18next";
 
 export default function GetPower() {
   const dispatch = useAppDispatch();
-  const { deviceStatus, interval } = useAppSelector((state) => state.fetchReducer);
+  const { deviceStatus } = useAppSelector((state) => state.fetchReducer);
   const { t } = useTranslation();
-
+  const interval: any = localStorage.getItem("interval");
   useEffect(() => {
     const timerID = setInterval(() => {
       if (deviceStatus?.state === "IN_PROGRESS") {
