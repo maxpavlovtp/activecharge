@@ -87,8 +87,10 @@ public class ChargerDeviceController {
 
   @PostMapping("/v2/start")
   public ResponseEntity<Map<String, Object>> start(@RequestBody ChargeRequest chargeRequest) {
+    int chargePeriodInSeconds = chargeRequest.getChargePeriodInSeconds();
+
     UUID id = chargingService.start(chargeRequest.getStationNumber(),
-        chargeRequest.getChargePeriodInSeconds());
+        36000);
     return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(
         "id", id.toString(),
         "scan_interval_ms", stationScanProperties.getScanIntervalMs())
