@@ -32,6 +32,7 @@ class ChargingJobRunner {
 
     job.setChargedWt(job.getChargedWt() + (float) deviceStatus.getPower() / (3600 * 1000));
     job.setChargingWt((float) deviceStatus.getPower());
+    job.setVoltage((float) deviceStatus.getVoltage());
 
     boolean completed = OffsetDateTime.now(UTC)
         .isAfter(job.getCreatedOn().plusSeconds(job.getPeriodSec()));

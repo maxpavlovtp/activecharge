@@ -16,6 +16,7 @@ public class ChargingJob {
   private ChargingJobState state;
   private double charginWt;
   private double chargedWt;
+  private double voltage;
   private long stoppedS;
   @Getter(AccessLevel.NONE)
   private long durationS;

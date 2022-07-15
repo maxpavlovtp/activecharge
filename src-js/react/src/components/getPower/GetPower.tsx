@@ -20,6 +20,7 @@ export default function GetPower() {
 
   let kWtCharged = deviceStatus?.chargedWt;
   let kWtPower = Number(deviceStatus?.charginWt) / 1000;
+  let voltage = Number(Math.round(deviceStatus?.voltage));
 
   // todo use for car range calculation feature
   // nisan leaf = 150
@@ -63,6 +64,22 @@ export default function GetPower() {
         )}
       </div>
       <div>
+        {deviceStatus?.state === "IN_PROGRESS" && (
+          <div
+            className={
+              deviceStatus?.state === "DONE" ||
+              deviceStatus?.state === "FAILED" ||
+              deviceStatus?.leftS <= 3
+                ? styles.offCont
+                : styles.voltageBox
+            }
+          >
+            <p className={styles.voltTitle}>{t("voltage")}</p>
+            <p className={styles.voltCharged}>
+              {voltage} {t("v")}
+            </p>
+          </div>
+        )}
         <p className={styles.kmCharged}>
           {isZero
             ? 0
