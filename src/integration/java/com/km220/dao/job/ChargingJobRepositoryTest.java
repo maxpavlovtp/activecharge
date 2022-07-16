@@ -114,9 +114,8 @@ class ChargingJobRepositoryTest {
   @Test
   @Sql("/dao/job/init_scan.sql")
   void scan_shouldReturnNotLockedRecords() {
-    int batchSize = 10;
     List<ChargingJobEntity> jobs = chargingJobRepository.scan(ChargingJobState.IN_PROGRESS,
-        batchSize);
+        10, 10);
 
     assertThat(jobs, hasItems(
             allOf(
