@@ -58,11 +58,11 @@ public class ChargingService {
     return jobId;
   }
 
-  public void refresh(int batchSize) {
+  public void refresh(int batchSize, int delayTime) {
     List<ChargingJobEntity> jobs = chargingJobRepository.scan(ChargingJobState.IN_PROGRESS,
-        batchSize);
+        batchSize, delayTime);
 
-    logger.info("Processing {} jobs..", jobs.size());
+    logger.debug("Processing {} jobs..", jobs.size());
 
     for (ChargingJobEntity job : jobs) {
       try {
@@ -70,7 +70,7 @@ public class ChargingService {
         chargingJobRepository.update(job);
         chargingJobCache.put(job.getId(), job);
       } catch (Exception e) {
-        logger.error("Failing", e);
+        logger.error("Failing charging charging", e);
       }
     }
   }
