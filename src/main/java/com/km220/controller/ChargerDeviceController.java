@@ -2,12 +2,19 @@ package com.km220.controller;
 
 import com.km220.config.StationScanProperties;
 import com.km220.model.ChargingJob;
+import com.km220.model.CreatedChargingJob;
 import com.km220.service.ChargingService;
 import com.km220.service.device.DeviceCache;
 import com.km220.service.device.DeviceService;
 import com.km220.service.device.DeviceState;
-import java.util.Map;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import java.util.UUID;
+import javax.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -85,21 +92,49 @@ public class ChargerDeviceController {
 
   private final ChargingService chargingService;
 
+  @Operation(summary = "Start charging")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "201", description = "Created charging job",
+          content = {@Content(mediaType = "application/json",
+              schema = @Schema(implementation = CreatedChargingJob.class))})
+  })
   @PostMapping("/v2/start")
-  public ResponseEntity<Map<String, Object>> start(@RequestBody ChargeRequest chargeRequest) {
+  public ResponseEntity<CreatedChargingJob> start(
+      @Parameter(description = "Charge request parameters") @RequestBody ChargeRequest chargeRequest) {
     int chargePeriodInSeconds = chargeRequest.getChargePeriodInSeconds();
 
     UUID id = chargingService.start(chargeRequest.getStationNumber(),
-        36000);
-    return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(
-        "id", id.toString(),
-        "scan_interval_ms", stationScanProperties.getScanIntervalMs())
+        chargePeriodInSeconds);
+    return ResponseEntity.status(HttpStatus.CREATED).body(CreatedChargingJob.builder()
+        .id(id.toString())
+        .scanIntervalMs(stationScanProperties.getScanIntervalMs())
+        .build()
     );
   }
 
+  @Operation(summary = "Get charging status by id")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Charging job status",
+          content = {@Content(mediaType = "application/json",
+              schema = @Schema(implementation = ChargingJob.class))})
+  })
   @GetMapping("/v2/status")
-  public ResponseEntity<ChargingJob> getStatus(@RequestParam String id) {
-    ChargingJob job = chargingService.get(UUID.fromString(id));
+  public ResponseEntity<ChargingJob> getStatus(
+      @Parameter(description = "Charging job id") @NotBlank @RequestParam String id) {
+    ChargingJob job = chargingService.get(id);
+    return ResponseEntity.status(HttpStatus.OK).body(job);
+  }
+
+  @Operation(summary = "Get charging status by station number")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Charging job status",
+          content = {@Content(mediaType = "application/json",
+              schema = @Schema(implementation = ChargingJob.class))})
+  })
+  @GetMapping("/v2/station/status")
+  public ResponseEntity<ChargingJob> getStationStatus(
+      @Parameter(description = "Station number") @NotBlank @RequestParam("station_number") String stationNumber) {
+    ChargingJob job = chargingService.get(stationNumber);
     return ResponseEntity.status(HttpStatus.OK).body(job);
   }
 }

@@ -26,6 +26,9 @@ spring:
 flyway:
   locations: "classpath:db/migration/pg"
 
+server:
+  forward-headers-strategy: framework
+
 # ewelink.region=eu
 # ewelink.email=maxpavlov.dp@gmail.com
 # ewelink.password=Nopassword1
