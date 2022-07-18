@@ -6,7 +6,6 @@ import com.km220.dao.job.ChargingJobEntity;
 import com.km220.dao.job.ChargingJobState;
 import com.km220.service.device.DeviceService;
 import java.time.OffsetDateTime;
-import java.time.ZoneId;
 import java.time.ZoneOffset;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +28,8 @@ class ChargingJobRunner {
         job.getId(), job.getNumber(), job.getStation().getNumber());
 
     var deviceStatus = deviceService.getState(job.getStation().getDeviceId());
+
+    logger.info("Device state: {}", deviceStatus);
 
     job.setChargedWt(job.getChargedWt() + (float) deviceStatus.getPower() / (3600 * 1000));
     job.setChargingWt((float) deviceStatus.getPower());

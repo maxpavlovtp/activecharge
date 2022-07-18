@@ -9,6 +9,7 @@ import com.km220.dao.station.StationRepository;
 import com.km220.model.ChargingJob;
 import com.km220.service.device.DeviceService;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,14 +69,17 @@ public class ChargingService {
       try {
         jobRunner.run(job);
         chargingJobRepository.update(job);
-        chargingJobCache.put(job.getId(), job);
+        chargingJobCache.put(job.getId().toString(), job);
+        chargingJobCache.put(job.getStation().getNumber(), job);
       } catch (Exception e) {
-        logger.error("Failing charging charging", e);
+        logger.error(
+            String.format(Locale.ROOT, "Failing charging job. id = %s, station number = %s",
+                job.getId(), job.getStation().getNumber()), e);
       }
     }
   }
 
-  public ChargingJob get(UUID key) {
+  public ChargingJob get(String key) {
     return jobConverter.apply(chargingJobCache.get(key));
   }
 }
