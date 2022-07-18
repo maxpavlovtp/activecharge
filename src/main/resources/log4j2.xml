@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Extra logging related to initialization of Log4j.
+ Set to debug or trace if log4j initialization is failing. -->
+<Configuration status="warn">
+  <Appenders>
+    <!-- Console appender configuration -->
+    <Console name="console" target="SYSTEM_OUT">
+      <PatternLayout
+        pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n" />
+    </Console>
+    <File name="BackFile" fileName="logs/back.log">
+      <PatternLayout>
+        <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+      </PatternLayout>
+    </File>
+    <Async name="Async">
+      <AppenderRef ref="BackFile"/>
+    </Async>
+  </Appenders>
+
+  <Loggers>
+    <!-- Root logger referring to console appender -->
+    <Root level="info" additivity="false">
+      <AppenderRef ref="console" />
+      <AppenderRef ref="Async" />
+    </Root>
+
+    <Logger name="com.km220" level="debug" additivity="false">
+      <Appender-ref ref="Async" level="DEBUG" />
+      <AppenderRef ref="console" level="DEBUG" />
+    </Logger>
+  </Loggers>
+</Configuration>

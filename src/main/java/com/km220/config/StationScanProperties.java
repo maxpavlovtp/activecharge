@@ -1,25 +1,20 @@
 package com.km220.config;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.ToString;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.ConstructorBinding;
 
 @ConstructorBinding
 @ConfigurationProperties(prefix = "station")
+@AllArgsConstructor
+@Getter
+@ToString
 public class StationScanProperties {
 
-  private final long scanIntervalMs;
+  private final int scanIntervalMs;
   private final short scanThreads;
-
-  public StationScanProperties(final long scanIntervalMs, final short scanThreads) {
-    this.scanIntervalMs = scanIntervalMs;
-    this.scanThreads = scanThreads;
-  }
-
-  public long getScanIntervalMs() {
-    return scanIntervalMs;
-  }
-
-  public short getScanThreads() {
-    return scanThreads;
-  }
+  private final int scanDelayMs;
+  private final int scanBatchSize;
 }
