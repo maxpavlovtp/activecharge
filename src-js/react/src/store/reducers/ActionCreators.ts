@@ -9,7 +9,7 @@ export const idStart = () => async (dispatch: AppDispatch) => {
   let stationNumber = localStorage.getItem("stationNumber");
   const data = JSON.stringify({
     station_number: stationNumber,
-    period_s: 30,
+    period_s: 20000,
   });
 
   const config = {
