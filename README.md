@@ -15,6 +15,9 @@
 3. stage: http://168.119.177.145/
 4. prod: http://220-km.com/2
 
+## Swagger:
+http://178.18.251.90:8080/swagger-ui/index.html
+
 ## BE spring boot endpoints:
 ### local:
 1. http://localhost:8080/device/start
