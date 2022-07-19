@@ -8,7 +8,6 @@ ewelink:
 
 device:
   chargeTimeSecs: 30
-deviceId: 10013bb124
 
 station:
   scan-delay-ms: 200
