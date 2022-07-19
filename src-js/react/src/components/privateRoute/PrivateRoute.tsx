@@ -7,7 +7,7 @@ export default function PrivateRoute({ children }: { children: any }) {
   let state: any = localStorage.getItem('stationState')
 
   console.log(deviceStatus); 
-  return state === "IN_PROGRESS" ? (
+  return state === "IN_PROGRESS" && state === !undefined ? (
     <Navigate to="/charging" />
   ) : (
     children
