@@ -1,6 +1,3 @@
-device:
-  chargeTimeSecs: 36000
-
 spring:
   datasource:
     url: jdbc:postgresql://178.18.251.90:5432/postgres
