@@ -63,7 +63,7 @@ public class ChargingService {
     List<ChargingJobEntity> jobs = chargingJobRepository.scan(ChargingJobState.IN_PROGRESS,
         batchSize, delayTime);
 
-    logger.debug("Processing {} jobs..", jobs.size());
+//    logger.debug("Processing {} jobs..", jobs.size());
 
     for (ChargingJobEntity job : jobs) {
       try {
