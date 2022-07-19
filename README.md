@@ -10,7 +10,7 @@
 5. run: sh run-220-local.sh
 
 ## FE react endpoint:
-1. local: http://localhost:3000/
+1. local: http://localhost:3000?station=2
 2. dev: http://178.18.251.90?station=3
 3. stage: http://168.119.177.145/
 4. prod: http://220-km.com/2
