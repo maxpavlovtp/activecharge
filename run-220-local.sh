@@ -8,7 +8,8 @@ lsof -ti tcp:8080 | xargs kill -kill
 lsof -ti tcp:5000 | xargs kill -kill
 lsof -ti tcp:3000 | xargs kill -kill
 
-docker-compose down && rm -r ./db-data
+docker-compose down && rm -rf ./db-data
+docker compose up
 nohup docker compose up &
 ./gradlew clean build -x test
 

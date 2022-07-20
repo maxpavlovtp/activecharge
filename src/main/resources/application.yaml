@@ -13,7 +13,7 @@ station:
   scan-delay-ms: 200
   scan-batch-size: 5
   scan-threads: 1
-  scan-interval-ms: 1000
+  scan-interval-ms: 3000
 
 # docker
 spring:
