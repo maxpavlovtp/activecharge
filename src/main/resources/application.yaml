@@ -10,10 +10,10 @@ device:
   chargeTimeSecs: 30
 
 station:
-  scan-delay-ms: 200
+  scan-delay-ms: 10000
   scan-batch-size: 5
   scan-threads: 1
-  scan-interval-ms: 3000
+  scan-interval-ms: 10000
 
 # docker
 spring:
