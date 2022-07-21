@@ -5,7 +5,10 @@ import { FetchSlice } from "./FetchSlice";
 const urlV2Start = `${process.env.REACT_APP_LINK_SERVE}device/v2/start`;
 const urlV2Status = `${process.env.REACT_APP_LINK_SERVE}device/v2/status?id=`;
 
+// const period_s = process.env.PERIOD_S;
+
 export const idStart = () => async (dispatch: AppDispatch) => {
+  let period_sec = process.env.PERIOD_S;
   let stationNumber = localStorage.getItem("stationNumber");
   const data = JSON.stringify({
     station_number: stationNumber,
