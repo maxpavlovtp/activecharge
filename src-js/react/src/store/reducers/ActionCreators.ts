@@ -5,14 +5,13 @@ import { FetchSlice } from "./FetchSlice";
 const urlV2Start = `${process.env.REACT_APP_LINK_SERVE}device/v2/start`;
 const urlV2Status = `${process.env.REACT_APP_LINK_SERVE}device/v2/status?id=`;
 
-// const period_s = process.env.PERIOD_S;
+const period_s = process.env.REACT_APP_PERIOD_S;
 
 export const idStart = () => async (dispatch: AppDispatch) => {
-  let period_sec = process.env.PERIOD_S;
   let stationNumber = localStorage.getItem("stationNumber");
   const data = JSON.stringify({
     station_number: stationNumber,
-    period_s: period_sec,
+    period_s: period_s,
   });
 
   const config = {
@@ -30,6 +29,7 @@ export const idStart = () => async (dispatch: AppDispatch) => {
       localStorage.setItem("idDevice", response.data ? response.data.id : null);
       localStorage.setItem("interval", response.data ? response.data.scan_interval_ms : 2000);
       console.log(JSON.stringify(response.data));
+      console.log(period_s)
       dispatch(FetchSlice.actions.chargingDataFetchingSuccess());
     })
     .catch(function (error: any) {
