@@ -18,28 +18,9 @@
 ## Swagger:
 http://178.18.251.90:8080/swagger-ui/index.html
 
-## BE spring boot endpoints:
-### local:
-1. http://localhost:8080/device/start
-2. http://localhost:8080/device/startSecs?secs=7
-3. http://localhost:8080/device/getDeviceStatus
-4. http://localhost:8080/device/getChargingStatus
-### stage:
-1. http://168.119.177.145:8080/device/start
-2. http://168.119.177.145:8080/device/startSecs?secs=7
-3. http://168.119.177.145:8080/device/getPower
-4. http://168.119.177.145:8080/device/getChargingStatus
-### prod:
-1. http://220-km.com:8080/device/start
-2. http://220-km.com:8080/device/startSecs?secs=7
-3. http://220-km.com:8080/device/getPower
-4. http://220-km.com:8080/device/getChargingStatus
-
 ## SDLC:
-1. We push to master
-2. We deploy every push to master using git actions ssh + systemctl.
-3. If deployment broken revert or use last tag https://github.com/maxpavlovdp/activecharge/releases/tag/v1.1
-4. Kanban board: https://esound.youtrack.cloud/youtrack/agiles/87-6/current
+1. We deploy every push to dev 178.18.251.90 using git actions + ssh + systemctl.
+2. Kanban board: https://esound.youtrack.cloud/youtrack/agiles/87-6/current
 
 ## Design:
 https://app.diagrams.net/#G1xBm3YxmDuKMkPA-N649yD8FCtsIpkAai
