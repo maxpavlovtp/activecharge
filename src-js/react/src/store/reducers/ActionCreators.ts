@@ -11,7 +11,7 @@ export const idStart = () => async (dispatch: AppDispatch) => {
   let stationNumber = localStorage.getItem("stationNumber");
   const data = JSON.stringify({
     station_number: stationNumber,
-    period_s: 40,
+    period_s: period_s,
   });
 
   const config = {
