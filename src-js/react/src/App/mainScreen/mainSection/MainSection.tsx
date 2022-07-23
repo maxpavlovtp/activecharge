@@ -11,14 +11,15 @@ import ErrorPage from "../../../components/error-page/ErrorPage";
 
 const MainSection: React.FC = () => {
   const [searchParams] = useSearchParams();
-  let stationNumber: any = searchParams.get("station");
-  let state: any = localStorage.getItem("stationState");
-  localStorage.setItem("stationNumber", stationNumber ? stationNumber : "2");
-  console.log(localStorage.getItem("stationNumber"));
+  let stationNumber: any = searchParams.get('station');
+  localStorage.setItem('stationNumber', stationNumber ? stationNumber : '2');
+  console.log(localStorage.getItem('stationNumber'))
 
   const { t } = useTranslation();
 
-  const { error } = useAppSelector((state) => state.fetchReducer);
+  const { error } = useAppSelector(
+    (state) => state.fetchReducer
+  );
 
   const dispatch = useAppDispatch();
 
@@ -28,11 +29,8 @@ const MainSection: React.FC = () => {
 
   if (error) {
     return (
-      <ErrorPage
-        errorHeader={t("errorDevHeader")}
-        errorBody={t("errorDevBody")}
-      />
-    );
+    <ErrorPage errorHeader={t("errorDevHeader")} errorBody={t("errorDevBody")} />
+  );
   }
 
   return (
@@ -40,35 +38,18 @@ const MainSection: React.FC = () => {
       <div className={styles.mainBox}>
         <div className={styles.container}>
           <h1 className={styles.title}>{t("title")}</h1>
-
-          {state === "IN_PROGRESS" ? (
-            <div className={styles.btnStart}>
-              <button className={styles.disaleBtn}>
-                {t("btns.start")}
-              </button>
-              <button className={styles.disaleBtn}>
-                {t("btns.startFree")}
-              </button>
-            </div>
-          ) : (
-            <div className={styles.btnStart}>
-              <Link
-                to="/overload"
-                className={styles.btnPay}
-                onClick={startCharging}
-              >
-                {t("btns.start")}
-              </Link>
-              <Link
-                to="/charging"
-                className={styles.btn}
-                onClick={startCharging}
-              >
-                {t("btns.startFree")}
-              </Link>
-            </div>
-          )}
-
+          <div className={styles.btnStart}>
+            <Link
+              to="/overload"
+              className={styles.btnPay}
+              onClick={startCharging}
+            >
+              {t("btns.start")}
+            </Link>
+            <Link to="/charging" className={styles.btn} onClick={startCharging}>
+              {t("btns.startFree")}
+            </Link>
+          </div>
           <div className={styles.imgCont}>
             <MainImgLoadingLazy
               src={mainImg}

@@ -1,12 +1,16 @@
 import { Navigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
+import { useEffect } from "react";
+import { getStationInfo } from "../../store/reducers/ActionCreators";
 
 export default function PrivateRoute({ children }: { children: any }) {
-  let state: any = localStorage.getItem("stationState");
+  const dispatch = useAppDispatch();
+  const { deviceStatus } = useAppSelector((state) => state.fetchReducer);
 
-  console.log(state);
-  return state === "IN_PROGRESS" ? (
-    <Navigate to="/charging" />
-  ) : (
-    children
-  );
+  useEffect(() => {
+    dispatch(getStationInfo());
+    console.log(deviceStatus?.state)
+  }, [deviceStatus?.state]);
+
+  return deviceStatus?.state === "IN_PROGRESS" ? <Navigate to="/charging" /> : children;
 }
