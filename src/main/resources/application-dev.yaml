@@ -8,8 +8,3 @@ spring:
     username: km220
     password: 12345678
 
-station:
-  scan-delay-ms: 10000
-  scan-batch-size: 5
-  scan-threads: 1
-  scan-interval-ms: 10000
