@@ -9,12 +9,13 @@ export default function GetPower() {
   const { deviceStatus } = useAppSelector((state) => state.fetchReducer);
   const { t } = useTranslation();
   const interval: any = localStorage.getItem("interval");
+  const sec = interval ? interval : 5000
   useEffect(() => {
     const timerID = setInterval(() => {
       if (deviceStatus?.state === "IN_PROGRESS") {
         dispatch(getStationInfo());
       }
-    }, interval);
+    }, sec);
     return () => clearInterval(timerID);
   }, [deviceStatus?.state]);
 
