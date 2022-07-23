@@ -10,7 +10,7 @@ export default function PrivateRoute({ children }: { children: any }) {
   useEffect(() => {
     dispatch(getStationInfo());
     console.log(deviceStatus?.state)
-  }, [deviceStatus?.state]);
+  }, []);
 
   return deviceStatus?.state === "IN_PROGRESS" ? <Navigate to="/charging" /> : children;
 }
