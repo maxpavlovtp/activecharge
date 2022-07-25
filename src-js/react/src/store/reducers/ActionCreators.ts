@@ -39,6 +39,7 @@ export const idStart = () => async (dispatch: AppDispatch) => {
 
 export const getStationInfo = () => async (dispatch: AppDispatch) => {
   let stationNumber = localStorage.getItem("stationNumber");
+  
     try {
       dispatch(FetchSlice.actions.deviceStatusFetching());
       axios
