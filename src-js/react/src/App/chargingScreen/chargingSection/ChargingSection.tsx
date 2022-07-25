@@ -21,8 +21,6 @@ const MainSection: React.FC = () => {
   let stationNumbers: any = searchParams.get("station");
   localStorage.setItem("stationNumber", stationNumbers ? stationNumbers : "2");
 
-  console.log(stationNumbers)
-
   const dispatch = useAppDispatch();
 
   const { t } = useTranslation();
