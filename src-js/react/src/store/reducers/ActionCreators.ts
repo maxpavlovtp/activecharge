@@ -45,7 +45,6 @@ export const getStationInfo = () => async (dispatch: AppDispatch) => {
         .get(urlV2Status + stationNumber)
         .then(function (result: any) {
           dispatch(FetchSlice.actions.deviceStatusFetchingSuccess(result.data));
-          localStorage.setItem("stationState", result.data.state)
           console.log(result.data);
         });
     } catch (e: any) {
