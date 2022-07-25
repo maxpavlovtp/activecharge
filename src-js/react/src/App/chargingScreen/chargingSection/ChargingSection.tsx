@@ -7,6 +7,8 @@ import Spinner from "../../../components/spinner/Spinner";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 import { getStationInfo } from "../../../store/reducers/ActionCreators";
 import GetPower from "../../../components/getPower/GetPower";
+import { useSearchParams } from "react-router-dom";
+import { setStationNumber } from "../../../store/reducers/FetchSlice";
 
 const MainSection: React.FC = () => {
   const [loading, setLoading] = useState<any>(true);
@@ -15,11 +17,17 @@ const MainSection: React.FC = () => {
   const [minuteTime, setMinuteTime] = useState<any>();
   const [secondsTime, setSecondsTime] = useState<any>(0);
 
+  const [searchParams] = useSearchParams();
+  let stationNumbers: any = searchParams.get("station");
+  localStorage.setItem("stationNumber", stationNumbers ? stationNumbers : "2");
+
+  console.log(stationNumbers)
+
   const dispatch = useAppDispatch();
 
   const { t } = useTranslation();
 
-  const { isLoadingCharging, deviceStatus, error } = useAppSelector(
+  const { isLoadingCharging, deviceStatus, error, stationNumber } = useAppSelector(
     (state) => state.fetchReducer
   );
 
@@ -31,6 +39,11 @@ const MainSection: React.FC = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    dispatch(setStationNumber(stationNumber))
+    console.log(stationNumber);
+  }, [])
 
   useEffect(() => {
     if (isLoadingCharging === false) {
@@ -45,7 +58,7 @@ const MainSection: React.FC = () => {
   }, [deviceStatus]);
 
   useEffect(() => {
-    console.log('leftSec: ' + secondsBackend);
+    console.log("leftSec: " + secondsBackend);
     if (secondsBackend >= 3610) {
       hours(secondsBackend);
     }
@@ -67,12 +80,15 @@ const MainSection: React.FC = () => {
 
   if (error)
     return (
-      <ErrorPage errorHeader={t("errorDevHeader")} errorBody={t("errorDevBody")} />
+      <ErrorPage
+        errorHeader={t("errorDevHeader")}
+        errorBody={t("errorDevBody")}
+      />
     );
 
   if (loading === true) return <Spinner />;
 
-  return ( 
+  return (
     <>
       <div className={styles.chargingBox}>
         {secondsTime >= 0 && (

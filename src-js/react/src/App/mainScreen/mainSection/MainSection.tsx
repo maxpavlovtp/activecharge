@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./MainSection.module.css";
 import mainImg from "../../../assets/charging.png";
 import { Link, useSearchParams } from "react-router-dom";
@@ -8,20 +8,23 @@ import { idStart } from "../../../store/reducers/ActionCreators";
 import MainImgLoadingLazy from "../../../components/lazyLoading/MainImgLoadingLazy";
 import placehoderSrc from "../../../assets/chargingTiny.png";
 import ErrorPage from "../../../components/error-page/ErrorPage";
+import { setStationNumber } from "../../../store/reducers/FetchSlice";
 
 const MainSection: React.FC = () => {
   const [searchParams] = useSearchParams();
-  let stationNumber: any = searchParams.get('station');
-  localStorage.setItem('stationNumber', stationNumber ? stationNumber : '2');
-  console.log(localStorage.getItem('stationNumber'))
+  let stationNumber: any = searchParams.get("station");
+  localStorage.setItem("stationNumber", stationNumber ? stationNumber : "2");
+  console.log(stationNumber);
 
   const { t } = useTranslation();
 
-  const { error } = useAppSelector(
-    (state) => state.fetchReducer
-  );
+  const { error } = useAppSelector((state) => state.fetchReducer);
 
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(setStationNumber(stationNumber | 2));
+  }, []);
 
   const startCharging = () => {
     dispatch(idStart());
@@ -29,8 +32,11 @@ const MainSection: React.FC = () => {
 
   if (error) {
     return (
-    <ErrorPage errorHeader={t("errorDevHeader")} errorBody={t("errorDevBody")} />
-  );
+      <ErrorPage
+        errorHeader={t("errorDevHeader")}
+        errorBody={t("errorDevBody")}
+      />
+    );
   }
 
   return (
@@ -46,7 +52,11 @@ const MainSection: React.FC = () => {
             >
               {t("btns.start")}
             </Link>
-            <Link to="/charging" className={styles.btn} onClick={startCharging}>
+            <Link
+              to={`/charging?station=${stationNumber}`}
+              className={styles.btn}
+              onClick={startCharging}
+            >
               {t("btns.startFree")}
             </Link>
           </div>

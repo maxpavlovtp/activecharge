@@ -9,7 +9,7 @@ lsof -ti tcp:5000 | xargs kill -kill
 lsof -ti tcp:3000 | xargs kill -kill
 
 docker-compose down && rm -rf ./db-data
-nohup docker compose up &
+nohup docker-compose up &
 ./gradlew clean build -x test
 
 nohup ./src-js/nest/run-nest-dev.sh &

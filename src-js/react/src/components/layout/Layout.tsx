@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, Navigate, Outlet } from "react-router-dom";
+import { Link, Navigate, Outlet, useSearchParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import styles from "./Header.module.css";
 import logo from "../../assets/logo.png";
@@ -13,13 +13,17 @@ export default function Layout() {
   const [fix, setFix] = useState(false);
   const [routeTo, setRouteTo] = useState<any>("/");
 
+  const [searchParams] = useSearchParams();
+  let stationNumbers: any = searchParams.get("station");
+  localStorage.setItem("stationNumber", stationNumbers ? stationNumbers : "2");
+
   const { deviceStatus, isGotDeviceStatus } = useAppSelector(
     (state) => state.fetchReducer
   );
   useEffect(() => {
-    deviceStatus?.state === 'IN_PROGRESS'
+    deviceStatus?.state === "IN_PROGRESS"
       ? setRouteTo("/charging")
-      : setRouteTo("/");
+      : setRouteTo(`/?station=${stationNumbers}`);
   }, [isGotDeviceStatus]);
 
   const fixed = () => {

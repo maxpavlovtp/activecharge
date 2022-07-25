@@ -1,18 +1,19 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IFetch } from "../../interfaces";
 
-interface FetchState {
+export interface FetchState {
   deviceStatus: any;
+  stationNumber: any;
   isLoadingCharging: boolean;
   isGotDeviceStatus: boolean;
   error: string;
 }
 
-const initialState: FetchState = {
+export const initialState: FetchState = {
   deviceStatus: null,
+  stationNumber: null,
   isLoadingCharging: false,
   isGotDeviceStatus: false,
-  error: ""
+  error: "",
 };
 
 export const FetchSlice = createSlice({
@@ -22,9 +23,7 @@ export const FetchSlice = createSlice({
     chargingDataFetching(state: FetchState) {
       state.isLoadingCharging = true;
     },
-    chargingDataFetchingSuccess(
-      state: FetchState
-    ) {
+    chargingDataFetchingSuccess(state: FetchState) {
       state.isLoadingCharging = false;
       state.error = "";
     },
@@ -50,7 +49,13 @@ export const FetchSlice = createSlice({
     ) {
       state.error = action.payload;
     },
+
+    setStationNumber(state: FetchState, action: PayloadAction<number>) {
+      state.stationNumber = action.payload;
+    },
   },
 });
+
+export const {setStationNumber} = FetchSlice.actions
 
 export default FetchSlice.reducer;
