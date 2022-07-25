@@ -53,6 +53,10 @@ const MainSection: React.FC = () => {
 
   useEffect(() => {
     setSecondsBackend(deviceStatus?.leftS);
+    if(deviceStatus?.state === 'DONE' && deviceStatus?.leftS === 0){
+      // setSecondsBackend(undefined)
+      setLoading(false)
+    }
   }, [deviceStatus]);
 
   useEffect(() => {
@@ -60,19 +64,19 @@ const MainSection: React.FC = () => {
     if (secondsBackend >= 3610) {
       hours(secondsBackend);
     }
-    if (secondsBackend < 3610) {
+    if (secondsBackend < 3610 && secondsBackend > 0) {
       setMinuteTime(Math.floor(secondsBackend / 60));
       setSecondsTime(secondsBackend % 60);
       setLoading(false);
     }
-    if (secondsBackend < 60) {
+    if (secondsBackend < 60 && secondsBackend > 0) {
       setSecondsTime(secondsBackend);
       setLoading(false);
     }
-    if (secondsBackend <= 3) {
+    if (secondsBackend <= 3 && secondsBackend > 0) {
+      setLoading(false);
       setSecondsTime(0);
       setMinuteTime(0);
-      setLoading(false);
     }
   }, [secondsBackend, hoursTime]);
 

@@ -53,9 +53,14 @@ export const FetchSlice = createSlice({
     setStationNumber(state: FetchState, action: PayloadAction<number>) {
       state.stationNumber = action.payload;
     },
+    
+    setDeviceStatusUndefind(state: FetchState, action: PayloadAction<any>) {
+      state.deviceStatus = action.payload;
+    },
   },
 });
 
-export const {setStationNumber} = FetchSlice.actions
+export const { setStationNumber } = FetchSlice.actions;
+export const { setDeviceStatusUndefind } = FetchSlice.actions;
 
 export default FetchSlice.reducer;
