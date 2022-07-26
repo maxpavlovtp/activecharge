@@ -22,7 +22,7 @@ export default function Layout() {
   );
   useEffect(() => {
     deviceStatus?.state === "IN_PROGRESS"
-      ? setRouteTo("/charging")
+      ? setRouteTo(`/charging?station=${stationNumbers}`)
       : setRouteTo(`/?station=${stationNumbers}`);
   }, [isGotDeviceStatus]);
 
