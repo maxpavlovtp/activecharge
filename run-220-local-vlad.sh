@@ -1,4 +1,4 @@
-# run this sh, wait 60 secs and go to http://localhost:3000/?station=3
+# run this sh, wait 60 secs and go to http://localhost:3000/?station=2
 cd "$(dirname "$0")" || exit
 
 pkill -f java
@@ -18,6 +18,6 @@ nohup ./src-js/react/run-react-dev.sh &
 
 echo "DB in docker is starting..."
 sleep 50s
-java -jar build/libs/220-km.com-0.0.1-SNAPSHOT.jar
+java -Dspring.profiles.active=vlad -jar build/libs/220-km.com-0.0.1-SNAPSHOT.jar
 
 #tail -f nohup.out 

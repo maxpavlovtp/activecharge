@@ -1,3 +1,4 @@
+# run this sh, wait 60 secs and go to http://localhost:3000/?station=1
 cd "$(dirname "$0")" || exit
 
 pkill -f java
