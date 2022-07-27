@@ -7,10 +7,9 @@ const urlV2Status = `${process.env.REACT_APP_LINK_SERVE}device/v2/station/status
 
 const period_s = process.env.REACT_APP_PERIOD_S;
 
-export const idStart = () => async (dispatch: AppDispatch) => {
-  let stationNumber = localStorage.getItem("stationNumber");
+export const idStart = (station: any) => async (dispatch: AppDispatch) => {
   const data = JSON.stringify({
-    station_number: stationNumber,
+    station_number: station,
     period_s: period_s,
   });
 
@@ -26,9 +25,12 @@ export const idStart = () => async (dispatch: AppDispatch) => {
   dispatch(FetchSlice.actions.chargingDataFetching());
   await axios(config)
     .then(function (response: any) {
-      localStorage.setItem("interval", response.data ? response.data.scan_interval_ms : 2000);
+      localStorage.setItem(
+        "interval",
+        response.data ? response.data.scan_interval_ms : 2000
+      );
       console.log(JSON.stringify(response.data));
-      console.log(period_s)
+      console.log(period_s);
       dispatch(FetchSlice.actions.chargingDataFetchingSuccess());
     })
     .catch(function (error: any) {
@@ -37,19 +39,16 @@ export const idStart = () => async (dispatch: AppDispatch) => {
     });
 };
 
-export const getStationInfo = () => async (dispatch: AppDispatch) => {
-  let stationNumber = localStorage.getItem("stationNumber");
-  
+export const getStationInfo =
+  (station: any) => async (dispatch: AppDispatch) => {
     try {
       dispatch(FetchSlice.actions.deviceStatusFetching());
-      axios
-        .get(urlV2Status + stationNumber)
-        .then(function (result: any) {
-          dispatch(FetchSlice.actions.deviceStatusFetchingSuccess(result.data));
-          console.log(result.data);
-        });
+      axios.get(urlV2Status + station).then(function (result: any) {
+        dispatch(FetchSlice.actions.deviceStatusFetchingSuccess(result.data));
+        console.log(result.data);
+      });
     } catch (e: any) {
       dispatch(FetchSlice.actions.deviceStatusFetchingError(e.message));
       console.log(e.message);
     }
-};
+  };

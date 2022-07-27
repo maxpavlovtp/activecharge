@@ -2,7 +2,6 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface FetchState {
   deviceStatus: any;
-  stationNumber: any;
   isLoadingCharging: boolean;
   isGotDeviceStatus: boolean;
   error: string;
@@ -10,7 +9,6 @@ export interface FetchState {
 
 export const initialState: FetchState = {
   deviceStatus: null,
-  stationNumber: null,
   isLoadingCharging: false,
   isGotDeviceStatus: false,
   error: "",
@@ -49,10 +47,6 @@ export const FetchSlice = createSlice({
     ) {
       state.error = action.payload;
     },
-
-    setStationNumber(state: FetchState, action: PayloadAction<number>) {
-      state.stationNumber = action.payload;
-    },
     
     setDeviceStatusUndefind(state: FetchState, action: PayloadAction<any>) {
       state.deviceStatus = action.payload;
@@ -60,7 +54,6 @@ export const FetchSlice = createSlice({
   },
 });
 
-export const { setStationNumber } = FetchSlice.actions;
 export const { setDeviceStatusUndefind } = FetchSlice.actions;
 
 export default FetchSlice.reducer;

@@ -6,13 +6,11 @@ import { getStationInfo } from "../../store/reducers/ActionCreators";
 export default function PrivateRoute({ children }: { children: any }) {
   const dispatch = useAppDispatch();
   const { deviceStatus } = useAppSelector((state) => state.fetchReducer);
-
   const [searchParams] = useSearchParams();
   let stationNumbers: any = searchParams.get("station");
-  localStorage.setItem("stationNumber", stationNumbers ? stationNumbers : "2");
-
+  
   useEffect(() => {
-    dispatch(getStationInfo());
+    dispatch(getStationInfo(stationNumbers));
     console.log(deviceStatus?.state)
   }, []);
 

@@ -8,7 +8,6 @@ import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 import { getStationInfo } from "../../../store/reducers/ActionCreators";
 import GetPower from "../../../components/getPower/GetPower";
 import { useSearchParams } from "react-router-dom";
-import { setStationNumber } from "../../../store/reducers/FetchSlice";
 
 const MainSection: React.FC = () => {
   const [loading, setLoading] = useState<any>(true);
@@ -19,15 +18,13 @@ const MainSection: React.FC = () => {
 
   const [searchParams] = useSearchParams();
   let stationNumbers: any = searchParams.get("station");
-  localStorage.setItem("stationNumber", stationNumbers ? stationNumbers : "2");
 
   const dispatch = useAppDispatch();
 
   const { t } = useTranslation();
 
-  const { isLoadingCharging, deviceStatus, error, stationNumber } = useAppSelector(
-    (state) => state.fetchReducer
-  );
+  const { isLoadingCharging, deviceStatus, error } =
+    useAppSelector((state) => state.fetchReducer);
 
   const hours = (secondsBackend: any) => {
     setHoursTime(Math.floor(secondsBackend / 60 / 60));
@@ -39,23 +36,18 @@ const MainSection: React.FC = () => {
   };
 
   useEffect(() => {
-    dispatch(setStationNumber(stationNumber))
-    console.log(stationNumber);
-  }, [])
-
-  useEffect(() => {
     if (isLoadingCharging === false) {
       setTimeout(() => {
-        dispatch(getStationInfo());
+        dispatch(getStationInfo(stationNumbers));
       }, 5500);
     }
   }, [isLoadingCharging]);
 
   useEffect(() => {
     setSecondsBackend(deviceStatus?.leftS);
-    if(deviceStatus?.state === 'DONE' && deviceStatus?.leftS === 0){
+    if (deviceStatus?.state === "DONE" && deviceStatus?.leftS === 0) {
       // setSecondsBackend(undefined)
-      setLoading(false)
+      setLoading(false);
     }
   }, [deviceStatus]);
 
@@ -95,7 +87,7 @@ const MainSection: React.FC = () => {
       <div className={styles.chargingBox}>
         {secondsTime >= 0 && (
           <div className={styles.contTimer}>
-            <GetPower />
+            <GetPower station={stationNumbers} />
             <Timer
               hours={hoursTime}
               minutes={minuteTime}

@@ -15,8 +15,6 @@ export default function Layout() {
 
   const [searchParams] = useSearchParams();
   let stationNumbers: any = searchParams.get("station");
-  localStorage.setItem("stationNumber", stationNumbers ? stationNumbers : "2");
-
   const { deviceStatus, isGotDeviceStatus } = useAppSelector(
     (state) => state.fetchReducer
   );
