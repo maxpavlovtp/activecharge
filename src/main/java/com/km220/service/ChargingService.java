@@ -63,18 +63,17 @@ public class ChargingService {
     List<ChargingJobEntity> jobs = chargingJobRepository.scan(ChargingJobState.IN_PROGRESS,
         batchSize, delayTime);
 
-    logger.debug("Processing {} jobs..", jobs.size());
-
     for (ChargingJobEntity job : jobs) {
       try {
         jobRunner.run(job);
+      } catch (Exception e) {
+        logger.error(
+            String.format(Locale.ROOT, "Job failed. id = %s, station number = %s",
+                job.getId(), job.getStation().getNumber()), e);
+      } finally {
         chargingJobRepository.update(job);
         chargingJobCache.put(job.getId().toString(), job);
         chargingJobCache.put(job.getStation().getNumber(), job);
-      } catch (Exception e) {
-        logger.error(
-            String.format(Locale.ROOT, "Failing charging job. id = %s, station number = %s",
-                job.getId(), job.getStation().getNumber()), e);
       }
     }
   }
