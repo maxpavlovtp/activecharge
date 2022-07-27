@@ -46,13 +46,12 @@ const MainSection: React.FC = () => {
   useEffect(() => {
     setSecondsBackend(deviceStatus?.leftS);
     if(deviceStatus?.state === 'DONE' && deviceStatus?.leftS === 0){
-      // setSecondsBackend(undefined)
       setLoading(false)
     }
   }, [deviceStatus]);
 
   useEffect(() => {
-    console.log("leftSec: " + secondsBackend);
+    console.log("leftSec: " + secondsBackend); 
     if (secondsBackend >= timerInterval) {
       hours(secondsBackend);
     }
