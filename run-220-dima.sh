@@ -17,6 +17,6 @@ nohup ./src-js/react/run-react-dev.sh &
 
 echo "DB in docker is starting..."
 sleep 50s
-java -Dspring.profiles.active=local -jar build/libs/220-km.com-0.0.1-SNAPSHOT.jar
+java -Dspring.profiles.active=dima -jar build/libs/220-km.com-0.0.1-SNAPSHOT.jar
 
 #tail -f nohup.out 
