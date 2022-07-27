@@ -51,8 +51,8 @@ export default function Layout() {
             <h3 className={styles.logoText}>220-km.com</h3>
           </Link>
 
-          <Navigation />
-          <MobileNavigation />
+          <Navigation stationNumbers={stationNumbers}/>
+          <MobileNavigation stationNumbers={stationNumbers}/>
         </nav>
       </header>
 

@@ -9,7 +9,7 @@ const lngs: any = {
   en: { nativeName: "Eng" },
 };
 
-export default function LinksTeblet() {
+export default function LinksTeblet({stationNumbers}: {stationNumbers: any}) {
   const { t, i18n } = useTranslation();
 
   const animateFrom = { opacity: 0, y: -40 };
@@ -23,7 +23,7 @@ export default function LinksTeblet() {
         transition={{ delay: 0.1 }}
         className={styles.list}
       >
-        <Link className={styles.links} to="/contacts">
+        <Link className={styles.links} to={`/contacts?station=${stationNumbers}`}>
           {t("contacts")}
         </Link>
       </motion.li>
@@ -33,7 +33,7 @@ export default function LinksTeblet() {
         transition={{ delay: 0.15 }}
         className={styles.list}
       >
-        <Link className={styles.links} to="/contract">
+        <Link className={styles.links} to={`/contract?station=${stationNumbers}`}>
           {t("offer")}
         </Link>
       </motion.li>
