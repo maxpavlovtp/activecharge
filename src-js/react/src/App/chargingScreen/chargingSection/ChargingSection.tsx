@@ -31,6 +31,9 @@ const MainSection: React.FC = () => {
       setLoading(false);
     }
   };
+  
+  const interval: any = localStorage.getItem("interval");
+  let timerInterval = 3600 + interval;
 
   useEffect(() => {
     if (isLoadingCharging === false) {
@@ -50,10 +53,10 @@ const MainSection: React.FC = () => {
 
   useEffect(() => {
     console.log("leftSec: " + secondsBackend);
-    if (secondsBackend >= 3610) {
+    if (secondsBackend >= timerInterval) {
       hours(secondsBackend);
     }
-    if (secondsBackend < 3610 && secondsBackend > 0) {
+    if (secondsBackend < timerInterval && secondsBackend > 0) {
       setMinuteTime(Math.floor(secondsBackend / 60));
       setSecondsTime(secondsBackend % 60);
       setLoading(false);
