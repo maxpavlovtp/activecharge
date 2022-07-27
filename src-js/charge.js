@@ -15,12 +15,12 @@ const ewelink = require('ewelink-api');
     const devices = await connection.getDevices();
     console.log(devices);
 
-    // const christmassTree = "100136f1a4"
+    const christmassTree = "100136f1a4"
 
-    // const status = await connection.setDevicePowerState(christmassTree, 'on');
-    // console.log(status);
+    const status = await connection.setDevicePowerState(christmassTree, 'on');
+    console.log(status);
 
-    const usage = await connection.getDevicePowerUsage('100136f1a4');
-    console.log(usage);
+    const usage = await connection.getDevicePowerUsage('100136f129');
+    // console.log(usage);
 
 })();
