@@ -11,6 +11,12 @@ deviceId: 10013bb124
 device:
   chargeTimeSecs: 1200
 
+station:
+  scan-delay-ms: 3000
+  scan-batch-size: 5
+  scan-threads: 1
+  scan-interval-ms: 3000
+
 spring:
   datasource:
     url: jdbc:tc:postgresql:14.4://localhost:5432/test_database
