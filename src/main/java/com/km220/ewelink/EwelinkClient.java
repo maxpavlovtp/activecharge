@@ -30,6 +30,7 @@ public class EwelinkClient {
     this.parameters = parameters;
     this.applicationId = applicationId;
     this.applicationSecret = applicationSecret;
+    this.tokenStorage = tokenStorage;
     this.httpClient = Optional.ofNullable(httpClient).orElseGet(HttpClient::newHttpClient);
   }
 
