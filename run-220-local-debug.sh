@@ -15,6 +15,6 @@ docker-compose down && rm -r ./db-data
 nohup docker compose up &
 sleep 50s
 ./gradlew clean build -x test
-java -Dspring.profiles.active=local -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -jar build/libs/220-km.com-0.0.1-SNAPSHOT.jar
+java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -jar build/libs/220-km.com-0.0.1-SNAPSHOT.jar
 
 #tail -f nohup.out
