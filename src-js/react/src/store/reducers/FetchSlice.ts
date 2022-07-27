@@ -12,7 +12,7 @@ const initialState: FetchState = {
   deviceStatus: null,
   isLoadingCharging: false,
   isGotDeviceStatus: false,
-  error: ""
+  error: "",
 };
 
 export const FetchSlice = createSlice({
@@ -22,9 +22,7 @@ export const FetchSlice = createSlice({
     chargingDataFetching(state: FetchState) {
       state.isLoadingCharging = true;
     },
-    chargingDataFetchingSuccess(
-      state: FetchState
-    ) {
+    chargingDataFetchingSuccess(state: FetchState) {
       state.isLoadingCharging = false;
       state.error = "";
     },
@@ -50,7 +48,13 @@ export const FetchSlice = createSlice({
     ) {
       state.error = action.payload;
     },
+
+    setDeviceStatusUndefind(state: FetchState, action: PayloadAction<any>) {
+      state.deviceStatus = action.payload;
+    },
   },
 });
+
+export const { setDeviceStatusUndefind } = FetchSlice.actions;
 
 export default FetchSlice.reducer;

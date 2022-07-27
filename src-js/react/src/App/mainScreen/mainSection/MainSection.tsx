@@ -8,29 +8,32 @@ import { idStart } from "../../../store/reducers/ActionCreators";
 import MainImgLoadingLazy from "../../../components/lazyLoading/MainImgLoadingLazy";
 import placehoderSrc from "../../../assets/chargingTiny.png";
 import ErrorPage from "../../../components/error-page/ErrorPage";
+import { setDeviceStatusUndefind } from "../../../store/reducers/FetchSlice";
 
 const MainSection: React.FC = () => {
   const [searchParams] = useSearchParams();
-  let stationNumber: any = searchParams.get('station');
-  localStorage.setItem('stationNumber', stationNumber ? stationNumber : '2');
-  console.log(localStorage.getItem('stationNumber'))
+  let stationNumber: any = searchParams.get("station");
+  localStorage.setItem("stationNumber", stationNumber ? stationNumber : "2");
+  console.log(localStorage.getItem("stationNumber"));
 
   const { t } = useTranslation();
 
-  const { error } = useAppSelector(
-    (state) => state.fetchReducer
-  );
+  const { error, deviceStatus } = useAppSelector((state) => state.fetchReducer);
 
   const dispatch = useAppDispatch();
 
   const startCharging = () => {
     dispatch(idStart());
+    dispatch(setDeviceStatusUndefind(undefined));
   };
 
   if (error) {
     return (
-    <ErrorPage errorHeader={t("errorDevHeader")} errorBody={t("errorDevBody")} />
-  );
+      <ErrorPage
+        errorHeader={t("errorDevHeader")}
+        errorBody={t("errorDevBody")}
+      />
+    );
   }
 
   return (
