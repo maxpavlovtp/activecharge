@@ -11,9 +11,6 @@ lsof -ti tcp:3000 | xargs kill -kill
 nohup ./src-js/nest/run-nest-dev.sh &
 nohup ./src-js/react/run-react-dev.sh &
 
-docker-compose down && rm -r ./db-data
-nohup docker compose up &
-sleep 50s
 ./gradlew clean build -x test
 java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -jar build/libs/220-km.com-0.0.1-SNAPSHOT.jar
 

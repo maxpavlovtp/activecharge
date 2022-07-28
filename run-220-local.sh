@@ -16,8 +16,6 @@ nohup docker-compose up &
 nohup ./src-js/nest/run-nest-dev.sh &
 nohup ./src-js/react/run-react-dev.sh &
 
-echo "DB in docker is starting..."
-sleep 50s
 java -jar build/libs/220-km.com-0.0.1-SNAPSHOT.jar
 
 #tail -f nohup.out 
