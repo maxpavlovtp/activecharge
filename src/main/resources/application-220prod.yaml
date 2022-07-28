@@ -3,10 +3,5 @@ ewelink:
   password: Nopassword1
 
 spring:
-  datasource:
-    url: jdbc:postgresql://178.18.251.90:5432/postgres
-    username: km220
-    password: 12345678
-
-flyway:
-  cleanOnValidationError: false
+  flyway:
+    clean-on-validation-error: false
