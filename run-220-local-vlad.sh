@@ -17,6 +17,6 @@ nohup ./src-js/react/run-react-dev.sh &
 #docker-compose down && rm -rf ./db-data
 nohup docker-compose up &
 ./gradlew clean build -x test
-java -Dspring.profiles.active=vlad -jar build/libs/220-km.com-0.0.1-SNAPSHOT.jar
+java -jar -Dspring.profiles.active=vlad build/libs/220-km.com-0.0.1-SNAPSHOT.jar
 
 #tail -f nohup.out 
