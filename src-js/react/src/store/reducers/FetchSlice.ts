@@ -1,14 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IFetch } from "../../interfaces";
 
-interface FetchState {
+export interface FetchState {
   deviceStatus: any;
   isLoadingCharging: boolean;
   isGotDeviceStatus: boolean;
   error: string;
 }
 
-const initialState: FetchState = {
+export const initialState: FetchState = {
   deviceStatus: null,
   isLoadingCharging: false,
   isGotDeviceStatus: false,
@@ -48,7 +47,7 @@ export const FetchSlice = createSlice({
     ) {
       state.error = action.payload;
     },
-
+    
     setDeviceStatusUndefind(state: FetchState, action: PayloadAction<any>) {
       state.deviceStatus = action.payload;
     },

@@ -7,6 +7,7 @@ import Spinner from "../../../components/spinner/Spinner";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 import { getStationInfo } from "../../../store/reducers/ActionCreators";
 import GetPower from "../../../components/getPower/GetPower";
+import { useSearchParams } from "react-router-dom";
 
 const MainSection: React.FC = () => {
   const [loading, setLoading] = useState<any>(true);
@@ -15,13 +16,15 @@ const MainSection: React.FC = () => {
   const [minuteTime, setMinuteTime] = useState<any>();
   const [secondsTime, setSecondsTime] = useState<any>(0);
 
+  const [searchParams] = useSearchParams();
+  let stationNumbers: any = searchParams.get("station");
+
   const dispatch = useAppDispatch();
 
   const { t } = useTranslation();
 
-  const { isLoadingCharging, deviceStatus, error } = useAppSelector(
-    (state) => state.fetchReducer
-  );
+  const { isLoadingCharging, deviceStatus, error } =
+    useAppSelector((state) => state.fetchReducer);
 
   const hours = (secondsBackend: any) => {
     setHoursTime(Math.floor(secondsBackend / 60 / 60));
@@ -38,7 +41,7 @@ const MainSection: React.FC = () => {
   useEffect(() => {
     if (isLoadingCharging === false) {
       setTimeout(() => {
-        dispatch(getStationInfo());
+        dispatch(getStationInfo(stationNumbers));
       }, 5500);
     }
   }, [isLoadingCharging]);
@@ -86,7 +89,7 @@ const MainSection: React.FC = () => {
       <div className={styles.chargingBox}>
         {secondsTime >= 0 && (
           <div className={styles.contTimer}>
-            <GetPower />
+            <GetPower station={stationNumbers} />
             <Timer
               hours={hoursTime}
               minutes={minuteTime}

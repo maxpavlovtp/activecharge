@@ -3,10 +3,10 @@ import Links from './Links';
 import styles from './Header.module.css';
 import LinksTeblet from './LinksTablet';
 
-export default function Navigation() {
+export default function Navigation({stationNumbers}: {stationNumbers: any}) {
   return (
     <div className={styles.navigation}>
-      <LinksTeblet />
+      <LinksTeblet stationNumbers={stationNumbers}/>
     </div>
   );
 }
