@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./MainSection.module.css";
 import mainImg from "../../../assets/charging.png";
 import { Link, useSearchParams } from "react-router-dom";
@@ -13,17 +13,15 @@ import { setDeviceStatusUndefind } from "../../../store/reducers/FetchSlice";
 const MainSection: React.FC = () => {
   const [searchParams] = useSearchParams();
   let stationNumber: any = searchParams.get("station");
-  localStorage.setItem("stationNumber", stationNumber ? stationNumber : "2");
-  console.log(localStorage.getItem("stationNumber"));
 
   const { t } = useTranslation();
 
-  const { error, deviceStatus } = useAppSelector((state) => state.fetchReducer);
+  const { error } = useAppSelector((state) => state.fetchReducer);
 
   const dispatch = useAppDispatch();
 
   const startCharging = () => {
-    dispatch(idStart());
+    dispatch(idStart(stationNumber));
     dispatch(setDeviceStatusUndefind(undefined));
   };
 
@@ -49,7 +47,11 @@ const MainSection: React.FC = () => {
             >
               {t("btns.start")}
             </Link>
-            <Link to="/charging" className={styles.btn} onClick={startCharging}>
+            <Link
+              to={`/charging?station=${stationNumber}`}
+              className={styles.btn}
+              onClick={startCharging}
+            >
               {t("btns.startFree")}
             </Link>
           </div>

@@ -4,16 +4,16 @@ import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import { getStationInfo } from "../../store/reducers/ActionCreators";
 import { useTranslation } from "react-i18next";
 
-export default function GetPower() {
+export default function GetPower({ station }: { station: any }) {
   const dispatch = useAppDispatch();
   const { deviceStatus } = useAppSelector((state) => state.fetchReducer);
   const { t } = useTranslation();
   const interval: any = localStorage.getItem("interval");
-  const sec = interval ? interval : 5000
+  const sec = interval ? interval : 5000;
   useEffect(() => {
     const timerID = setInterval(() => {
       if (deviceStatus?.state === "IN_PROGRESS") {
-        dispatch(getStationInfo());
+        dispatch(getStationInfo(station));
       }
     }, sec);
     return () => clearInterval(timerID);
