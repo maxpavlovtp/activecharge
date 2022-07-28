@@ -18,21 +18,18 @@ station:
 # docker
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/220-km
-    username: 220-km
-    password: 12345678
+    url: jdbc:postgresql://localhost:5432/km220
+    username: km220
+    password: Nopassword1
+  flyway:
+    clean-on-validation-error: true
 
 flyway:
   locations: "classpath:db/migration/pg"
-  cleanOnValidationError: true
 
 
 server:
   forward-headers-strategy: framework
-
-# #main
-# ewelink.appId = YzfeftUVcZ6twZw1OoVKPRFYTrGEg01Q
-# ewelink.appSecret = 4G91qSoboqYO4Y0XJ0LPPKIsq8reHdfa
 
 # #backup
 # #ewelink.appid = 'oeVkj2lYFGnJu5XUtWisfW4utiN4u9Mq';
