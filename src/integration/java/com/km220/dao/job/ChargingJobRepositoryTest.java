@@ -103,7 +103,8 @@ class ChargingJobRepositoryTest {
     assertEquals(ChargingJobState.DONE, job.getState());
     assertEquals(1f, job.getChargingWt(), 0.00001f);
     assertEquals(2f, job.getChargedWt(), 0.00001f);
-    assertEquals(OffsetDateTime.parse("2007-12-03T12:15:30+02:00"), job.getStoppedOn());
+    assertEquals(OffsetDateTime.parse("2007-12-03T10:15:30+00:00").atZoneSameInstant(ZoneOffset.UTC),
+        job.getStoppedOn().atZoneSameInstant(ZoneOffset.UTC));
 
     assertNotNull(job.getStation());
     assertEquals("stage", job.getStation().getName());
@@ -165,5 +166,11 @@ class ChargingJobRepositoryTest {
             )
         )
     );
+  }
+
+  @Test
+  void addMultipleChargingsForSameStation_shouldThrowError() {
+    chargingJobRepository.add(STATION_NUMBER, 10);
+    chargingJobRepository.add(STATION_NUMBER, 10);
   }
 }

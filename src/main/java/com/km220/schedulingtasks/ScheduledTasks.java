@@ -1,7 +1,7 @@
 package com.km220.schedulingtasks;
 
 import com.km220.config.StationScanProperties;
-import com.km220.service.ChargingService;
+import com.km220.service.job.ChargingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;

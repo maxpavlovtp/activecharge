@@ -1,4 +1,4 @@
-package com.km220.service;
+package com.km220.service.job;
 
 import com.km220.dao.job.ChargingJobEntity;
 import com.km220.model.ChargingJob;
