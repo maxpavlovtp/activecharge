@@ -12,7 +12,7 @@
 ## FE react endpoint:
 1. local: http://localhost:3000?station=3
 2. dev: http://178.18.251.90?station=4
-3. prod: http://220-km.com/2
+3. prod: http://220-km.com?station=5
 
 ## Swagger:
 http://178.18.251.90:8080/swagger-ui/index.html
