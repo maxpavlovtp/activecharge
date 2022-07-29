@@ -66,13 +66,13 @@ public class ChargingService {
     return jobId;
   }
 
-  public void refresh(int batchSize, int delayTime) {
+  public void refresh(int batchSize, int scanDelayMs, int scanIntervalMs) {
     List<ChargingJobEntity> jobs = chargingJobRepository.scan(ChargingJobState.IN_PROGRESS,
-        batchSize, delayTime);
+        batchSize, scanDelayMs);
 
     for (ChargingJobEntity job : jobs) {
       try {
-        jobRunner.run(job);
+        jobRunner.run(job, scanIntervalMs);
       } catch (Exception e) {
         logger.error(
             String.format(Locale.ROOT, "Job failed. id = %s, station number = %s",
