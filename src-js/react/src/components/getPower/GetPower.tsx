@@ -4,22 +4,24 @@ import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import { getStationInfo } from "../../store/reducers/ActionCreators";
 import { useTranslation } from "react-i18next";
 
-export default function GetPower() {
+export default function GetPower({ station }: { station: any }) {
   const dispatch = useAppDispatch();
   const { deviceStatus } = useAppSelector((state) => state.fetchReducer);
   const { t } = useTranslation();
-
+  const interval: any = localStorage.getItem("interval");
+  const sec = interval ? interval : 5000;
   useEffect(() => {
     const timerID = setInterval(() => {
       if (deviceStatus?.state === "IN_PROGRESS") {
-        dispatch(getStationInfo());
+        dispatch(getStationInfo(station));
       }
-    }, 4000);
+    }, sec);
     return () => clearInterval(timerID);
   }, [deviceStatus?.state]);
 
-  let kWtCharged = deviceStatus?.chargedWt;
+  let kWtCharged = Number(deviceStatus?.chargedWt) / 1000;
   let kWtPower = Number(deviceStatus?.charginWt) / 1000;
+  let voltage = Number(Math.round(deviceStatus?.voltage));
 
   // todo use for car range calculation feature
   // nisan leaf = 150
@@ -63,6 +65,22 @@ export default function GetPower() {
         )}
       </div>
       <div>
+        {deviceStatus?.state === "IN_PROGRESS" && (
+          <div
+            className={
+              deviceStatus?.state === "DONE" ||
+              deviceStatus?.state === "FAILED" ||
+              deviceStatus?.leftS <= 3
+                ? styles.offCont
+                : styles.voltageBox
+            }
+          >
+            <p className={styles.voltTitle}>{t("voltage")}</p>
+            <p className={styles.voltCharged}>
+              {voltage} {t("v")}
+            </p>
+          </div>
+        )}
         <p className={styles.kmCharged}>
           {isZero
             ? 0

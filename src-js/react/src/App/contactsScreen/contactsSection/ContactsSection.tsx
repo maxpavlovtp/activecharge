@@ -46,8 +46,8 @@ const MainSection: React.FC = () => {
               <p className="tapForCall">{t("tapCall")}:</p>
               <div className="numberCont">
                 <Emoji symbol="📲" label="phone" />
-                <a href="tel:+380933235022" className="telephone">
-                  {t("telMax")}: 093-323-50-22
+                <a href="tel:+380971983759" className="telephone">
+                  {t("telMax")}: 097-198-37-59
                 </a>
               </div>
               <div className="numberCont">

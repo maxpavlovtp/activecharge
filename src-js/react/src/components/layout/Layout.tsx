@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, Navigate, Outlet } from "react-router-dom";
+import { Link, Navigate, Outlet, useSearchParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import styles from "./Header.module.css";
 import logo from "../../assets/logo.png";
@@ -13,13 +13,15 @@ export default function Layout() {
   const [fix, setFix] = useState(false);
   const [routeTo, setRouteTo] = useState<any>("/");
 
+  const [searchParams] = useSearchParams();
+  let stationNumbers: any = searchParams.get("station");
   const { deviceStatus, isGotDeviceStatus } = useAppSelector(
     (state) => state.fetchReducer
   );
   useEffect(() => {
-    deviceStatus?.state === 'IN_PROGRESS'
-      ? setRouteTo("/charging")
-      : setRouteTo("/");
+    deviceStatus?.state === "IN_PROGRESS"
+      ? setRouteTo(`/charging?station=${stationNumbers}`)
+      : setRouteTo(`/?station=${stationNumbers}`);
   }, [isGotDeviceStatus]);
 
   const fixed = () => {
@@ -49,8 +51,8 @@ export default function Layout() {
             <h3 className={styles.logoText}>220-km.com</h3>
           </Link>
 
-          <Navigation />
-          <MobileNavigation />
+          <Navigation stationNumbers={stationNumbers}/>
+          <MobileNavigation stationNumbers={stationNumbers}/>
         </nav>
       </header>
 

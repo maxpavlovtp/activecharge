@@ -1,4 +1,4 @@
-package com.km220.service;
+package com.km220.service.job;
 
 import com.km220.cache.ChargingJobCache;
 import com.km220.dao.job.ChargingJobEntity;
@@ -9,9 +9,11 @@ import com.km220.dao.station.StationRepository;
 import com.km220.model.ChargingJob;
 import com.km220.service.device.DeviceService;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,7 +49,13 @@ public class ChargingService {
         periodSeconds);
 
     StationEntity station = stationRepository.getByNumber(stationNumber);
-    UUID jobId = chargingJobRepository.add(stationNumber, periodSeconds);
+    UUID jobId = null;
+    try {
+      jobId = chargingJobRepository.add(stationNumber, periodSeconds);
+    } catch(DuplicateKeyException exception) {
+      throw new DuplicateChargingException(String.format(Locale.ROOT,
+          "Duplicate charging. Station number = %s", stationNumber));
+    }
     deviceService.toggleOn(station.getDeviceId(), periodSeconds);
 
     //TODO: handle failure toggling device on. we need to mark this in DB.
@@ -58,24 +66,26 @@ public class ChargingService {
     return jobId;
   }
 
-  public void refresh(int batchSize) {
+  public void refresh(int batchSize, int scanDelayMs, int scanIntervalMs) {
     List<ChargingJobEntity> jobs = chargingJobRepository.scan(ChargingJobState.IN_PROGRESS,
-        batchSize);
-
-    logger.info("Processing {} jobs..", jobs.size());
+        batchSize, scanDelayMs);
 
     for (ChargingJobEntity job : jobs) {
       try {
-        jobRunner.run(job);
-        chargingJobRepository.update(job);
-        chargingJobCache.put(job.getId(), job);
+        jobRunner.run(job, scanIntervalMs);
       } catch (Exception e) {
-        logger.error("Failing", e);
+        logger.error(
+            String.format(Locale.ROOT, "Job failed. id = %s, station number = %s",
+                job.getId(), job.getStation().getNumber()), e);
+      } finally {
+        chargingJobRepository.update(job);
+        chargingJobCache.put(job.getId().toString(), job);
+        chargingJobCache.put(job.getStation().getNumber(), job);
       }
     }
   }
 
-  public ChargingJob get(UUID key) {
+  public ChargingJob get(String key) {
     return jobConverter.apply(chargingJobCache.get(key));
   }
 }

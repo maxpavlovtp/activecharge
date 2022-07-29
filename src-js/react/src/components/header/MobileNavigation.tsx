@@ -3,7 +3,7 @@ import Links from './Links';
 import styles from './Header.module.css';
 import { IoClose, IoMenu } from 'react-icons/io5';
 
-export default function MobileNavigation() {
+export default function MobileNavigation({stationNumbers}: {stationNumbers: any}) {
   const [open, setOpen] = useState(false);
   const ref = useRef<any>();
 

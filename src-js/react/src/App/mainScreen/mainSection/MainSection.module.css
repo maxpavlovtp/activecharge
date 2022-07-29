@@ -31,7 +31,7 @@
 .btn {
     margin: 0 5px;
     border: none;
-    background-color: #04AA6D;
+    background-color: #8F00FF;
     color: white;
     font-family: "OpenSansMedium", Arial, Helvetica, sans-serif;
     font-weight: 500;
@@ -43,7 +43,7 @@
 .btnPay{
     margin: 0 5px;
     border: none;
-    background-color: #04AA6D;
+    background-color: #8F00FF;
     color: white;
     font-family: "OpenSansMedium", Arial, Helvetica, sans-serif;
     font-weight: 500;
@@ -56,8 +56,8 @@
 .disaleBtn{
     margin: 0 5px;
     border: none;
-    background-color: #04aa6d;
-    opacity: 0.7;
+    background-color: #8F00FF;
+    opacity: 0.2;
     color: white;
     font-family: "OpenSansMedium", Arial, Helvetica, sans-serif;
     font-weight: 500;
@@ -65,7 +65,6 @@
     border-radius: 12px;
     padding: 15px 15px;
     text-decoration: none;
-    cursor: pointer;
 }
 
 .imgCont {

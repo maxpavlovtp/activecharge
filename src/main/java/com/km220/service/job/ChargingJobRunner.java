@@ -1,4 +1,4 @@
-package com.km220.service;
+package com.km220.service.job;
 
 import static java.time.ZoneOffset.UTC;
 
@@ -6,7 +6,6 @@ import com.km220.dao.job.ChargingJobEntity;
 import com.km220.dao.job.ChargingJobState;
 import com.km220.service.device.DeviceService;
 import java.time.OffsetDateTime;
-import java.time.ZoneId;
 import java.time.ZoneOffset;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,14 +23,17 @@ class ChargingJobRunner {
     this.deviceService = deviceService;
   }
 
-  public void run(ChargingJobEntity job) {
+  public void run(ChargingJobEntity job, int scanIntervalMs) {
     logger.info("Process charging job with id = {}, number = {}, station number = {}",
         job.getId(), job.getNumber(), job.getStation().getNumber());
 
     var deviceStatus = deviceService.getState(job.getStation().getDeviceId());
 
-    job.setChargedWt(job.getChargedWt() + (float) deviceStatus.getPower() / (3600 * 1000));
+    logger.info("Device state: {}", deviceStatus);
+
+    job.setChargedWt(job.getChargedWt() + (float) deviceStatus.getPower() * scanIntervalMs / (3600 * 1000));
     job.setChargingWt((float) deviceStatus.getPower());
+    job.setVoltage((float) deviceStatus.getVoltage());
 
     boolean completed = OffsetDateTime.now(UTC)
         .isAfter(job.getCreatedOn().plusSeconds(job.getPeriodSec()));

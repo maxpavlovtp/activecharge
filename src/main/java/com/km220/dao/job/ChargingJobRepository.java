@@ -35,7 +35,7 @@ public class ChargingJobRepository {
   private static final String STATION_ALIAS = "s_";
   private static final String CHARGING_JOB_ALIAS = "j_";
 
-  private static final String QUERY = """
+  private static final String SELECT_QUERY = """
       SELECT j.id as j_id, j.number as j_number, j.charged_wt as j_charged_wt,
           j.charging_wt as j_charging_wt, j.reason as j_reason, j.state as j_state,
           j.created_on as j_created_on, j.updated_on as j_updated_on, j.period_sec as j_period_sec,
@@ -45,6 +45,16 @@ public class ChargingJobRepository {
         FROM charging_job j
         JOIN station s on j.station_id = s.id
       """;
+
+  private static final String INSERT_SQL = """
+        INSERT into charging_job(station_id, period_sec)
+        VALUES ((SELECT id FROM station WHERE number = :station_number), :period_sec);
+        """;
+
+  private static final String UPDATE_SQL = """
+        UPDATE charging_job SET state = :state, reason = :reason, charging_wt = :charging_wt,
+        charged_wt = :charged_wt, stopped_on = :stopped_on where number = :number
+        """;
 
   private static final Logger logger = LoggerFactory.getLogger(ChargingJobRepository.class);
 
@@ -56,7 +66,7 @@ public class ChargingJobRepository {
   public ChargingJobEntity getById(UUID jobId) {
     Objects.requireNonNull(jobId);
 
-    var sql = QUERY + " WHERE j.id = :id";
+    var sql = SELECT_QUERY + " WHERE j.id = :id";
 
     return jdbcTemplate.queryForObject(sql, Map.of("id", jobId),
         chargingJobRowMapper);
@@ -66,24 +76,27 @@ public class ChargingJobRepository {
   public ChargingJobEntity getByNumber(String number) {
     Objects.requireNonNull(number);
 
-    var sql = QUERY + " WHERE j.number = :number";
+    var sql = SELECT_QUERY + " WHERE j.number = :number";
 
     return jdbcTemplate.queryForObject(sql, Map.of("number", number),
         chargingJobRowMapper);
   }
 
-  public List<ChargingJobEntity> scan(ChargingJobState state, int batchSize) {
+  public List<ChargingJobEntity> scan(ChargingJobState state,
+      int batchSize,
+      int delayTime) {
     Objects.requireNonNull(state);
 
-    var sql = QUERY + """
-        WHERE j.state = :state
+    var sql = SELECT_QUERY + """
+        WHERE j.state = :state AND EXTRACT(EPOCH FROM (now() - j.updated_on)) < :delay_time
         ORDER BY j.updated_on
         LIMIT %s
-        FOR UPDATE SKIP LOCKED
+        FOR UPDATE OF j SKIP LOCKED
         """.formatted(batchSize);
 
     var sqlParameterSource = new MapSqlParameterSource();
     sqlParameterSource.addValue("state", state, Types.OTHER);
+    sqlParameterSource.addValue("delay_time", delayTime, Types.INTEGER);
 
     return jdbcTemplate.query(sql, sqlParameterSource, chargingJobRowMapper);
   }
@@ -91,16 +104,12 @@ public class ChargingJobRepository {
   public UUID add(String stationNumber, int periodSeconds) {
     Objects.requireNonNull(stationNumber);
 
-    var sql = """
-        INSERT into charging_job(station_id, period_sec)
-        VALUES ((SELECT id FROM station WHERE number = :station_number), :period_sec);
-        """;
     var parameters = new MapSqlParameterSource()
         .addValue("station_number", stationNumber)
         .addValue("period_sec", periodSeconds);
     final KeyHolder keyHolder = new GeneratedKeyHolder();
 
-    if (jdbcTemplate.update(sql, parameters, keyHolder) > 0) {
+    if (jdbcTemplate.update(INSERT_SQL, parameters, keyHolder) > 0) {
       logger.info("Charging job created in DB. Station number = {}, period = {} seconds",
           stationNumber,
           periodSeconds);
@@ -115,10 +124,6 @@ public class ChargingJobRepository {
   public void update(ChargingJobEntity chargingJob) {
     Objects.requireNonNull(chargingJob);
 
-    var sql = """
-        UPDATE charging_job SET state = :state, reason = :reason, charging_wt = :charging_wt,
-        charged_wt = :charged_wt, stopped_on = :stopped_on where number = :number
-        """;
     var parameters = new HashMap<String, Object>();
     parameters.put(STATE, chargingJob.getState().toString());
     parameters.put(REASON, chargingJob.getReason());
@@ -127,7 +132,7 @@ public class ChargingJobRepository {
     parameters.put(NUMBER, chargingJob.getNumber());
     parameters.put(STOPPED_ON, chargingJob.getStoppedOn());
 
-    if (jdbcTemplate.update(sql, parameters) <= 0) {
+    if (jdbcTemplate.update(UPDATE_SQL, parameters) <= 0) {
       throw new ChargerDatabaseException("Couldn't update charging job. Job number = "
           + chargingJob.getNumber());
     }

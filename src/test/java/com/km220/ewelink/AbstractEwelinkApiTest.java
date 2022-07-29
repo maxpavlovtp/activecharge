@@ -4,7 +4,7 @@ public abstract class AbstractEwelinkApiTest {
 
   protected final EwelinkClient ewelinkClient;
 
-  protected static final String BOILER_DEVICE_ID = "1001323420";
+  protected static final String BOILER_DEVICE_ID = "100155422a";
   protected static final String STAGE_DEVICE_ID = "10013bb124";
 
   private static final String EMAIL = "maxpavlov.dp@gmail.com";
@@ -19,6 +19,7 @@ public abstract class AbstractEwelinkApiTest {
         .parameters(new EwelinkParameters(REGION, EMAIL, PASSWORD, COUNTRY_CODE))
         .applicationId(APP_ID)
         .applicationSecret(APP_SECRET)
+        .tokenStorage(new TokenStorageInMemoryImpl())
         .build();
   }
 }

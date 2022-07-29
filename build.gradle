@@ -4,6 +4,7 @@ plugins {
 	id 'java'
 	id 'jvm-test-suite'
 	id 'idea'
+	id "org.flywaydb.flyway" version "9.0.3"
 }
 
 group = 'com.activecharge'
@@ -25,11 +26,15 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
 
+	implementation 'org.springdoc:springdoc-openapi-ui:1.6.4'
+
 	implementation 'com.google.code.gson:gson:2.9.0'
 	implementation 'org.java-websocket:Java-WebSocket:1.5.3'
 
 	compileOnly 'org.projectlombok:lombok:1.18.24'
+
 	annotationProcessor 'org.projectlombok:lombok:1.18.24'
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
 	//TODO: run migrations in separate mode by gradle plugin or cli. This dependency should be compileOnly!
 	implementation("org.flywaydb:flyway-core:8.5.13")
@@ -39,6 +44,20 @@ dependencies {
 	testImplementation 'org.hamcrest:hamcrest:2.2'
 	testCompileOnly 'org.projectlombok:lombok:1.18.24'
 	testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
+}
+
+
+flyway {
+	driver = 'org.postgresql.Driver'
+	url = 'jdbc:postgresql://localhost:5432/km220'
+	user = 'km220'
+	password = 'Nopassword1'
+	connectRetries = 10
+	initSql = 'SET ROLE \'km220\''
+	schemas = ['public']
+	skipDefaultCallbacks = false
+	cleanDisabled = false
+	workingDirectory = './'
 }
 
 testing {
