@@ -19,14 +19,14 @@ public class ChargingJobInMemoryCache implements ChargingJobCache {
   public ChargingJobEntity get(final String id) {
     ChargingJobEntity job = cache.get(id);
 
-    logger.debug("Get from cache. key = {}, value = {}", id, job);
+    logger.debug("Get entry from cache. key = {}, value = {}", id, job);
 
     return job;
   }
 
   @Override
   public ChargingJobEntity put(final String id, ChargingJobEntity job) {
-    logger.debug("Put in cache. key = {}, value = {}", id, job);
+    logger.debug("Put entry in cache. key = {}, value = {}", id, job);
 
     return cache.put(id, job);
   }

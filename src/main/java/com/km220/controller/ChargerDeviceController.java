@@ -4,7 +4,7 @@ import com.km220.config.StationScanProperties;
 import com.km220.dao.job.ChargingJobState;
 import com.km220.model.ChargingJob;
 import com.km220.model.CreatedChargingJob;
-import com.km220.service.ChargingService;
+import com.km220.service.job.ChargingService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;

@@ -17,16 +17,20 @@ public class EwelinkClient {
   private EwelinkParameters parameters;
   private String applicationId;
   private String applicationSecret;
+  private TokenStorage tokenStorage;
   private HttpClient httpClient;
 
   @Builder
   @SuppressWarnings("unused")
   private EwelinkClient(@NonNull final EwelinkParameters parameters,
       @NonNull final String applicationId,
-      @NonNull final String applicationSecret, final HttpClient httpClient) {
+      @NonNull final String applicationSecret,
+      @NonNull final TokenStorage tokenStorage,
+      final HttpClient httpClient) {
     this.parameters = parameters;
     this.applicationId = applicationId;
     this.applicationSecret = applicationSecret;
+    this.tokenStorage = tokenStorage;
     this.httpClient = Optional.ofNullable(httpClient).orElseGet(HttpClient::newHttpClient);
   }
 
@@ -36,7 +40,7 @@ public class EwelinkClient {
 
   public EwelinkDeviceApiV2 devicesV2() {
     return new EwelinkDeviceApiV2(parameters, applicationId, applicationSecret,
-        httpClient);
+        tokenStorage, httpClient);
   }
 
   public WSEwelinkDeviceApi wsDevices() {
