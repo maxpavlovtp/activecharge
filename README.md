@@ -9,6 +9,7 @@
 3. install npm
 4. install docker
 5. run: sh run-220-local.sh
+6. go to: http://localhost:3000/?station=3
 
 ## FE react endpoint:
 1. local: http://localhost:3000?station=3
