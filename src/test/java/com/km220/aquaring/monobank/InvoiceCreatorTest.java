@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 class InvoiceCreatorTest {
 
   @Test
-  void makePost() throws IOException {
+  void generateCheckoutLink() throws IOException {
     assertThat(InvoiceCreator.generateCheckoutLink()).contains("pageUrl");
   }
 }

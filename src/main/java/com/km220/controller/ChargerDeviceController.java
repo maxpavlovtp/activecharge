@@ -76,22 +76,4 @@ public class ChargerDeviceController {
     ChargingJob job = chargingService.get(stationNumber);
     return ResponseEntity.status(HttpStatus.OK).body(job);
   }
-
-
-  @GetMapping("/isPowerLimitOvelrloaded")
-  public ChargerResponse<Boolean> isPowerLimitOvelrloaded() {
-    return new ChargerResponse<>("isPowerLimitOvelrloaded", false);
-  }
-
-  @GetMapping("/getPowerLimit")
-  public ChargerResponse<Integer> getPowerLimit() {
-    return new ChargerResponse<>("getPowerLimit", 0);
-  }
-
-  @GetMapping("/isOverloadCheckCompleted")
-  public ChargerResponse<Boolean> isOverloadCheckCompleted(
-      @Parameter(description = "Station number") @NotBlank @RequestParam("station_number") String stationNumber) {
-    ChargingJobState state = chargingService.get(stationNumber).getState();
-    return new ChargerResponse<>("isOverloadCheckCompleted", state == ChargingJobState.DONE);
-  }
 }
