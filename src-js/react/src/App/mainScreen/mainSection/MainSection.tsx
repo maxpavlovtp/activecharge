@@ -47,7 +47,7 @@ const MainSection: React.FC = () => {
           {/*  {t("btns.start")}*/}
           {/*</Link>*/}
 
-          <a  className={styles.btnPay} href="https://pay.mbnk.biz/220802CYn2b8bB82Bfbg" target="_blank" rel="noreferrer">
+          <a  className={styles.btnPay} href="https://pay.mbnk.biz/2208024GGyPq5Vj6rgoj" target="_blank" rel="noreferrer">
             {t("btns.start")}
           </a>
 
