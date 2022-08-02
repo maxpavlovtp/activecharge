@@ -9,9 +9,10 @@
 3. install npm
 4. install docker
 5. run: sh run-220-local.sh
-6. go to: http://localhost:3000/?station=3
-7. download DB tool: https://dbeaver.io/download/
-8. configure connection:
+6. check FE: http://localhost:3000/?station=3
+7. check BE swagger: http://localhost:8080/swagger-ui/index.html
+8. download DB tool: https://dbeaver.io/download/
+9. configure connection:
     url: jdbc:postgresql://localhost:5432/km220
     username: km220
     password: Nopassword1
