@@ -117,8 +117,7 @@ const MainSection: React.FC = () => {
                 замовлення.
               </p>
               <p>
-                <strong>Платіжна система</strong>- сервіс, що функціонує на основі
-                АПК в мережі Інтернет за адресою{" "}
+                <strong>Платіжна система</strong>- сервіс, що функціонує в мережі Інтернет за адресою{" "}
                 <a className={styles.offerLink} href="https://www.monobank.ua/qr/" target="_blank">
                   https://www.monobank.ua/qr
                 </a>
