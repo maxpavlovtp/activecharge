@@ -1,10 +1,10 @@
 package com.km220.config;
 
-import com.km220.dao.ewelink.EwelinkTokenRepository;
+import com.km220.dao.ewelink.EwelinkCredentialsRepository;
 import com.km220.ewelink.EwelinkClient;
 import com.km220.ewelink.EwelinkParameters;
-import com.km220.ewelink.TokenStorage;
-import com.km220.service.TokenStorageImpl;
+import com.km220.ewelink.CredentialsStorage;
+import com.km220.service.DatabaseCredentialsStorage;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -18,7 +18,7 @@ public class EwelinkConfiguration {
   }
 
   @Bean
-  EwelinkClient ewelinkClient(TokenStorage tokenStorage) {
+  EwelinkClient ewelinkClient(CredentialsStorage credentialsStorage) {
     return EwelinkClient.builder()
         .applicationId(ewelinkProperties.getAppId())
         .applicationSecret(ewelinkProperties.getAppSecret())
@@ -30,12 +30,12 @@ public class EwelinkConfiguration {
                 ewelinkProperties.getCountryCode()
             )
         )
-        .tokenStorage(tokenStorage)
+        .credentialsStorage(credentialsStorage)
         .build();
   }
 
   @Bean
-  TokenStorage tokenStorage(EwelinkTokenRepository ewelinkTokenRepository) {
-    return new TokenStorageImpl(ewelinkTokenRepository);
+  CredentialsStorage tokenStorage(EwelinkCredentialsRepository ewelinkCredentialsRepository) {
+    return new DatabaseCredentialsStorage(ewelinkCredentialsRepository);
   }
 }

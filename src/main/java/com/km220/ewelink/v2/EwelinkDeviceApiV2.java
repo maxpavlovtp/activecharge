@@ -3,7 +3,7 @@ package com.km220.ewelink.v2;
 import static com.km220.ewelink.internal.EwelinkConstants.DEVICE_TYPE;
 
 import com.km220.ewelink.EwelinkParameters;
-import com.km220.ewelink.TokenStorage;
+import com.km220.ewelink.CredentialsStorage;
 import com.km220.ewelink.internal.model.v2.DeviceUpdateRequest;
 import com.km220.ewelink.internal.utils.JsonUtils;
 import com.km220.ewelink.internal.v2.AbstractEwelinkApiV2;
@@ -23,8 +23,8 @@ public final class EwelinkDeviceApiV2 extends AbstractEwelinkApiV2 {
   private static final Logger LOGGER = LoggerFactory.getLogger(EwelinkDeviceApiV2.class);
 
   public EwelinkDeviceApiV2(final EwelinkParameters parameters, final String applicationId,
-      final String applicationSecret, final TokenStorage tokenStorage, final HttpClient httpClient) {
-    super(parameters, applicationId, applicationSecret, tokenStorage, httpClient);
+      final String applicationSecret, final CredentialsStorage credentialsStorage, final HttpClient httpClient) {
+    super(parameters, applicationId, applicationSecret, credentialsStorage, httpClient);
   }
 
   public CompletableFuture<DeviceV2> getStatus(String deviceId) {
