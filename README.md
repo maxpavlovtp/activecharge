@@ -10,7 +10,7 @@
 4. install docker
 5. run: sh run-220-local.sh
 6. go to: http://localhost:3000/?station=3
-7. dounload DB tool: https://dbeaver.io/download/
+7. download DB tool: https://dbeaver.io/download/
 8. configure connection:
     url: jdbc:postgresql://localhost:5432/km220
     username: km220
