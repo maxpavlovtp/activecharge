@@ -39,13 +39,18 @@ const MainSection: React.FC = () => {
       <div className={styles.container}>
         <h1 className={styles.title}>{t("title")}</h1>
         <div className={styles.btnStart}>
-          <Link
-              to="/overload"
-              className={styles.btnPay}
-              onClick={startCharging}
-          >
+          {/*<Link*/}
+          {/*    to="/overload"*/}
+          {/*    className={styles.btnPay}*/}
+          {/*    onClick={startCharging}*/}
+          {/*>*/}
+          {/*  {t("btns.start")}*/}
+          {/*</Link>*/}
+
+          <a  className={styles.btnPay} href="https://pay.mbnk.biz/2208024GGyPq5Vj6rgoj" target="_blank" rel="noreferrer">
             {t("btns.start")}
-          </Link>
+          </a>
+
           <Link
               to={`/charging?station=${stationNumber}`}
               className={styles.btn}
