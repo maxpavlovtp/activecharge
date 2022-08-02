@@ -1,0 +1,14 @@
+ewelink:
+  region: eu
+  email: maxpavlov.dp@gmail.com
+  password: Nopassword1
+  countryCode: "+380"
+  appId: YzfeftUVcZ6twZw1OoVKPRFYTrGEg01Q
+  appSecret: 4G91qSoboqYO4Y0XJ0LPPKIsq8reHdfa
+
+device:
+  chargeTimeSecs: 30
+
+# komariv
+deviceId: 10013bb124
+

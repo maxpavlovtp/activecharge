@@ -38,7 +38,7 @@
   },
   "scripts": {
     "start": "env-cmd -e development react-scripts start",
-    "build": "env-cmd -e prodaction react-scripts build",
+    "buildProd": "CI=false && env-cmd -e prodaction react-scripts build",
     "stage": "env-cmd -e stage react-scripts build",
     "dev": "CI=false && env-cmd -e dev react-scripts build",
     "test": "react-scripts test",

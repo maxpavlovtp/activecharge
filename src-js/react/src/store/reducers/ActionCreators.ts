@@ -2,49 +2,53 @@ import { AppDispatch } from "../store";
 import axios from "axios";
 import { FetchSlice } from "./FetchSlice";
 
-const urlOn = `${process.env.REACT_APP_LINK_SERVE}device/start`;
-const urlDeviceStatus = `${process.env.REACT_APP_LINK_SERVE}device/getDeviceStatus`;
-const urlChargingStatus = `${process.env.REACT_APP_LINK_SERVE}device/getChargingStatus`;
+const urlV2Start = `${process.env.REACT_APP_LINK_SERVE}device/v2/start`;
+const urlV2Status = `${process.env.REACT_APP_LINK_SERVE}device/v2/station/status?station_number=`;
 
+const period_s = process.env.REACT_APP_PERIOD_S;
 
-export const fetchChargingData = () => async (dispatch: AppDispatch) => {
-  try {
-    dispatch(FetchSlice.actions.chargingDataFetching());
-    let stationNumber = localStorage.getItem('stationNumber');
-    const response = await axios.get(urlOn + "?station=" + stationNumber);
-    dispatch(FetchSlice.actions.chargingDataFetchingSuccess(response.data));
-    console.log(response.data);
-  } catch (e: any) {
-    dispatch(FetchSlice.actions.chargingDataFetchingError(e.message));
-    console.log(e.message);
-  }
+export const idStart = (station: any) => async (dispatch: AppDispatch) => {
+  const data = JSON.stringify({
+    station_number: station,
+    period_s: period_s,
+  });
+
+  const config = {
+    method: "post",
+    url: urlV2Start,
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    data: data,
+  };
+  dispatch(FetchSlice.actions.chargingDataFetching());
+  await axios(config)
+    .then(function (response: any) {
+      localStorage.setItem(
+        "interval",
+        response.data ? response.data.scan_interval_ms : 2000
+      );
+      console.log(JSON.stringify(response.data));
+      console.log(period_s);
+      dispatch(FetchSlice.actions.chargingDataFetchingSuccess());
+    })
+    .catch(function (error: any) {
+      console.log(error);
+      dispatch(FetchSlice.actions.chargingDataFetchingError(error.message));
+    });
 };
 
-
-export const getDeviceStatus = () => async (dispatch: AppDispatch) => {
-  try {
-    dispatch(FetchSlice.actions.deviceStatusFetching());
-    let stationNumber = localStorage.getItem('stationNumber');
-    const response = await axios.get(urlDeviceStatus + "?station=" + stationNumber);
-    dispatch(FetchSlice.actions.deviceStatusFetchingSuccess(response.data));
-    console.log(response.data);
-  } catch (e: any) {
-    dispatch(FetchSlice.actions.deviceStatusFetchingError(e.message));
-    console.log(e.message);
-  }
-};
-
-export const getChargingStatus = () => async (dispatch: AppDispatch) => {
-  try {
-    dispatch(FetchSlice.actions.chargingStatusFetching());
-    let stationNumber = localStorage.getItem('stationNumber');
-    const response = await axios.get(urlChargingStatus + "?station=" + stationNumber);
-    dispatch(
-      FetchSlice.actions.chargingStatusFetchingSuccess(response.data.data)
-    );
-    console.log(response.data);
-  } catch (e: any) {
-    dispatch(FetchSlice.actions.chargingStatusFetchingError(e.message));
-    console.log(e.message);
-  }
-};
+export const getStationInfo =
+  (station: any) => async (dispatch: AppDispatch) => {
+    try {
+      dispatch(FetchSlice.actions.deviceStatusFetching());
+      axios.get(urlV2Status + station).then(function (result: any) {
+        dispatch(FetchSlice.actions.deviceStatusFetchingSuccess(result.data));
+        console.log(result.data);
+      });
+    } catch (e: any) {
+      dispatch(FetchSlice.actions.deviceStatusFetchingError(e.message));
+      console.log(e.message);
+    }
+  };

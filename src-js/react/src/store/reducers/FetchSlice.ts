@@ -1,30 +1,17 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IFetch } from "../../interfaces";
 
-interface FetchState {
-  startDataCharging: any;
+export interface FetchState {
   deviceStatus: any;
-  whichStation: any;
-  devicePower: string;
-  chargingStatus: number;
   isLoadingCharging: boolean;
-  isGotChargingStatus: boolean;
   isGotDeviceStatus: boolean;
   error: string;
-  station: string;
 }
 
-const initialState: FetchState = {
-  startDataCharging: null,
+export const initialState: FetchState = {
   deviceStatus: null,
-  devicePower: "",
-  whichStation: null,
-  chargingStatus: 0,
   isLoadingCharging: false,
-  isGotChargingStatus: false,
   isGotDeviceStatus: false,
   error: "",
-  station: "2"
 };
 
 export const FetchSlice = createSlice({
@@ -34,38 +21,15 @@ export const FetchSlice = createSlice({
     chargingDataFetching(state: FetchState) {
       state.isLoadingCharging = true;
     },
-    chargingDataFetchingSuccess(
-      state: FetchState,
-      action: PayloadAction<IFetch[]>
-    ) {
+    chargingDataFetchingSuccess(state: FetchState) {
       state.isLoadingCharging = false;
       state.error = "";
-      state.startDataCharging = action.payload;
     },
     chargingDataFetchingError(
       state: FetchState,
       action: PayloadAction<string>
     ) {
       state.isLoadingCharging = false;
-      state.error = action.payload;
-    },
-
-    chargingStatusFetching(state: FetchState) {
-      state.isGotChargingStatus = true;
-    },
-    chargingStatusFetchingSuccess(
-      state: FetchState,
-      action: PayloadAction<number>
-    ) {
-      state.isGotChargingStatus = false;
-      state.error = "";
-      state.chargingStatus = action.payload;
-    },
-    chargingStatusFetchingError(
-      state: FetchState,
-      action: PayloadAction<string>
-    ) {
-      state.isGotChargingStatus = false;
       state.error = action.payload;
     },
 
@@ -83,11 +47,13 @@ export const FetchSlice = createSlice({
     ) {
       state.error = action.payload;
     },
-
-    whichStationIs(state: FetchState, action: PayloadAction<any>) {
-      state.whichStation = action.payload;
-    }
+    
+    setDeviceStatusUndefind(state: FetchState, action: PayloadAction<any>) {
+      state.deviceStatus = action.payload;
+    },
   },
 });
+
+export const { setDeviceStatusUndefind } = FetchSlice.actions;
 
 export default FetchSlice.reducer;

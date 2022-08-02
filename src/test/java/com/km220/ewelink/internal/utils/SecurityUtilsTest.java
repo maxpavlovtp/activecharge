@@ -19,14 +19,14 @@ class SecurityUtilsTest {
   @Test
   void makeAuthorizationSign() {
     Map<String, String> body = new LinkedHashMap<>();
-    body.put("password", "12345678");
+    body.put("password", "Nopassword1");
     body.put("countryCode", "+380");
-    body.put("email", "jasper.ua@gmail.com");
+    body.put("email", "maxpavlov.dp@gmail.com");
 
     String jsonBody = JsonUtils.serialize(body);
 
     String auth = SecurityUtils.makeAuthorizationSign("4G91qSoboqYO4Y0XJ0LPPKIsq8reHdfa", jsonBody);
 
-    assertEquals("6a+NXrTzfYadtmH+zAcPTSYQ1EnVjg3ScImArXK306k=", auth);
+    assertEquals("M9t3DIXCv3Jz+vKRnzVwiGb70oVQRxR5ZuTSM36o1Qs=", auth);
   }
 }

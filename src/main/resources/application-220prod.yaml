@@ -1,0 +1,7 @@
+ewelink:
+  email: km220.com@gmail.com
+  password: Nopassword1
+
+spring:
+  flyway:
+    clean-on-validation-error: false

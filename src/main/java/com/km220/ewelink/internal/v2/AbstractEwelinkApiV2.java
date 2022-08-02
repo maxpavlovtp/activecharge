@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.km220.ewelink.EwelinkApiException;
 import com.km220.ewelink.EwelinkClientException;
 import com.km220.ewelink.EwelinkParameters;
+import com.km220.ewelink.TokenStorage;
 import com.km220.ewelink.internal.CredentialsRequest;
 import com.km220.ewelink.internal.model.v2.CredentialResponseV2;
 import com.km220.ewelink.internal.utils.JsonUtils;
@@ -29,7 +30,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
@@ -41,6 +41,7 @@ public abstract class AbstractEwelinkApiV2 {
   protected final EwelinkParameters parameters;
   protected final String applicationId;
   protected final String applicationSecret;
+  private final TokenStorage tokenStorage;
   protected final HttpClient httpClient;
 
   private static final String API_BASE_URI = "https://%s-apia.coolkit.cc/v2";
@@ -53,44 +54,14 @@ public abstract class AbstractEwelinkApiV2 {
 
   private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-  //TODO: this works only for single node
-  private static final Map<String, String> tokenCache = new ConcurrentHashMap<>();
-
   protected AbstractEwelinkApiV2(final EwelinkParameters parameters, final String applicationId,
-      final String applicationSecret, final HttpClient httpClient) {
+      final String applicationSecret, final TokenStorage tokenStorage,
+      final HttpClient httpClient) {
     this.parameters = Objects.requireNonNull(parameters);
     this.applicationId = Objects.requireNonNull(applicationId);
     this.applicationSecret = Objects.requireNonNull(applicationSecret);
     this.httpClient = Objects.requireNonNull(httpClient);
-  }
-
-  protected final String getAccessToken(String invalidToken) {
-    Supplier<CompletableFuture<String>> tokenExtractor = () -> {
-      String jsonRequestBody = JsonUtils.serialize(
-          CredentialsRequest.builder()
-              .email(parameters.getEmail())
-              .password(parameters.getPassword())
-              .countryCode(parameters.getCountryCode())
-              .build()
-      );
-      CompletableFuture<JsonNode> jsonResponse = apiJsonRequest(HTTP_POST,
-          BodyPublishers.ofString(jsonRequestBody),
-          LOGIN_URI,
-          generateHeaders("Sign",
-              SecurityUtils.makeAuthorizationSign(applicationSecret, jsonRequestBody)),
-          Map.of(),
-          HTTP_STATUS_OK);
-      return jsonResponse
-          .thenApply(JsonUtils.jsonDataConverter(CredentialResponseV2.class))
-          .thenApply(r -> r.getData().getAt());
-    };
-
-    return tokenCache.compute("token", (key, value) -> {
-      if (Objects.equals(value, invalidToken)) {
-        return tokenExtractor.get().join();
-      }
-      return value;
-    });
+    this.tokenStorage = tokenStorage;
   }
 
   protected final <T> CompletableFuture<T> apiGetObjectRequest(final String apiUri,
@@ -135,7 +106,7 @@ public abstract class AbstractEwelinkApiV2 {
           allHeaders, parameters, expectedStatus);
     };
 
-    var accessToken = getAccessToken(null);
+    var accessToken = tokenStorage.get(getTokenExtractor());
     CompletableFuture<JsonNode> requestCompletableFuture = requestExecutor.apply(accessToken);
 
     return requestCompletableFuture.exceptionallyCompose(e -> {
@@ -144,7 +115,7 @@ public abstract class AbstractEwelinkApiV2 {
         LOGGER.info("Auth error. {}", e.getMessage());
         LOGGER.info("Retry to get new access token");
 
-        return requestExecutor.apply(getAccessToken(accessToken));
+        return requestExecutor.apply(tokenStorage.refresh(getTokenExtractor(), accessToken));
       }
 
       return requestCompletableFuture;
@@ -236,5 +207,28 @@ public abstract class AbstractEwelinkApiV2 {
       throw new EwelinkApiException(
           String.format(Locale.ROOT, "API responded with error=%d, msg=%s", error, msg), error);
     }
+  }
+
+  private Supplier<String> getTokenExtractor() {
+    return () -> {
+      String jsonRequestBody = JsonUtils.serialize(
+          CredentialsRequest.builder()
+              .email(parameters.getEmail())
+              .password(parameters.getPassword())
+              .countryCode(parameters.getCountryCode())
+              .build()
+      );
+      CompletableFuture<JsonNode> jsonResponse = apiJsonRequest(HTTP_POST,
+          BodyPublishers.ofString(jsonRequestBody),
+          LOGIN_URI,
+          generateHeaders("Sign",
+              SecurityUtils.makeAuthorizationSign(applicationSecret, jsonRequestBody)),
+          Map.of(),
+          HTTP_STATUS_OK);
+      return jsonResponse
+          .thenApply(JsonUtils.jsonDataConverter(CredentialResponseV2.class))
+          .thenApply(r -> r.getData().getAt())
+          .join();
+    };
   }
 }
