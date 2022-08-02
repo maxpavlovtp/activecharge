@@ -43,6 +43,10 @@ p {
   color: #008957;
 }
 
+.congrats220 {
+  color: #8F00FF;
+}
+
 
 @media (max-width: 1340px) {
   .container {

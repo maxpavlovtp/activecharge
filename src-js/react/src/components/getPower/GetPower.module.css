@@ -7,7 +7,23 @@
   font-family: "OpenSansRegular", Arial, Helvetica, sans-serif;
   font-weight: 400;
   font-size: calc(1.5rem + 1.5vw);
-  margin-top: 40px;
+  margin-top: 30px;
+  color: #2c2b2b;
+}
+.voltageBox {
+  margin-top: 30px;
+}
+.voltTitle {
+  font-family: "OpenSansSemiBold", Arial, Helvetica, sans-serif;
+  font-weight: 600;
+  font-size: calc(1rem + 1.3vw);
+  margin-bottom: 5px;
+  color: #8F00FF;
+}
+.voltCharged {
+  font-family: "OpenSansSemiBold", Arial, Helvetica, sans-serif;
+  font-weight: 600;
+  font-size: calc(1rem + 1.5vw);
   color: #2c2b2b;
 }
 .textTitle {
@@ -15,7 +31,7 @@
   font-weight: 600;
   font-size: calc(1.3rem + 1.9vw);
   margin-bottom: 5px;
-  color: #04aa6d;
+  color: #8F00FF;
 }
 
 .text {
@@ -50,9 +66,9 @@
   font-weight: 500;
   font-size: calc(1.2rem + 1.5vw);
   margin-bottom: 5px;
-  color: #2c2b2b;
+  color: #8F00FF;
 }
-.finishText{
+.finishText {
   text-align: center;
   font-family: "OpenSansMedium", Arial, Helvetica, sans-serif;
   font-weight: 500;
