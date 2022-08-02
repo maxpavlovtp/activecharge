@@ -28,7 +28,7 @@
 http://178.18.251.90:8080/swagger-ui/index.html
 
 ## SDLC:
-1. We deploy every push to dev 178.18.251.90 using git actions + ssh + systemctl.
+1. We deploy every PR to dev 178.18.251.90 using git actions + ssh + systemctl.
 2. Kanban board: https://esound.youtrack.cloud/youtrack/agiles/87-6/current
 
 ## Design:
