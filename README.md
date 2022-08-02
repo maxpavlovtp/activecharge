@@ -10,6 +10,9 @@
 4. install docker
 5. run: sh run-220-local.sh
 6. go to: http://localhost:3000/?station=3
+7. buy device: https://smartunit.com.ua/p1468345789-wifi-rele-tomzn.html?source=merchant_center&gclid=CjwKCAjwlqOXBhBqEiwA-hhitJnVhc58A84dNE5pXfiLi6m56wuSncTd-V8D6tC-fHsVxSQa6EZCBBoCJB8QAvD_BwE
+8. go deeper :)
+
 
 ## FE react endpoint:
 1. local: http://localhost:3000?station=3
