@@ -30,7 +30,7 @@ i18n
           v: "В",
           km: " км",
           chargedCongrats: "Вітаннячка!",
-          chargedkWt: "Зарядили в тачку ",
+          chargedkWt: "Ми зарядили в тачку ",
           power: "Потужність",
           charging: "Зарядили",
           voltage: "Вольтаж",
