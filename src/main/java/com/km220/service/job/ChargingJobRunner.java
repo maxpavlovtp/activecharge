@@ -31,7 +31,8 @@ class ChargingJobRunner {
 
     logger.info("Device state: {}", deviceStatus);
 
-    job.setChargedWt(job.getChargedWt() + (float) deviceStatus.getPower() * scanIntervalMs / (3600 * 1000));
+    int dirtyHack = 2;
+    job.setChargedWt(job.getChargedWt() + (float) deviceStatus.getPower() * scanIntervalMs / (3600 * 1000 * dirtyHack));
     job.setChargingWt((float) deviceStatus.getPower());
     job.setVoltage((float) deviceStatus.getVoltage());
 
