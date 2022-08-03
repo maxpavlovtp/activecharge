@@ -181,7 +181,10 @@ public abstract class AbstractEwelinkApiV2 {
   }
 
   private String getApiUri(String apiUri) {
-    return String.format(API_BASE_URI, parameters.getRegion()) + apiUri;
+    if (!apiUri.matches("^(https?)://.*$")) {
+      return String.format(API_BASE_URI, parameters.getRegion()) + apiUri;
+    }
+    return apiUri;
   }
 
   private Map<String, String> generateHeaders(String authSchema, String token) {

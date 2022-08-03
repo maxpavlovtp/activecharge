@@ -19,7 +19,7 @@ import java.util.concurrent.CountDownLatch;
 public abstract class AbstractWSEwelinkApiV2 extends AbstractEwelinkApiV2 {
 
   private static final String WSS_URI_TEMPLATE = "wss://%s:%s/api/ws";
-  private static final String DISPATCH_APP_API_URI = "/dispatch/app";
+  private static final String DISPATCH_APP_API_URL = "https://eu-dispa.coolkit.cc/dispatch/app";
 
   private WebSocket webSocket;
   private String apiSessionKey;
@@ -35,7 +35,7 @@ public abstract class AbstractWSEwelinkApiV2 extends AbstractEwelinkApiV2 {
 
     var webSocketClient = new WebSocketClient(clientListener, latch);
 
-    webSocket = apiGetObjectRequest(DISPATCH_APP_API_URI,
+    webSocket = apiGetObjectRequest(DISPATCH_APP_API_URL,
         Map.of(),
         JsonUtils.jsonDataConverter(DispatchResponse.class)
     ).thenCompose(dispatchResponse -> HttpClient
