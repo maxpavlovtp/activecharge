@@ -1,4 +1,4 @@
-# Project to transform you garage or any public spot to electric car charging station.
+# Project to transform your garage or any public spot to electric car charging station.
 [![CI](https://github.com/maxpavlovdp/activecharge/actions/workflows/ci.yml/badge.svg)](https://github.com/maxpavlovdp/activecharge/actions/workflows/ci.yml)
 [![CI prod](https://github.com/maxpavlovdp/activecharge/actions/workflows/ci-prod.yml/badge.svg)](https://github.com/maxpavlovdp/activecharge/actions/workflows/ci-prod.yml)
 
