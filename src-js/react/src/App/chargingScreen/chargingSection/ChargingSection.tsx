@@ -36,7 +36,7 @@ const MainSection: React.FC = () => {
   };
   
   const interval: any = localStorage.getItem("interval");
-  let timerInterval = 3600 + interval;
+  let timerInterval = 3600 + Number(interval);
 
   useEffect(() => {
     if (isLoadingCharging === false) {
