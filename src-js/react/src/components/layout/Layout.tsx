@@ -35,7 +35,7 @@ export default function Layout() {
   window.addEventListener("scroll", fixed);
   const { t } = useTranslation();
   return (
-    <>
+    <div className={styles.generalContainer}>
       <header className={styles.headerBox}>
         <nav className={fix ? styles.paddingBoxFixed : styles.paddingBox}>
           <Link className={styles.homeLink} to={routeTo}>
@@ -70,6 +70,6 @@ export default function Layout() {
           {t("footer.part3")}
         </p>
       </footer>
-    </>
+    </div>
   );
 }
