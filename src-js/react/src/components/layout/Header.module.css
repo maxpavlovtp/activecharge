@@ -35,8 +35,6 @@
   display: flex;
 }
 
-
-
 .logoText {
   color: #393939;
   font-family: "OpenSansBold", Arial, Helvetica, sans-serif;
@@ -93,7 +91,7 @@
 
 .footerBox {
   display: flex;
-  margin-top: 20px;
+  background-color: #fff;
 }
 
 .footerText {
@@ -153,5 +151,11 @@
 
   .navigation {
     display: none;
+  }
+}
+
+@media (max-height: 420px) {
+  .footerBox {
+    margin-top: 120px;
   }
 }
