@@ -38,7 +38,7 @@ export default function Layout() {
     <>
       <header className={styles.headerBox}>
         <nav className={fix ? styles.paddingBoxFixed : styles.paddingBox}>
-          <Link className={styles.homeLink} to={routeTo}>
+          <Link reloadDocument={true} className={styles.homeLink} to={routeTo}>
             <div className={styles.logoContainer}>
               <MainImgLoadingLazy
                 src={logo}
