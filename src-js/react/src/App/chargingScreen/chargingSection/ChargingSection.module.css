@@ -63,3 +63,11 @@
     padding-top: 10px;
   }
 }
+@media (max-height: 340px) {
+  /* .footerBox {
+    margin-top: 180px;
+  }
+    .headerBox {
+      padding-bottom: 170px;
+    } */
+}
