@@ -22,7 +22,7 @@ public class InvoiceCreator {
     http.setRequestProperty("X-Token", "ux9Fn-4ob62pBQtM0O9z_gOKYhSo9SYBHk3g-2Bivw70");
 
     String body = "{\n"
-        + "    \"amount\": 4200,\n"
+        + "    \"amount\": 22000,\n"
         + "    \"ccy\": 980,\n"
         + "    \"merchantPaymInfo\": {\n"
         + "        \"reference\": \"84d0070ee4e44667b31371d8f8813947\",\n"

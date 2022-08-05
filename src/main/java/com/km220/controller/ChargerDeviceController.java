@@ -11,7 +11,10 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import javax.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -75,5 +78,27 @@ public class ChargerDeviceController {
       @Parameter(description = "Station number") @NotBlank @RequestParam("station_number") String stationNumber) {
     ChargingJob job = chargingService.get(stationNumber);
     return ResponseEntity.status(HttpStatus.OK).body(job);
+  }
+
+  @GetMapping("/v2/station/statusAll")
+  public ResponseEntity<List<ChargingJob>> getStatusAll() {
+    String[] stations = {"1", "2", "3", "4", "5"};
+
+    // todo implemtent
+    List<ChargingJob> jobs = chargingService.getInProgressJobs();
+
+    jobs = Arrays.stream(stations)
+        .map(id -> new ChargingJob(id, System.currentTimeMillis(), 3600))
+        .map(job -> {
+          if ("1".equals(job.getStationNumber())) {
+            job.setState(ChargingJobState.DONE);
+          } else {
+            job.setState(ChargingJobState.IN_PROGRESS);
+          }
+          return job;
+        })
+        .collect(Collectors.toList());
+
+    return ResponseEntity.status(HttpStatus.OK).body(jobs);
   }
 }

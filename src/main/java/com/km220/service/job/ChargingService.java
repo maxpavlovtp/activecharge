@@ -88,4 +88,8 @@ public class ChargingService {
   public ChargingJob get(String key) {
     return jobConverter.apply(chargingJobCache.get(key));
   }
+
+  public List<ChargingJob> getInProgressJobs() {
+    return null;
+  }
 }
