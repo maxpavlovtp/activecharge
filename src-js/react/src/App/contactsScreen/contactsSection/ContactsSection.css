@@ -98,3 +98,12 @@
     padding-top: 20px;
   }
 }
+@media (max-height: 580px) {
+  .contactsBox {
+    margin-top: -120px;
+    margin-bottom: -580px;
+  }
+  .contactsCont{
+    padding-top: 0;
+  }
+} 
