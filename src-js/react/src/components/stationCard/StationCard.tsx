@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import LoadingTime from "./LoadingTime";
 import styles from "./StationCard.module.css";
 import Timer from "./Timer";
@@ -58,28 +59,32 @@ export default function ({
   }, [secondsBackend, hoursTime]);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.mainInfo}>
-        <p className={styles.numberStation}>#{numberStation}</p>
-        <p className={styles.nameStation}>{nameStation}</p>
-      </div>
-      <div className={styles.status}>
-        {state === "IN_PROGRESS" ? (
-          loading === true ? (
-            <LoadingTime />
+    <Link className={styles.linkToStation} to={`/start?station=${numberStation}`}>
+      <div className={styles.container}>
+        <div className={styles.mainInfo}>
+          <p className={styles.numberStation}>#{numberStation}</p>
+          <p className={styles.nameStation}>{nameStation}</p>
+        </div>
+        <div className={styles.status}>
+          {state === "IN_PROGRESS" ? (
+            loading === true ? (
+              <LoadingTime />
+            ) : (
+              <Timer
+                hours={hoursTime}
+                minutes={minuteTime}
+                seconds={secondsTime}
+              />
+            )
           ) : (
-            <Timer
-              hours={hoursTime}
-              minutes={minuteTime}
-              seconds={secondsTime}
-            />
-          )
-        ) : (
-          <p className={styles.readyCharge}>Ready!</p>
-        )}
+            <p className={styles.readyCharge}>Ready!</p>
+          )}
 
-        <div className={state === 'IN_PROGRESS' ? styles.online : styles.offline}></div>
+          <div
+            className={state === "IN_PROGRESS" ? styles.online : styles.offline}
+          ></div>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 }

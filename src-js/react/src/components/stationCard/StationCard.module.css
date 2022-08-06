@@ -49,3 +49,6 @@
     height: 20px;
     background-color: #8F00FF;
 }
+.linkToStation{
+    text-decoration: none;
+}
