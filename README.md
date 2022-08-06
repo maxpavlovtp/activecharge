@@ -32,4 +32,6 @@ http://178.18.251.90:8080/swagger-ui/index.html
 
 ## Design:
 https://app.diagrams.net/#G1xBm3YxmDuKMkPA-N649yD8FCtsIpkAai
-<img width="898" alt="image" src="https://user-images.githubusercontent.com/5563023/183231489-647590bd-ba61-407a-ae71-6b7c243f0fba.png">
+<img width="906" alt="image" src="https://user-images.githubusercontent.com/5563023/183234275-1f28ef40-e86e-4cef-8cc4-6de7d8e3b299.png">
+<img width="701" alt="image" src="https://user-images.githubusercontent.com/5563023/183234265-230acac8-3010-4f00-96b8-548bc2450bf3.png">
+
