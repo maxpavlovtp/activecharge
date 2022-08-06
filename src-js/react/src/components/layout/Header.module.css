@@ -1,5 +1,8 @@
 .generalContainer{
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .paddingBox {
@@ -94,21 +97,16 @@
   margin-left: 15px;
 }
 
-.footerBox {
-  display: flex;
-}
 
 .footerText {
   text-align: center;
-  padding: 10px 12px;
+  padding: 10px 12px 0;
   border-top: 1px solid #e6e6e6;
   font-family: "OpenSansRegular", Arial, Helvetica, sans-serif;
   font-weight: 400;
   font-size: calc(0.6rem + 0.3vw);
   color: #6e6e6e;
   background-color: #fff;
-  width: 100%;
-  margin: 0 auto;
 }
 
 .footerLink {

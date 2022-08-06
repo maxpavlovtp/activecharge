@@ -83,10 +83,14 @@ p {
     margin-top: 80px;
   }
 }
-
+@media (max-height: 1280px) {
+  .contentPage {
+    margin-bottom: 20px;
+  }
+} 
 @media (max-height: 580px) {
   .contentPage {
     margin-top: -80px;
-    margin-bottom: -100px;
+    margin-bottom: -80px;
   }
 } 

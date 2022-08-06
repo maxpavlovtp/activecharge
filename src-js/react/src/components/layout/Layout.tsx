@@ -11,7 +11,7 @@ import placehoderSrc from "../../assets/logoTiny.png";
 
 export default function Layout() {
   const [fix, setFix] = useState(false);
-  const [routeTo, setRouteTo] = useState<any>("/");
+  const [routeTo, setRouteTo] = useState<any>("/main");
 
   const [searchParams] = useSearchParams();
   let stationNumbers: any = searchParams.get("station");
@@ -21,7 +21,7 @@ export default function Layout() {
   useEffect(() => {
     deviceStatus?.state === "IN_PROGRESS"
       ? setRouteTo(`/charging?station=${stationNumbers}`)
-      : setRouteTo(`/?station=${stationNumbers}`);
+      : setRouteTo(`/`);
   }, [isGotDeviceStatus]);
 
   const fixed = () => {
