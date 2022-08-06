@@ -36,7 +36,7 @@ abstract class AbstractWSEwelinkApi extends AbstractEwelinkApi {
     long timestamp = Instant.now().getEpochSecond();
     var latch = new CountDownLatch(1);
 
-    var webSocketClient = new WebSocketClient(clientListener, latch);
+    var webSocketClient = new WebSocketClient(clientListener, () -> webSocket, latch);
 
     webSocket = apiResourceRequest(HTTP_POST,
         BodyPublishers.ofString(JsonUtils.serialize(DispatchRequest.builder()

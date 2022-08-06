@@ -15,6 +15,8 @@ import java.net.http.WebSocket;
 import java.time.Instant;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class AbstractWSEwelinkApiV2 extends AbstractEwelinkApiV2 {
 
@@ -24,6 +26,8 @@ public abstract class AbstractWSEwelinkApiV2 extends AbstractEwelinkApiV2 {
   private WebSocket webSocket;
   private String apiSessionKey;
 
+  private static final Logger logger = LoggerFactory.getLogger(AbstractWSEwelinkApiV2.class);
+
   protected AbstractWSEwelinkApiV2(final EwelinkParameters parameters, final String applicationId,
       final String applicationSecret, final CredentialsStorage credentialsStorage,
       final HttpClient httpClient) {
@@ -31,27 +35,28 @@ public abstract class AbstractWSEwelinkApiV2 extends AbstractEwelinkApiV2 {
   }
 
   protected final void openWebSocket(WSClientListener clientListener) {
+    logger.debug("Open websocket.. ");
+
     var latch = new CountDownLatch(1);
 
-    var webSocketClient = new WebSocketClient(clientListener, latch);
-
-    webSocket = apiGetObjectRequest(DISPATCH_APP_API_URL,
+    var dispatchResponse = apiGetObjectRequest(DISPATCH_APP_API_URL,
         Map.of(),
         JsonUtils.jsonDataConverter(DispatchResponse.class)
-    ).thenCompose(dispatchResponse -> HttpClient
-        .newHttpClient()
-        .newWebSocketBuilder()
-        .buildAsync(
-            URI.create(String.format(WSS_URI_TEMPLATE,
-                dispatchResponse.getDomain(),
-                dispatchResponse.getPort())),
-            webSocketClient
-        )
     ).join();
 
-    EwelinkCredentials credentials = getCredentials();
+    var webSocketClient = new WebSocketClient(clientListener, () -> webSocket, latch);
 
+    webSocket = HttpClient.newHttpClient()
+        .newWebSocketBuilder()
+        .buildAsync(
+            URI.create(String.format(WSS_URI_TEMPLATE, dispatchResponse.getDomain(),
+                dispatchResponse.getPort())),
+            webSocketClient)
+        .join();
+
+    EwelinkCredentials credentials = getCredentials();
     var timestampSeconds = Instant.now().getEpochSecond();
+    logger.debug("Start websocket handshake.. ");
     sendMessage(JsonUtils.serialize(
         WssLogin.builder()
             .action("userOnline")
@@ -74,6 +79,7 @@ public abstract class AbstractWSEwelinkApiV2 extends AbstractEwelinkApiV2 {
   }
 
   protected final void closeWebSocket() {
+    logger.debug("Close websocket.. ");
     if (webSocket != null) {
       webSocket.sendClose(WebSocket.NORMAL_CLOSURE, "").join();
       webSocket = null;
@@ -85,6 +91,7 @@ public abstract class AbstractWSEwelinkApiV2 extends AbstractEwelinkApiV2 {
       throw new IllegalStateException("WebSocket is not opened!");
     }
     var messageWithApiKey = JsonUtils.addPropertyToJson(message, "apikey", apiKey);
+    logger.debug("Send websocket msg: {}", messageWithApiKey);
     webSocket.sendText(messageWithApiKey, true).join();
   }
 
