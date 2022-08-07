@@ -52,10 +52,11 @@ public final class WSEwelinkDeviceApiV2 extends AbstractWSEwelinkApiV2 {
   }
 
   public void startConsumption(String deviceId) {
-    log.debug("Start device consumption. Device id = {}", deviceId);
+    String startTime = dateFormat.format(Date.from(Instant.now()));
+    log.debug("Start device consumption. Device id = {}, Start time = {}", deviceId, startTime);
     var params = Params.builder()
         .oneKwh("start")
-        .startTime(dateFormat.format(Date.from(Instant.now())))
+        .startTime(startTime)
         .build();
     var message = JsonUtils.serialize(WssSetDeviceStatus.create(deviceId, params));
     sendMessage(message);
@@ -65,7 +66,7 @@ public final class WSEwelinkDeviceApiV2 extends AbstractWSEwelinkApiV2 {
     log.debug("Stop device consumption. Device id = {}", deviceId);
     var params = Params.builder()
         .oneKwh("stop")
-        .endTime(dateFormat.format(Date.from(Instant.now())))
+//        .endTime(dateFormat.format(Date.from(Instant.now())))
         .build();
     var message = JsonUtils.serialize(WssSetDeviceStatus.create(deviceId, params));
     sendMessage(message);
