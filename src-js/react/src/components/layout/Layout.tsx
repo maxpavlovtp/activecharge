@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Link, Navigate, Outlet, useSearchParams } from "react-router-dom";
+import {
+  Link,
+  Navigate,
+  Outlet,
+  useLocation,
+  useSearchParams,
+} from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import styles from "./Header.module.css";
 import logo from "../../assets/logo.png";
@@ -35,6 +41,8 @@ export default function Layout() {
     }
   };
 
+  const location = useLocation();
+
   window.addEventListener("scroll", fixed);
   const { t } = useTranslation();
   return (
@@ -61,9 +69,11 @@ export default function Layout() {
 
       <Outlet />
 
-      <Link className={styles.backToHome} to="/">
-        <FontAwesomeIcon icon={faHome} size="2x" />
-      </Link>
+      {location.pathname !== "/" && (
+        <Link className={styles.backToHome} to="/">
+          <FontAwesomeIcon icon={faHome} size="2x" />
+        </Link>
+      )}
 
       <footer className={styles.footerBox}>
         <p className={styles.footerText}>

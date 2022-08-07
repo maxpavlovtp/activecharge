@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useLocation, useMatch } from "react-router-dom";
 import ErrorPage from "../../components/error-page/ErrorPage";
 import StationCard from "../../components/stationCard/StationCard";
 import styles from "./HomeScreen.module.css";
