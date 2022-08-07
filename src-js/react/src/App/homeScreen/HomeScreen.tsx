@@ -30,8 +30,8 @@ export default function HomeScreen() {
                 <StationCard
                   state={data?.state}
                   leftS={data?.leftS}
-                  numberStation={data?.stationNumber}
-                  nameStation={"Comfort town"}
+                  stationNumber={data?.stationNumber}
+                  stationName={"Comfort town"}
                 />
               </div>
             );

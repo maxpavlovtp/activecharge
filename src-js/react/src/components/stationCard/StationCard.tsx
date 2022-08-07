@@ -5,13 +5,13 @@ import styles from "./StationCard.module.css";
 import Timer from "./Timer";
 
 export default function ({
-  numberStation,
-  nameStation,
+  stationNumber,
+  stationName,
   leftS,
   state,
 }: {
-  numberStation: any;
-  nameStation: any;
+  stationNumber: any;
+  stationName: any;
   leftS: any;
   state: any;
 }) {
@@ -59,11 +59,11 @@ export default function ({
   }, [secondsBackend, hoursTime]);
 
   return (
-    <Link className={styles.linkToStation} to={`/start?station=${numberStation}`}>
+    <Link className={styles.linkToStation} to={`/start?station=${stationNumber}`}>
       <div className={styles.container}>
         <div className={styles.mainInfo}>
-          <p className={styles.numberStation}>#{numberStation}</p>
-          <p className={styles.nameStation}>{nameStation}</p>
+          <p className={styles.numberStation}>#{stationNumber}</p>
+          <p className={styles.nameStation}>{stationName}</p>
         </div>
         <div className={styles.status}>
           {state === "IN_PROGRESS" ? (
