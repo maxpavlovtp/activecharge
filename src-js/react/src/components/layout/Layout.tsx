@@ -8,6 +8,9 @@ import MobileNavigation from "../header/MobileNavigation";
 import { useTranslation } from "react-i18next";
 import MainImgLoadingLazy from "../lazyLoading/MainImgLoadingLazy";
 import placehoderSrc from "../../assets/logoTiny.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Home } from "@material-ui/icons";
+import { faHome } from "@fortawesome/free-solid-svg-icons";
 
 export default function Layout() {
   const [fix, setFix] = useState(false);
@@ -51,12 +54,16 @@ export default function Layout() {
             <h3 className={styles.logoText}>220-km.com</h3>
           </Link>
 
-          <Navigation stationNumbers={stationNumbers}/>
-          <MobileNavigation stationNumbers={stationNumbers}/>
+          <Navigation stationNumbers={stationNumbers} />
+          <MobileNavigation stationNumbers={stationNumbers} />
         </nav>
       </header>
 
       <Outlet />
+
+      <Link className={styles.backToHome} to="/">
+        <FontAwesomeIcon icon={faHome} size="2x" />
+      </Link>
 
       <footer className={styles.footerBox}>
         <p className={styles.footerText}>

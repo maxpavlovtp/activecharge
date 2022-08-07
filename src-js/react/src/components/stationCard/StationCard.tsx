@@ -59,7 +59,7 @@ export default function ({
   }, [secondsBackend, hoursTime]);
 
   return (
-    <Link className={styles.linkToStation} to={`/start?station=${stationNumber}`}>
+    <Link reloadDocument={true} className={styles.linkToStation} to={`/start?station=${stationNumber}`}>
       <div className={styles.container}>
         <div className={styles.mainInfo}>
           <p className={styles.numberStation}>#{stationNumber}</p>
