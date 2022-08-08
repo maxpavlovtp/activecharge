@@ -52,8 +52,14 @@ public class OrderController {
   @PostMapping("/callBackMono")
   public ResponseEntity<Void> callBackMono(@RequestBody String callBackMono) {
     log.info("Call back from monobank: {}", callBackMono);
+
+    String invoiceId = fetchInvoiceId(callBackMono);
+    log.info("invoiceId: {}", invoiceId);
+    String stationNumberFromCache = invoiceCache.get(invoiceId);
+    log.info("stationNumberFromCache: {}", stationNumberFromCache);
     deviceService.toggleOn(
-        stationRepository.getByNumber(invoiceCache.get(fetchInvoiceId(callBackMono))).getDeviceId(),
+        stationRepository.getByNumber(stationNumberFromCache)
+            .getDeviceId(),
         12 * 3600);
     return ResponseEntity.status(HttpStatus.OK).body(null);
   }
