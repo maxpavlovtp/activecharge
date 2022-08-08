@@ -9,11 +9,6 @@ const Timer = (props: ITimer) => {
     props.minutes,
     props.seconds,
   ]);
-  // calc(1.4rem + 0.7vw)
-  // 20px 0 0 0;
-
-  // calc(1.5rem + 1.5vw)"
-  // 20px 0 30px 0"
   const timerText: any = {
     fontWeight: "400",
     fontSize: props.fontSize,
