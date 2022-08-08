@@ -54,6 +54,7 @@ public class OrderService {
     http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
     http.connect();
     try (OutputStream os = http.getOutputStream()) {
+      log.info("sending checkout request to monobank: {}", body);
       os.write(out);
     }
 
