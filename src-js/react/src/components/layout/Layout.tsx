@@ -15,7 +15,6 @@ import { useTranslation } from "react-i18next";
 import MainImgLoadingLazy from "../lazyLoading/MainImgLoadingLazy";
 import placehoderSrc from "../../assets/logoTiny.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Home } from "@material-ui/icons";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 
 export default function Layout() {
