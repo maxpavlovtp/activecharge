@@ -7,4 +7,4 @@ spring:
     clean-on-validation-error: false
 
 monobank:
-  callBackHost: "178.18.251.90"
+  callBackHost: "220-km.com"
