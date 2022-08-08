@@ -42,7 +42,7 @@ public class OrderService {
         + "        \"basketOrder\": []\n"
         + "    },\n"
         + "    \"redirectUrl\": \"http://" + callBackHost + "/charging?station=" + station + "\",\n"
-        + "    \"webHookUrl\": \"http://" + callBackHost + "/order/callBackMono\",\n"
+        + "    \"webHookUrl\": \"http://" + callBackHost + ":8080/order/callBackMono\",\n"
         + "    \"validity\": 3600,\n"
         + "    \"paymentType\": \"debit\"\n"
         + "}";
@@ -54,7 +54,7 @@ public class OrderService {
     http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
     http.connect();
     try (OutputStream os = http.getOutputStream()) {
-      log.info("sending checkout request to monobank: {}", body);
+      log.info("sending generateCheckoutLink request to monobank: {}", body);
       os.write(out);
     }
 

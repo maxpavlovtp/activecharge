@@ -39,15 +39,21 @@ public class OrderController {
   public ResponseEntity<String> generateCheckoutLink(
       @NotBlank @RequestParam("station_number") String stationNumber) throws IOException {
     String monoResponse = orderService.generateCheckoutLink(stationNumber);
-    String invoiceId = monoResponse.replace("{\"invoiceId\":\"", "").split("\"")[0];
+//    todo extract to service
+    String invoiceId = fetchInvoiceId(monoResponse);
     invoiceCache.put(invoiceId, monoResponse);
     return ResponseEntity.status(HttpStatus.OK).body(monoResponse);
+  }
+
+  private String fetchInvoiceId(String monoResponse) {
+    return monoResponse.replace("{\"invoiceId\":\"", "").split("\"")[0];
   }
 
   @PostMapping("/callBackMono")
   public ResponseEntity<Void> callBackMono(@RequestBody String callBackMono) {
     log.info("Call back from monobank: {}", callBackMono);
-    deviceService.toggleOn(stationRepository.getByNumber(invoiceCache.get("")).getDeviceId(),
+    deviceService.toggleOn(
+        stationRepository.getByNumber(invoiceCache.get(fetchInvoiceId(callBackMono))).getDeviceId(),
         12 * 3600);
     return ResponseEntity.status(HttpStatus.OK).body(null);
   }
