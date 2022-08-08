@@ -1,8 +1,10 @@
 package com.km220.controller;
 
+import com.km220.dao.station.StationEntity;
 import com.km220.dao.station.StationRepository;
 import com.km220.service.OrderService;
 import com.km220.service.device.DeviceService;
+import com.km220.service.job.ChargingService;
 import java.io.IOException;
 import java.util.HashMap;
 import javax.validation.constraints.NotBlank;
@@ -27,10 +29,7 @@ public class OrderController {
   @Autowired
   private OrderService orderService;
   @Autowired
-  private DeviceService deviceService;
-
-  @Autowired
-  private StationRepository stationRepository;
+  private ChargingService chargingService;
 
   //  todo move to DB
   private static final HashMap<String, String> invoiceCache = new HashMap<>();
@@ -57,10 +56,7 @@ public class OrderController {
     log.info("invoiceId: {}", invoiceId);
     String stationNumberFromCache = invoiceCache.get(invoiceId);
     log.info("stationNumberFromCache: {}", stationNumberFromCache);
-    deviceService.toggleOn(
-        stationRepository.getByNumber(stationNumberFromCache)
-            .getDeviceId(),
-        12 * 3600);
+    chargingService.start(stationNumberFromCache, 12 * 3600);
     return ResponseEntity.status(HttpStatus.OK).body(null);
   }
 }
