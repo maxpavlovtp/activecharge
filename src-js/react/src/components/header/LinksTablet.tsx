@@ -9,7 +9,11 @@ const lngs: any = {
   en: { nativeName: "Eng" },
 };
 
-export default function LinksTeblet({stationNumbers}: {stationNumbers: any}) {
+export default function LinksTeblet({
+  stationNumbers,
+}: {
+  stationNumbers: any;
+}) {
   const { t, i18n } = useTranslation();
 
   const animateFrom = { opacity: 0, y: -40 };
@@ -23,24 +27,60 @@ export default function LinksTeblet({stationNumbers}: {stationNumbers: any}) {
         transition={{ delay: 0.1 }}
         className={styles.list}
       >
-        <Link className={styles.links} to={`/contacts?station=${stationNumbers}`}>
+        <Link
+          className={styles.links}
+          to={stationNumbers === null ? "/" : `/?station=${stationNumbers}`}
+        >
+          {t("landingLink")}
+        </Link>
+      </motion.li>
+      <motion.li
+        initial={animateFrom}
+        animate={animateTo}
+        transition={{ delay: 0.2 }}
+        className={styles.list}
+      >
+        {stationNumbers !== null ? (
+          <Link
+            className={styles.links}
+            to={`/start?station=${stationNumbers}`}
+          >
+            {t("chargeLink")}
+          </Link>
+        ) : (
+          <></>
+        )}
+      </motion.li>
+      <motion.li
+        initial={animateFrom}
+        animate={animateTo}
+        transition={{ delay: 0.3 }}
+        className={styles.list}
+      >
+        <Link
+          className={styles.links}
+          to={`/contacts?station=${stationNumbers}`}
+        >
           {t("contacts")}
         </Link>
       </motion.li>
       <motion.li
         initial={animateFrom}
         animate={animateTo}
-        transition={{ delay: 0.15 }}
+        transition={{ delay: 0.4 }}
         className={styles.list}
       >
-        <Link className={styles.links} to={`/contract?station=${stationNumbers}`}>
+        <Link
+          className={styles.links}
+          to={`/contract?station=${stationNumbers}`}
+        >
           {t("offer")}
         </Link>
       </motion.li>
       <motion.li
         initial={animateFrom}
         animate={animateTo}
-        transition={{ delay: 0.15 }}
+        transition={{ delay: 0.5 }}
         className={styles.list}
       >
         <div className={styles.langContainer}>
