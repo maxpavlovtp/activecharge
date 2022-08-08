@@ -118,7 +118,7 @@ const MainSection: React.FC = () => {
   );
 
   return process.env.REACT_APP_LINK_SERVE === "http://220-km.com:8080/"
-    ? withoutStartBtn
+    ? withStartBtn
     : withStartBtn;
 };
 
