@@ -68,11 +68,11 @@ export default function Layout() {
 
       <Outlet />
 
-      {location.pathname !== "/" && (
+      {/* {location.pathname !== "/" && (
         <Link className={styles.backToHome} to="/">
           <FontAwesomeIcon icon={faHome} size="2x" />
         </Link>
-      )}
+      )} */}
 
       <footer className={styles.footerBox}>
         <p className={styles.footerText}>

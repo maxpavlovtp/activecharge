@@ -94,6 +94,8 @@ const MainSection: React.FC = () => {
               hours={hoursTime}
               minutes={minuteTime}
               seconds={secondsTime}
+              fontSize={"calc(1.5rem + 1.5vw)"}
+              margin={"20px 0 30px 0"}
             />
           </div>
         )}

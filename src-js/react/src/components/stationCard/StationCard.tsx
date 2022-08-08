@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import LoadingTime from "./LoadingTime";
 import styles from "./StationCard.module.css";
-import Timer from "./Timer";
+import Timer from "../timer/Timer";
 
 export default function ({
   stationNumber,
@@ -74,6 +74,8 @@ export default function ({
                 hours={hoursTime}
                 minutes={minuteTime}
                 seconds={secondsTime}
+                margin={"20px 0 0 0"}
+                fontSize={"calc(1.4rem + 0.7vw)"}
               />
             )
           ) : (

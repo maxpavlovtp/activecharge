@@ -2,6 +2,8 @@ export interface ITimer {
   seconds?: number;
   minutes?: number;
   hours?: number;
+  fontSize?: string;
+  margin?: string;
 }
 
 export interface IFetch {
