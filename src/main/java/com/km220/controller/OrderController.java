@@ -41,7 +41,7 @@ public class OrderController {
     String monoResponse = orderService.generateCheckoutLink(stationNumber);
 //    todo extract to service
     String invoiceId = fetchInvoiceId(monoResponse);
-    invoiceCache.put(invoiceId, monoResponse);
+    invoiceCache.put(invoiceId, stationNumber);
     return ResponseEntity.status(HttpStatus.OK).body(monoResponse);
   }
 
