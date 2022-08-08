@@ -34,7 +34,7 @@ public class OrderService {
     http.setRequestProperty("X-Token", monoToken);
 
     String body = "{\n"
-        + "    \"amount\": 110000,\n"
+        + "    \"amount\": 11000,\n"
         + "    \"ccy\": 980,\n"
         + "    \"merchantPaymInfo\": {\n"
         + "        \"reference\": \"84d0070ee4e44667b31371d8f8813947\",\n"
