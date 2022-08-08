@@ -33,6 +33,7 @@ server:
 
 monobank:
   token: "ux9Fn-4ob62pBQtM0O9z_gOKYhSo9SYBHk3g-2Bivw70"
+  callBackHost: "178.18.251.90"
 
 # #backup
 # #ewelink.appid = 'oeVkj2lYFGnJu5XUtWisfW4utiN4u9Mq';

@@ -8,35 +8,41 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class OrderService {
 
   @Value("${monobank.token}")
   private String monoToken;
 
-  public String generateCheckoutLink() throws IOException {
+  @Value("${monobank.callBackHost}")
+  private String callBackHost;
+
+
+  public String generateCheckoutLink(String station) throws IOException {
     String result = null;
 
     URL url = new URL("https://api.monobank.ua/api/merchant/invoice/create");
     URLConnection con = url.openConnection();
     HttpURLConnection http = (HttpURLConnection) con;
-    http.setRequestMethod("POST"); // PUT is another valid option
+    http.setRequestMethod("POST");
     http.setDoOutput(true);
     http.setRequestProperty("X-Token", monoToken);
 
     String body = "{\n"
-        + "    \"amount\": 22000,\n"
+        + "    \"amount\": 110000,\n"
         + "    \"ccy\": 980,\n"
         + "    \"merchantPaymInfo\": {\n"
         + "        \"reference\": \"84d0070ee4e44667b31371d8f8813947\",\n"
-        + "        \"destination\": \"Покупка щастя\",\n"
+        + "        \"destination\": \"12 годин зарядки\",\n"
         + "        \"basketOrder\": []\n"
         + "    },\n"
-        + "    \"redirectUrl\": \"https://example.com/your/website/result/page\",\n"
-        + "    \"webHookUrl\": \"https://example.com/mono/acquiring/webhook/maybesomegibberishuniquestringbutnotnecessarily\",\n"
+        + "    \"redirectUrl\": \"http://" + callBackHost + "/charging?station=" + station + "\",\n"
+        + "    \"webHookUrl\": \"http://" + callBackHost + "/order/callBackMono\",\n"
         + "    \"validity\": 3600,\n"
         + "    \"paymentType\": \"debit\"\n"
         + "}";
@@ -56,14 +62,14 @@ public class OrderService {
       br = new BufferedReader(new InputStreamReader(http.getInputStream()));
       String strCurrentLine;
       while ((strCurrentLine = br.readLine()) != null) {
-        System.out.println(strCurrentLine);
+        log.info("Checkout info: {}", strCurrentLine);
         result = strCurrentLine;
       }
     } else {
       br = new BufferedReader(new InputStreamReader(http.getErrorStream()));
       String strCurrentLine;
       while ((strCurrentLine = br.readLine()) != null) {
-        System.out.println(strCurrentLine);
+        log.error("Error: {}", strCurrentLine);
       }
     }
 

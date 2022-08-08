@@ -1,7 +1,6 @@
 package com.km220.controller;
 
 import com.km220.service.OrderService;
-import io.swagger.v3.oas.annotations.Parameter;
 import java.io.IOException;
 import javax.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
@@ -21,14 +20,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @Slf4j
 public class OrderController {
+
   @Autowired
   OrderService orderService;
 
   @GetMapping("/generateCheckoutLink")
-  public ResponseEntity<String> getStationStatus(
-      @Parameter(description = "Station number") @NotBlank @RequestParam("station_number") String stationNumber)
-      throws IOException {
-    return ResponseEntity.status(HttpStatus.OK).body(orderService.generateCheckoutLink());
+  public ResponseEntity<String> generateCheckoutLink(
+      @NotBlank @RequestParam("station_number") String stationNumber) throws IOException {
+    return ResponseEntity.status(HttpStatus.OK)
+        .body(orderService.generateCheckoutLink(stationNumber));
   }
 
   @PostMapping("/callBackMono")
