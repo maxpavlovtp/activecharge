@@ -7,7 +7,8 @@ public abstract class AbstractEwelinkApiTest {
   protected static final String BOILER_DEVICE_ID = "100155422a";
   protected static final String STAGE_DEVICE_ID = "10013bb124";
 
-  private static final String EMAIL = "maxpavlov.dp@gmail.com";
+  // todo remove hardcode
+  private static final String EMAIL = "km220.com@gmail.com";
   private static final String PASSWORD = "Nopassword1";
   private static final String REGION = "eu";
   private static final String COUNTRY_CODE = "+380";
