@@ -4,7 +4,6 @@ import MainScreen from "./App/mainScreen/MainScreen";
 import ContactsScreen from "./App/contactsScreen/ContactsScreen";
 import ContractScreen from "./App/contractScreen/ContractScreen";
 import ChargingScreen from "./App/chargingScreen/ChargingScreen";
-import MainOverload from "./components/overload-page/MainOverload";
 import Layout from "./components/layout/Layout";
 import NotFoundPage from "./components/notFoundPage/NotFoundPage";
 import PrivateRoute from "./components/privateRoute/PrivateRoute";
@@ -20,7 +19,6 @@ function App() {
             <Route path="/contract" element={<ContractScreen />} />
             <Route path="/contacts" element={<ContactsScreen />} />
             <Route path="/charging" element={<ChargingScreen />} />
-            <Route path="/overload" element={<MainOverload />} />
             <Route
               path="/start"
               element={

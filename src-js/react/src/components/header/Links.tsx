@@ -32,6 +32,7 @@ export default function Links({
         <Link
           className={styles.links}
           to={stationNumbers === null ? "/" : `/?station=${stationNumbers}`}
+          onClick={() => closeMenu(false)}
         >
           {t("landingLink")}
         </Link>
@@ -46,6 +47,7 @@ export default function Links({
           <Link
             className={styles.links}
             to={`/start?station=${stationNumbers}`}
+            onClick={() => closeMenu(false)}
           >
             {t("chargeLink")}
           </Link>
