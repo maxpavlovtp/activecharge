@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./Header.module.css";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -18,6 +18,9 @@ export default function LinksTeblet({
 
   const animateFrom = { opacity: 0, y: -40 };
   const animateTo = { opacity: 1, y: 0 };
+  useEffect(() => {
+    console.log(stationNumbers)
+  }, [stationNumbers])
 
   return (
     <ul className={styles.routeLinks}>
@@ -40,7 +43,7 @@ export default function LinksTeblet({
         transition={{ delay: 0.2 }}
         className={styles.list}
       >
-        {stationNumbers !== null ? (
+        {stationNumbers !== 'null' && stationNumbers !== null ? (
           <Link
             className={styles.links}
             to={`/start?station=${stationNumbers}`}

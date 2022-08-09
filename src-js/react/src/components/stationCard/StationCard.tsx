@@ -11,7 +11,7 @@ export default function ({
   state,
 }: {
   stationNumber: any;
-  stationName: any;
+  stationName: any; 
   leftS: any;
   state: any;
 }) {
