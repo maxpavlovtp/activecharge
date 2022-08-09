@@ -9,7 +9,13 @@ const lngs: any = {
   en: { nativeName: "Eng" },
 };
 
-export default function Links({closeMenu}: {closeMenu?:any}) {
+export default function Links({
+  closeMenu,
+  stationNumbers,
+}: {
+  closeMenu?: any;
+  stationNumbers: any;
+}) {
   const { t, i18n } = useTranslation();
 
   const animateFrom = { opacity: 0, y: -40 };
@@ -23,24 +29,61 @@ export default function Links({closeMenu}: {closeMenu?:any}) {
         transition={{ delay: 0.1 }}
         className={styles.list}
       >
-        <Link className={styles.links} to="/contacts" onClick={() => closeMenu(false)}>
+        <Link
+          className={styles.links}
+          to={stationNumbers === null ? "/" : `/?station=${stationNumbers}`}
+        >
+          {t("landingLink")}
+        </Link>
+      </motion.li>
+      {stationNumbers !== "null" && stationNumbers !== null && (
+        <motion.li
+          initial={animateFrom}
+          animate={animateTo}
+          transition={{ delay: 0.2 }}
+          className={styles.list}
+        >
+          <Link
+            className={styles.links}
+            to={`/start?station=${stationNumbers}`}
+          >
+            {t("chargeLink")}
+          </Link>
+        </motion.li>
+      )}
+
+      <motion.li
+        initial={animateFrom}
+        animate={animateTo}
+        transition={{ delay: 0.3 }}
+        className={styles.list}
+      >
+        <Link
+          className={styles.links}
+          to="/contacts"
+          onClick={() => closeMenu(false)}
+        >
           {t("contacts")}
         </Link>
       </motion.li>
       <motion.li
         initial={animateFrom}
         animate={animateTo}
-        transition={{ delay: 0.15 }}
+        transition={{ delay: 0.4 }}
         className={styles.list}
       >
-        <Link className={styles.links} to="/contract" onClick={() => closeMenu(false)}>
+        <Link
+          className={styles.links}
+          to="/contract"
+          onClick={() => closeMenu(false)}
+        >
           {t("offer")}
         </Link>
       </motion.li>
       <motion.li
         initial={animateFrom}
         animate={animateTo}
-        transition={{ delay: 0.15 }}
+        transition={{ delay: 0.5 }}
         className={styles.list}
       >
         <div className={styles.langContainer}>

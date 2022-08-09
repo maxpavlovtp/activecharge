@@ -39,7 +39,7 @@ export default function MobileNavigation({stationNumbers}: {stationNumbers: any}
   return (
     <div className={styles.mobileNavigation} ref={ref}>
       {open ? closeIcon : openIcon}
-      {open && <Links closeMenu={setOpen}/>}
+      {open && <Links stationNumbers={stationNumbers} closeMenu={setOpen}/>}
     </div>
   );
 }
