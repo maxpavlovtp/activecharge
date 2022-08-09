@@ -35,7 +35,7 @@ public class OrderController {
   public ResponseEntity<String> generateCheckoutLink(
       @NotBlank @RequestParam("station_number") String stationNumber) throws IOException {
     String monoResponse = orderService.generateCheckoutLink(stationNumber);
-//    todo extract to service
+    // todo extract to service
     String invoiceId = fetchInvoiceId(monoResponse);
     invoiceCache.put(invoiceId, stationNumber);
     return ResponseEntity.status(HttpStatus.OK).body(monoResponse);
@@ -48,12 +48,15 @@ public class OrderController {
   @PostMapping("/callBackMono")
   public ResponseEntity<Void> callBackMono(@RequestBody String callBackMono) {
     log.info("Call back from monobank: {}", callBackMono);
+    // todo move to service
+    if (callBackMono.contains("\"status\":\"success\"")) {
+      String invoiceId = fetchInvoiceId(callBackMono);
+      log.info("invoiceId: {}", invoiceId);
+      String stationNumberFromCache = invoiceCache.get(invoiceId);
+      log.info("stationNumberFromCache: {}", stationNumberFromCache);
+      chargingService.start(stationNumberFromCache, 12 * 3600);
+    }
 
-    String invoiceId = fetchInvoiceId(callBackMono);
-    log.info("invoiceId: {}", invoiceId);
-    String stationNumberFromCache = invoiceCache.get(invoiceId);
-    log.info("stationNumberFromCache: {}", stationNumberFromCache);
-    chargingService.start(stationNumberFromCache, 12 * 3600);
     return ResponseEntity.status(HttpStatus.OK).body(null);
   }
 }
