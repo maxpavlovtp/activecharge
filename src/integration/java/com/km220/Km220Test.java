@@ -2,7 +2,7 @@ package com.km220;
 
 import org.junit.jupiter.api.Test;
 
-class ChargerApplicationTest extends BaseIT {
+class Km220Test extends BaseIT {
 
   @Test
   void contextLoads() {

@@ -1,6 +1,6 @@
 ewelink:
   region: eu
-  email: maxpavlov.dp@gmail.com
+  email: km220.com@gmail.com
   password: Nopassword1
   countryCode: "+380"
   appId: YzfeftUVcZ6twZw1OoVKPRFYTrGEg01Q
@@ -30,6 +30,10 @@ flyway:
 
 server:
   forward-headers-strategy: framework
+
+monobank:
+  token: "ux9Fn-4ob62pBQtM0O9z_gOKYhSo9SYBHk3g-2Bivw70"
+  callBackHost: "178.18.251.90"
 
 # #backup
 # #ewelink.appid = 'oeVkj2lYFGnJu5XUtWisfW4utiN4u9Mq';
