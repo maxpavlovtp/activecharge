@@ -33,12 +33,11 @@ public class OrderController {
 
   @GetMapping("/generateCheckoutLink")
   public ResponseEntity<String> generateCheckoutLink(
-      @NotBlank @RequestParam("station_number") String stationNumber,
-      @NotBlank @RequestParam("hours") String hours) throws IOException {
-    String monoResponse = orderService.generateCheckoutLink(stationNumber, Integer.valueOf(hours));
+      @NotBlank @RequestParam("station_number") String stationNumber) throws IOException {
+    String monoResponse = orderService.generateCheckoutLink(stationNumber);
     // todo extract to service
     String invoiceId = fetchInvoiceId(monoResponse);
-    invoiceCache.put(invoiceId, stationNumber + ";" + hours);
+    invoiceCache.put(invoiceId, stationNumber);
     return ResponseEntity.status(HttpStatus.OK).body(monoResponse);
   }
 
@@ -53,10 +52,9 @@ public class OrderController {
     if (callBackMono.contains("\"status\":\"success\"")) {
       String invoiceId = fetchInvoiceId(callBackMono);
       log.info("invoiceId: {}", invoiceId);
-      String stationNumberFromCache = invoiceCache.get(invoiceId).split(";")[0];
-      String hours = invoiceCache.get(invoiceId).split(";")[1];
+      String stationNumberFromCache = invoiceCache.get(invoiceId);
       log.info("stationNumberFromCache: {}", stationNumberFromCache);
-      chargingService.start(stationNumberFromCache, Integer.parseInt(hours) * 3600);
+      chargingService.start(stationNumberFromCache, 12 * 3600);
     }
 
     return ResponseEntity.status(HttpStatus.OK).body(null);
