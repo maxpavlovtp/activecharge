@@ -1,0 +1,1 @@
+INSERT INTO station ("name", "number", provider_device_id)VALUES('tyhran','1001', '10015544ee');
