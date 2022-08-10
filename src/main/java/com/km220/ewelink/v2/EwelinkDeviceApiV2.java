@@ -1,9 +1,11 @@
 package com.km220.ewelink.v2;
 
+import static com.km220.ewelink.internal.EwelinkConstants.CONSUMPTION_DATE_FORMAT;
 import static com.km220.ewelink.internal.EwelinkConstants.DEVICE_TYPE;
+import static com.km220.ewelink.internal.EwelinkConstants.START_CONSUMPTION;
 
-import com.km220.ewelink.EwelinkParameters;
 import com.km220.ewelink.CredentialsStorage;
+import com.km220.ewelink.EwelinkParameters;
 import com.km220.ewelink.internal.model.v2.DeviceUpdateRequest;
 import com.km220.ewelink.internal.utils.JsonUtils;
 import com.km220.ewelink.internal.v2.AbstractEwelinkApiV2;
@@ -11,6 +13,8 @@ import com.km220.ewelink.model.device.Params;
 import com.km220.ewelink.model.device.SwitchState;
 import com.km220.ewelink.model.v2.DeviceV2;
 import java.net.http.HttpClient;
+import java.time.Instant;
+import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import org.slf4j.Logger;
@@ -43,6 +47,8 @@ public final class EwelinkDeviceApiV2 extends AbstractEwelinkApiV2 {
     var params = Params.builder()
         .switchState(state)
         .uiActive(chargeSeconds)
+        .oneKwh(START_CONSUMPTION)
+        .startTime(CONSUMPTION_DATE_FORMAT.format(Date.from(Instant.now())))
         .build();
     return apiPostObjectRequest(DEVICES_API_URI,
         Map.of(),

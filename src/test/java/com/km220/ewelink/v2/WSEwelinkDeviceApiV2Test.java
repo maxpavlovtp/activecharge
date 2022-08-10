@@ -13,34 +13,21 @@ class WSEwelinkDeviceApiV2Test extends AbstractEwelinkApiTest {
   @Test
   void getDeviceStatus_shouldReturnDeviceStatus() throws InterruptedException {
     var wsEwelinkDeviceApi = ewelinkClient.wsDevicesV2();
+    var ewelinkDeviceApi = ewelinkClient.devicesV2();
 
-    wsEwelinkDeviceApi.toggle("1001323420", SwitchState.ON, 5 * 60);
+    //ewelinkDeviceApi.toggle("10013bb124", SwitchState.ON, 5 * 60);
+    wsEwelinkDeviceApi.toggle("10013bb124", SwitchState.ON, 5 * 60);
+    Thread.sleep(3000 * 60);
 
+    wsEwelinkDeviceApi.refreshConsumption("10013bb124");
     Thread.sleep(1000);
 
-    wsEwelinkDeviceApi.stopConsumption("1001323420");
+//    wsEwelinkDeviceApi.stopConsumption("10013bb124");
+//    Thread.sleep(1000);
+//
+//    wsEwelinkDeviceApi.refreshConsumption("10013bb124");
+//    Thread.sleep(1000);
 
-    Thread.sleep(1000);
-
-    wsEwelinkDeviceApi.startConsumption("1001323420");
-
-    Thread.sleep(5000 * 60);
-
-    //wsEwelinkDeviceApi.stopConsumption("10013bb124");
-
-    Thread.sleep(1000);
-
-    wsEwelinkDeviceApi.refreshConsumption("1001323420");
-
-    Thread.sleep(1000);
-
-    wsEwelinkDeviceApi.getHistoricalConsumption("1001323420");
-
-    Thread.sleep(1000);
-
-    wsEwelinkDeviceApi.queryStatus("1001323420");
-
-    //TODO: validate result
-    Thread.sleep(1000);
+    //wsEwelinkDeviceApi.toggle("10013bb124", SwitchState.OFF, 5 * 60);
   }
 }
