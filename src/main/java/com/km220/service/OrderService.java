@@ -23,7 +23,7 @@ public class OrderService {
   private String callBackHost;
 
 
-  public String generateCheckoutLink(String station) throws IOException {
+  public String generateCheckoutLink(String station, Integer hours) throws IOException {
     String result = null;
 
     URL url = new URL("https://api.monobank.ua/api/merchant/invoice/create");
@@ -33,12 +33,15 @@ public class OrderService {
     http.setDoOutput(true);
     http.setRequestProperty("X-Token", monoToken);
 
+//    move to DB
+    int uahPerHour = 10;
+    String uahCents = String.valueOf(hours * uahPerHour * 100);
     String body = "{\n"
-        + "    \"amount\": 11000,\n"
+        + "    \"amount\": " + uahCents + ",\n"
         + "    \"ccy\": 980,\n"
         + "    \"merchantPaymInfo\": {\n"
         + "        \"reference\": \"84d0070ee4e44667b31371d8f8813947\",\n"
-        + "        \"destination\": \"12 годин зарядки\",\n"
+        + "        \"destination\": \"" + hours + " годин зарядки\",\n"
         + "        \"basketOrder\": []\n"
         + "    },\n"
         + "    \"redirectUrl\": \"http://" + callBackHost + "/charging?station=" + station + "\",\n"
