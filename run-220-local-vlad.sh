@@ -11,12 +11,14 @@ lsof -ti tcp:3000 | xargs kill -kill
 
 #FE
 nohup ./src-js/nest/run-nest-dev.sh &
-nohup ./src-js/react/run-react-dev.sh &
+nohup ./src-js/react/run-react-local.sh &
 
 #BE
 #docker-compose down && rm -rf ./db-data
 nohup docker-compose up &
 ./gradlew clean build -x test
+echo "sleep for 10 secs..."
+sleep 10
 java -jar -Dspring.profiles.active=vlad build/libs/220-km.com-0.0.1-SNAPSHOT.jar
 
 #tail -f nohup.out 
