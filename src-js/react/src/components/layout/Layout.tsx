@@ -7,16 +7,14 @@ import {
   useSearchParams,
 } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
-import styles from "./Layout.module.css"; 
+import "./layout.css";
 import logo from "../../assets/logo.png";
-import Navigation from "../header/Navigation";
-import MobileNavigation from "../header/MobileNavigation";
 import { useTranslation } from "react-i18next";
 import MainImgLoadingLazy from "../lazyLoading/MainImgLoadingLazy";
 import placehoderSrc from "../../assets/logoTiny.png";
+import { Nav, Navbar } from "react-bootstrap";
 
 export default function Layout() {
-  const [fix, setFix] = useState(false);
   const [routeTo, setRouteTo] = useState<any>("/main");
 
   const [searchParams] = useSearchParams();
@@ -30,47 +28,119 @@ export default function Layout() {
       : setRouteTo(`/`);
   }, [isGotDeviceStatus]);
 
-  const fixed = () => {
-    if (window.scrollY >= 20) {
-      setFix(true);
-    } else {
-      setFix(false);
-    }
+  const lngs: any = {
+    ua: { nativeName: "Укр" },
+    en: { nativeName: "Eng" },
   };
 
-  const location = useLocation();
+  const { t, i18n } = useTranslation();
 
-  window.addEventListener("scroll", fixed);
-  const { t } = useTranslation();
   return (
-    <div className={styles.generalContainer}>
-      <header className={styles.headerBox}>
-        <nav className={fix ? styles.paddingBoxFixed : styles.paddingBox}>
-          <Link reloadDocument={true} className={styles.homeLink} to={routeTo}>
-            <div className={styles.logoContainer}>
-              <MainImgLoadingLazy
-                src={logo}
-                alt={"logo"}
-                placeholderSrc={placehoderSrc}
-                width="40"
-                heigth="40"
-              />
-            </div>
-            <h3 className={styles.logoText}>220-km.com</h3>
-          </Link>
+    <div className="generalContainer">
+      <Navbar className="stickyNav" bg="light" expand="lg" collapseOnSelect>
+        <Link
+          style={{ textDecoration: "none" }}
+          reloadDocument={true}
+          className="homeLink"
+          to={routeTo}
+        >
+          <div className="logoContainer">
+            <MainImgLoadingLazy
+              src={logo}
+              alt={"logo"}
+              placeholderSrc={placehoderSrc}
+              width="40"
+              heigth="40"
+            />
+          </div>
+          <h3 className="logoText">220-km.com</h3>
+        </Link>
+        <Navbar.Toggle />
+        <Navbar.Collapse>
+          <Nav className="navs">
+            <Nav.Item>
+              <Nav.Link
+                style={{ textDecoration: "none" }}
+                className="links"
+                eventKey="1"
+                as={Link}
+                to={
+                  stationNumbers === null ? "/" : `/?station=${stationNumbers}`
+                }
+              >
+                {t("landingLink")}
+              </Nav.Link>
+            </Nav.Item>
 
-          <Navigation stationNumbers={stationNumbers} />
-          <MobileNavigation stationNumbers={stationNumbers} />
-        </nav>
-      </header>
+            {stationNumbers !== "null" && stationNumbers !== null && (
+              <Nav.Item>
+                <Nav.Link
+                  style={{ textDecoration: "none" }}
+                  className="links"
+                  eventKey="2"
+                  as={Link}
+                  to={`/start?station=${stationNumbers}`}
+                >
+                  {t("chargeLink")}
+                </Nav.Link>
+              </Nav.Item>
+            )}
+
+            <Nav.Item>
+              <Nav.Link
+                style={{ textDecoration: "none" }}
+                className="links"
+                eventKey="3"
+                as={Link}
+                to={`/contacts?station=${stationNumbers}`}
+              >
+                {t("contacts")}
+              </Nav.Link>
+            </Nav.Item>
+
+            <Nav.Item>
+              <Nav.Link
+                style={{ textDecoration: "none" }}
+                className="links"
+                eventKey="4"
+                as={Link}
+                to={`/contract?station=${stationNumbers}`}
+              >
+                {t("offer")}
+              </Nav.Link>
+            </Nav.Item>
+
+            <Nav.Item>
+              <Nav.Link eventKey="5">
+                <div className="langContainer">
+                  {Object.keys(lngs).map((lng: any) => (
+                    <button
+                      className="btnLang"
+                      key={lng}
+                      style={{
+                        fontWeight:
+                          i18n.resolvedLanguage === lng ? "bold" : "normal",
+                      }}
+                      type="submit"
+                      onClick={() => i18n.changeLanguage(lng)}
+                    >
+                      {lngs[lng].nativeName}
+                    </button>
+                  ))}
+                </div>
+              </Nav.Link>
+            </Nav.Item>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
 
       <Outlet />
 
-      <footer className={styles.footerBox}>
-        <p className={styles.footerText}>
+      <footer className="footerBox">
+        <p className="footerText">
           ©2022 {t("footer.part1")}. {t("footer.part2")}{" "}
           <a
-            className={styles.footerLink}
+            className="footerLink"
             href="https://www.facebook.com/zeBoosterLab/"
           >
             ZE Booster Lab

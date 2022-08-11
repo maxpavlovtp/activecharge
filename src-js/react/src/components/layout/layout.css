@@ -1,0 +1,88 @@
+.generalContainer {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.stickyNav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.homeLink {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.logoContainer {
+  display: flex;
+}
+
+.logoText {
+  color: #393939;
+  font-family: "OpenSansBold", Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  font-size: calc(0.9rem + 1.2vw);
+  margin: 0;
+  margin-left: 10px;
+}
+
+.links {
+  color: #6c757d;
+  padding: 4px;
+  padding-left: 12px;
+  padding-right: 0;
+  font-family: "OpenSansRegular", Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.links:hover {
+  color: #393939;
+}
+
+.langContainer {
+  display: flex;
+}
+
+.btnLang {
+  font-family: "OpenSansRegular", Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: #393939;
+  margin-left: 5px;
+}
+.btnLang:not(:last-child) {
+  border-right: 2px solid #a5adb4;
+  padding-right: 5px;
+  margin-left: 15px;
+}
+
+.navs{
+  align-items: flex-end;
+  margin-top: 10px;
+}
+
+.footerText {
+  text-align: center;
+  padding: 10px 12px 0;
+  border-top: 1px solid #e6e6e6;
+  font-family: "OpenSansRegular", Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  font-size: calc(0.6rem + 0.3vw);
+  color: #6e6e6e;
+  background-color: #fff;
+}
+
+.footerLink {
+  text-decoration: none;
+  color: #2997ff;
+}
+
+.footerLink:hover {
+  text-decoration: underline;
+}
