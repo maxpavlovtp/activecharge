@@ -1,7 +1,5 @@
-.contentPage {
-  margin-top: 120px;
-}
 .container {
+  margin-top: 120px;
   max-width: 1240px;
   margin: 0 auto;
 }
@@ -33,7 +31,7 @@ p {
 }
 .offerLink {
   text-decoration: none;
-  color: #8F00FF;
+  color: #8f00ff;
 }
 .offerLink:hover {
   color: #008957;
@@ -44,9 +42,8 @@ p {
 }
 
 .congrats220 {
-  color: #8F00FF;
+  color: #8f00ff;
 }
-
 
 @media (max-width: 1340px) {
   .container {
@@ -87,10 +84,10 @@ p {
   .contentPage {
     margin-bottom: 20px;
   }
-} 
+}
 @media (max-height: 580px) {
   .contentPage {
     margin-top: -80px;
     margin-bottom: -80px;
   }
-} 
+}

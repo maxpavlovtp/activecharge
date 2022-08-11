@@ -24,7 +24,7 @@ const MainSection: React.FC = () => {
   const { t } = useTranslation();
 
   const { isLoadingCharging, deviceStatus, error } =
-    useAppSelector((state) => state.fetchReducer);
+      useAppSelector((state) => state.fetchReducer);
 
   const hours = (secondsBackend: any) => {
     setHoursTime(Math.floor(secondsBackend / 60 / 60));
@@ -34,7 +34,7 @@ const MainSection: React.FC = () => {
       setLoading(false);
     }
   };
-  
+
   const interval: any = localStorage.getItem("interval");
   let timerInterval = 3600 + (Number(interval) / 1000);
 
@@ -54,7 +54,7 @@ const MainSection: React.FC = () => {
   }, [deviceStatus]);
 
   useEffect(() => {
-    console.log("leftSec: " + secondsBackend); 
+    console.log("leftSec: " + secondsBackend);
     if (secondsBackend >= timerInterval) {
       hours(secondsBackend);
     }
@@ -76,31 +76,31 @@ const MainSection: React.FC = () => {
 
   if (error)
     return (
-      <ErrorPage
-        errorHeader={t("errorDevHeader")}
-        errorBody={t("errorDevBody")}
-      />
+        <ErrorPage
+            errorHeader={t("errorDevHeader")}
+            errorBody={t("errorDevBody")}
+        />
     );
 
   if (loading === true) return <Spinner />;
 
   return (
-    <>
-      <div className={styles.chargingBox}>
-        {secondsTime >= 0 && (
-          <div className={styles.contTimer}>
-            <GetPower station={stationNumbers} />
-            <Timer
-              hours={hoursTime}
-              minutes={minuteTime}
-              seconds={secondsTime}
-              fontSize={"calc(1.5rem + 1.5vw)"}
-              margin={"20px 0 30px 0"}
-            />
-          </div>
-        )}
-      </div>
-    </>
+      <>
+        <div className={styles.chargingBox}>
+          {secondsTime >= 0 && (
+              <div className={styles.contTimer}>
+                <GetPower station={stationNumbers} />
+                <Timer
+                    hours={hoursTime}
+                    minutes={minuteTime}
+                    seconds={secondsTime}
+                    fontSize={"calc(1.5rem + 1.5vw)"}
+                    margin={"20px 0 30px 0"}
+                />
+              </div>
+          )}
+        </div>
+      </>
   );
 };
 
