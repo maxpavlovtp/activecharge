@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import styles from "./ChargingSection.module.css";
-import Timer from "../../../components/timer/Timer";
-import ErrorPage from "../../../components/error-page/ErrorPage";
+import Timer from "../../components/timer/Timer";
+import ErrorPage from "../../components/error-page/ErrorPage";
 import { useTranslation } from "react-i18next";
-import Spinner from "../../../components/spinner/Spinner";
-import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
-import { getStationInfo } from "../../../store/reducers/ActionCreators";
-import GetPower from "../../../components/getPower/GetPower";
+import Spinner from "../../components/spinner/Spinner";
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
+import { getStationInfo } from "../../store/reducers/ActionCreators";
+import GetPower from "../../components/getPower/GetPower";
 import { useSearchParams } from "react-router-dom";
 
 const MainSection: React.FC = () => {

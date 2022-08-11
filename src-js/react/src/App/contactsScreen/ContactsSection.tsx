@@ -8,8 +8,8 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { faPhoneSquareAlt } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
-import Modal from "../../../components/modal/Modal";
-import Emoji from "../../../components/emoji/Emoji";
+import Modal from "../../components/modal/Modal";
+import Emoji from "../../components/emoji/Emoji";
 
 const MainSection: React.FC = () => {
   const [modalActive, setModalActive] = useState(false);
