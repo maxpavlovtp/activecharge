@@ -15,7 +15,7 @@
   font-family: "OpenSansSemiBold", Arial, Helvetica, sans-serif;
   font-weight: 600;
   color: #393939;
-  margin-right: 5px;
+  margin-left: 5px;
 }
 .nameStation {
   font-size: calc(1.3rem + 0.4vw);

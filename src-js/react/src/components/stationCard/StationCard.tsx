@@ -11,7 +11,7 @@ export default function ({
   state,
 }: {
   stationNumber: any;
-  stationName: any; 
+  stationName: any;
   leftS: any;
   state: any;
 }) {
@@ -59,11 +59,15 @@ export default function ({
   }, [secondsBackend, hoursTime]);
 
   return (
-    <Link reloadDocument={true} className={styles.linkToStation} to={`/start?station=${stationNumber}`}>
+    <Link
+      reloadDocument={true}
+      className={styles.linkToStation}
+      to={`/start?station=${stationNumber}`}
+    >
       <div className={styles.container}>
         <div className={styles.mainInfo}>
-          <p className={styles.numberStation}>#{stationNumber}</p>
-          <p className={styles.nameStation}>{stationName}</p>
+          <p className={styles.nameStation}>Station</p>
+          <p className={styles.numberStation}>{stationNumber}</p>
         </div>
         <div className={styles.status}>
           {state === "IN_PROGRESS" ? (
