@@ -1,5 +1,5 @@
 
-package com.km220.ewelink.internal;
+package com.km220.ewelink.internal.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
