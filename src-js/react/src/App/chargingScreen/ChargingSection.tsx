@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import { getStationInfo } from "../../store/reducers/ActionCreators";
 import GetPower from "../../components/getPower/GetPower";
 import { useSearchParams } from "react-router-dom";
+import { useBackTime } from "../../hooks/useBackTime";
 
 const MainSection: React.FC = () => {
   const [loading, setLoading] = useState<any>(true);
@@ -26,18 +27,6 @@ const MainSection: React.FC = () => {
   const { isLoadingCharging, deviceStatus, error } =
       useAppSelector((state) => state.fetchReducer);
 
-  const hours = (secondsBackend: any) => {
-    setHoursTime(Math.floor(secondsBackend / 60 / 60));
-    if (hoursTime) {
-      setMinuteTime(Math.floor(secondsBackend / 60) - hoursTime * 60);
-      setSecondsTime(secondsBackend % 60);
-      setLoading(false);
-    }
-  };
-
-  const interval: any = localStorage.getItem("interval");
-  let timerInterval = 3600 + (Number(interval) / 1000);
-
   useEffect(() => {
     if (isLoadingCharging === false) {
       setTimeout(() => {
@@ -53,26 +42,14 @@ const MainSection: React.FC = () => {
     }
   }, [deviceStatus]);
 
-  useEffect(() => {
-    console.log("leftSec: " + secondsBackend);
-    if (secondsBackend >= timerInterval) {
-      hours(secondsBackend);
-    }
-    if (secondsBackend < timerInterval && secondsBackend > 0) {
-      setMinuteTime(Math.floor(secondsBackend / 60));
-      setSecondsTime(secondsBackend % 60);
-      setLoading(false);
-    }
-    if (secondsBackend < 60 && secondsBackend > 0) {
-      setSecondsTime(secondsBackend);
-      setLoading(false);
-    }
-    if (secondsBackend <= 3 && secondsBackend > 0) {
-      setLoading(false);
-      setSecondsTime(0);
-      setMinuteTime(0);
-    }
-  }, [secondsBackend, hoursTime]);
+  useBackTime(
+    secondsBackend,
+    hoursTime,
+    setHoursTime,
+    setMinuteTime,
+    setSecondsTime,
+    setLoading,
+  );
 
   if (error)
     return (
