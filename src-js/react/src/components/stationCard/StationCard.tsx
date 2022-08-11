@@ -7,12 +7,10 @@ import { useBackTime } from "../../hooks/useBackTime";
 
 export default function ({
   stationNumber,
-  stationName,
   leftS,
   state,
 }: {
   stationNumber: any;
-  stationName: any;
   leftS: any;
   state: any;
 }) {

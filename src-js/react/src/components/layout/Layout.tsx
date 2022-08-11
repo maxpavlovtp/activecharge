@@ -7,15 +7,13 @@ import {
   useSearchParams,
 } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
-import styles from "./Header.module.css";
+import styles from "./Layout.module.css"; 
 import logo from "../../assets/logo.png";
 import Navigation from "../header/Navigation";
 import MobileNavigation from "../header/MobileNavigation";
 import { useTranslation } from "react-i18next";
 import MainImgLoadingLazy from "../lazyLoading/MainImgLoadingLazy";
 import placehoderSrc from "../../assets/logoTiny.png";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome } from "@fortawesome/free-solid-svg-icons";
 
 export default function Layout() {
   const [fix, setFix] = useState(false);

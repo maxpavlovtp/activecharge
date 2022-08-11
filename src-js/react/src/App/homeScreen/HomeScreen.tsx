@@ -31,7 +31,6 @@ export default function HomeScreen() {
                   state={data?.state}
                   leftS={data?.leftS}
                   stationNumber={data?.stationNumber}
-                  stationName={"Comfort town"}
                 />
               </div>
             );
