@@ -16,7 +16,7 @@ import { Nav, Navbar } from "react-bootstrap";
 
 export default function Layout() {
   const [routeTo, setRouteTo] = useState<any>("/main");
-
+  const [open, setOpen] = useState<any>(null);
   const [searchParams] = useSearchParams();
   let stationNumbers: any = searchParams.get("station");
   const { deviceStatus, isGotDeviceStatus } = useAppSelector(
@@ -27,6 +27,12 @@ export default function Layout() {
       ? setRouteTo(`/charging?station=${stationNumbers}`)
       : setRouteTo(`/`);
   }, [isGotDeviceStatus]);
+
+  const closeMenu = () => {
+    setOpen(!open);
+    console.log(open);
+  };
+  let toggleStatus = !open ? "toggle-icon" : "toggle-icon open";
 
   const lngs: any = {
     ua: { nativeName: "Укр" },
@@ -55,13 +61,14 @@ export default function Layout() {
           </div>
           <h3 className="logoText">220-km.com</h3>
         </Link>
-        <Navbar.Toggle />
+        <Navbar.Toggle onClick={closeMenu} bsPrefix={`${toggleStatus}`} />
         <Navbar.Collapse>
-          <Nav className="navs">
+          <Nav className="ml-auto mt-auto navs">
             <Nav.Item>
               <Nav.Link
                 style={{ textDecoration: "none" }}
                 className="links"
+                onClick={closeMenu}
                 eventKey="1"
                 as={Link}
                 to={
@@ -77,6 +84,7 @@ export default function Layout() {
                 <Nav.Link
                   style={{ textDecoration: "none" }}
                   className="links"
+                  onClick={closeMenu}
                   eventKey="2"
                   as={Link}
                   to={`/start?station=${stationNumbers}`}
@@ -90,6 +98,7 @@ export default function Layout() {
               <Nav.Link
                 style={{ textDecoration: "none" }}
                 className="links"
+                onClick={closeMenu}
                 eventKey="3"
                 as={Link}
                 to={`/contacts?station=${stationNumbers}`}
@@ -102,6 +111,7 @@ export default function Layout() {
               <Nav.Link
                 style={{ textDecoration: "none" }}
                 className="links"
+                onClick={closeMenu}
                 eventKey="4"
                 as={Link}
                 to={`/contract?station=${stationNumbers}`}
@@ -111,7 +121,7 @@ export default function Layout() {
             </Nav.Item>
 
             <Nav.Item>
-              <Nav.Link eventKey="5">
+              <Nav.Link eventKey="5" onClick={closeMenu}>
                 <div className="langContainer">
                   {Object.keys(lngs).map((lng: any) => (
                     <button
