@@ -1,28 +1,5 @@
-.generalContainer {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.stickyNav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index:2;
-  box-shadow:0 2px 10px rgba(0,0,0,0.1);
-}
-.toggle-icon{
+.toggle-icon {
   display: none;
-} 
-.homeLink {
-  display: flex;
-  align-items: center;
-  box-sizing: border-box;
-}
-
-.logoContainer {
-  display: flex;
 }
 
 .logoText {
@@ -30,47 +7,40 @@
   font-family: "OpenSansBold", Arial, Helvetica, sans-serif;
   font-weight: 700;
   font-size: calc(0.9rem + 1.2vw);
-  margin: 0;
-  margin-left: 10px;
 }
 
 .links {
-  color: #6c757d;
-  padding: 4px;
-  padding-left: 12px;
-  padding-right: 0;
   font-family: "OpenSansRegular", Arial, Helvetica, sans-serif;
   font-weight: 400;
   font-size: calc(0.7rem + 0.4vw);
-}
-
-.links:hover {
-  color: #393939;
-}
-
-.langContainer {
-  display: flex;
 }
 
 .btnLang {
   font-family: "OpenSansRegular", Arial, Helvetica, sans-serif;
   font-weight: 400;
   font-size: calc(0.7rem + 0.4vw);
-  background-color: transparent;
   border: none;
-  cursor: pointer;
+  background-color: #f8f9fa;
   color: #393939;
-  margin-left: 5px;
 }
 .btnLang:not(:last-child) {
   border-right: 2px solid #a5adb4;
   padding-right: 5px;
-  margin-left: 15px;
 }
 
-.navs {
-  align-items: flex-end;
-  margin-top: 10px;
+@media (max-width: 991px) {
+  .toggle-icon {
+    display: block;
+    background-image: url("../../assets/icons8-menu-24.svg");
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background-color: #f8f9fa;
+  }
+  .open {
+    background-image: url("../../assets/icons8-close-24.svg");
+  }
 }
 
 .footerText {
@@ -93,17 +63,4 @@
   text-decoration: underline;
 }
 
-@media (max-width: 992px) {
-  .toggle-icon {
-    display: block;
-    background-image: url('../../assets/icons8-menu-24.svg');
-    background-repeat: no-repeat;
-    width: 24px;
-    height: 24px;
-    border: none;
-    background-color: #f8f9fa;
-  }
-  .open {
-    background-image: url("../../assets/icons8-close-24.svg");
-  }
-}
+

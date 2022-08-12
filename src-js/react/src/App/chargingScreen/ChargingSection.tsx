@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import styles from "./ChargingSection.module.css";
 import Timer from "../../components/timer/Timer";
 import ErrorPage from "../../components/error-page/ErrorPage";
 import { useTranslation } from "react-i18next";
@@ -9,6 +8,7 @@ import { getStationInfo } from "../../store/reducers/ActionCreators";
 import GetPower from "../../components/getPower/GetPower";
 import { useSearchParams } from "react-router-dom";
 import { useBackTime } from "../../hooks/useBackTime";
+import { Container, Row } from "react-bootstrap";
 
 const MainSection: React.FC = () => {
   const [loading, setLoading] = useState<any>(true);
@@ -24,8 +24,9 @@ const MainSection: React.FC = () => {
 
   const { t } = useTranslation();
 
-  const { isLoadingCharging, deviceStatus, error } =
-      useAppSelector((state) => state.fetchReducer);
+  const { isLoadingCharging, deviceStatus, error } = useAppSelector(
+    (state) => state.fetchReducer
+  );
 
   useEffect(() => {
     if (isLoadingCharging === false) {
@@ -37,8 +38,8 @@ const MainSection: React.FC = () => {
 
   useEffect(() => {
     setSecondsBackend(deviceStatus?.leftS);
-    if(deviceStatus?.state === 'DONE' && deviceStatus?.leftS === 0){
-      setLoading(false)
+    if (deviceStatus?.state === "DONE" && deviceStatus?.leftS === 0) {
+      setLoading(false);
     }
   }, [deviceStatus]);
 
@@ -48,36 +49,40 @@ const MainSection: React.FC = () => {
     setHoursTime,
     setMinuteTime,
     setSecondsTime,
-    setLoading,
+    setLoading
   );
 
   if (error)
     return (
-        <ErrorPage
-            errorHeader={t("errorDevHeader")}
-            errorBody={t("errorDevBody")}
-        />
+      <ErrorPage
+        errorHeader={t("errorDevHeader")}
+        errorBody={t("errorDevBody")}
+      />
     );
 
   if (loading === true) return <Spinner />;
 
   return (
-      <>
-        <div className={styles.chargingBox}>
-          {secondsTime >= 0 && (
-              <div className={styles.contTimer}>
-                <GetPower station={stationNumbers} />
-                <Timer
-                    hours={hoursTime}
-                    minutes={minuteTime}
-                    seconds={secondsTime}
-                    fontSize={"calc(1.5rem + 1.5vw)"}
-                    margin={"20px 0 30px 0"}
-                />
-              </div>
-          )}
-        </div>
-      </>
+    <>
+      <Container fluid >
+        {secondsTime >= 0 && (
+          <>
+            <Row className="justify-content-center">
+              <GetPower station={stationNumbers} />
+            </Row>
+            <Row className="justify-content-center">
+              <Timer
+                hours={hoursTime}
+                minutes={minuteTime}
+                seconds={secondsTime}
+                fontSize={"calc(1.5rem + 1.5vw)"}
+                margin={"20px 0 30px 0"}
+              />
+            </Row>
+          </>
+        )}
+      </Container>
+    </>
   );
 };
 
