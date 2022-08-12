@@ -34,7 +34,7 @@ public class OrderService {
     http.setRequestProperty("X-Token", monoToken);
 
 //    move to DB
-    int uahPerHour = 10;
+    int uahPerHour = 7;
     String uahCents = String.valueOf(hours * uahPerHour * 100);
     String body = "{\n"
         + "    \"amount\": " + uahCents + ",\n"
