@@ -50,7 +50,7 @@ export default function Layout() {
       className="flex-column justify-content-between ml-0 pl-0 mr-0 pr-0"
     >
       <Navbar
-        className="justify-content-between align-items-center shadow-sm stickyNav"
+        className="justify-content-between align-items-center shadow-sm s"
         bg="light"
         expand="lg"
         collapseOnSelect
@@ -58,7 +58,7 @@ export default function Layout() {
         <Link
           style={{ textDecoration: "none", display: "flex" }}
           reloadDocument={true}
-          className="flex-row"
+          className="flex-row align-items-center"
           to={routeTo}
         >
           <div className="logoContainer">
