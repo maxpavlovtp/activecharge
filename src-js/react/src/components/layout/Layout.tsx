@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Link,
   Navigate,
@@ -17,11 +17,14 @@ import { Nav, Navbar } from "react-bootstrap";
 export default function Layout() {
   const [routeTo, setRouteTo] = useState<any>("/main");
   const [open, setOpen] = useState<any>(null);
+  const [expanded, setExpanded] = useState<any>(null);
+
   const [searchParams] = useSearchParams();
   let stationNumbers: any = searchParams.get("station");
   const { deviceStatus, isGotDeviceStatus } = useAppSelector(
     (state) => state.fetchReducer
   );
+
   useEffect(() => {
     deviceStatus?.state === "IN_PROGRESS"
       ? setRouteTo(`/charging?station=${stationNumbers}`)
