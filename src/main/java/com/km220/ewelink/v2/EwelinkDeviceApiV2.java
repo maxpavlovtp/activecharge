@@ -3,6 +3,7 @@ package com.km220.ewelink.v2;
 import static com.km220.ewelink.internal.EwelinkConstants.CONSUMPTION_DATE_FORMAT;
 import static com.km220.ewelink.internal.EwelinkConstants.DEVICE_TYPE;
 import static com.km220.ewelink.internal.EwelinkConstants.START_CONSUMPTION;
+import static com.km220.ewelink.internal.EwelinkConstants.STOP_CONSUMPTION;
 
 import com.km220.ewelink.CredentialsStorage;
 import com.km220.ewelink.EwelinkParameters;
@@ -47,7 +48,7 @@ public final class EwelinkDeviceApiV2 extends AbstractEwelinkApiV2 {
     var params = Params.builder()
         .switchState(state)
         .uiActive(chargeSeconds)
-        .oneKwh(START_CONSUMPTION)
+        .oneKwh(state == SwitchState.ON ? START_CONSUMPTION : STOP_CONSUMPTION)
         .startTime(CONSUMPTION_DATE_FORMAT.format(Date.from(Instant.now())))
         .build();
     return apiPostObjectRequest(DEVICES_API_URI,

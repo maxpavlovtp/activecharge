@@ -18,7 +18,7 @@ import java.util.concurrent.CountDownLatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class AbstractWSEwelinkApiV2 extends AbstractEwelinkApiV2 {
+public abstract class AbstractWSEwelinkApiV2 extends AbstractEwelinkApiV2 implements AutoCloseable {
 
   private static final String WSS_URI_TEMPLATE = "wss://%s:%s/api/ws";
   private static final String DISPATCH_APP_API_URL = "https://eu-dispa.coolkit.cc/dispatch/app";
@@ -28,13 +28,18 @@ public abstract class AbstractWSEwelinkApiV2 extends AbstractEwelinkApiV2 {
 
   private static final Logger logger = LoggerFactory.getLogger(AbstractWSEwelinkApiV2.class);
 
-  protected AbstractWSEwelinkApiV2(final EwelinkParameters parameters, final String applicationId,
-      final String applicationSecret, final CredentialsStorage credentialsStorage,
+  protected AbstractWSEwelinkApiV2(final EwelinkParameters parameters,
+      final String applicationId,
+      final String applicationSecret,
+      final CredentialsStorage credentialsStorage,
+      WSClientListener clientListener,
       final HttpClient httpClient) {
     super(parameters, applicationId, applicationSecret, credentialsStorage, httpClient);
+
+    openWebSocket(clientListener);
   }
 
-  protected final void openWebSocket(WSClientListener clientListener) {
+  private void openWebSocket(WSClientListener clientListener) {
     logger.debug("Open websocket.. ");
 
     var latch = new CountDownLatch(1);
@@ -78,7 +83,7 @@ public abstract class AbstractWSEwelinkApiV2 extends AbstractEwelinkApiV2 {
     }
   }
 
-  protected final void closeWebSocket() {
+  private void closeWebSocket() {
     logger.debug("Close websocket.. ");
     if (webSocket != null) {
       webSocket.sendClose(WebSocket.NORMAL_CLOSURE, "").join();
@@ -95,7 +100,12 @@ public abstract class AbstractWSEwelinkApiV2 extends AbstractEwelinkApiV2 {
     webSocket.sendText(messageWithApiKey, true).join();
   }
 
-  protected final void sendMessage(String message) {
+  protected void sendMessage(String message) {
     sendMessage(message, apiSessionKey);
+  }
+
+  @Override
+  public void close() {
+    closeWebSocket();
   }
 }

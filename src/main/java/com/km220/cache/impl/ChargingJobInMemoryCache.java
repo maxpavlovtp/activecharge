@@ -17,17 +17,11 @@ public class ChargingJobInMemoryCache implements ChargingJobCache {
 
   @Override
   public ChargingJobEntity get(final String id) {
-    ChargingJobEntity job = cache.get(id);
-
-    logger.debug("Get entry from cache. key = {}, value = {}", id, job);
-
-    return job;
+    return cache.get(id);
   }
 
   @Override
   public ChargingJobEntity put(final String id, ChargingJobEntity job) {
-    logger.debug("Put entry in cache. key = {}, value = {}", id, job);
-
     return cache.put(id, job);
   }
 }

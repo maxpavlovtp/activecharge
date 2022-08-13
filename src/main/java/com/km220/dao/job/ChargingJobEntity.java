@@ -19,6 +19,7 @@ public final class ChargingJobEntity extends DatabaseEntity {
   public static final String STATION_ID = "station_id";
   public static final String CHARGING_WT = "charging_wt";
   public static final String CHARGED_WT = "charged_wt";
+  public static final String CHARGED_WT_WS = "charged_wt_ws";
 
   public static final String VOLTAGE = "voltage";
   public static final String REASON = "reason";
@@ -29,6 +30,7 @@ public final class ChargingJobEntity extends DatabaseEntity {
   private ChargingJobState state;
   private float chargingWt;
   private float chargedWt;
+  private float chargedWtWs;
   private double voltage;
   private String reason;
   private int periodSec;

@@ -1,0 +1,1 @@
+ALTER TABLE charging_job ADD COLUMN charged_wt_ws NUMERIC NOT NULL DEFAULT 0;

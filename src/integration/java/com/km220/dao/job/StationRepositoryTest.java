@@ -32,8 +32,8 @@ class StationRepositoryTest {
     StationEntity stationEntity = stationRepository.getByNumber(STATION_NUMBER);
 
     assertNotNull(stationEntity);
-    assertEquals("stage", stationEntity.getName());
+    assertEquals("vlad", stationEntity.getName());
     assertEquals("2", stationEntity.getNumber());
-    assertEquals("10013bb124", stationEntity.getDeviceId());
+    assertEquals("1000d61c41", stationEntity.getDeviceId());
   }
 }

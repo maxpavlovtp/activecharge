@@ -11,6 +11,7 @@ import com.km220.service.device.DeviceService;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
+import java.util.function.Function;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DuplicateKeyException;
@@ -52,7 +53,7 @@ public class ChargingService {
     UUID jobId = null;
     try {
       jobId = chargingJobRepository.add(stationNumber, periodSeconds);
-    } catch(DuplicateKeyException exception) {
+    } catch (DuplicateKeyException exception) {
       throw new DuplicateChargingException(String.format(Locale.ROOT,
           "Duplicate charging. Station number = %s", stationNumber));
     }
@@ -86,10 +87,32 @@ public class ChargingService {
   }
 
   public ChargingJob get(String key) {
-    return jobConverter.apply(chargingJobCache.get(key));
+    ChargingJobEntity jobEntity = chargingJobCache.get(key);
+    if (jobEntity != null) {
+      return jobConverter.apply(jobEntity);
+    }
+    return null;
   }
 
   public List<ChargingJob> getInProgressJobs() {
     return null;
+  }
+
+  private static class ChargingJobConverter implements Function<ChargingJobEntity, ChargingJob> {
+
+    @Override
+    public ChargingJob apply(final ChargingJobEntity jobEntity) {
+      var job = new ChargingJob(jobEntity.getStation().getNumber(),
+          jobEntity.getCreatedOn().toEpochSecond(), jobEntity.getPeriodSec());
+      job.setCharginWt(jobEntity.getChargingWt());
+      job.setChargedWt(jobEntity.getChargedWt());
+      job.setChargedWtWs(jobEntity.getChargedWtWs());
+      job.setVoltage(jobEntity.getVoltage());
+      job.setState(jobEntity.getState());
+      if (jobEntity.getStoppedOn() != null) {
+        job.setStoppedS(jobEntity.getStoppedOn().toEpochSecond());
+      }
+      return job;
+    }
   }
 }

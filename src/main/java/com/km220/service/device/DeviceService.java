@@ -7,4 +7,6 @@ public interface DeviceService {
   void toggleOn(String deviceId, int chargeTimeSeconds);
 
   void toggleOff(String deviceId, int chargeTimeSeconds);
+
+  void requestConsumption(String deviceId);
 }

@@ -64,6 +64,9 @@ public class ChargerDeviceController {
   public ResponseEntity<ChargingJob> getStatus(
       @Parameter(description = "Charging job id") @NotBlank @RequestParam String id) {
     ChargingJob job = chargingService.get(id);
+    if (job == null) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(job);
+    }
     return ResponseEntity.status(HttpStatus.OK).body(job);
   }
 

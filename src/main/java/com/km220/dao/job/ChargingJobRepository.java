@@ -1,6 +1,7 @@
 package com.km220.dao.job;
 
 import static com.km220.dao.job.ChargingJobEntity.CHARGED_WT;
+import static com.km220.dao.job.ChargingJobEntity.CHARGED_WT_WS;
 import static com.km220.dao.job.ChargingJobEntity.CHARGING_WT;
 import static com.km220.dao.job.ChargingJobEntity.NUMBER;
 import static com.km220.dao.job.ChargingJobEntity.REASON;
@@ -36,7 +37,7 @@ public class ChargingJobRepository {
   private static final String CHARGING_JOB_ALIAS = "j_";
 
   private static final String SELECT_QUERY = """
-      SELECT j.id as j_id, j.number as j_number, j.charged_wt as j_charged_wt,
+      SELECT j.id as j_id, j.number as j_number, j.charged_wt as j_charged_wt, j.charged_wt_ws as j_charged_wt_ws,
           j.charging_wt as j_charging_wt, j.reason as j_reason, j.state as j_state,
           j.created_on as j_created_on, j.updated_on as j_updated_on, j.period_sec as j_period_sec,
           j.stopped_on as j_stopped_on,
@@ -53,7 +54,7 @@ public class ChargingJobRepository {
 
   private static final String UPDATE_SQL = """
         UPDATE charging_job SET state = :state, reason = :reason, charging_wt = :charging_wt,
-        charged_wt = :charged_wt, stopped_on = :stopped_on where number = :number
+        charged_wt = :charged_wt, charged_wt_ws = :charged_wt_ws, stopped_on = :stopped_on where number = :number
         """;
 
   private static final Logger logger = LoggerFactory.getLogger(ChargingJobRepository.class);
@@ -73,12 +74,16 @@ public class ChargingJobRepository {
   }
 
   @Transactional(readOnly = true)
-  public ChargingJobEntity getByNumber(String number) {
-    Objects.requireNonNull(number);
+  public ChargingJobEntity getByDeviceId(String deviceId) {
+    Objects.requireNonNull(deviceId);
 
-    var sql = SELECT_QUERY + " WHERE j.number = :number";
+    var sql = SELECT_QUERY + """
+        WHERE j.state = 'IN_PROGRESS' AND s.provider_device_id = :deviceId
+        ORDER BY j.updated_on DESC
+        LIMIT 1
+        """;
 
-    return jdbcTemplate.queryForObject(sql, Map.of("number", number),
+    return jdbcTemplate.queryForObject(sql, Map.of("deviceId", deviceId),
         chargingJobRowMapper);
   }
 
@@ -92,7 +97,8 @@ public class ChargingJobRepository {
         ORDER BY j.updated_on
         LIMIT %s
         FOR UPDATE OF j SKIP LOCKED
-        """.formatted(batchSize);
+        """;
+    sql = sql.formatted(batchSize);
 
     var sqlParameterSource = new MapSqlParameterSource();
     sqlParameterSource.addValue("state", state, Types.OTHER);
@@ -122,6 +128,8 @@ public class ChargingJobRepository {
   }
 
   public void update(ChargingJobEntity chargingJob) {
+    logger.debug("Update charging job in DB: {}", chargingJob);
+
     Objects.requireNonNull(chargingJob);
 
     var parameters = new HashMap<String, Object>();
@@ -129,6 +137,7 @@ public class ChargingJobRepository {
     parameters.put(REASON, chargingJob.getReason());
     parameters.put(CHARGING_WT, chargingJob.getChargingWt());
     parameters.put(CHARGED_WT, chargingJob.getChargedWt());
+    parameters.put(CHARGED_WT_WS, chargingJob.getChargedWtWs());
     parameters.put(NUMBER, chargingJob.getNumber());
     parameters.put(STOPPED_ON, chargingJob.getStoppedOn());
 

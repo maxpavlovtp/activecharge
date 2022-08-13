@@ -44,9 +44,9 @@ public class EwelinkClient {
         credentialsStorage, httpClient);
   }
 
-  public WSEwelinkDeviceApiV2 wsDevicesV2() {
+  public WSEwelinkDeviceApiV2 wsDevicesV2(WSClientListener wsClientListener) {
     return new WSEwelinkDeviceApiV2(parameters, applicationId, applicationSecret,
-        credentialsStorage, httpClient);
+        credentialsStorage, wsClientListener, httpClient);
   }
 
   public WSEwelinkDeviceApi wsDevices() {

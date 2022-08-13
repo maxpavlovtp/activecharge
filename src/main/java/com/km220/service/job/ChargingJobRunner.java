@@ -27,6 +27,9 @@ class ChargingJobRunner {
     logger.info("Process charging job with id = {}, number = {}, station number = {}",
         job.getId(), job.getNumber(), job.getStation().getNumber());
 
+    //request consumption
+    deviceService.requestConsumption(job.getStation().getDeviceId());
+
     var deviceStatus = deviceService.getState(job.getStation().getDeviceId());
 
     logger.info("Device state: {}", deviceStatus);
