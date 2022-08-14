@@ -20,15 +20,15 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @Testcontainers
 @ActiveProfiles("integration-test")
-class EwelinkCredentialsRepositoryTest {
+class EwelinkTokenRepositoryTest {
 
   @Autowired
-  private EwelinkCredentialsRepository ewelinkCredentialsRepository;
+  private EwelinkTokenRepository ewelinkTokenRepository;
 
   @Sql("/dao/ewelink/init_token_table.sql")
   @Test
   void getToken_readOnly_shouldReturnTokenFromDb() {
-    EwelinkCredentialsEntity ewelinkToken = ewelinkCredentialsRepository.get(false);
+    EwelinkTokenEntity ewelinkToken = ewelinkTokenRepository.get(false);
 
     assertNotNull(ewelinkToken);
     assertEquals("TOKEN_VAL", ewelinkToken.getToken());
@@ -36,7 +36,7 @@ class EwelinkCredentialsRepositoryTest {
 
   @Test
   void getToken_readOnly_shouldReturnEmptyTokenFromDb() {
-    EwelinkCredentialsEntity ewelinkToken = ewelinkCredentialsRepository.get(false);
+    EwelinkTokenEntity ewelinkToken = ewelinkTokenRepository.get(false);
 
     assertNotNull(ewelinkToken);
     assertNull(ewelinkToken.getToken());
@@ -44,12 +44,12 @@ class EwelinkCredentialsRepositoryTest {
 
   @Test
   void updateToken_shouldUpdateTokenInDb() {
-    EwelinkCredentialsEntity ewelinkToken = ewelinkCredentialsRepository.get(false);
+    EwelinkTokenEntity ewelinkToken = ewelinkTokenRepository.get(false);
     ewelinkToken.setToken("TOKEN_UPDATED_VAL");
 
-    ewelinkCredentialsRepository.update(ewelinkToken);
+    ewelinkTokenRepository.update(ewelinkToken);
 
-    ewelinkToken = ewelinkCredentialsRepository.get(false);
+    ewelinkToken = ewelinkTokenRepository.get(false);
 
     assertNotNull(ewelinkToken);
     assertEquals("TOKEN_UPDATED_VAL", ewelinkToken.getToken());
@@ -57,12 +57,12 @@ class EwelinkCredentialsRepositoryTest {
 
   @Test
   void exclusivelyUpdateToken_shouldUpdateTokenInDb() {
-    EwelinkCredentialsEntity ewelinkToken = ewelinkCredentialsRepository.get(true);
+    EwelinkTokenEntity ewelinkToken = ewelinkTokenRepository.get(true);
     ewelinkToken.setToken("TOKEN_UPDATED_VAL");
 
-    ewelinkCredentialsRepository.update(ewelinkToken);
+    ewelinkTokenRepository.update(ewelinkToken);
 
-    ewelinkToken = ewelinkCredentialsRepository.get(true);
+    ewelinkToken = ewelinkTokenRepository.get(true);
 
     assertNotNull(ewelinkToken);
     assertEquals("TOKEN_UPDATED_VAL", ewelinkToken.getToken());

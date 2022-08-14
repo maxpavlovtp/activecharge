@@ -17,7 +17,6 @@ public class WssGetDeviceStatus {
   String action;
   String deviceid;
   String userAgent;
-  String from;
   Long sequence;
   Long ts;
   List<String> params;
@@ -28,7 +27,6 @@ public class WssGetDeviceStatus {
         .action(QUERY_ACTION)
         .deviceid(deviceId)
         .userAgent(APP_USER_AGENT)
-        .from(APP_USER_AGENT)
         .sequence(timestamp * 1000)
         .ts(timestamp)
         .build();

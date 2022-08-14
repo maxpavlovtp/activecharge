@@ -1,4 +1,4 @@
-package com.km220.ewelink.internal.model;
+package com.km220.ewelink.internal;
 
 import lombok.Builder;
 import lombok.Value;

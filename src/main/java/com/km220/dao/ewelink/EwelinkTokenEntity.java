@@ -10,12 +10,10 @@ import lombok.experimental.SuperBuilder;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public final class EwelinkCredentialsEntity extends DatabaseEntity {
+public final class EwelinkTokenEntity extends DatabaseEntity {
 
   public static final String TOKEN = "token";
-  public static final String API_KEY = "api_key";
 
   private String token;
-  private String apiKey;
 
 }

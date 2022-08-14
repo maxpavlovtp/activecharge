@@ -1,7 +1,7 @@
 package com.km220.ewelink.internal.model.v2;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.km220.ewelink.internal.model.CredentialsResponse;
+import com.km220.ewelink.internal.CredentialsResponse;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.extern.jackson.Jacksonized;

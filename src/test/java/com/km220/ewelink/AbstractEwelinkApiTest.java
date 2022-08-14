@@ -20,7 +20,7 @@ public abstract class AbstractEwelinkApiTest {
         .parameters(new EwelinkParameters(REGION, EMAIL, PASSWORD, COUNTRY_CODE))
         .applicationId(APP_ID)
         .applicationSecret(APP_SECRET)
-        .credentialsStorage(new MemoryCredentialsStorage())
+        .tokenStorage(new TokenStorageInMemoryImpl())
         .build();
   }
 }
