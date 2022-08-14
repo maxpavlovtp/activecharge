@@ -8,8 +8,8 @@
 3. prod: http://220-km.com?station=5
 
 ## BE Swagger:
-http://178.18.251.90:8080/swagger-ui/index.html
-http://localhost:8080/swagger-ui/index.html
+1. http://178.18.251.90:8080/swagger-ui/index.html
+2. http://localhost:8080/swagger-ui/index.html
 
 
 ## Setup dev env:
