@@ -67,18 +67,15 @@ const MainSection: React.FC = () => {
       <Container fluid >
         {secondsTime >= 0 && (
           <>
-            <Row className="justify-content-center">
-              <GetPower station={stationNumbers} />
-            </Row>
-            <Row className="justify-content-center">
-              <Timer
-                hours={hoursTime}
-                minutes={minuteTime}
-                seconds={secondsTime}
-                fontSize={"calc(1.5rem + 1.5vw)"}
-                margin={"20px 0 30px 0"}
-              />
-            </Row>
+            <GetPower station={stationNumbers} />
+
+            <Timer
+              hours={hoursTime}
+              minutes={minuteTime}
+              seconds={secondsTime}
+              fontSize={"calc(1.5rem + 1.5vw)"}
+              margin={"20px 0 30px 0"}
+            />
           </>
         )}
       </Container>

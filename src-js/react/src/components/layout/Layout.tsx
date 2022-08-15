@@ -1,9 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
-  Link,
-  Navigate,
+  Link, 
   Outlet,
-  useLocation,
   useSearchParams,
 } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
