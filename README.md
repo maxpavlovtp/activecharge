@@ -8,7 +8,9 @@
 3. prod: http://220-km.com?station=5
 
 ## BE Swagger:
-http://178.18.251.90:8080/swagger-ui/index.html
+1. http://178.18.251.90:8080/swagger-ui/index.html
+2. http://localhost:8080/swagger-ui/index.html
+
 
 ## Setup dev env:
 1. install java 17 from https://www.azul.com/downloads/?version=java-17-lts&package=jdk
