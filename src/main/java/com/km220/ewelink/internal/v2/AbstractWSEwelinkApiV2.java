@@ -44,6 +44,9 @@ public abstract class AbstractWSEwelinkApiV2 extends AbstractEwelinkApiV2 implem
 
     var latch = new CountDownLatch(1);
 
+    //TODO: might not be working on multiple nodes
+    login();
+
     var dispatchResponse = apiGetObjectRequest(DISPATCH_APP_API_URL,
         Map.of(),
         JsonUtils.jsonDataConverter(DispatchResponse.class)

@@ -100,7 +100,7 @@ public class WebSocketClient implements WebSocket.Listener {
   }
 
   private void scheduleHeartBeats(Config config) {
-    if (config.getHb() == 1) {
+    if (config != null && config.getHb() == 1) {
       int intervalInSeconds = config.getHbInterval();
       executorService.scheduleAtFixedRate(() -> {
         logger.trace("Heartbeat sending.. ");

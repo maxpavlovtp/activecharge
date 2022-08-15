@@ -31,8 +31,7 @@ class ChargingJobRunner {
     deviceService.requestConsumption(job.getStation().getDeviceId());
 
     var deviceStatus = deviceService.getState(job.getStation().getDeviceId());
-
-    logger.info("Device state: {}", deviceStatus);
+    logger.info("Got device state: {}", deviceStatus);
 
     int dirtyHack = 2;
     job.setChargedWt(job.getChargedWt() + (float) deviceStatus.getPower() * scanIntervalMs / (3600 * 1000 * dirtyHack));
