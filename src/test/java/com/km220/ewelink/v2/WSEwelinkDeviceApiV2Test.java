@@ -1,7 +1,9 @@
 package com.km220.ewelink.v2;
 
 import com.km220.ewelink.AbstractEwelinkApiTest;
+import com.km220.ewelink.WSClientListener;
 import com.km220.ewelink.model.device.SwitchState;
+import com.km220.ewelink.model.ws.WssResponse;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,35 +14,33 @@ class WSEwelinkDeviceApiV2Test extends AbstractEwelinkApiTest {
 
   @Test
   void getDeviceStatus_shouldReturnDeviceStatus() throws InterruptedException {
-    var wsEwelinkDeviceApi = ewelinkClient.wsDevicesV2();
+    var wsEwelinkDeviceApi = ewelinkClient.wsDevicesV2(new WSClientListenerImpl());
+    var ewelinkDeviceApi = ewelinkClient.devicesV2();
 
-    wsEwelinkDeviceApi.toggle("1001323420", SwitchState.ON, 5 * 60);
+    ewelinkDeviceApi.toggle("10013bb124", SwitchState.ON, 5 * 60);
+    //wsEwelinkDeviceApi.toggle("10013bb124", SwitchState.ON, 5 * 60);
+    Thread.sleep(500 * 60);
 
+    wsEwelinkDeviceApi.refreshConsumption("10013bb124");
     Thread.sleep(1000);
 
-    wsEwelinkDeviceApi.stopConsumption("1001323420");
+//    wsEwelinkDeviceApi.stopConsumption("10013bb124");
+//    Thread.sleep(1000);
+//
+//    wsEwelinkDeviceApi.refreshConsumption("10013bb124");
+//    Thread.sleep(1000);
 
-    Thread.sleep(1000);
+    //ewelinkDeviceApi.toggle("10013bb124", SwitchState.OFF, 0);
+  }
 
-    wsEwelinkDeviceApi.startConsumption("1001323420");
+  private static class WSClientListenerImpl implements WSClientListener {
 
-    Thread.sleep(5000 * 60);
+    @Override
+    public void onMessage(final WssResponse message) {
+    }
 
-    //wsEwelinkDeviceApi.stopConsumption("10013bb124");
-
-    Thread.sleep(1000);
-
-    wsEwelinkDeviceApi.refreshConsumption("1001323420");
-
-    Thread.sleep(1000);
-
-    wsEwelinkDeviceApi.getHistoricalConsumption("1001323420");
-
-    Thread.sleep(1000);
-
-    wsEwelinkDeviceApi.queryStatus("1001323420");
-
-    //TODO: validate result
-    Thread.sleep(1000);
+    @Override
+    public void onError(final Throwable error) {
+    }
   }
 }

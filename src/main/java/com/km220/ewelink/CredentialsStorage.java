@@ -10,8 +10,10 @@ public interface CredentialsStorage {
 
   EwelinkCredentials get(Supplier<EwelinkCredentials> credentialsSupplier);
 
-  EwelinkCredentials refresh(Supplier<EwelinkCredentials> credentialsSupplier,
+  EwelinkCredentials relogin(Supplier<EwelinkCredentials> credentialsSupplier,
       EwelinkCredentials oldCredentials);
+
+  EwelinkCredentials login(Supplier<EwelinkCredentials> credentialsSupplier);
 
   @AllArgsConstructor
   @Getter

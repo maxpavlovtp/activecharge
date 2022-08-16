@@ -16,14 +16,14 @@ public class MemoryCredentialsStorage implements CredentialsStorage {
     EwelinkCredentials credentials = cache.get(ENTRY_KEY);
 
     if (credentials == null) {
-      credentials = refresh(credentialsSupplier, credentials);
+      credentials = relogin(credentialsSupplier, credentials);
     }
 
     return credentials;
   }
 
   @Override
-  public EwelinkCredentials refresh(final Supplier<EwelinkCredentials> credentialsSupplier,
+  public EwelinkCredentials relogin(final Supplier<EwelinkCredentials> credentialsSupplier,
       final EwelinkCredentials oldCredentials) {
 
     return cache.compute(ENTRY_KEY, (key, credentials) -> {
@@ -34,5 +34,10 @@ public class MemoryCredentialsStorage implements CredentialsStorage {
 
       return credentials;
     });
+  }
+
+  @Override
+  public EwelinkCredentials login(final Supplier<EwelinkCredentials> credentialsSupplier) {
+    return cache.compute(ENTRY_KEY, (key, credentials) -> credentialsSupplier.get());
   }
 }

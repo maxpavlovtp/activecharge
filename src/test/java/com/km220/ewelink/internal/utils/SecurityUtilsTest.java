@@ -21,12 +21,12 @@ class SecurityUtilsTest {
     Map<String, String> body = new LinkedHashMap<>();
     body.put("password", "Nopassword1");
     body.put("countryCode", "+380");
-    body.put("email", "maxpavlov.dp@gmail.com");
+    body.put("email", "km220.com@gmail.com");
 
     String jsonBody = JsonUtils.serialize(body);
 
     String auth = SecurityUtils.makeAuthorizationSign("4G91qSoboqYO4Y0XJ0LPPKIsq8reHdfa", jsonBody);
 
-    assertEquals("M9t3DIXCv3Jz+vKRnzVwiGb70oVQRxR5ZuTSM36o1Qs=", auth);
+    assertEquals("92XDcYQszoCXtZwQuq35RienQ1iXFnIUjdqAHuAeTjw=", auth);
   }
 }

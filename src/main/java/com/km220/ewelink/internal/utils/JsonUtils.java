@@ -10,9 +10,11 @@ import java.util.function.Function;
 
 public final class JsonUtils {
 
-  private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+  public static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+
   static {
-    OBJECT_MAPPER.setSerializationInclusion(Include.NON_NULL);;
+    OBJECT_MAPPER.setSerializationInclusion(Include.NON_NULL);
+    ;
   }
 
   private JsonUtils() {
@@ -49,6 +51,15 @@ public final class JsonUtils {
       var jsonNode = OBJECT_MAPPER.readTree(json);
       ((ObjectNode) jsonNode).put(key, value);
       return OBJECT_MAPPER.writeValueAsString(jsonNode);
+    } catch (JsonProcessingException e) {
+      throw new EwelinkClientException(e);
+    }
+  }
+
+  public static String prettyPrint(String json) {
+    try {
+      var jsonNode = OBJECT_MAPPER.readTree(json);
+      return jsonNode.toPrettyString();
     } catch (JsonProcessingException e) {
       throw new EwelinkClientException(e);
     }

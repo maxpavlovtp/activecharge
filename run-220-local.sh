@@ -17,6 +17,8 @@ nohup ./src-js/react/run-react-local.sh &
 #docker-compose down && rm -rf ./db-data
 nohup docker-compose up &
 ./gradlew clean build -x test
+echo "sleep for 10 secs..."
+sleep 10
 java -jar build/libs/220-km.com-0.0.1-SNAPSHOT.jar
 
 #tail -f nohup.out 
