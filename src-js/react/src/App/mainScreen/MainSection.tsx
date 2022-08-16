@@ -79,7 +79,7 @@ const MainSection: React.FC = () => {
           xs="auto"
           as={Link}
           to={`/charging?station=${stationNumber}`}
-          className="btn"
+          className="btnStart"
           onClick={startCharging}
         >
           {t("btns.startFree")}
@@ -88,7 +88,7 @@ const MainSection: React.FC = () => {
         <Col
           as={"a"}
           xs="auto"
-          className="mr-3 ml-3 btn"
+          className="mr-3 ml-3 btnStart"
           href={`${payUrl6h}`}
           target="_blank"
           rel="noreferrer"
@@ -98,7 +98,7 @@ const MainSection: React.FC = () => {
         <Col
           xs="auto"
           as={"a"}
-          className="btn"
+          className="btnStart"
           href={`${payUrl12h}`}
           target="_blank"
           rel="noreferrer"
