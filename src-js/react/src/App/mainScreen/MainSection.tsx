@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styles from "./MainSection.module.css";
+import "./MainSection.css";
 import mainImg from "../../assets/charging.png";
 import { Link, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -11,6 +11,7 @@ import ErrorPage from "../../components/error-page/ErrorPage";
 import { setDeviceStatusUndefind } from "../../store/reducers/FetchSlice";
 import axios from "axios";
 import Spinner from "../../components/spinner/Spinner";
+import { Col, Container, Row } from "react-bootstrap";
 
 const MainSection: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -68,35 +69,44 @@ const MainSection: React.FC = () => {
   }
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>{t("title")}</h1>
-      <div className={styles.btnStart}>
-        <Link
+    <Container fluid>
+      <Row className="justify-content-center">
+        <h1 className="title">{t("title")}</h1>
+      </Row>
+
+      <Row className="justify-content-center mt-4 mb-5">
+        <Col
+          xs="auto"
+          as={Link}
           to={`/charging?station=${stationNumber}`}
-          className={styles.btn}
+          className="btn"
           onClick={startCharging}
         >
           {t("btns.startFree")}
-        </Link>
+        </Col>
 
-        <a
-          className={styles.btnPay}
+        <Col
+          as={"a"}
+          xs="auto"
+          className="mr-3 ml-3 btn"
           href={`${payUrl6h}`}
           target="_blank"
           rel="noreferrer"
         >
           {t("btns.start6h")}
-        </a>
-        <a
-          className={styles.btnPay}
+        </Col>
+        <Col
+          xs="auto"
+          as={"a"}
+          className="btn"
           href={`${payUrl12h}`}
           target="_blank"
           rel="noreferrer"
         >
           {t("btns.start")}
-        </a>
-      </div>
-      <div className={styles.imgCont}>
+        </Col>
+      </Row>
+      <Row className="justify-content-center">
         <MainImgLoadingLazy
           src={mainImg}
           alt={"station"}
@@ -104,8 +114,8 @@ const MainSection: React.FC = () => {
           width="256"
           heigth="256"
         />
-      </div>
-    </div>
+      </Row>
+    </Container>
   );
 };
 

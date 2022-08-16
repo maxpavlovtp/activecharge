@@ -1,0 +1,40 @@
+.title {
+  font-size: calc(2rem + 1.5vw);
+  font-family: "OpenSansBold", Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  color: #393939;
+  text-align: center;
+}
+
+.btn {
+  background-color: #8f00ff;
+  color: white;
+  font-family: "OpenSansMedium", Arial, Helvetica, sans-serif;
+  font-weight: 500;
+  font-size: calc(1.5rem + 2vw);
+  border-radius: 10px;
+}
+.disaleBtn {
+  opacity: 0.2;
+}
+
+@media (max-width: 720px) {
+  .title {
+    font-size: calc(1.5rem + 1.5vw);
+  }
+}
+
+@media (max-width: 420px) {
+  .title {
+    font-size: calc(1.7rem + 1.5vw);
+  }
+}
+
+@media (max-width: 320px) {
+  .title {
+    font-size: calc(1.2rem + 1.5vw);
+  }
+  .btn {
+    font-size: calc(1rem + 2vw);
+  }
+}
