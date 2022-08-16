@@ -64,18 +64,23 @@ const MainSection: React.FC = () => {
 
   return (
     <>
-      <Container fluid >
+      <Container fluid>
         {secondsTime >= 0 && (
           <>
             <GetPower station={stationNumbers} />
-
-            <Timer
-              hours={hoursTime}
-              minutes={minuteTime}
-              seconds={secondsTime}
-              fontSize={"calc(1.5rem + 1.5vw)"}
-              margin={"20px 0 30px 0"}
-            />
+            {deviceStatus?.state === "DONE" ||
+            deviceStatus?.state === "FAILED" ||
+            deviceStatus?.leftS <= 3 ? (
+              <></>
+            ) : (
+              <Timer
+                hours={hoursTime}
+                minutes={minuteTime}
+                seconds={secondsTime}
+                fontSize={"calc(1.5rem + 1.5vw)"}
+                margin={"20px 0 30px 0"}
+              />
+            )}
           </>
         )}
       </Container>
