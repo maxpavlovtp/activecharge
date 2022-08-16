@@ -13,10 +13,10 @@
   margin-top: 50px;
 }
 .title {
-  font-family: "OpenSansMedium", Arial, Helvetica, sans-serif;
-  font-weight: 500;
-  font-size: 30px;
-  margin: 0 !important;
+  font-family: "OpenSansSemibold", Arial, Helvetica, sans-serif;
+  font-weight: 600;
+  font-size: calc(1.5rem + 0.7vw);
+  margin-top: 30px;
 }
 .conentTitle {
   font-size: 20px;
@@ -52,9 +52,6 @@ p {
   }
 }
 @media (max-width: 1080px) {
-  .title {
-    font-size: 24px;
-  }
   .textContainer {
     padding: 30px 20px;
     margin: 30px 0;
@@ -65,10 +62,6 @@ p {
   }
 }
 @media (max-width: 600px) {
-  .title {
-    font-size: 18px;
-    font-weight: 500;
-  }
   .textContainer {
     padding: 30px 20px;
     margin: 30px 0;

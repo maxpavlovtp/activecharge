@@ -1,11 +1,12 @@
 import React from "react";
+import { Container } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import styles from "./ContractSection.module.css";
 
 const MainSection: React.FC = () => {
   const { t } = useTranslation();
   return (
-    <div className={styles.container}>
+    <Container>
       <h1 className={styles.title}>{t("offerTitle")}</h1>
       <div className={styles.contractsBox}>
         <div className={styles.textContainer}>
@@ -467,7 +468,7 @@ const MainSection: React.FC = () => {
           </p>
         </div>
       </div>
-    </div>
+    </Container>
   );
 };
 
