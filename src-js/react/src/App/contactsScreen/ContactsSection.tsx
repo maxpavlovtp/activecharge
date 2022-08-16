@@ -22,7 +22,9 @@ const MainSection: React.FC = () => {
 
     <Container>
       <Row className="justify-content-center mb-5">
-        <Col className="text-center viber" onClick={() => setModalActive(true)}>
+        <Col as={"div"} className="text-center viber" onClick={() => {
+          setModalActive(true)
+          console.log(modalActive)}}>
           <FontAwesomeIcon icon={faPhoneSquareAlt} size="4x" />
           <p className="linkName">{t("callUs")}</p>
         </Col>
