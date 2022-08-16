@@ -111,7 +111,7 @@ public abstract class AbstractEwelinkApiV2 {
     return requestCompletableFuture.exceptionallyCompose(e -> {
       Throwable cause = e.getCause();
       if (cause instanceof EwelinkApiException && (((EwelinkApiException) cause).getCode() == 401 ||
-          ((EwelinkApiException) cause).getCode() == 406)) {
+          ((EwelinkApiException) cause).getCode() == 406 || ((EwelinkApiException) cause).getCode() == 403)) {
         LOGGER.info("Auth error. {}", e.getMessage());
         LOGGER.info("Retry to get new access token");
         return requestExecutor.apply(
