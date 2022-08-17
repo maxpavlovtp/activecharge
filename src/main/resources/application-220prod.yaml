@@ -4,3 +4,6 @@ spring:
 
 monobank:
   callBackHost: "220-km.com"
+
+device:
+  freeChargeSecs: 3600

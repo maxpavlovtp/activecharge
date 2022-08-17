@@ -55,6 +55,8 @@ const MainSection: React.FC = () => {
     }
   }, []);
 
+  
+
   if (error) {
     return (
       <ErrorPage
@@ -64,10 +66,11 @@ const MainSection: React.FC = () => {
     );
   }
 
-  if (payUrl12h === null || payUrl6h === null) {
-    return <Spinner />;
-  }
 
+  if (payUrl12h === null || payUrl6h === null ) {
+    // todo disable buttons instead
+    // return <Spinner />
+  }
   return (
     <Container fluid>
       <Row className="justify-content-center">

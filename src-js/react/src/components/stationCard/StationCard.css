@@ -1,21 +1,15 @@
-.container {
-  max-width: 300px;
-  background-color: rgb(252, 247, 247);
+/* rgb(252, 247, 247) */
+.containerCard {
+  min-height: 200px;
+  background-color: green;
   border-radius: 20px;
   box-shadow: 12px 12px 2px 1px rgba(0, 0, 255, 0.2);
-  margin: 20px;
-  padding: 20px;
-}
-.mainInfo {
-  display: flex;
-  align-items: baseline;
 }
 .numberStation {
   font-size: calc(1.4rem + 0.7vw);
   font-family: "OpenSansSemiBold", Arial, Helvetica, sans-serif;
   font-weight: 600;
   color: #393939;
-  margin-left: 5px;
 }
 .nameStation {
   font-size: calc(1.3rem + 0.4vw);
@@ -23,32 +17,22 @@
   font-weight: 500;
   color: #393939;
   border-bottom: 1px solid #dbdbdb;
-
-}
-.status {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
 }
 .readyCharge {
   font-size: calc(1.3rem + 0.4vw);
   font-family: "OpenSansMedium", Arial, Helvetica, sans-serif;
   font-weight: 500;
   color: #393939;
-  margin-top: 20px;
 }
-.online {
+
+.statusCard {
   border-radius: 25px;
   width: 20px;
   height: 20px;
-  background-color: #8F00FF;
 }
-.offline{
-    border-radius: 25px;
-    width: 20px;
-    height: 20px;
-    background-color: #fff;
+.online {
+  background-color: #8f00ff;
 }
-.linkToStation{
-    text-decoration: none;
+.offline {
+  background-color: #fff;
 }

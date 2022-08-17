@@ -1,9 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Col, Container, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import ErrorPage from "../../components/error-page/ErrorPage";
 import StationCard from "../../components/stationCard/StationCard";
-import styles from "./HomeScreen.module.css";
 
 const urlV2StatusAll = `${process.env.REACT_APP_LINK_SERVE}device/v2/station/statusAll`;
 
@@ -21,18 +21,18 @@ export default function HomeScreen() {
     }
   }, []);
   return (
-    <div className={styles.container}>
-      <div className={styles.contentBox}>
-        {statusALl?.map((data: any) => {
+    <Container >
+      <Row className="justify-content-center">
+         {statusALl?.map((data: any) => {
           if (data?.state) {
             return (
-              <div key={Math.random()}>
+              <Col lg={4} md={6} key={Math.random()}>
                 <StationCard
                   state={data?.state}
                   leftS={data?.leftS}
                   stationNumber={data?.stationNumber}
                 />
-              </div>
+              </Col>
             );
           } else {
             <ErrorPage
@@ -41,7 +41,8 @@ export default function HomeScreen() {
             />;
           }
         })}
-      </div>
-    </div>
+      </Row>
+       
+    </Container>
   );
 }
