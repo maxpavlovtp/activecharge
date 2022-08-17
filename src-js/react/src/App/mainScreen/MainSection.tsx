@@ -67,10 +67,10 @@ const MainSection: React.FC = () => {
   }
 
 
-  if (payUrl12h === null || payUrl6h === null ) {
-    // todo disable buttons instead
-    // return <Spinner />
-  }
+  // if (payUrl12h !== null || payUrl6h !== null ) {
+  //   // todo disable buttons instead
+  //   return <Spinner />
+  // }
   return (
     <Container fluid="lg">
       <Row className="justify-content-center">
