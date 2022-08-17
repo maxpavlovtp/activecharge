@@ -64,7 +64,8 @@ const MainSection: React.FC = () => {
   }
 
   if (payUrl12h === null || payUrl6h === null ) {
-    return <Spinner />
+    // todo disable buttons instead
+    // return <Spinner />
   }
 
   return (
