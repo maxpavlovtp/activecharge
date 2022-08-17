@@ -4,6 +4,8 @@
   font-weight: 700;
   color: #393939;
   text-align: center;
+  padding-right: 7px;
+  padding-left: 7px;
 }
 
 .btnStart {
@@ -13,6 +15,7 @@
   font-weight: 500;
   font-size: calc(1.5rem + 2vw);
   border-radius: 10px;
+  padding: 7px;
 }
 .disaleBtn {
   opacity: 0.2;

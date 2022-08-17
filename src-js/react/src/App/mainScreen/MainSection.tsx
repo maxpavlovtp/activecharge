@@ -72,7 +72,7 @@ const MainSection: React.FC = () => {
     // return <Spinner />
   }
   return (
-    <Container fluid>
+    <Container style={{backgroundColor: "black"}} fluid="lg">
       <Row className="justify-content-center">
         <h1 className="title">{t("title")}</h1>
       </Row>
