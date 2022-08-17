@@ -11,6 +11,8 @@
 1. http://178.18.251.90:8080/swagger-ui/index.html
 2. http://localhost:8080/swagger-ui/index.html
 
+## BE Prometheus
+1. http://178.18.251.90:9090/graph?g0.expr=&g0.tab=1&g0.stacked=0&g0.show_exemplars=0&g0.range_input=1h
 
 ## Setup dev env:
 1. install java 17 from https://www.azul.com/downloads/?version=java-17-lts&package=jdk

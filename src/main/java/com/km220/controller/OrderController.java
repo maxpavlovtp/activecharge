@@ -36,6 +36,9 @@ public class OrderController {
       @NotBlank @RequestParam("station_number") String stationNumber,
       @NotBlank @RequestParam("hours") String hours) throws IOException {
     String monoResponse = orderService.generateCheckoutLink(stationNumber, Integer.valueOf(hours));
+    if (monoResponse == null) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("check orderService logs");
+    }
     // todo extract to service
     String invoiceId = fetchInvoiceId(monoResponse);
     invoiceCache.put(invoiceId, stationNumber + ";" + hours);
