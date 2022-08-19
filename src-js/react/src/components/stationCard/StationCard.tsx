@@ -30,7 +30,7 @@ export default function ({
     setHoursTime,
     setMinuteTime,
     setSecondsTime,
-    setLoading,
+    setLoading
   );
 
   return (
@@ -44,27 +44,33 @@ export default function ({
           <p className={styles.nameStation}>Station</p>
           <p className={styles.numberStation}>{stationNumber}</p>
         </div>
-        <div className={styles.status}>
-          {state === "IN_PROGRESS" ? (
-            loading === true ? (
-              <LoadingTime />
+        {process.env.REACT_APP_LINK_SERVE === "http://220-km.com:8080/" ? (
+          <></>
+        ) : (
+          <div className={styles.status}>
+            {state === "IN_PROGRESS" ? (
+              loading === true ? (
+                <LoadingTime />
+              ) : (
+                <Timer
+                  hours={1}
+                  minutes={30}
+                  seconds={0}
+                  margin={"20px 0 0 0"}
+                  fontSize={"30px"}
+                />
+              )
             ) : (
-              <Timer
-                hours={1}
-                minutes={30}
-                seconds={0}
-                margin={"20px 0 0 0"}
-                fontSize={"30px"}
-              />
-            )
-          ) : (
-            <p className={styles.readyCharge}>Ready!</p>
-          )}
+              <p className={styles.readyCharge}>Ready!</p>
+            )}
 
-          <div
-            className={state === "IN_PROGRESS" ? styles.online : styles.offline}
-          ></div>
-        </div>
+            <div
+              className={
+                state === "IN_PROGRESS" ? styles.online : styles.offline
+              }
+            ></div>
+          </div>
+        )}
       </div>
     </Link>
   );
