@@ -32,6 +32,8 @@ const MainSection: React.FC = () => {
     dispatch(setDeviceStatusUndefind(undefined));
   };
 
+  let statusBtn = payUrl12h !== null || payUrl6h !== null ? "btnStart" : "btnStart disableBtn"
+
   useEffect(() => {
     try {
       axios.get(urlPayment12h).then(function (result: any) {
@@ -43,7 +45,7 @@ const MainSection: React.FC = () => {
     }
   }, []);
 
-  //todo use loop
+  // todo use loop
   useEffect(() => {
     try {
       axios.get(urlPayment6h).then(function (result: any) {
@@ -63,11 +65,6 @@ const MainSection: React.FC = () => {
       />
     );
   }
-
-  // if (payUrl12h !== null || payUrl6h !== null ) {
-  //   // todo disable buttons instead
-  //   return <Spinner />
-  // }
   return (
     <Container fluid="lg">
       <Row className="justify-content-center">
@@ -81,7 +78,7 @@ const MainSection: React.FC = () => {
           xs="auto"
           as={Link}
           to={`/charging?station=${stationNumber}`}
-          className="btnStart"
+          className={statusBtn}
           onClick={startCharging}
         >
           {t("btns.startFree")}
@@ -90,7 +87,7 @@ const MainSection: React.FC = () => {
         <Col
           as={"a"}
           xs="auto"
-          className="mr-3 ml-3 btnStart"
+          className={`mr-3 ml-3 ${statusBtn}`}
           href={`${payUrl6h}`}
           target="_blank"
           rel="noreferrer"
@@ -100,7 +97,7 @@ const MainSection: React.FC = () => {
         <Col
           xs="auto"
           as={"a"}
-          className="btnStart"
+          className={statusBtn}
           href={`${payUrl12h}`}
           target="_blank"
           rel="noreferrer"

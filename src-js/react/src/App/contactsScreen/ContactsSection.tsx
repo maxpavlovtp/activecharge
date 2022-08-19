@@ -17,9 +17,6 @@ const MainSection: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-
-    // todo Bootstrap grid
-
     <Container>
       <Row className="justify-content-center mb-5">
         <Col as={"div"} className="text-center viber" onClick={() => {
