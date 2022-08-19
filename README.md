@@ -3,8 +3,8 @@
 [![CI prod](https://github.com/maxpavlovdp/activecharge/actions/workflows/ci-prod.yml/badge.svg)](https://github.com/maxpavlovdp/activecharge/actions/workflows/ci-prod.yml)
 
 ## FE react endpoint:
-1. local: http://localhost:3000?station=3
-2. dev: http://178.18.251.90?station=4
+1. local: http://localhost:3000
+2. dev: http://178.18.251.90
 3. prod: http://220-km.com?station=5
 
 ## BE Swagger:
