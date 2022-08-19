@@ -34,11 +34,11 @@ p {
   color: #8f00ff;
 }
 .offerLink:hover {
-  color: #008957;
+  color: #000;
 }
 
 .offerLink:active {
-  color: #008957;
+  color: #000;
 }
 
 .congrats220 {
