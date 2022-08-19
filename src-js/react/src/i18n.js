@@ -20,11 +20,12 @@ i18n
       ua: {
         translation: {
           btns: {
-            start: "12",
-            start6h: "6",
+            start: "г",
             startFree: "Фрі",
           },
           title: "Заряди 220 кілометрів за ніч",
+          chargeLink: "Зарядка",
+          landingLink: "Головна",
           contacts: "Зв'яжіться з нами",
           offer: "Умови користування",
           wt: "кВт",
@@ -72,11 +73,12 @@ i18n
       en: {
         translation: {
           btns: {
-            start: "12h",
-            start6h: "6h",
+            start: "h",
             startFree: "Free",
           },
           title: "Charge 220 kilometers per night",
+          chargeLink: "Charging",
+          landingLink: "Home",
           contacts: "Contact Us",
           offer: "Terms of use",
           wt: "kWt",
