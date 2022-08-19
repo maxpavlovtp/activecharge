@@ -24,9 +24,6 @@ export default function GetPower({ station }: { station: any }) {
   let kWtPower = Number(deviceStatus?.charginWt) / 1000;
   let voltage = Number(Math.round(deviceStatus?.voltage));
 
-  // todo use for car range calculation feature
-  // nisan leaf = 150
-  // tesla model 3 = 100
   let carKwtKmRatio = 150;
   let isZero = deviceStatus?.chargedWt === undefined;
   let chargeStatus = `${isZero ? " " : kWtCharged.toFixed(2)} ${t("wt")}`;

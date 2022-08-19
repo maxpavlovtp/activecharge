@@ -10,7 +10,6 @@ import placehoderSrc from "../../assets/chargingTiny.png";
 import ErrorPage from "../../components/error-page/ErrorPage";
 import { setDeviceStatusUndefind } from "../../store/reducers/FetchSlice";
 import axios from "axios";
-import Spinner from "../../components/spinner/Spinner";
 import { Col, Container, Row } from "react-bootstrap";
 
 const MainSection: React.FC = () => {
