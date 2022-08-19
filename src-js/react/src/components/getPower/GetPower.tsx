@@ -30,6 +30,12 @@ export default function GetPower({ station }: { station: any }) {
 
   return (
     <>
+      <Row className="justify-content-center mb-4">
+        <p className="stationText">
+          Station: <span className="stationNumber">{station}</span>
+        </p>
+      </Row>
+
       <Row className="justify-content-center">
         <Col
           xs
@@ -47,7 +53,7 @@ export default function GetPower({ station }: { station: any }) {
             {kWtPower.toFixed(2)} {t("wt")}
           </p>
         </Col>
-        
+
         {deviceStatus?.state === "DONE" ||
         deviceStatus?.state === "FAILED" ||
         deviceStatus?.leftS <= 3 ? (

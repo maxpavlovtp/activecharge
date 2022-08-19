@@ -5,8 +5,6 @@ import { FetchSlice } from "./FetchSlice";
 const urlV2Start = `${process.env.REACT_APP_LINK_SERVE}device/v2/start`;
 const urlV2Status = `${process.env.REACT_APP_LINK_SERVE}device/v2/station/status?station_number=`;
 
-//todo remove
-
 export const idStart = (station: any) => async (dispatch: AppDispatch) => {
   const data = JSON.stringify({
     station_number: station,
