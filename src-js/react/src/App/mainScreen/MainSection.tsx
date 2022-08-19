@@ -55,8 +55,6 @@ const MainSection: React.FC = () => {
     }
   }, []);
 
-  
-
   if (error) {
     return (
       <ErrorPage
@@ -65,7 +63,6 @@ const MainSection: React.FC = () => {
       />
     );
   }
-
 
   // if (payUrl12h !== null || payUrl6h !== null ) {
   //   // todo disable buttons instead
@@ -76,8 +73,10 @@ const MainSection: React.FC = () => {
       <Row className="justify-content-center">
         <h1 className="title">{t("title")}</h1>
       </Row>
-
-      <Row className="justify-content-center mt-4 mb-5">
+      <Row className="justify-content-center mt-2">
+        <p className="stationText">Station: <span className="stationNumber">{stationNumber}</span></p>
+      </Row>
+      <Row className="justify-content-center mt-2 mb-5">
         <Col
           xs="auto"
           as={Link}
@@ -109,6 +108,7 @@ const MainSection: React.FC = () => {
           {t("btns.start")}
         </Col>
       </Row>
+     
       <Row className="justify-content-center">
         <MainImgLoadingLazy
           src={mainImg}
