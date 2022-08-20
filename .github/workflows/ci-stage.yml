@@ -29,7 +29,7 @@ jobs:
         host: 157.90.254.213
         user: root
         key: ${{ secrets.PRIVATE_KEY}}
-    - name: 220 copy artifacts to stage
+    - name: 220 copy artifacts to stage-node-1
       uses: appleboy/scp-action@master
       with:
         host: 157.90.254.213
@@ -38,7 +38,16 @@ jobs:
         key: ${{ secrets.PRIVATE_KEY }}
         source: "build/libs/220-km.com-0.0.1-SNAPSHOT.jar, src-js/react/build"
         target: "/220/"
-    - name: 220 restart BE on stage
+    - name: 220 copy artifacts to stage-node-2
+        uses: appleboy/scp-action@master
+        with:
+          host: 157.90.252.84
+          username: root
+          port: 22
+          key: ${{ secrets.PRIVATE_KEY }}
+          source: "build/libs/220-km.com-0.0.1-SNAPSHOT.jar, src-js/react/build"
+          target: "/220/"
+    - name: 220 restart BE on stage-node-1
       uses: fifsky/ssh-action@master
       with:
         command: |
@@ -46,3 +55,11 @@ jobs:
         host: 157.90.254.213
         user: root
         key: ${{ secrets.PRIVATE_KEY}}
+    - name: 220 restart BE on stage-node-2
+        uses: fifsky/ssh-action@master
+        with:
+          command: |
+            systemctl restart run-220-be.service
+          host: 157.90.252.84
+          user: root
+          key: ${{ secrets.PRIVATE_KEY}}
