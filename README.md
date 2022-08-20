@@ -2,17 +2,15 @@
 [![CI](https://github.com/maxpavlovdp/activecharge/actions/workflows/ci.yml/badge.svg)](https://github.com/maxpavlovdp/activecharge/actions/workflows/ci.yml)
 [![CI prod](https://github.com/maxpavlovdp/activecharge/actions/workflows/ci-prod.yml/badge.svg)](https://github.com/maxpavlovdp/activecharge/actions/workflows/ci-prod.yml)
 
-## FE react endpoint:
+## FE endpoints:
 1. local: http://localhost:3000
 2. dev: http://178.18.251.90
 3. prod: http://220-km.com?station=5
 
-## BE Swagger:
+## BE endpoints:
 1. http://178.18.251.90:8080/swagger-ui/index.html
 2. http://localhost:8080/swagger-ui/index.html
-
-## BE Prometheus
-1. http://178.18.251.90:9090/graph?g0.expr=&g0.tab=1&g0.stacked=0&g0.show_exemplars=0&g0.range_input=1h
+3. http://178.18.251.90:9090/graph?g0.expr=&g0.tab=1&g0.stacked=0&g0.show_exemplars=0&g0.range_input=1h
 
 ## Setup dev env:
 1. install java 17 from https://www.azul.com/downloads/?version=java-17-lts&package=jdk
@@ -38,6 +36,3 @@
 https://app.diagrams.net/#G1xBm3YxmDuKMkPA-N649yD8FCtsIpkAai
 <img width="906" alt="image" src="https://user-images.githubusercontent.com/5563023/183234275-1f28ef40-e86e-4cef-8cc4-6de7d8e3b299.png">
 <img width="724" alt="image" src="https://user-images.githubusercontent.com/5563023/183415299-e86c51c5-f378-4c0d-9b39-91a3656e73ce.png">
-
-
-http://178.18.251.90:8080/swagger-ui/index.html
