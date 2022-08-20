@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import styles from "./Timer.module.css";
 import { ITimer } from "../../interfaces";
 import { useAppSelector } from "../../hooks/reduxHooks";
 
@@ -10,6 +9,13 @@ const Timer = (props: ITimer) => {
     props.minutes,
     props.seconds,
   ]);
+  const timerText: any = {
+    fontWeight: "400",
+    fontSize: props.fontSize,
+    margin: props.margin,
+    color: "#2c2b2b",
+    transition: "0.8s",
+  };
 
   const { deviceStatus } = useAppSelector((state) => state.fetchReducer);
 
@@ -41,14 +47,8 @@ const Timer = (props: ITimer) => {
   }, [h, m, s]);
 
   return (
-    <div className={styles.timerBox}>
-      <p
-        className={
-          deviceStatus?.state === "IN_PROGRESS"
-            ? styles.timerText
-            : styles.overTimerText
-        }
-      >
+    <div style={{ textAlign: "center" }}>
+      <p style={timerText}>
         {`${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}:${s
           .toString()
           .padStart(2, "0")}`}

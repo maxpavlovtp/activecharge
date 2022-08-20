@@ -1,13 +1,13 @@
 import React, { Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import MainScreen from "./App/mainScreen/MainScreen";
-import ContactsScreen from "./App/contactsScreen/ContactsScreen";
-import ContractScreen from "./App/contractScreen/ContractScreen";
-import ChargingScreen from "./App/chargingScreen/ChargingScreen";
-import MainOverload from "./components/overload-page/MainOverload";
 import Layout from "./components/layout/Layout";
 import NotFoundPage from "./components/notFoundPage/NotFoundPage";
 import PrivateRoute from "./components/privateRoute/PrivateRoute";
+import HomeScreen from "./App/homeScreen/HomeScreen";
+import MainSection from "./App/mainScreen/MainSection";
+import ChargingSection from "./App/chargingScreen/ChargingSection";
+import ContactsSection from "./App/contactsScreen/ContactsSection";
+import ContractSection from "./App/contractScreen/ContractSection";
 
 function App() {
   return (
@@ -16,18 +16,18 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route path="*" element={<NotFoundPage />} />
-            <Route path="/contract" element={<ContractScreen />} />
-            <Route path="/contacts" element={<ContactsScreen />} />
-            <Route path="/charging" element={<ChargingScreen />} />
-            <Route path="/overload" element={<MainOverload />} />
+            <Route path="/contract" element={<ContractSection />} />
+            <Route path="/contacts" element={<ContactsSection/>} />
+            <Route path="/charging" element={<ChargingSection />} />
             <Route
-              path="/"
+              path="/start"
               element={
                 <PrivateRoute>
-                  <MainScreen />
+                  <MainSection />
                 </PrivateRoute>
               }
             />
+            <Route path="/" element={<HomeScreen />} />
           </Route>
         </Routes>
       </Router>

@@ -20,6 +20,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import javax.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +35,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ChargerDeviceController {
 
+  @Value("${device.freeChargeSecs}")
+  private int freeChargeSecs;
+
   private final StationScanProperties stationScanProperties;
   private final ChargerService chargerService;
   private final ChargingJobService chargingJobService;
@@ -47,7 +51,7 @@ public class ChargerDeviceController {
   @PostMapping("/v2/start")
   public ResponseEntity<CreatedChargingJob> start(
       @Parameter(description = "Charge request parameters") @RequestBody ChargeRequest chargeRequest) {
-    int chargePeriodInSeconds = chargeRequest.getChargePeriodInSeconds();
+    int chargePeriodInSeconds = this.freeChargeSecs;
 
     UUID id = chargerService.start(chargeRequest.getStationNumber(),
         chargePeriodInSeconds);
