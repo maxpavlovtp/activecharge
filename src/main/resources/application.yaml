@@ -10,7 +10,7 @@ device:
   chargeTimeSecs: 30
 
 station:
-  scan-delay-ms: 1000
+  scan-delay-ms: 10000
   scan-batch-size: 5
   scan-threads: 1
   scan-interval-ms: 2000
