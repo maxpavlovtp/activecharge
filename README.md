@@ -18,7 +18,7 @@
 3. install npm
 4. install docker
 5. run: sh run-220-local.sh
-6. check FE: http://localhost:3000/?station=3
+6. check FE: http://localhost:3000
 7. check BE swagger: http://localhost:8080/swagger-ui/index.html
 8. download DB tool: https://dbeaver.io/download/
 9. configure connection:
