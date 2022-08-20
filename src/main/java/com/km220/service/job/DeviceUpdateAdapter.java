@@ -1,24 +1,24 @@
 package com.km220.service.job;
 
-import com.km220.cache.ChargingJobCache;
+import com.km220.config.StationScanProperties;
 import com.km220.dao.job.ChargingJobEntity;
-import com.km220.dao.job.ChargingJobRepository;
-import com.km220.service.device.ConsumptionUpdate;
-import com.km220.service.device.DeviceUpdater;
+import com.km220.service.device.update.ConsumptionUpdate;
+import com.km220.service.device.update.DeviceStatusUpdate;
+import com.km220.service.device.update.DeviceUpdater;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-@Slf4j
 @Component
+@Slf4j
 public class DeviceUpdateAdapter implements DeviceUpdater {
 
-  private final ChargingJobRepository chargingJobRepository;
-  private final ChargingJobCache chargingJobCache;
+  private final StationScanProperties stationScanProperties;
+  private final ChargingJobService chargingJobService;
 
-  public DeviceUpdateAdapter(final ChargingJobRepository chargingJobRepository,
-      final ChargingJobCache chargingJobCache) {
-    this.chargingJobRepository = chargingJobRepository;
-    this.chargingJobCache = chargingJobCache;
+  public DeviceUpdateAdapter(final ChargingJobService chargingJobService,
+      final StationScanProperties stationScanProperties) {
+    this.chargingJobService = chargingJobService;
+    this.stationScanProperties = stationScanProperties;
   }
 
   @Override
@@ -26,12 +26,30 @@ public class DeviceUpdateAdapter implements DeviceUpdater {
     log.debug("Received consumption update. device id = {}, data = {}", update.getDeviceId(),
         update.getOneKwh());
 
-    ChargingJobEntity jobEntity = chargingJobRepository.getByDeviceId(update.getDeviceId());
+    ChargingJobEntity jobEntity = chargingJobService.findActive(update.getDeviceId());
     if (jobEntity != null) {
       jobEntity.setChargedWtWs(update.getOneKwh());
-      chargingJobRepository.update(jobEntity);
-      chargingJobCache.put(jobEntity.getId().toString(), jobEntity);
-      chargingJobCache.put(jobEntity.getStation().getNumber(), jobEntity);
+
+      chargingJobService.update(jobEntity);
+    }
+  }
+
+  @Override
+  public void onStatus(final DeviceStatusUpdate deviceStatusUpdate) {
+    log.debug("Received status update. device id = {}, data = {}", deviceStatusUpdate.getDeviceId(),
+        deviceStatusUpdate);
+
+    ChargingJobEntity jobEntity = chargingJobService.findActive(deviceStatusUpdate.getDeviceId());
+    if (jobEntity != null) {
+      var dirtyHack = 2;
+      float chargedWt = jobEntity.getChargedWt() +
+          deviceStatusUpdate.getPower() * stationScanProperties.getScanIntervalMs() / (3600 * 1000
+              * dirtyHack);
+      jobEntity.setChargedWt(chargedWt);
+      jobEntity.setChargingWt(deviceStatusUpdate.getPower());
+      jobEntity.setVoltage(deviceStatusUpdate.getVoltage());
+
+      chargingJobService.update(jobEntity);
     }
   }
 }

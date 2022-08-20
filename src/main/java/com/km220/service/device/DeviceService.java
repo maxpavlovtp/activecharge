@@ -8,5 +8,9 @@ public interface DeviceService {
 
   void toggleOff(String deviceId, int chargeTimeSeconds);
 
+  //----------non-blocking
+
   void requestConsumption(String deviceId);
+
+  void requestDeviceState(String deviceId);
 }

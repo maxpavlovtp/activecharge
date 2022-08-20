@@ -18,6 +18,7 @@ import java.util.Objects;
 import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -81,10 +82,11 @@ public class ChargingJobRepository {
         WHERE j.state = 'IN_PROGRESS' AND s.provider_device_id = :deviceId
         ORDER BY j.updated_on DESC
         LIMIT 1
+        FOR UPDATE
         """;
 
-    return jdbcTemplate.queryForObject(sql, Map.of("deviceId", deviceId),
-        chargingJobRowMapper);
+    return DataAccessUtils.singleResult(jdbcTemplate.query(sql, Map.of("deviceId", deviceId),
+        chargingJobRowMapper));
   }
 
   public List<ChargingJobEntity> scan(ChargingJobState state,

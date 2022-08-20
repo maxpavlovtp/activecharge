@@ -1,4 +1,4 @@
-package com.km220.service.device;
+package com.km220.service.device.update;
 
 import lombok.Builder.Default;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @Getter
 @ToString
-public class DeviceUpdate {
+public abstract class AbstractDeviceUpdate {
 
   @NonNull
   private String deviceId;

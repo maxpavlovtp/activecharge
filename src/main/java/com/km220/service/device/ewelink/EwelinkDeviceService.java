@@ -7,7 +7,7 @@ import com.km220.ewelink.v2.WSEwelinkDeviceApiV2;
 import com.km220.service.device.DeviceException;
 import com.km220.service.device.DeviceService;
 import com.km220.service.device.DeviceState;
-import com.km220.service.device.DeviceUpdater;
+import com.km220.service.device.update.DeviceUpdater;
 import java.util.Locale;
 import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +31,7 @@ public class EwelinkDeviceService implements DeviceService {
   public DeviceState getState(String deviceId) {
     return ewelinkClient.devicesV2()
         .getStatus(Objects.requireNonNull(deviceId))
-        .thenApply(response -> DeviceUtils.convert(deviceId, response))
+        .thenApply(response -> Utils.convert(deviceId, response))
         .join();
   }
 
@@ -60,6 +60,11 @@ public class EwelinkDeviceService implements DeviceService {
   @Override
   public void requestConsumption(final String deviceId) {
     wsEwelinkDeviceApiV2.refreshConsumption(deviceId);
+  }
+
+  @Override
+  public void requestDeviceState(final String deviceId) {
+    wsEwelinkDeviceApiV2.queryStatus(deviceId);
   }
 
 }
