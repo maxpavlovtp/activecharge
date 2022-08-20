@@ -1,4 +1,4 @@
-# Transform any public spot to electric car charging station.
+# Transform any public spot to EV charging station.
 [![CI](https://github.com/maxpavlovdp/activecharge/actions/workflows/ci.yml/badge.svg)](https://github.com/maxpavlovdp/activecharge/actions/workflows/ci.yml)
 [![CI stage](https://github.com/maxpavlovdp/activecharge/actions/workflows/ci-stage.yml/badge.svg)](https://github.com/maxpavlovdp/activecharge/actions/workflows/ci-stage.yml)
 [![CI prod](https://github.com/maxpavlovdp/activecharge/actions/workflows/ci-prod.yml/badge.svg)](https://github.com/maxpavlovdp/activecharge/actions/workflows/ci-prod.yml)
