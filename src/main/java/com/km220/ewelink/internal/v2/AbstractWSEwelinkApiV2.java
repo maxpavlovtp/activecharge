@@ -1,10 +1,13 @@
 package com.km220.ewelink.internal.v2;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import com.km220.ewelink.CredentialsStorage;
 import com.km220.ewelink.CredentialsStorage.EwelinkCredentials;
 import com.km220.ewelink.EwelinkParameters;
 import com.km220.ewelink.WSClientListener;
 import com.km220.ewelink.internal.WebSocketClient;
+import com.km220.ewelink.internal.WebSocketHandler;
 import com.km220.ewelink.internal.utils.JsonUtils;
 import com.km220.ewelink.internal.utils.SecurityUtils;
 import com.km220.ewelink.internal.ws.DispatchResponse;
@@ -12,6 +15,7 @@ import com.km220.ewelink.internal.ws.WssLogin;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.WebSocket;
+import java.nio.ByteBuffer;
 import java.time.Instant;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
@@ -22,6 +26,8 @@ public abstract class AbstractWSEwelinkApiV2 extends AbstractEwelinkApiV2 implem
 
   private static final String WSS_URI_TEMPLATE = "wss://%s:%s/api/ws";
   private static final String DISPATCH_APP_API_URL = "https://eu-dispa.coolkit.cc/dispatch/app";
+
+  private final WSClientListener clientListener;
 
   private WebSocket webSocket;
   private String apiSessionKey;
@@ -36,11 +42,13 @@ public abstract class AbstractWSEwelinkApiV2 extends AbstractEwelinkApiV2 implem
       final HttpClient httpClient) {
     super(parameters, applicationId, applicationSecret, credentialsStorage, httpClient);
 
+    this.clientListener = clientListener;
+
     openWebSocket(clientListener);
   }
 
   private void openWebSocket(WSClientListener clientListener) {
-    logger.debug("Open websocket.. ");
+    logger.info("Open websocket.. ");
 
     var latch = new CountDownLatch(1);
 
@@ -52,7 +60,7 @@ public abstract class AbstractWSEwelinkApiV2 extends AbstractEwelinkApiV2 implem
         JsonUtils.jsonDataConverter(DispatchResponse.class)
     ).join();
 
-    var webSocketClient = new WebSocketClient(clientListener, () -> webSocket, latch);
+    var webSocketClient = new WebSocketClient(clientListener, new WebSocketHandlerImpl(), latch);
 
     webSocket = HttpClient.newHttpClient()
         .newWebSocketBuilder()
@@ -62,9 +70,10 @@ public abstract class AbstractWSEwelinkApiV2 extends AbstractEwelinkApiV2 implem
             webSocketClient)
         .join();
 
+    logger.info("Start websocket handshake.. ");
+
     EwelinkCredentials credentials = getCredentials();
     var timestampSeconds = Instant.now().getEpochSecond();
-    logger.debug("Start websocket handshake.. ");
     sendMessage(JsonUtils.serialize(
         WssLogin.builder()
             .action("userOnline")
@@ -84,10 +93,13 @@ public abstract class AbstractWSEwelinkApiV2 extends AbstractEwelinkApiV2 implem
     } catch (InterruptedException e) {
       Thread.currentThread().interrupt();
     }
+
+    logger.info("Connection is ready.");
   }
 
   private void closeWebSocket() {
-    logger.debug("Close websocket.. ");
+    logger.info("Closing websocket.. ");
+
     if (webSocket != null) {
       webSocket.sendClose(WebSocket.NORMAL_CLOSURE, "").join();
       webSocket = null;
@@ -99,7 +111,7 @@ public abstract class AbstractWSEwelinkApiV2 extends AbstractEwelinkApiV2 implem
       throw new IllegalStateException("WebSocket is not opened!");
     }
     var messageWithApiKey = JsonUtils.addPropertyToJson(message, "apikey", apiKey);
-    logger.debug("Send websocket msg: {}", messageWithApiKey);
+    logger.debug("Sending websocket msg: {}", messageWithApiKey);
     webSocket.sendText(messageWithApiKey, true).join();
   }
 
@@ -110,5 +122,19 @@ public abstract class AbstractWSEwelinkApiV2 extends AbstractEwelinkApiV2 implem
   @Override
   public void close() {
     closeWebSocket();
+  }
+
+  private class WebSocketHandlerImpl implements WebSocketHandler {
+    @Override
+    public void ping() {
+      var payload = ByteBuffer.wrap("ping".getBytes(UTF_8));
+      webSocket.sendPing(payload);
+    }
+
+    @Override
+    public void disconnect() {
+      logger.warn("Trying to reestablish websocket connection");
+      openWebSocket(clientListener);
+    }
   }
 }

@@ -1,14 +1,11 @@
 package com.km220.ewelink.internal;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-
 import com.km220.ewelink.WSClientListener;
 import com.km220.ewelink.internal.utils.JsonUtils;
 import com.km220.ewelink.model.ws.Config;
 import com.km220.ewelink.model.ws.WssResponse;
 import java.net.http.WebSocket;
 import java.net.http.WebSocket.Listener;
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -19,7 +16,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Supplier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,14 +31,15 @@ public class WebSocketClient implements WebSocket.Listener {
   private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
 
   private final WSClientListener clientListener;
-  private final Supplier<WebSocket> webSocketSupplier;
+  private final WebSocketHandler webSocketHandler;
 
   private static final Logger logger = LoggerFactory.getLogger(WebSocketClient.class);
 
-  public WebSocketClient(WSClientListener clientListener, Supplier<WebSocket> webSocketSupplier,
+  public WebSocketClient(WSClientListener clientListener,
+      final WebSocketHandler webSocketHandler,
       CountDownLatch latch) {
     this.clientListener = clientListener;
-    this.webSocketSupplier = webSocketSupplier;
+    this.webSocketHandler = webSocketHandler;
     this.latch = latch;
   }
 
@@ -73,6 +70,8 @@ public class WebSocketClient implements WebSocket.Listener {
     logger.error("Socket error.", error);
     parts = new ArrayList<>();
     clientListener.onError(error);
+    stopScheduleHeartBeats();
+    webSocketHandler.disconnect();
   }
 
   @Override
@@ -104,8 +103,7 @@ public class WebSocketClient implements WebSocket.Listener {
       int intervalInSeconds = config.getHbInterval();
       executorService.scheduleAtFixedRate(() -> {
         logger.trace("Heartbeat sending.. ");
-        var payload = ByteBuffer.wrap("ping".getBytes(UTF_8));
-        webSocketSupplier.get().sendPing(payload);
+        webSocketHandler.ping();
       }, intervalInSeconds, intervalInSeconds, TimeUnit.SECONDS);
     }
   }

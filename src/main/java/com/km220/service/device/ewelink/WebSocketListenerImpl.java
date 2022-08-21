@@ -58,7 +58,7 @@ class WebSocketListenerImpl implements WSClientListener {
 
   @Override
   public void onError(final Throwable error) {
-    log.warn("Ewelink websocket error", error);
+    log.error("Ewelink websocket error", error);
   }
 
 
