@@ -4,5 +4,5 @@ public interface WebSocketHandler {
 
   void ping();
 
-  void disconnect();
+  void onDisconnect();
 }

@@ -132,8 +132,8 @@ public abstract class AbstractWSEwelinkApiV2 extends AbstractEwelinkApiV2 implem
     }
 
     @Override
-    public void disconnect() {
-      logger.warn("Trying to reestablish websocket connection");
+    public void onDisconnect() {
+      logger.warn("Trying to reestablish websocket connection...");
       openWebSocket(clientListener);
     }
   }

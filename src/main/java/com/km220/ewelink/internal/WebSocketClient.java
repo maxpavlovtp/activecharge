@@ -69,17 +69,24 @@ public class WebSocketClient implements WebSocket.Listener {
   public void onError(WebSocket webSocket, Throwable error) {
     logger.error("Socket error.", error);
     parts = new ArrayList<>();
-    clientListener.onError(error);
-    stopScheduleHeartBeats();
-    webSocketHandler.disconnect();
+    try {
+      clientListener.onError(error);
+      stopScheduleHeartBeats();
+    } finally {
+      webSocketHandler.onDisconnect();
+    }
   }
 
   @Override
   public CompletionStage<?> onClose(final WebSocket webSocket, final int statusCode,
       final String reason) {
     logger.debug("Socket closing.. ");
-    stopScheduleHeartBeats();
-    return Listener.super.onClose(webSocket, statusCode, reason);
+    try {
+      stopScheduleHeartBeats();
+      return Listener.super.onClose(webSocket, statusCode, reason);
+    } finally {
+      webSocketHandler.onDisconnect();
+    }
   }
 
   private void onMessageCompleted() {

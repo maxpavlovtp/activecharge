@@ -3,5 +3,5 @@ ewelink:
   password: 12345678
 
 device:
-  freeChargeSecs: 30
+  freeChargeSecs: 600
 

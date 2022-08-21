@@ -112,7 +112,7 @@ abstract class AbstractWSEwelinkApi extends AbstractEwelinkApi {
     }
 
     @Override
-    public void disconnect() {
+    public void onDisconnect() {
     }
   }
 
