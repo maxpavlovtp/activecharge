@@ -7,7 +7,7 @@ on:
       branches: [ develop ]
 
 jobs:
-  build-and-depploy-dev:
+  build-and-deploy-dev:
     runs-on: ubuntu-latest
 
     steps:
@@ -51,7 +51,7 @@ jobs:
   build-and-depploy-on-stage:
     runs-on: 'ubuntu-latest'
 #    environment: 'stage'
-    needs: [build-and-depploy-on-stage]
+    needs: [build-and-deploy-dev]
 
     steps:
       - uses: actions/checkout@v2
