@@ -3,6 +3,7 @@ package com.km220.ewelink.v2;
 import static com.km220.ewelink.internal.EwelinkConstants.CONSUMPTION_DATE_FORMAT;
 import static com.km220.ewelink.internal.EwelinkConstants.DEVICE_TYPE;
 import static com.km220.ewelink.internal.EwelinkConstants.START_CONSUMPTION;
+import static com.km220.ewelink.internal.EwelinkConstants.STOP_CONSUMPTION;
 
 import com.km220.ewelink.CredentialsStorage;
 import com.km220.ewelink.EwelinkParameters;
@@ -24,7 +25,7 @@ public final class EwelinkDeviceApiV2 extends AbstractEwelinkApiV2 {
 
   static final String DEVICES_API_URI = "/device/thing/status";
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(EwelinkDeviceApiV2.class);
+  private static final Logger logger = LoggerFactory.getLogger(EwelinkDeviceApiV2.class);
 
   public EwelinkDeviceApiV2(final EwelinkParameters parameters, final String applicationId,
       final String applicationSecret, final CredentialsStorage credentialsStorage, final HttpClient httpClient) {
@@ -32,7 +33,7 @@ public final class EwelinkDeviceApiV2 extends AbstractEwelinkApiV2 {
   }
 
   public CompletableFuture<DeviceV2> getStatus(String deviceId) {
-    LOGGER.info("Get status device. Device id = {}", deviceId);
+    logger.info("Get status device. Device id = {}", deviceId);
 
     return apiGetObjectRequest(
         DEVICES_API_URI,
@@ -44,10 +45,12 @@ public final class EwelinkDeviceApiV2 extends AbstractEwelinkApiV2 {
   }
 
   public CompletableFuture<DeviceV2> toggle(String deviceId, SwitchState state, int chargeSeconds) {
+    logger.info("Switch device. Device id = {}. State = {}", deviceId, state.getState());
+
     var params = Params.builder()
         .switchState(state)
         .uiActive(chargeSeconds)
-        .oneKwh(START_CONSUMPTION)
+        .oneKwh(state == SwitchState.ON ? START_CONSUMPTION : STOP_CONSUMPTION)
         .startTime(CONSUMPTION_DATE_FORMAT.format(Date.from(Instant.now())))
         .build();
     return apiPostObjectRequest(DEVICES_API_URI,

@@ -14,7 +14,8 @@ public class DatabaseCredentialsStorage implements CredentialsStorage {
 
   private final EwelinkCredentialsRepository ewelinkCredentialsRepository;
 
-  public DatabaseCredentialsStorage(final EwelinkCredentialsRepository ewelinkCredentialsRepository) {
+  public DatabaseCredentialsStorage(
+      final EwelinkCredentialsRepository ewelinkCredentialsRepository) {
     this.ewelinkCredentialsRepository = ewelinkCredentialsRepository;
   }
 
@@ -23,23 +24,36 @@ public class DatabaseCredentialsStorage implements CredentialsStorage {
   public EwelinkCredentials get(final Supplier<EwelinkCredentials> credentialsSupplier) {
     EwelinkCredentialsEntity credentialsEntity = ewelinkCredentialsRepository.get(false);
     if (StringUtils.isEmpty(credentialsEntity.getToken())) {
-     return refresh(credentialsSupplier, convert(credentialsEntity));
+      return relogin(credentialsSupplier, convert(credentialsEntity));
     }
     return convert(credentialsEntity);
   }
 
   @Override
   @Transactional
-  public EwelinkCredentials refresh(final Supplier<EwelinkCredentials> credentialsSupplier,
+  public EwelinkCredentials relogin(final Supplier<EwelinkCredentials> credentialsSupplier,
       final EwelinkCredentials oldCredentials) {
     EwelinkCredentialsEntity credentialsEntity = ewelinkCredentialsRepository.get(true);
     if (Objects.equals(convert(credentialsEntity), oldCredentials)) {
-      EwelinkCredentials newCredentials = credentialsSupplier.get();
-      credentialsEntity.setToken(newCredentials.getToken());
-      credentialsEntity.setApiKey(newCredentials.getApiKey());
-      ewelinkCredentialsRepository.update(credentialsEntity);
+      updateLogin(credentialsEntity, credentialsSupplier);
     }
     return convert(credentialsEntity);
+  }
+
+  @Override
+  @Transactional
+  public EwelinkCredentials login(final Supplier<EwelinkCredentials> credentialsSupplier) {
+    EwelinkCredentialsEntity credentialsEntity = ewelinkCredentialsRepository.get(true);
+    updateLogin(credentialsEntity, credentialsSupplier);
+    return convert(credentialsEntity);
+  }
+
+  private void updateLogin(EwelinkCredentialsEntity credentialsEntity,
+      final Supplier<EwelinkCredentials> credentialsSupplier) {
+    EwelinkCredentials newCredentials = credentialsSupplier.get();
+    credentialsEntity.setToken(newCredentials.getToken());
+    credentialsEntity.setApiKey(newCredentials.getApiKey());
+    ewelinkCredentialsRepository.update(credentialsEntity);
   }
 
   private static EwelinkCredentials convert(EwelinkCredentialsEntity credentialsEntity) {

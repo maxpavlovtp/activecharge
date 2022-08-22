@@ -7,9 +7,9 @@ import com.km220.service.device.DeviceException;
 import java.util.Locale;
 import java.util.Objects;
 
-final class DeviceUtils {
+class Utils {
 
-  private DeviceUtils() {
+  private Utils() {
   }
 
   public static DeviceState convert(WssResponse wssResponse) {

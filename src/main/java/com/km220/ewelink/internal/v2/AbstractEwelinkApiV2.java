@@ -6,12 +6,12 @@ import static com.km220.ewelink.internal.utils.HttpUtils.CONTENT_TYPE_HEADER;
 import static com.km220.ewelink.internal.utils.HttpUtils.HTTP_GET;
 import static com.km220.ewelink.internal.utils.HttpUtils.HTTP_POST;
 import static com.km220.ewelink.internal.utils.HttpUtils.HTTP_STATUS_OK;
+import static com.km220.ewelink.internal.utils.JsonUtils.OBJECT_MAPPER;
 import static java.net.http.HttpRequest.BodyPublishers.noBody;
 import static java.util.stream.Collectors.joining;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.km220.ewelink.CredentialsStorage;
 import com.km220.ewelink.CredentialsStorage.EwelinkCredentials;
 import com.km220.ewelink.EwelinkApiException;
@@ -52,8 +52,6 @@ public abstract class AbstractEwelinkApiV2 {
   private static final String X_CK_APPID_HEADER = "X-CK-Appid";
 
   private static final Logger LOGGER = LoggerFactory.getLogger(AbstractEwelinkApiV2.class);
-
-  private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
   protected AbstractEwelinkApiV2(final EwelinkParameters parameters, final String applicationId,
       final String applicationSecret, final CredentialsStorage credentialsStorage,
@@ -112,11 +110,12 @@ public abstract class AbstractEwelinkApiV2 {
     CompletableFuture<JsonNode> requestCompletableFuture = requestExecutor.apply(credentials);
     return requestCompletableFuture.exceptionallyCompose(e -> {
       Throwable cause = e.getCause();
-      if (cause instanceof EwelinkApiException && ((EwelinkApiException) cause).getCode() == 401) {
+      if (cause instanceof EwelinkApiException && (((EwelinkApiException) cause).getCode() == 401 ||
+          ((EwelinkApiException) cause).getCode() == 406 || ((EwelinkApiException) cause).getCode() == 403)) {
         LOGGER.info("Auth error. {}", e.getMessage());
         LOGGER.info("Retry to get new access token");
         return requestExecutor.apply(
-            credentialsStorage.refresh(getCredentialsSupplier(), credentials));
+            credentialsStorage.relogin(getCredentialsSupplier(), credentials));
       }
       return requestCompletableFuture;
     });
@@ -136,6 +135,7 @@ public abstract class AbstractEwelinkApiV2 {
             .thenApply(httpResponseBody -> {
               try {
                 JsonNode responseJson = OBJECT_MAPPER.readTree(httpResponseBody);
+                LOGGER.debug("Received http response: {}", responseJson.toPrettyString());
                 checkSuccessResponse(responseJson);
                 return responseJson;
               } catch (final JsonProcessingException e) {
@@ -237,5 +237,9 @@ public abstract class AbstractEwelinkApiV2 {
 
   protected final EwelinkCredentials getCredentials() {
     return credentialsStorage.get(getCredentialsSupplier());
+  }
+
+  protected final void login() {
+    credentialsStorage.login(getCredentialsSupplier());
   }
 }

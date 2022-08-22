@@ -1,10 +1,13 @@
 package com.km220.controller;
 
 import com.km220.config.StationScanProperties;
+import com.km220.controller.converters.ChargingJobConverter;
+import com.km220.dao.job.ChargingJobEntity;
 import com.km220.dao.job.ChargingJobState;
 import com.km220.model.ChargingJob;
 import com.km220.model.CreatedChargingJob;
-import com.km220.service.job.ChargingService;
+import com.km220.service.job.ChargerService;
+import com.km220.service.job.ChargingJobService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -36,7 +39,8 @@ public class ChargerDeviceController {
   private int freeChargeSecs;
 
   private final StationScanProperties stationScanProperties;
-  private final ChargingService chargingService;
+  private final ChargerService chargerService;
+  private final ChargingJobService chargingJobService;
 
   @Operation(summary = "Start charging")
   @ApiResponses(value = {
@@ -49,7 +53,8 @@ public class ChargerDeviceController {
       @Parameter(description = "Charge request parameters") @RequestBody ChargeRequest chargeRequest) {
     int chargePeriodInSeconds = this.freeChargeSecs;
 
-    UUID id = chargingService.start(chargeRequest.getStationNumber(), chargePeriodInSeconds);
+    UUID id = chargerService.start(chargeRequest.getStationNumber(),
+        chargePeriodInSeconds);
     return ResponseEntity.status(HttpStatus.CREATED).body(CreatedChargingJob.builder()
         .id(id.toString())
         .scanIntervalMs(stationScanProperties.getScanIntervalMs())
@@ -66,8 +71,13 @@ public class ChargerDeviceController {
   @GetMapping("/v2/status")
   public ResponseEntity<ChargingJob> getStatus(
       @Parameter(description = "Charging job id") @NotBlank @RequestParam String id) {
-    ChargingJob job = chargingService.get(id);
-    return ResponseEntity.status(HttpStatus.OK).body(job);
+
+    ChargingJobEntity job = chargingJobService.find(id);
+    if (job == null) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    }
+    return ResponseEntity.status(HttpStatus.OK)
+        .body(ChargingJobConverter.INSTANCE.apply(job));
   }
 
   @Operation(summary = "Get charging status by station number")
@@ -79,8 +89,13 @@ public class ChargerDeviceController {
   @GetMapping("/v2/station/status")
   public ResponseEntity<ChargingJob> getStationStatus(
       @Parameter(description = "Station number") @NotBlank @RequestParam("station_number") String stationNumber) {
-    ChargingJob job = chargingService.get(stationNumber);
-    return ResponseEntity.status(HttpStatus.OK).body(job);
+
+    ChargingJobEntity job = chargingJobService.find(stationNumber);
+    if (job == null) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    }
+    return ResponseEntity.status(HttpStatus.OK)
+        .body(ChargingJobConverter.INSTANCE.apply(job));
   }
 
   @GetMapping("/v2/station/statusAll")
@@ -88,7 +103,7 @@ public class ChargerDeviceController {
     String[] stations = {"1", "2", "3", "4", "5"};
 
     // todo implemtent
-    List<ChargingJob> jobs = chargingService.getInProgressJobs();
+    List<ChargingJob> jobs = chargingJobService.getInProgressJobs();
 
     jobs = Arrays.stream(stations)
         .map(id -> new ChargingJob(id, System.currentTimeMillis(), 3600))

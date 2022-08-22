@@ -1,6 +1,7 @@
 package com.km220.dao.job;
 
 import static com.km220.dao.job.ChargingJobEntity.CHARGED_WT;
+import static com.km220.dao.job.ChargingJobEntity.CHARGED_WT_WS;
 import static com.km220.dao.job.ChargingJobEntity.CHARGING_WT;
 import static com.km220.dao.job.ChargingJobEntity.NUMBER;
 import static com.km220.dao.job.ChargingJobEntity.PERIOD;
@@ -40,6 +41,7 @@ public class ChargingJobRowMapper extends DatabaseEntityRowMapper<ChargingJobEnt
     job.setState(ChargingJobState.valueOf(rs.getString(name(STATE))));
     job.setReason(rs.getString(name(REASON)));
     job.setChargedWt(rs.getFloat(name(CHARGED_WT)));
+    job.setChargedWtWs(rs.getFloat(name(CHARGED_WT_WS)));
     job.setChargingWt(rs.getFloat(name(CHARGING_WT)));
     job.setPeriodSec(rs.getInt(name(PERIOD)));
 

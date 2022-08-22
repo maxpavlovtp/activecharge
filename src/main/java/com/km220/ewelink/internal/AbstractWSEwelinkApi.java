@@ -2,6 +2,7 @@ package com.km220.ewelink.internal;
 
 import static com.km220.ewelink.internal.utils.HttpUtils.HTTP_POST;
 import static com.km220.ewelink.internal.utils.HttpUtils.HTTP_STATUS_OK;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 import com.km220.ewelink.EwelinkParameters;
 import com.km220.ewelink.WSClientListener;
@@ -14,6 +15,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.WebSocket;
+import java.nio.ByteBuffer;
 import java.time.Instant;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
@@ -36,7 +38,7 @@ abstract class AbstractWSEwelinkApi extends AbstractEwelinkApi {
     long timestamp = Instant.now().getEpochSecond();
     var latch = new CountDownLatch(1);
 
-    var webSocketClient = new WebSocketClient(clientListener, () -> webSocket, latch);
+    var webSocketClient = new WebSocketClient(clientListener, new WebSocketHandlerImpl(), latch);
 
     webSocket = apiResourceRequest(HTTP_POST,
         BodyPublishers.ofString(JsonUtils.serialize(DispatchRequest.builder()
@@ -100,6 +102,18 @@ abstract class AbstractWSEwelinkApi extends AbstractEwelinkApi {
 
   final void sendMessage(String message) {
     sendMessage(message, apiKey);
+  }
+
+  private class WebSocketHandlerImpl implements WebSocketHandler {
+    @Override
+    public void ping() {
+      var payload = ByteBuffer.wrap("ping".getBytes(UTF_8));
+      webSocket.sendPing(payload);
+    }
+
+    @Override
+    public void onDisconnect() {
+    }
   }
 
 }

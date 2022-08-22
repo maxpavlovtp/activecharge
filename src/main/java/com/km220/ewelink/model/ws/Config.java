@@ -21,4 +21,5 @@ public class Config {
   private Integer hbInterval;
   @Default
   private Map<String, Object> additionalProperties = new HashMap<>();
+  private String oneKwhData;
 }
