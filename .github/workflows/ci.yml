@@ -1,6 +1,8 @@
 name: CI
 
 on:
+   push:
+    branches: [ develop ]
    pull_request:
       branches: [ develop ]
 
@@ -21,6 +23,11 @@ jobs:
       run: ./gradlew clean build -i
     - name: 220 build FE
       run: cd src-js/react && npm i && npm run buildDev
+  deploy-on-dev:
+    runs-on: 'ubuntu-latest'
+    environment: 'dev'
+    needs: build-and-publish
+    steps:
     - name: 220 clean old deployments on dev
       uses: fifsky/ssh-action@master
       with:
