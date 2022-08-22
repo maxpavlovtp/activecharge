@@ -7,7 +7,7 @@ on:
       branches: [ develop ]
 
 jobs:
-  build-and-deploy-dev:
+  build-and-deploy-on-dev:
     runs-on: ubuntu-latest
 
     steps:
@@ -51,10 +51,14 @@ jobs:
   build-and-depploy-on-stage:
     runs-on: 'ubuntu-latest'
 #    environment: 'stage'
-    needs: [build-and-deploy-dev]
+    needs: [build-and-deploy-on-dev]
 
     steps:
       - uses: actions/checkout@v2
+      - uses: trstringer/manual-approval@v1
+        with:
+          secret: ${{ github.TOKEN }}
+          approvers: maxpavlovdp
       - uses: actions/setup-java@v2
         with:
           java-version: '17'
