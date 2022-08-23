@@ -67,7 +67,7 @@ const MainSection: React.FC = () => {
       </Row>
       <Row className="justify-content-center mt-2">
         <p className="stationText">
-          Station: <span className="stationNumber">{stationNumber}</span>
+          {t("station")}: <span className="stationNumber">{stationNumber}</span>
         </p>
       </Row>
       <Row className="justify-content-center mt-2 mb-5">
