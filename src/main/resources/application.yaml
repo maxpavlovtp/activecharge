@@ -7,7 +7,7 @@ ewelink:
   appSecret: 4G91qSoboqYO4Y0XJ0LPPKIsq8reHdfa
 
 device:
-  freeChargeSecs: 600
+  freeChargeSecs: 360
 
 station:
   scan-delay-ms: 10000
