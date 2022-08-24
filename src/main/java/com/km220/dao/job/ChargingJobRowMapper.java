@@ -8,6 +8,7 @@ import static com.km220.dao.job.ChargingJobEntity.PERIOD;
 import static com.km220.dao.job.ChargingJobEntity.REASON;
 import static com.km220.dao.job.ChargingJobEntity.STATE;
 import static com.km220.dao.job.ChargingJobEntity.STOPPED_ON;
+import static com.km220.dao.job.ChargingJobEntity.VOLTAGE;
 
 import com.km220.dao.DatabaseEntityRowMapper;
 import com.km220.dao.station.StationEntity;
@@ -43,6 +44,7 @@ public class ChargingJobRowMapper extends DatabaseEntityRowMapper<ChargingJobEnt
     job.setChargedWt(rs.getFloat(name(CHARGED_WT)));
     job.setChargedWtWs(rs.getFloat(name(CHARGED_WT_WS)));
     job.setChargingWt(rs.getFloat(name(CHARGING_WT)));
+    job.setVoltage(rs.getFloat(name(VOLTAGE)));
     job.setPeriodSec(rs.getInt(name(PERIOD)));
 
     String stoppedOn = rs.getString(name(STOPPED_ON));
