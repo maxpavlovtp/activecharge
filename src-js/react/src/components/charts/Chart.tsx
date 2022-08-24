@@ -73,7 +73,7 @@ export const data = {
 
 export function Chart() {
   return (
-    <div style={{ width: 700 }}>
+    <div style={{ maxWidth: 700, width: "100%" }}>
       <Line options={options} data={data} />
     </div>
   );
