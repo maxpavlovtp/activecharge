@@ -71,7 +71,7 @@ public final class WSEwelinkDeviceApiV2 extends AbstractWSEwelinkApiV2 {
   }
 
   public void refreshConsumption(String deviceId) {
-    log.debug("Refresh consumption. Device id = {}", deviceId);
+    log.debug("Query device consumption. Device id = {}", deviceId);
     var params = Params.builder()
         .oneKwh(GET_CONSUMPTION)
         .build();
