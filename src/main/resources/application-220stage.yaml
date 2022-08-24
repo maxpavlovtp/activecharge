@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://10.1.0.6:5432/km220
+    url: jdbc:postgresql://10.1.0.4:5432/km220
     username: km220
     password: Nopassword1
   flyway:
