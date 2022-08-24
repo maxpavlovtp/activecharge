@@ -38,7 +38,7 @@ export const options = {
         pinch: {
           enabled: true,
         },
-        mode: 'x',
+        mode: 'x' as 'x',
       },
     },
     title: {
