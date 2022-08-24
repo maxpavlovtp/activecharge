@@ -3,6 +3,8 @@ spring:
     url: jdbc:postgresql://10.1.0.4:5432/km220
     username: km220
     password: Nopassword1
+  flyway:
+    locations: 'classpath:db/migration/postgres/common,/db/migration/postgres/220stage'
 ewelink:
-  email: eskimorollerr@gmail.com
+  email: km220.com@gmail.com
   password: Nopassword1

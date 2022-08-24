@@ -3,7 +3,6 @@ package com.km220.service.job;
 import static com.km220.dao.job.ChargingJobState.IN_PROGRESS;
 import static java.lang.String.format;
 
-import com.km220.cache.ChargingJobCache;
 import com.km220.dao.job.ChargingJobEntity;
 import com.km220.dao.job.ChargingJobRepository;
 import com.km220.model.ChargingJob;
@@ -21,12 +20,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class ChargingJobService {
 
   private final ChargingJobRepository chargingJobRepository;
-  private final ChargingJobCache chargingJobCache;
 
-  public ChargingJobService(final ChargingJobRepository chargingJobRepository,
-      final ChargingJobCache chargingJobCache) {
+  public ChargingJobService(final ChargingJobRepository chargingJobRepository) {
     this.chargingJobRepository = chargingJobRepository;
-    this.chargingJobCache = chargingJobCache;
   }
 
   public UUID create(String stationNumber, int periodInSeconds) {
@@ -40,20 +36,22 @@ public class ChargingJobService {
 
   public void update(ChargingJobEntity jobEntity) {
     chargingJobRepository.update(jobEntity);
-    chargingJobCache.put(jobEntity.getId().toString(), jobEntity);
-    chargingJobCache.put(jobEntity.getStation().getNumber(), jobEntity);
   }
 
   public List<ChargingJobEntity> scanActive(int batchSize, int delayTime) {
     return chargingJobRepository.scan(IN_PROGRESS, batchSize, delayTime);
   }
 
-  public ChargingJobEntity find(String key) {
-    return chargingJobCache.get(key);
+  public ChargingJobEntity findByJobId(String jobId) {
+    return chargingJobRepository.getById(UUID.fromString(jobId));
+  }
+
+  public ChargingJobEntity findByStationNumber(String stationNumber) {
+    return chargingJobRepository.getByStationNumber(stationNumber);
   }
 
   public ChargingJobEntity findActive(String deviceId) {
-    return chargingJobRepository.getByDeviceId(deviceId);
+    return chargingJobRepository.getActiveByDeviceId(deviceId);
   }
 
   public List<ChargingJob> getInProgressJobs() {

@@ -1,6 +1,7 @@
 spring:
   flyway:
     clean-on-validation-error: false
+    locations: 'classpath:db/migration/postgres/common,/db/migration/postgres/220prod'
 
 monobank:
   callBackHost: "220-km.com"

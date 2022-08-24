@@ -1,7 +1,5 @@
 package com.km220.service.device.ewelink;
 
-import static com.km220.ewelink.internal.EwelinkConstants.UPDATE_ACTION;
-
 import com.km220.ewelink.WSClientListener;
 import com.km220.ewelink.model.device.SwitchState;
 import com.km220.ewelink.model.ws.WssResponse;
@@ -41,7 +39,7 @@ class WebSocketListenerImpl implements WSClientListener {
     }
 
     //device status
-    if (UPDATE_ACTION.equals(message.getAction()) && message.getParams() != null) {
+    if (message.getParams() != null) {
       var params = message.getParams();
       if (StringUtils.isEmpty(params.getPower()) || StringUtils.isEmpty(params.getVoltage())) {
         return;

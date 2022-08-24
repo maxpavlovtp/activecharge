@@ -15,24 +15,21 @@ station:
   scan-threads: 1
   scan-interval-ms: 2000
 
-# docker
 spring:
   datasource:
+    # docker
     url: jdbc:postgresql://localhost:5432/km220
     username: km220
     password: Nopassword1
   flyway:
     clean-on-validation-error: false
-
-flyway:
-  locations: "classpath:db/migration/pg"
-
+    locations: 'classpath:db/migration/postgres/common,/db/migration/postgres/local'
 
 server:
   forward-headers-strategy: framework
 
 monobank:
-  token: "ux9Fn-4ob62pBQtM0O9z_gOKYhSo9SYBHk3g-2Bivw70"
+  token: "uZR_Cp6hs2TiuLUIPEXKk0pWeKbwy5tNAWmhJg4DU5Zg"
   callBackHost: "178.18.251.90"
 
 # #backup

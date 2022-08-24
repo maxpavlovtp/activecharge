@@ -72,7 +72,7 @@ public class ChargerDeviceController {
   public ResponseEntity<ChargingJob> getStatus(
       @Parameter(description = "Charging job id") @NotBlank @RequestParam String id) {
 
-    ChargingJobEntity job = chargingJobService.find(id);
+    ChargingJobEntity job = chargingJobService.findByJobId(id);
     if (job == null) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
@@ -90,7 +90,7 @@ public class ChargerDeviceController {
   public ResponseEntity<ChargingJob> getStationStatus(
       @Parameter(description = "Station number") @NotBlank @RequestParam("station_number") String stationNumber) {
 
-    ChargingJobEntity job = chargingJobService.find(stationNumber);
+    ChargingJobEntity job = chargingJobService.findByStationNumber(stationNumber);
     if (job == null) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
