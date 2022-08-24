@@ -15,18 +15,15 @@ station:
   scan-threads: 1
   scan-interval-ms: 2000
 
-# docker
 spring:
   datasource:
+    # docker
     url: jdbc:postgresql://localhost:5432/km220
     username: km220
     password: Nopassword1
   flyway:
     clean-on-validation-error: false
-
-flyway:
-  locations: "classpath:db/migration/pg"
-
+    locations: 'classpath:db/migration/postgres/common,/db/migration/postgres/local'
 
 server:
   forward-headers-strategy: framework
