@@ -29,7 +29,7 @@ server:
   forward-headers-strategy: framework
 
 monobank:
-  token: "ux9Fn-4ob62pBQtM0O9z_gOKYhSo9SYBHk3g-2Bivw70"
+  token: "uZR_Cp6hs2TiuLUIPEXKk0pWeKbwy5tNAWmhJg4DU5Zg"
   callBackHost: "178.18.251.90"
 
 # #backup
