@@ -32,7 +32,7 @@ export default function GetPower({ station }: { station: any }) {
     <>
       <Row className="justify-content-center mb-4">
         <p className="stationText">
-          Station: <span className="stationNumber">{station}</span>
+          {t("station")}: <span className="stationNumber">{station}</span>
         </p>
       </Row>
 

@@ -30,9 +30,7 @@ const MainSection: React.FC = () => {
 
   useEffect(() => {
     if (isLoadingCharging === false) {
-      setTimeout(() => {
-        dispatch(getStationInfo(stationNumbers));
-      }, 5500);
+      dispatch(getStationInfo(stationNumbers));
     }
   }, [isLoadingCharging]);
 
