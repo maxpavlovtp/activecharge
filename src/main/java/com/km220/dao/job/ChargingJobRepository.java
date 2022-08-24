@@ -7,6 +7,7 @@ import static com.km220.dao.job.ChargingJobEntity.NUMBER;
 import static com.km220.dao.job.ChargingJobEntity.REASON;
 import static com.km220.dao.job.ChargingJobEntity.STATE;
 import static com.km220.dao.job.ChargingJobEntity.STOPPED_ON;
+import static com.km220.dao.job.ChargingJobEntity.VOLTAGE;
 
 import com.km220.dao.ChargerDatabaseException;
 import com.km220.dao.station.StationRowMapper;
@@ -39,7 +40,7 @@ public class ChargingJobRepository {
 
   private static final String SELECT_QUERY = """
       SELECT j.id as j_id, j.number as j_number, j.charged_wt as j_charged_wt, j.charged_wt_ws as j_charged_wt_ws,
-          j.charging_wt as j_charging_wt, j.reason as j_reason, j.state as j_state,
+          j.charging_wt as j_charging_wt, j.voltage as j_voltage, j.reason as j_reason, j.state as j_state,
           j.created_on as j_created_on, j.updated_on as j_updated_on, j.period_sec as j_period_sec,
           j.stopped_on as j_stopped_on,
           s.id as s_id, s.number as s_number, s.name as s_name, s.provider_device_id as s_provider_device_id,
@@ -55,7 +56,8 @@ public class ChargingJobRepository {
 
   private static final String UPDATE_SQL = """
         UPDATE charging_job SET state = :state, reason = :reason, charging_wt = :charging_wt,
-        charged_wt = :charged_wt, charged_wt_ws = :charged_wt_ws, stopped_on = :stopped_on where number = :number
+        charged_wt = :charged_wt, charged_wt_ws = :charged_wt_ws, voltage = :voltage,
+        stopped_on = :stopped_on where number = :number
         """;
 
   private static final Logger logger = LoggerFactory.getLogger(ChargingJobRepository.class);
@@ -70,12 +72,26 @@ public class ChargingJobRepository {
 
     var sql = SELECT_QUERY + " WHERE j.id = :id";
 
-    return jdbcTemplate.queryForObject(sql, Map.of("id", jobId),
-        chargingJobRowMapper);
+    return DataAccessUtils.singleResult(jdbcTemplate.query(sql, Map.of("id", jobId),
+        chargingJobRowMapper));
   }
 
   @Transactional(readOnly = true)
-  public ChargingJobEntity getByDeviceId(String deviceId) {
+  public ChargingJobEntity getByStationNumber(String stationNumber) {
+    Objects.requireNonNull(stationNumber);
+
+    var sql = SELECT_QUERY + """
+        WHERE j.state = 'IN_PROGRESS' AND s.number = :stationNumber
+        ORDER BY j.updated_on DESC
+        LIMIT 1
+        """;
+
+    return DataAccessUtils.singleResult(jdbcTemplate.query(sql, Map.of("stationNumber", stationNumber),
+        chargingJobRowMapper));
+  }
+
+  @Transactional(readOnly = true)
+  public ChargingJobEntity getActiveByDeviceId(String deviceId) {
     Objects.requireNonNull(deviceId);
 
     var sql = SELECT_QUERY + """
@@ -140,6 +156,7 @@ public class ChargingJobRepository {
     parameters.put(CHARGING_WT, chargingJob.getChargingWt());
     parameters.put(CHARGED_WT, chargingJob.getChargedWt());
     parameters.put(CHARGED_WT_WS, chargingJob.getChargedWtWs());
+    parameters.put(VOLTAGE, chargingJob.getVoltage());
     parameters.put(NUMBER, chargingJob.getNumber());
     parameters.put(STOPPED_ON, chargingJob.getStoppedOn());
 

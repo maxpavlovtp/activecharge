@@ -57,14 +57,19 @@ public class ChargerService {
   public void refreshStatus(int batchSize, int scanDelayMs) {
     List<ChargingJobEntity> jobs = chargingJobService.scanActive(batchSize, scanDelayMs);
     for (ChargingJobEntity jobEntity : jobs) {
-      ExceptionUtils.runSafely(() -> refreshStatus(jobEntity),
-          () -> format(Locale.ROOT, "Job failed. id = %s, station number = %s", jobEntity.getId(),
-              jobEntity.getStation().getNumber()));
-      chargingJobService.update(jobEntity);
+      try {
+        boolean updated = refreshStatus(jobEntity);
+        if (updated) {
+          chargingJobService.update(jobEntity);
+        }
+      } catch (Exception e) {
+        log.error(format(Locale.ROOT, "Job failed. id = %s, station number = %s", jobEntity.getId(),
+            jobEntity.getStation().getNumber()), e);
+      }
     }
   }
 
-  private void refreshStatus(ChargingJobEntity jobEntity) {
+  private boolean refreshStatus(ChargingJobEntity jobEntity) {
     log.info("Process charging job with id = {}, number = {}, station number = {}",
         jobEntity.getId(), jobEntity.getNumber(), jobEntity.getStation().getNumber());
 
@@ -78,11 +83,16 @@ public class ChargerService {
     if (completed) {
       ExceptionUtils.runSafely(() -> Thread.sleep(1000));
 
+      //turn off device
       deviceService.toggleOff(jobEntity.getStation().getDeviceId(), jobEntity.getPeriodSec());
 
       jobEntity.setReason("Completed");
       jobEntity.setState(ChargingJobState.DONE);
       jobEntity.setStoppedOn(OffsetDateTime.now(ZoneOffset.UTC));
+
+      return true;
     }
+
+    return false;
   }
 }
