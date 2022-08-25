@@ -9,7 +9,7 @@ import GetPower from "../../components/getPower/GetPower";
 import { useSearchParams } from "react-router-dom";
 import { useBackTime } from "../../hooks/useBackTime";
 import { Container, Row } from "react-bootstrap";
-import { Chart } from "../../components/charts/Chart";
+import { Charts } from "../../components/charts/Chart";
 
 const MainSection: React.FC = () => {
   const [loading, setLoading] = useState<any>(true);
@@ -83,9 +83,8 @@ const MainSection: React.FC = () => {
           </>
         )}
         <Row className="justify-content-center mb-4">
-          <Chart />
+          <Charts />
         </Row>
-        
       </Container>
     </>
   );
