@@ -11,6 +11,7 @@ import ErrorPage from "../../components/error-page/ErrorPage";
 import { setDeviceStatusUndefind } from "../../store/reducers/FetchSlice";
 import axios from "axios";
 import { Col, Container, Row } from "react-bootstrap";
+import { Chart } from "../../components/charts/Chart";
 
 const MainSection: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -125,6 +126,9 @@ const MainSection: React.FC = () => {
           width="256"
           heigth="256"
         />
+      </Row>
+      <Row className="justify-content-center mb-4">
+        <Chart />
       </Row>
     </Container>
   );

@@ -82,9 +82,7 @@ const MainSection: React.FC = () => {
             )}
           </>
         )}
-        <Row className="justify-content-center mb-4">
-          <Chart />
-        </Row>
+        
         
       </Container>
     </>
