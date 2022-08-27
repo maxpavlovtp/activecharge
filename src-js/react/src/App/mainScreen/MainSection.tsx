@@ -41,8 +41,8 @@ const MainSection: React.FC = () => {
           setPayUrls([]);
           data?.map((link: any) => {
             const { pageUrl } = link.data;
-            setPayUrls((pay: any) => [...pay, pageUrl]);
-            console.log(payUrls);
+            setPayUrls((pay: any) => [...pay, pageUrl]); 
+            console.log(pageUrl);
           });
         });
     } catch (e: any) {
@@ -50,7 +50,7 @@ const MainSection: React.FC = () => {
     }
   }, []);
 
-  let statusBtn = errorPay !== null ? "btnStart" : "btnStart disableBtn";
+  let statusBtn = errorPay === null ? "btnStart" : "btnStart disableBtn";
 
   if (error) {
     return (
