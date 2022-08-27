@@ -30,7 +30,7 @@ server:
 
 monobank:
   token: "uZR_Cp6hs2TiuLUIPEXKk0pWeKbwy5tNAWmhJg4DU5Zg"
-  callBackHost: "178.18.251.90"
+  callBackHost: "49.12.19.42"
 
 # #backup
 # #ewelink.appid = 'oeVkj2lYFGnJu5XUtWisfW4utiN4u9Mq';
