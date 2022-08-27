@@ -19,11 +19,12 @@ public class LoginController {
 
   @GetMapping("/ewelinkRedirect")
   public ResponseEntity<String> generateCheckoutLink(
-      @NotBlank @RequestParam("code") String code,
-      @NotBlank @RequestParam("region") String region,
-      @NotBlank @RequestParam("state") String state
+      @RequestParam("code") String code,
+      @RequestParam("regin") String region,
+      @RequestParam("state") String state
   ) {
-    log.info("oAuth login call back from ewelink code: {}, region: {}, state: {}", code, region, state);
+    log.info("oAuth login call back from ewelink code: {}, region: {}, state: {}", code, region,
+        state);
 
     return ResponseEntity.status(HttpStatus.OK).body(null);
   }
