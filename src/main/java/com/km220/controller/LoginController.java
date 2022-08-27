@@ -23,7 +23,7 @@ public class LoginController {
       @NotBlank @RequestParam("region") String region,
       @NotBlank @RequestParam("state") String state
   ) {
-    log.info("code: {}, region: {}, state: {}", code, region, state);
+    log.info("oAuth login call back from ewelink code: {}, region: {}, state: {}", code, region, state);
 
     return ResponseEntity.status(HttpStatus.OK).body(null);
   }
