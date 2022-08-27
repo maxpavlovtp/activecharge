@@ -10,7 +10,7 @@
 
 ## BE endpoints:
 1. http://localhost:8080/swagger-ui/index.html
-3. http://178.18.251.90:8080/swagger-ui/index.html
+3. http://49.12.19.42:8080/swagger-ui/index.html
 4. http://49.12.19.42:8080/swagger-ui/index.html
 5. http://178.18.251.90:9090/graph?g0.expr=&g0.tab=1&g0.stacked=0&g0.show_exemplars=0&g0.range_input=1h
 
