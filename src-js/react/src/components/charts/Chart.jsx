@@ -64,6 +64,7 @@ export const options = {
         },
       },
     },
+    
     yAxes: {
       ticks: {
         beginAtZero: true,
@@ -73,16 +74,30 @@ export const options = {
   },
 };
 
+const labels = [];
+for (let time = 0; time <= 720; time++) {
+  labels.push(time);
+}
+
 export const data = {
   datasets: [
     {
       label: "Dataset 1 (linear interpolation)",
       backgroundColor: "#fff",
-      borderColor: "red",
+      borderColor: "blue",
       fill: false,
       lineTension: 0,
       borderDash: [8, 4],
-      data: [],
+      data: labels.map(() => faker.datatype.number({ min: -200, max: 200 })),
+    },
+    {
+      label: "Dataset 2 (linear interpolation)",
+      backgroundColor: "#ececec",
+      borderColor: "blue",
+      fill: false,
+      lineTension: 0,
+      borderDash: [8, 4],
+      data: labels.map(() => faker.datatype.number({ min: -200, max: 200 })),
     },
   ],
 };
