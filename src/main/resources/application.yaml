@@ -16,6 +16,8 @@ station:
   scan-interval-ms: 2000
 
 spring:
+  application:
+    name: km220.com
   datasource:
     # docker
     url: jdbc:postgresql://localhost:5432/km220
@@ -31,6 +33,15 @@ server:
 monobank:
   token: "uZR_Cp6hs2TiuLUIPEXKk0pWeKbwy5tNAWmhJg4DU5Zg"
   callBackHost: "49.12.19.42"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, metrics, prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}
 
 # #backup
 # #ewelink.appid = 'oeVkj2lYFGnJu5XUtWisfW4utiN4u9Mq';
