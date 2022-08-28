@@ -4,9 +4,8 @@
 
 ## FE endpoints:
 1. local: http://localhost:3000
-2. dev: http://178.18.251.90
-3. stage (load balancer): http://49.12.19.42
-4. prod: http://220-km.com?station=5
+2. stage (load balancer): http://49.12.19.42
+3. prod: http://220-km.com?station=5
 
 ## BE endpoints:
 1. http://localhost:8080/swagger-ui/index.html
