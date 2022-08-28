@@ -1,48 +1,6 @@
 version: '3.7'
 
-volumes:
-  prometheus_data: { }
-  grafana_data: { }
-
 services:
-
-  alertmanager:
-    image: prom/alertmanager:v0.24.0
-    restart: always
-    volumes:
-      - ./config/monitoring/alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml
-    command:
-      - '--config.file=/etc/alertmanager/alertmanager.yml'
-    ports:
-      - 9093:9093
-
-  prometheus:
-    image: prom/prometheus:v2.38.0
-    volumes:
-      - ./config/monitoring/prometheus:/etc/prometheus
-      - prometheus_data:/prometheus
-    command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-    links:
-      - alertmanager:alertmanager
-    ports:
-      - 9090:9090
-    restart: always
-    deploy:
-      mode: global
-
-  grafana:
-    image: grafana/grafana:9.1.1
-    volumes:
-      - ./config/monitoring/grafana/dashboards:/var/lib/grafana/dashboards
-      - ./config/monitoring/grafana/provisioning:/etc/grafana/provisioning
-      - grafana_data:/var/lib/grafana
-    links:
-      - prometheus
-    ports:
-      - 3000:3000
 
   postgresql:
     image: postgres:14.4
