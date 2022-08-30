@@ -47,13 +47,7 @@ export const FetchSlice = createSlice({
     ) {
       state.error = action.payload;
     },
-    
-    setDeviceStatusUndefind(state: FetchState, action: PayloadAction<any>) {
-      state.deviceStatus = action.payload;
-    },
   },
 });
-
-export const { setDeviceStatusUndefind } = FetchSlice.actions;
 
 export default FetchSlice.reducer;

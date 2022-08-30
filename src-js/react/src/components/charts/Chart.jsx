@@ -29,7 +29,7 @@ ChartJS.register(
   zoomPlugin
 );
 
-export function Chart() {
+export function Chart({leftS}) {
   const { t } = useTranslation();
   const labels = [];
   for (let time = 0; time <= 720; time++) {
@@ -94,7 +94,7 @@ export function Chart() {
               });
             });
           },
-          delay: 3000,
+          delay: 0,
           time: {
             displayFormat: "h:mm",
           },
@@ -108,8 +108,8 @@ export function Chart() {
           minUnit: "second",
           source: "auto",
           autoSkip: true,
-          callback: function (value) {
-            return moment(value, "HH:mm:ss").format("mm:ss");
+          callback: function () {
+            return leftS;
           },
         },
       },

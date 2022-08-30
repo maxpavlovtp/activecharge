@@ -4,14 +4,13 @@ import mainImg from "../../assets/charging.png";
 import { Link, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
-import { idStart } from "../../store/reducers/ActionCreators";
+import { getStationInfo, idStart } from "../../store/reducers/ActionCreators";
 import MainImgLoadingLazy from "../../components/lazyLoading/MainImgLoadingLazy";
 import placehoderSrc from "../../assets/chargingTiny.png";
 import ErrorPage from "../../components/error-page/ErrorPage";
-import { setDeviceStatusUndefind } from "../../store/reducers/FetchSlice";
+// import { setDeviceStatusUndefind } from "../../store/reducers/FetchSlice";
 import axios from "axios";
 import { Col, Container, Row } from "react-bootstrap";
-import { Chart } from "../../components/charts/Chart";
 
 const MainSection: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -31,7 +30,6 @@ const MainSection: React.FC = () => {
 
   const startCharging = () => {
     dispatch(idStart(stationNumber));
-    dispatch(setDeviceStatusUndefind(undefined));
   };
 
   useEffect(() => {
@@ -42,7 +40,7 @@ const MainSection: React.FC = () => {
           setPayUrls([]);
           data?.map((link: any) => {
             const { pageUrl } = link.data;
-            setPayUrls((pay: any) => [...pay, pageUrl]); 
+            setPayUrls((pay: any) => [...pay, pageUrl]);
             console.log(pageUrl);
           });
         });
@@ -51,7 +49,7 @@ const MainSection: React.FC = () => {
     }
   }, []);
 
-  let statusBtn = errorPay === null ? "btnStart" : "btnStart disableBtn";
+  let statusBtn = errorPay !== null ? "btnStart disableBtn" : "btnStart";
 
   if (error) {
     return (
@@ -63,6 +61,21 @@ const MainSection: React.FC = () => {
   }
   return (
     <Container fluid="lg">
+      {/* {payUrls.map((link: any, id: any) => {
+          return (
+            <Col
+              key={id}
+              as={"a"}
+              xs="auto"
+              className={`ml-2 ${statusBtn}`}
+              href={`${link}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              6{t("btns.start")}
+            </Col>
+          );
+        })} */}
       <Row className="justify-content-center">
         <h1 className="title">{t("title")}</h1>
       </Row>
@@ -81,21 +94,7 @@ const MainSection: React.FC = () => {
         >
           {t("btns.startFree")}
         </Col>
-        {/* {payUrls.map((link: any, id: any) => {
-          return (
-            <Col
-              key={id}
-              as={"a"}
-              xs="auto"
-              className={`ml-2 ${statusBtn}`}
-              href={`${link}`}
-              target="_blank"
-              rel="noreferrer"
-            >
-              6{t("btns.start")}
-            </Col>
-          );
-        })} */}
+
         <Col
           as={"a"}
           xs="auto"
@@ -126,9 +125,6 @@ const MainSection: React.FC = () => {
           width="256"
           heigth="256"
         />
-      </Row>
-      <Row className="justify-content-center mb-4">
-        <Chart />
       </Row>
     </Container>
   );
