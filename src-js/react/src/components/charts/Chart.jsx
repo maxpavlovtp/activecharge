@@ -29,12 +29,24 @@ ChartJS.register(
   zoomPlugin
 );
 
-export function Chart({leftS}) {
+export function Chart({ leftS, stationNumber, voltage, power }) {
   const { t } = useTranslation();
   const labels = [];
   for (let time = 0; time <= 720; time++) {
     labels.push(time);
   }
+
+  const onRecieve = (chart) => {
+    chart.data.datasets[0].data.push({
+      x: Date.now(),
+      y: power,
+    });
+    chart.data.datasets[1].data.push({
+      x: Date.now(),
+      y: voltage,
+    });
+    chart.update("quiet");
+  };
 
   const data = {
     datasets: [
@@ -67,15 +79,15 @@ export function Chart({leftS}) {
         type: "linear",
         display: true,
         position: "left",
-        min: 0,
-        max: 7,
+        min: -1,
+        max: 5,
       },
       voltage: {
         type: "linear",
         display: true,
         position: "right",
-        min: 0,
-        max: 7,
+        min: 160,
+        max: 280,
 
         // grid line settings
         grid: {
@@ -86,19 +98,10 @@ export function Chart({leftS}) {
         type: "realtime",
         distribution: "linear",
         realtime: {
-          onRefresh: function (chart) {
-            chart.data.datasets.forEach((dataset) => {
-              dataset.data.push({
-                x: Date.now(),
-                y: Math.random() * 5,
-              });
-            });
-          },
-          delay: 0,
-          time: {
-            displayFormat: "h:mm",
-          },
-        },
+          delay: 2000,
+          refresh: 2000,
+          onRefresh: onRecieve,
+        }, 
         ticks: {
           displayFormats: 1,
           maxRotation: 0,
@@ -108,11 +111,14 @@ export function Chart({leftS}) {
           minUnit: "second",
           source: "auto",
           autoSkip: true,
-          callback: function () {
-            return leftS;
+          callback: function (value) {
+            return moment(value, "HH:mm:ss").format("mm:ss");
           },
         },
       },
+    },
+    interaction: {
+      intersect: false,
     },
   };
   return (

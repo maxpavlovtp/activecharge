@@ -61,21 +61,6 @@ const MainSection: React.FC = () => {
   }
   return (
     <Container fluid="lg">
-      {/* {payUrls.map((link: any, id: any) => {
-          return (
-            <Col
-              key={id}
-              as={"a"}
-              xs="auto"
-              className={`ml-2 ${statusBtn}`}
-              href={`${link}`}
-              target="_blank"
-              rel="noreferrer"
-            >
-              6{t("btns.start")}
-            </Col>
-          );
-        })} */}
       <Row className="justify-content-center">
         <h1 className="title">{t("title")}</h1>
       </Row>
