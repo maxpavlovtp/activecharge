@@ -1,10 +1,9 @@
 package com.km220.dao.job;
 
-import static com.km220.dao.job.ChargingJobEntity.CHARGED_WT;
-import static com.km220.dao.job.ChargingJobEntity.CHARGED_WT_WS;
-import static com.km220.dao.job.ChargingJobEntity.CHARGING_WT;
+import static com.km220.dao.job.ChargingJobEntity.CHARGED_KWH;
 import static com.km220.dao.job.ChargingJobEntity.NUMBER;
 import static com.km220.dao.job.ChargingJobEntity.PERIOD;
+import static com.km220.dao.job.ChargingJobEntity.POWER_WT;
 import static com.km220.dao.job.ChargingJobEntity.REASON;
 import static com.km220.dao.job.ChargingJobEntity.STATE;
 import static com.km220.dao.job.ChargingJobEntity.STOPPED_ON;
@@ -41,9 +40,8 @@ public class ChargingJobRowMapper extends DatabaseEntityRowMapper<ChargingJobEnt
     job.setNumber(rs.getInt(name(NUMBER)));
     job.setState(ChargingJobState.valueOf(rs.getString(name(STATE))));
     job.setReason(rs.getString(name(REASON)));
-    job.setChargedWt(rs.getFloat(name(CHARGED_WT)));
-    job.setChargedWtWs(rs.getFloat(name(CHARGED_WT_WS)));
-    job.setChargingWt(rs.getFloat(name(CHARGING_WT)));
+    job.setPowerWt(rs.getFloat(name(POWER_WT)));
+    job.setChargedKwh(rs.getFloat(name(CHARGED_KWH)));
     job.setVoltage(rs.getFloat(name(VOLTAGE)));
     job.setPeriodSec(rs.getInt(name(PERIOD)));
 

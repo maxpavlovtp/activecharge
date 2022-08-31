@@ -14,9 +14,8 @@ public class ChargingJob {
   private final int periodS;
 
   private ChargingJobState state;
-  private double charginWt;
-  private double chargedWt;
-  private double chargedWtWs;
+  private double powerWt;
+  private double chargedKwh;
   private double voltage;
   private long stoppedS;
   @Getter(AccessLevel.NONE)
