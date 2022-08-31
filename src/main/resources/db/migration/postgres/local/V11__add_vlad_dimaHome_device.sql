@@ -1,0 +1,1 @@
+INSERT INTO station ("name", "number", provider_device_id)VALUES('2-local-vlad-dimaHome','2', '10013bd071');

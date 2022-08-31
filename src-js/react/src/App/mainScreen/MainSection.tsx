@@ -41,7 +41,7 @@ const MainSection: React.FC = () => {
           setPayUrls([]);
           data?.map((link: any) => {
             const { pageUrl } = link.data;
-            setPayUrls((pay: any) => [...pay, pageUrl]); 
+            setPayUrls((pay: any) => [...pay, pageUrl]);
             console.log(pageUrl);
           });
         });
@@ -80,21 +80,7 @@ const MainSection: React.FC = () => {
         >
           {t("btns.startFree")}
         </Col>
-        {/* {payUrls.map((link: any, id: any) => {
-          return (
-            <Col
-              key={id}
-              as={"a"}
-              xs="auto"
-              className={`ml-2 ${statusBtn}`}
-              href={`${link}`}
-              target="_blank"
-              rel="noreferrer"
-            >
-              6{t("btns.start")}
-            </Col>
-          );
-        })} */}
+
         <Col
           as={"a"}
           xs="auto"
