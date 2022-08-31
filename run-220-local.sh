@@ -8,7 +8,7 @@ nohup ./src-js/react/run-react-local.sh &
 
 #BE
 #docker-compose down && rm -rf ./db-data
-nohup docker-compose up &
+nohup docker compose up &
 ./gradlew clean build -x test
 echo "sleep for 10 secs..."
 sleep 10
