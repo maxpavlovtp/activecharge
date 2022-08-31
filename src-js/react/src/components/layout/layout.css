@@ -3,7 +3,7 @@
 }
 
 .logoText {
-  color: #393939;
+  /* color: #393939; */
   font-family: "OpenSansBold", Arial, Helvetica, sans-serif;
   font-weight: 700;
   font-size: calc(0.9rem + 1.2vw);
@@ -20,8 +20,8 @@
   font-weight: 400;
   font-size: calc(0.7rem + 0.4vw);
   border: none;
-  background-color: #f8f9fa;
-  color: #393939;
+  /* background-color: #f8f9fa;
+  color: #393939; */
 }
 .btnLang:not(:last-child) {
   border-right: 2px solid #a5adb4;
@@ -36,7 +36,7 @@
     width: 24px;
     height: 24px;
     border: none;
-    background-color: #f8f9fa;
+    /* background-color: #f8f9fa; */
   }
   .open {
     background-image: url("../../assets/icons8-close-24.svg");
@@ -50,13 +50,13 @@
   font-family: "OpenSansRegular", Arial, Helvetica, sans-serif;
   font-weight: 400;
   font-size: calc(0.6rem + 0.3vw);
-  color: #6e6e6e;
-  background-color: #fff;
+  /* color: #6e6e6e; */
+  /* background-color: #fff; */
 }
 
 .footerLink {
   text-decoration: none;
-  color: #2997ff;
+  /* color: #2997ff; */
 }
 
 .footerLink:hover {
