@@ -8,7 +8,7 @@ import MainImgLoadingLazy from "../lazyLoading/MainImgLoadingLazy";
 import placehoderSrc from "../../assets/logoTiny.png";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { ThemeProvider } from "styled-components";
-import { GlobalStyles } from "../globalStyles";
+import { GlobalStyles, LinksColor } from "../globalStyles";
 import { lightTheme, darkTheme } from "../darkTheme/Theme";
 
 export default function Layout() {
@@ -60,11 +60,10 @@ export default function Layout() {
             expand="lg"
             collapseOnSelect
           >
-            <Link
-              style={{ textDecoration: "none", display: "flex" }}
+            <LinksColor
+              to={routeTo}
               reloadDocument={true}
               className="flex-row align-items-center"
-              to={routeTo}
             >
               <div className="logoContainer">
                 <MainImgLoadingLazy
@@ -75,11 +74,12 @@ export default function Layout() {
                   heigth="40"
                 />
               </div>
+
               <h3 className="ml-1 mb-0 logoText">220-km.com</h3>
-            </Link>
+            </LinksColor>
             <Navbar.Toggle onClick={closeMenu} bsPrefix={`${toggleStatus}`} />
             <Navbar.Collapse>
-              <button onClick={themeToggler}>Switch Theme</button>
+              {/* <button onClick={themeToggler}>Switch Theme</button> */}
               <Nav className="ml-auto mt-auto align-items-end">
                 <Nav.Item>
                   <Nav.Link

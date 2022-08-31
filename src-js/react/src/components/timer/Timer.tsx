@@ -13,7 +13,7 @@ const Timer = (props: ITimer) => {
     fontWeight: "400",
     fontSize: props.fontSize,
     margin: props.margin,
-    color: "#2c2b2b",
+    // color: "#2c2b2b",
     transition: "0.8s",
   };
 
