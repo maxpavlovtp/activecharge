@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -8,17 +8,19 @@ import {
   Title,
   Tooltip,
   Legend,
+  Filler,
 } from "chart.js";
 import "chartjs-adapter-luxon";
+import zoomPlugin from "chartjs-plugin-zoom";
 import ChartStreaming from "chartjs-plugin-streaming";
 import { Line } from "react-chartjs-2";
 import { faker } from "@faker-js/faker";
-import zoomPlugin from "chartjs-plugin-zoom";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
 
 ChartJS.register(
   CategoryScale,
+  zoomPlugin,
   LinearScale,
   PointElement,
   LineElement,
@@ -26,68 +28,109 @@ ChartJS.register(
   Tooltip,
   Legend,
   ChartStreaming,
-  zoomPlugin
+  Filler
 );
 
 export function Chart({ leftS, stationNumber, voltage, power }) {
+  const [voltageChart, setVoltageChart] = useState([]);
+  const [powerChart, setPowerChart] = useState([]);
   const { t } = useTranslation();
   const labels = [];
   for (let time = 0; time <= 720; time++) {
     labels.push(time);
   }
 
-  const onRecieve = (chart) => {
-    chart.data.datasets[0].data.push({
-      x: Date.now(),
-      y: power,
-    });
-    chart.data.datasets[1].data.push({
-      x: Date.now(),
-      y: voltage,
-    });
-    chart.update("quiet");
+  const chartStop = leftS === 0 ? true : false;
+
+  const onRecieve = () => {
+    setPowerChart((old) => [
+      ...old,
+      {
+        x: Date.now(),
+        y: power,
+      },
+    ]);
+    setVoltageChart((old) => [
+      ...old,
+      {
+        x: Date.now(),
+        y: voltage,
+      },
+    ]);
+    // chart.update("quiet");
   };
 
   const data = {
     datasets: [
       {
         label: t("power"),
-        backgroundColor: "#fff",
-        borderColor: "red",
-        fill: false,
+        backgroundColor: "rgba(237, 140, 140, 0.5)",
+        fill: true,
         lineTension: 0,
         borderDash: [8, 4],
+        borderColor: "rgb(237, 121, 121)",
+        cubicInterpolationMode: "monotone",
         yAxisID: "power",
-        data: [],
+        data: powerChart,
       },
       {
         label: t("voltage"),
-        backgroundColor: "#ececec",
-        borderColor: "blue",
-        fill: false,
+        backgroundColor: "rgba(208, 188, 245, 0.5)",
+        fill: true,
         lineTension: 0,
         borderDash: [8, 4],
+        borderColor: "rgb(169, 149, 207)",
+        cubicInterpolationMode: "monotone",
         yAxisID: "voltage",
-        data: [],
+        data: voltageChart,
       },
     ],
   };
 
   const options = {
+    responsive: true,
+    interaction: {
+      intersect: false,
+    },
+    plugins: {
+      zoom: {
+        pan: {
+          enabled: true,
+          mode: "xy",
+        },
+        zoom: {
+          pinch: {
+            enabled: true,
+          },
+          wheel: {
+            enabled: true,
+          },
+          mode: "xy",
+        },
+        limits: {
+          xy: {
+            minDelay: null,
+            maxDelay: null,
+            minDuration: null,
+            maxDuration: null,
+          },
+        },
+      },
+    },
     scales: {
       power: {
         type: "linear",
         display: true,
         position: "left",
-        min: -1,
-        max: 5,
+        min: 0,
+        max: 8,
       },
       voltage: {
         type: "linear",
         display: true,
         position: "right",
-        min: 160,
-        max: 280,
+        min: 180,
+        max: 260,
 
         // grid line settings
         grid: {
@@ -98,16 +141,18 @@ export function Chart({ leftS, stationNumber, voltage, power }) {
         type: "realtime",
         distribution: "linear",
         realtime: {
-          delay: 2000,
+          duration: 20000,
+          delay: 3000,
           refresh: 2000,
+          pause: chartStop,
           onRefresh: onRecieve,
-        }, 
+        },
         ticks: {
-          displayFormats: 1,
+          displayFormats: 3,
           maxRotation: 0,
           minRotation: 0,
           stepSize: 1,
-          maxTicksLimit: 30,
+          maxTicksLimit: 20,
           minUnit: "second",
           source: "auto",
           autoSkip: true,
@@ -116,9 +161,6 @@ export function Chart({ leftS, stationNumber, voltage, power }) {
           },
         },
       },
-    },
-    interaction: {
-      intersect: false,
     },
   };
   return (
