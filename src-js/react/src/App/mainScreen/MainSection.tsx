@@ -4,11 +4,11 @@ import mainImg from "../../assets/charging.png";
 import { Link, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
-import { idStart } from "../../store/reducers/ActionCreators";
+import { getStationInfo, idStart } from "../../store/reducers/ActionCreators";
 import MainImgLoadingLazy from "../../components/lazyLoading/MainImgLoadingLazy";
 import placehoderSrc from "../../assets/chargingTiny.png";
 import ErrorPage from "../../components/error-page/ErrorPage";
-import { setDeviceStatusUndefind } from "../../store/reducers/FetchSlice";
+// import { setDeviceStatusUndefind } from "../../store/reducers/FetchSlice";
 import axios from "axios";
 import { Col, Container, Row } from "react-bootstrap";
 
@@ -30,7 +30,6 @@ const MainSection: React.FC = () => {
 
   const startCharging = () => {
     dispatch(idStart(stationNumber));
-    dispatch(setDeviceStatusUndefind(undefined));
   };
 
   useEffect(() => {
@@ -50,7 +49,7 @@ const MainSection: React.FC = () => {
     }
   }, []);
 
-  let statusBtn = errorPay === null ? "btnStart" : "btnStart disableBtn";
+  let statusBtn = errorPay !== null ? "btnStart disableBtn" : "btnStart";
 
   if (error) {
     return (
