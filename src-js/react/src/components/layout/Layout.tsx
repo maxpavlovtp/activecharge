@@ -3,12 +3,21 @@ import { Link, Outlet, useSearchParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import "./layout.css";
 import logo from "../../assets/logo.png";
+import whiteLogo from "../../assets/whiteLogoNav.png";
+import lightMode from "../../assets/lightMode.png";
+import nightMode from "../../assets/nightMode.png";
 import { useTranslation } from "react-i18next";
 import MainImgLoadingLazy from "../lazyLoading/MainImgLoadingLazy";
 import placehoderSrc from "../../assets/logoTiny.png";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { ThemeProvider } from "styled-components";
-import { GlobalStyles, LinksColor } from "../globalStyles";
+import {
+  GlobalStyles,
+  LinksColor,
+  NavBar,
+  NavLink,
+  Translate,
+} from "../globalStyles";
 import { lightTheme, darkTheme } from "../darkTheme/Theme";
 
 export default function Layout() {
@@ -31,7 +40,6 @@ export default function Layout() {
     setOpen(!open);
     console.log(open);
   };
-  let toggleStatus = !open ? "toggle-icon" : "toggle-icon open";
 
   const lngs: any = {
     ua: { nativeName: "Укр" },
@@ -41,10 +49,20 @@ export default function Layout() {
   const { t, i18n } = useTranslation();
 
   const [theme, setTheme] = useState("light");
+  const [logoTheme, setLogoTheme] = useState(logo);
+  const [modeImg, setModeImg] = useState(nightMode);
   const themeToggler = () => {
-    theme === "light" ? setTheme("dark") : setTheme("light");
+    if (theme === "light") {
+      setTheme("dark");
+      setLogoTheme(whiteLogo);
+      setModeImg(lightMode);
+    } else {
+      setTheme("light");
+      setLogoTheme(logo);
+      setModeImg(nightMode);
+    }
   };
-
+  let toggleStatus = !open ? "toggle-icon" : "open toggle-icon ";
   return (
     <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
       <>
@@ -54,9 +72,8 @@ export default function Layout() {
           style={{ height: "100vh", display: "flex" }}
           className="flex-column justify-content-between ml-0 pl-0 mr-0 pr-0"
         >
-          <Navbar
-            className="justify-content-between align-items-center shadow-sm s"
-            // bg="light"
+          <NavBar
+            className="justify-content-between align-items-center shadow-sm"
             expand="lg"
             collapseOnSelect
           >
@@ -67,7 +84,7 @@ export default function Layout() {
             >
               <div className="logoContainer">
                 <MainImgLoadingLazy
-                  src={logo}
+                  src={logoTheme}
                   alt={"logo"}
                   placeholderSrc={placehoderSrc}
                   width="40"
@@ -79,8 +96,7 @@ export default function Layout() {
             </LinksColor>
             <Navbar.Toggle onClick={closeMenu} bsPrefix={`${toggleStatus}`} />
             <Navbar.Collapse>
-              {/* <button onClick={themeToggler}>Switch Theme</button> */}
-              <Nav className="ml-auto mt-auto align-items-end">
+              <Nav className="ml-auto mt-auto align-items-center">
                 <Nav.Item>
                   <Nav.Link
                     style={{ textDecoration: "none" }}
@@ -94,7 +110,7 @@ export default function Layout() {
                         : `/?station=${stationNumbers}`
                     }
                   >
-                    {t("landingLink")}
+                    <NavLink>{t("landingLink")}</NavLink>
                   </Nav.Link>
                 </Nav.Item>
 
@@ -108,7 +124,7 @@ export default function Layout() {
                       as={Link}
                       to={`/start?station=${stationNumbers}`}
                     >
-                      {t("chargeLink")}
+                      <NavLink>{t("chargeLink")}</NavLink>
                     </Nav.Link>
                   </Nav.Item>
                 )}
@@ -122,7 +138,7 @@ export default function Layout() {
                     as={Link}
                     to={`/contacts?station=${stationNumbers}`}
                   >
-                    {t("contacts")}
+                    <NavLink>{t("contacts")}</NavLink>
                   </Nav.Link>
                 </Nav.Item>
 
@@ -135,18 +151,18 @@ export default function Layout() {
                     as={Link}
                     to={`/contract?station=${stationNumbers}`}
                   >
-                    {t("offer")}
+                    <NavLink>{t("offer")}</NavLink>
                   </Nav.Link>
                 </Nav.Item>
 
-                <Nav.Item className="ml-3">
+                <Nav.Item className="ml-3 mr-3">
                   <Nav.Link
                     className="text-decoration-none"
                     eventKey="5"
                     onClick={closeMenu}
                   >
                     {Object.keys(lngs).map((lng: any) => (
-                      <button
+                      <Translate
                         className="ml-1 btnLang"
                         key={lng}
                         style={{
@@ -157,13 +173,25 @@ export default function Layout() {
                         onClick={() => i18n.changeLanguage(lng)}
                       >
                         {lngs[lng].nativeName}
-                      </button>
+                      </Translate>
                     ))}
                   </Nav.Link>
                 </Nav.Item>
+                <Nav.Item>
+                  <button
+                    style={{ backgroundColor: "transparent", border: "none" }}
+                    onClick={themeToggler}
+                  >
+                    <img
+                      style={{ width: "30px", height: "30px" }}
+                      src={modeImg}
+                      alt={"theme"}
+                    />
+                  </button>
+                </Nav.Item>
               </Nav>
             </Navbar.Collapse>
-          </Navbar>
+          </NavBar>
 
           <Outlet />
 

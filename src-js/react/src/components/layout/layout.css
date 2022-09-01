@@ -19,8 +19,7 @@
   font-weight: 400;
   font-size: calc(0.7rem + 0.4vw);
   border: none;
-  /* background-color: #f8f9fa;
-  color: #393939; */
+
 }
 .btnLang:not(:last-child) {
   border-right: 2px solid #a5adb4;
@@ -35,7 +34,8 @@
     width: 24px;
     height: 24px;
     border: none;
-    /* background-color: #f8f9fa; */
+    background-color: #f8f9fa;
+    border-radius: 3px;
   }
   .open {
     background-image: url("../../assets/icons8-close-24.svg");
