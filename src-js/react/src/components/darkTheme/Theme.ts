@@ -4,12 +4,13 @@ export const lightTheme = {
   toggleBorder: "#FFF",
   background: "#363537",
 
-  navBarBg: '#f8f9fa',
+  navBarBg: "#f8f9fa",
   navText: "rgba(0,0,0,.5)",
   translateBg: "#f8f9fa",
   translateText: "#393939",
 
   powerMetricColor: "#8f00ff",
+  offerLinksColor: "#8f00ff",
 
   a: "#2c2b2b",
 };
@@ -19,12 +20,14 @@ export const darkTheme = {
   toggleBorder: "#6B8096",
   background: "#999",
 
-  navBarBg: '#292829',
+  navBarBg: "#292829",
   navText: "#FAFAFA",
   translateBg: "#292829",
   translateText: "#FAFAFA",
 
   powerMetricColor: "#d1a1f7",
+
+  offerLinksColor: "#ddb9fa",
 
   a: "#fafafa",
 };

@@ -1,6 +1,7 @@
 import React from "react";
 import { Container } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import { OfferLinksColor } from "../../components/globalStyles";
 import styles from "./ContractSection.module.css";
 
 const MainSection: React.FC = () => {
@@ -17,84 +18,84 @@ const MainSection: React.FC = () => {
             <strong> </strong>
           </p>
           <p>
-            <a className={styles.offerLink} href="#dictionary">
+            <OfferLinksColor className={styles.offerLink} href="#dictionary">
               <strong>1. </strong>
               <strong>Визначення термінів</strong>
-            </a>
+            </OfferLinksColor>
           </p>
           <p>
-            <a className={styles.offerLink} href="#offer">
+            <OfferLinksColor className={styles.offerLink} href="#offer">
               <strong>2. </strong>
               <strong>Договір між Клієнтом і Веб-сайтом 220-km.com</strong>
-            </a>
+            </OfferLinksColor>
           </p>
           <p>
-            <a className={styles.offerLink} href="#siteUsage">
+            <OfferLinksColor className={styles.offerLink} href="#siteUsage">
               <strong>3. </strong>
               <strong>Користування Веб-сайтом</strong>
-            </a>
+            </OfferLinksColor>
           </p>
           <p>
-            <a className={styles.offerLink} href="#forbidden">
+            <OfferLinksColor className={styles.offerLink} href="#forbidden">
               <strong>4. </strong>
               <strong>Заборонена діяльність</strong>
-            </a>
+            </OfferLinksColor>
           </p>
           <p>
-            <a className={styles.offerLink} href="#conditions">
+            <OfferLinksColor className={styles.offerLink} href="#conditions">
               <strong>5. </strong>
               <strong>Правила та обмеження Постачальника</strong>
-            </a>
+            </OfferLinksColor>
           </p>
           <p>
-            <a className={styles.offerLink} href="#costs">
+            <OfferLinksColor className={styles.offerLink} href="#costs">
               <strong>6. </strong>
               <strong>Вартість послуг і порядок розрахунку</strong>
-            </a>
+            </OfferLinksColor>
           </p>
           <p>
-            <a className={styles.offerLink} href="#revocation">
+            <OfferLinksColor className={styles.offerLink} href="#revocation">
               <strong>7. </strong>
               <strong>Умови повернення оплати</strong>
-            </a>
+            </OfferLinksColor>
           </p>
           <p>
-            <a className={styles.offerLink} href="#gatheringInfo">
+            <OfferLinksColor className={styles.offerLink} href="#gatheringInfo">
               <strong>8. </strong>
               <strong>Яку інформацію ми збираємо від Вас</strong>
-            </a>
+            </OfferLinksColor>
           </p>
           <p>
-            <a className={styles.offerLink} href="#confidential">
+            <OfferLinksColor className={styles.offerLink} href="#confidential">
               <strong>9. </strong>
               <strong>Політика конфіденційності</strong>
-            </a>
+            </OfferLinksColor>
           </p>
           <p>
-            <a className={styles.offerLink} href="#childConfidential">
+            <OfferLinksColor className={styles.offerLink} href="#childConfidential">
               <strong>10. </strong>
               <strong>Конфіденційність по відношенню до дітей</strong>
-            </a>
+            </OfferLinksColor>
           </p>
           <p>
-            <a className={styles.offerLink} href="#software">
+            <OfferLinksColor className={styles.offerLink} href="#software">
               <strong>11. </strong>
               <strong>
                 Програмне забезпечення, доступне на даному веб-сайті
               </strong>
-            </a>
+            </OfferLinksColor>
           </p>
           <p>
-            <a className={styles.offerLink} href="#cookies">
+            <OfferLinksColor className={styles.offerLink} href="#cookies">
               <strong>12. </strong>
               <strong>Куки та інші технології</strong>
-            </a>
+            </OfferLinksColor>
           </p>
           <p>
-            <a className={styles.offerLink} href="#contacts">
+            <OfferLinksColor className={styles.offerLink} href="#contacts">
               <strong>13. </strong>
               <strong>Як Ви можете зв'язатися з нами</strong>
-            </a>
+            </OfferLinksColor>
           </p>
           <br />
           <p id="dictionary">
@@ -115,24 +116,24 @@ const MainSection: React.FC = () => {
             відкритий для вільного візуального ознайомлення, публічно доступний,
             що належить ФОП "Павлов Максим Валерійович", розташований в мережі
             Інтернет за адресою{" "}
-            <a
+            <OfferLinksColor
               className={styles.offerLink}
               href="http://220-km.com"
               target="_blank"
             >
               http://220-km.com
-            </a>
+            </OfferLinksColor>
           </p>
           <p>
             <strong>Договір оферти</strong>— даний документ, опублікований в
             мережі Інтернет за єдиною адресою:{" "}
-            <a
+            <OfferLinksColor
               className={styles.offerLink}
               href="http://220-km.com/contract"
               target="_blank"
             >
               http://220-km.com/contract
-            </a>
+            </OfferLinksColor>
           </p>
           <p>
             <strong>Акцепт</strong>- це відповідь особи, якій адресована оферта,
@@ -158,13 +159,13 @@ const MainSection: React.FC = () => {
           <p>
             <strong>Платіжна система</strong>- сервіс, що функціонує в мережі
             Інтернет за адресою{" "}
-            <a
+            <OfferLinksColor
               className={styles.offerLink}
               href="https://www.monobank.ua/qr/"
               target="_blank"
             >
               https://www.monobank.ua/qr
-            </a>
+            </OfferLinksColor>
             , за допомогою якого Клієнти отримують можливість оплатити зарядку в
             режимі реального часу.
           </p>
@@ -321,8 +322,8 @@ const MainSection: React.FC = () => {
           </p>
           <p>
             6.3 Послуга вважається виконаною належним чином і в повному обсязі
-            після відображення:
-            <div className={styles.congrats220}>Вітаннячка!</div>Ми зарядили в
+            після відображення: 
+            <OfferLinksColor> Вітаннячка!</OfferLinksColor> Ми зарядили в
             тачку (кількість кіловатт)
           </p>
           <p id="revocation">

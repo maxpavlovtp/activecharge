@@ -83,3 +83,10 @@ export const MainScreenLink = styled(Col)`
 export const PowerMetricsColor = styled.p`
   color: ${({ theme }: { theme: any }) => theme.powerMetricColor};
 `;
+
+export const OfferLinksColor = styled.a`
+  color: ${({ theme }: { theme: any }) => theme.offerLinksColor};
+  &:hover {
+    color: ${({ theme }: { theme: any }) => theme.a};
+  }
+`;
