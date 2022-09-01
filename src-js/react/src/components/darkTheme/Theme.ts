@@ -12,6 +12,8 @@ export const lightTheme = {
   powerMetricColor: "#8f00ff",
   offerLinksColor: "#8f00ff",
 
+  footerColorLink: "#1b85f7",
+
   a: "#2c2b2b",
 };
 export const darkTheme = {
@@ -28,6 +30,8 @@ export const darkTheme = {
   powerMetricColor: "#d1a1f7",
 
   offerLinksColor: "#ddb9fa",
+
+  footerColorLink: "#73b4fa",
 
   a: "#fafafa",
 };

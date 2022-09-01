@@ -90,3 +90,7 @@ export const OfferLinksColor = styled.a`
     color: ${({ theme }: { theme: any }) => theme.a};
   }
 `;
+
+export const FooterLink = styled.a`
+  color: ${({ theme }: { theme: any }) => theme.footerColorLink};
+`;

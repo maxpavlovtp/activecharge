@@ -14,6 +14,7 @@ import placehoderSrc from "../../assets/logoTiny.png";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { ThemeProvider } from "styled-components";
 import {
+  FooterLink,
   GlobalStyles,
   LinksColor,
   NavBar,
@@ -208,12 +209,12 @@ export default function Layout() {
           <footer className="footerBox">
             <p className="footerText">
               ©2022 {t("footer.part1")}. {t("footer.part2")}{" "}
-              <a
+              <FooterLink
                 className="footerLink"
                 href="https://www.facebook.com/zeBoosterLab/"
               >
                 ZE Booster Lab
-              </a>{" "}
+              </FooterLink>{" "}
               {t("footer.part3")}
             </p>
           </footer>
