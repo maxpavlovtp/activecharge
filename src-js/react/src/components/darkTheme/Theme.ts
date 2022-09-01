@@ -9,6 +9,8 @@ export const lightTheme = {
   translateBg: "#f8f9fa",
   translateText: "#393939",
 
+  powerMetricColor: "#8f00ff",
+
   a: "#2c2b2b",
 };
 export const darkTheme = {
@@ -21,6 +23,8 @@ export const darkTheme = {
   navText: "#FAFAFA",
   translateBg: "#292829",
   translateText: "#FAFAFA",
+
+  powerMetricColor: "#d1a1f7",
 
   a: "#fafafa",
 };

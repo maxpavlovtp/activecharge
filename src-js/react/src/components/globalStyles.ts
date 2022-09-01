@@ -79,3 +79,7 @@ export const MainScreenLink = styled(Col)`
   }
   transition: all 0.5s linear;
 `;
+
+export const PowerMetricsColor = styled.p`
+  color: ${({ theme }: { theme: any }) => theme.powerMetricColor};
+`;
