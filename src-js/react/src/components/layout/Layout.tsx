@@ -19,6 +19,7 @@ import {
   Translate,
 } from "../globalStyles";
 import { lightTheme, darkTheme } from "../darkTheme/Theme";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 export default function Layout() {
   const [routeTo, setRouteTo] = useState<any>("/main");
@@ -48,9 +49,9 @@ export default function Layout() {
 
   const { t, i18n } = useTranslation();
 
-  const [theme, setTheme] = useState("light");
-  const [logoTheme, setLogoTheme] = useState(logo);
-  const [modeImg, setModeImg] = useState(nightMode);
+  const [theme, setTheme] = useLocalStorage<string>("themeMode", "light");
+  const [logoTheme, setLogoTheme] = useLocalStorage<string>("logoImg", logo);
+  const [modeImg, setModeImg] = useLocalStorage<string>("btnMode", lightMode);
   const themeToggler = () => {
     if (theme === "light") {
       setTheme("dark");
