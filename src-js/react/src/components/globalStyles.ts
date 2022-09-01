@@ -42,3 +42,8 @@ export const Translate = styled.button`
   color: ${({ theme }: { theme: any }) => theme.translateText};
   transition: all 0.5s linear;
 `;
+
+export const HomeCard = styled.div`
+  background-color: ${({ theme }: { theme: any }) => theme.navBarBg};
+  transition: all 0.5s linear;
+`;
