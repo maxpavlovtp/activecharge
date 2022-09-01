@@ -6,6 +6,8 @@ import logo from "../../assets/logo.png";
 import whiteLogo from "../../assets/whiteLogoNav.png";
 import lightMode from "../../assets/lightMode.png";
 import nightMode from "../../assets/nightMode.png";
+import mainImg from "../../assets/charging.png";
+import whiteMainImg from "../../assets/whiteCharging.png";
 import { useTranslation } from "react-i18next";
 import MainImgLoadingLazy from "../lazyLoading/MainImgLoadingLazy";
 import placehoderSrc from "../../assets/logoTiny.png";
@@ -52,15 +54,22 @@ export default function Layout() {
   const [theme, setTheme] = useLocalStorage<string>("themeMode", "light");
   const [logoTheme, setLogoTheme] = useLocalStorage<string>("logoImg", logo);
   const [modeImg, setModeImg] = useLocalStorage<string>("btnMode", lightMode);
+  const [mainImgTheme, setMainImgTheme] = useLocalStorage<string>(
+    "mainImg",
+    mainImg
+  );
+
   const themeToggler = () => {
     if (theme === "light") {
       setTheme("dark");
       setLogoTheme(whiteLogo);
       setModeImg(lightMode);
+      setMainImgTheme(whiteMainImg);
     } else {
       setTheme("light");
       setLogoTheme(logo);
       setModeImg(nightMode);
+      setMainImgTheme(mainImg);
     }
   };
   let toggleStatus = !open ? "toggle-icon" : "open toggle-icon ";
@@ -194,7 +203,7 @@ export default function Layout() {
             </Navbar.Collapse>
           </NavBar>
 
-          <Outlet />
+          <Outlet context={[mainImgTheme, setMainImgTheme]}/>
 
           <footer className="footerBox">
             <p className="footerText">

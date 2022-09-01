@@ -1,6 +1,6 @@
 import styled, { createGlobalStyle } from "styled-components";
 import { Link } from "react-router-dom";
-import { Nav, Navbar } from "react-bootstrap";
+import { Col, Nav, Navbar } from "react-bootstrap";
 export const GlobalStyles = createGlobalStyle`
   body {
     background: ${({ theme }: { theme: any }) => theme.body};
@@ -49,6 +49,22 @@ export const HomeCard = styled.div`
 `;
 
 export const CardLink = styled(Link)`
+  color: ${({ theme }: { theme: any }) => theme.a};
+  text-decoration: none;
+  &:hover {
+    color: ${({ theme }: { theme: any }) => theme.a};
+  }
+  &:focus,
+  &:hover,
+  &:visited,
+  &:link,
+  &:active {
+    text-decoration: none;
+  }
+  transition: all 0.5s linear;
+`;
+
+export const MainScreenLink = styled(Col)`
   color: ${({ theme }: { theme: any }) => theme.a};
   text-decoration: none;
   &:hover {

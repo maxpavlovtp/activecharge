@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./MainSection.css";
-import mainImg from "../../assets/charging.png";
-import { Link, useSearchParams } from "react-router-dom";
+
+import { Link, useOutletContext, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import { getStationInfo, idStart } from "../../store/reducers/ActionCreators";
@@ -11,11 +11,14 @@ import ErrorPage from "../../components/error-page/ErrorPage";
 // import { setDeviceStatusUndefind } from "../../store/reducers/FetchSlice";
 import axios from "axios";
 import { Col, Container, Row } from "react-bootstrap";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { MainScreenLink } from "../../components/globalStyles";
 
 const MainSection: React.FC = () => {
   const [searchParams] = useSearchParams();
   const [payUrls, setPayUrls] = useState<any>([]);
   const [errorPay, setErrorPay] = useState<any>(null);
+  const [mainImgTheme, setMainImgTheme] = useOutletContext<any>();
 
   let stationNumber: any = searchParams.get("station");
   const urlPayment12h = `${process.env.REACT_APP_LINK_SERVE}order/generateCheckoutLink?station_number=${stationNumber}&&hours=12`;
@@ -104,7 +107,7 @@ const MainSection: React.FC = () => {
 
       <Row className="justify-content-center">
         <MainImgLoadingLazy
-          src={mainImg}
+          src={mainImgTheme}
           alt={"station"}
           placeholderSrc={placehoderSrc}
           width="256"
