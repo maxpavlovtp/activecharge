@@ -47,3 +47,19 @@ export const HomeCard = styled.div`
   background-color: ${({ theme }: { theme: any }) => theme.navBarBg};
   transition: all 0.5s linear;
 `;
+
+export const CardLink = styled(Link)`
+  color: ${({ theme }: { theme: any }) => theme.a};
+  text-decoration: none;
+  &:hover {
+    color: ${({ theme }: { theme: any }) => theme.a};
+  }
+  &:focus,
+  &:hover,
+  &:visited,
+  &:link,
+  &:active {
+    text-decoration: none;
+  }
+  transition: all 0.5s linear;
+`;
