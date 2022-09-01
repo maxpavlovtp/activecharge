@@ -24,7 +24,7 @@ public class DeviceUpdateAdapter implements DeviceUpdater {
 
     ChargingJobEntity jobEntity = chargingJobService.findActive(update.getDeviceId());
     if (jobEntity != null) {
-      jobEntity.setChargedKwh(update.getOneKwh() * 1000);
+      jobEntity.setChargedWtH(update.getOneKwh() * 1000);
       chargingJobService.update(jobEntity);
     }
   }

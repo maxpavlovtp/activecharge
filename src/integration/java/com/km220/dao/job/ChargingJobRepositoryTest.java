@@ -38,7 +38,7 @@ class ChargingJobRepositoryTest {
 
   private static final String STATION_NUMBER = "1";
   private static final String STATION_NAME = "1-vlad-garage36";
-  private static final String STATION_DEVICE = "1000d61c41";
+  private static final String STATION_DEVICE = "1001323420";
 
   @Autowired
   private ChargingJobRepository chargingJobRepository;
@@ -58,15 +58,13 @@ class ChargingJobRepositoryTest {
     assertEquals("", job.getReason());
     assertEquals(ChargingJobState.IN_PROGRESS, job.getState());
     assertEquals(0f, job.getPowerWt(), 0.00001f);
-    assertEquals(0f, job.getChargedKwh(), 0.00001f);
+    assertEquals(0f, job.getChargedWtH(), 0.00001f);
     assertEquals(10, job.getPeriodSec());
     assertNull(job.getStoppedOn());
     assertTrue(job.getCreatedOn().isAfter(now.atOffset(ZoneOffset.UTC)));
     assertTrue(job.getUpdatedOn().isAfter(now.atOffset(ZoneOffset.UTC)));
 
     assertNotNull(job.getStation());
-    assertEquals(STATION_NAME, job.getStation().getName());
-    assertEquals(STATION_NUMBER, job.getStation().getNumber());
     assertEquals(STATION_DEVICE, job.getStation().getDeviceId());
   }
 
@@ -85,14 +83,14 @@ class ChargingJobRepositoryTest {
     assertEquals("", job.getReason());
     assertEquals(ChargingJobState.IN_PROGRESS, job.getState());
     assertEquals(0f, job.getPowerWt(), 0.00001f);
-    assertEquals(0f, job.getChargedKwh(), 0.00001f);
+    assertEquals(0f, job.getChargedWtH(), 0.00001f);
     assertEquals(10, job.getPeriodSec());
     assertNull(job.getStoppedOn());
     assertTrue(job.getCreatedOn().isAfter(onCreate.atOffset(ZoneOffset.UTC)));
     assertTrue(job.getUpdatedOn().isAfter(onCreate.atOffset(ZoneOffset.UTC)));
 
     job.setPowerWt(1f);
-    job.setChargedKwh(2f);
+    job.setChargedWtH(2f);
     job.setReason("OK");
     job.setState(ChargingJobState.DONE);
     job.setStoppedOn(OffsetDateTime.parse("2007-12-03T10:15:30+00:00"));
@@ -106,13 +104,12 @@ class ChargingJobRepositoryTest {
     assertEquals("OK", job.getReason());
     assertEquals(ChargingJobState.DONE, job.getState());
     assertEquals(1f, job.getPowerWt(), 0.00001f);
-    assertEquals(2f, job.getChargedKwh(), 0.00001f);
+    assertEquals(2f, job.getChargedWtH(), 0.00001f);
     assertEquals(
         OffsetDateTime.parse("2007-12-03T10:15:30+00:00").atZoneSameInstant(ZoneOffset.UTC),
         job.getStoppedOn().atZoneSameInstant(ZoneOffset.UTC));
 
     assertNotNull(job.getStation());
-    assertEquals(STATION_NAME, job.getStation().getName());
     assertEquals(STATION_NUMBER, job.getStation().getNumber());
     assertEquals(STATION_DEVICE, job.getStation().getDeviceId());
   }
@@ -128,7 +125,7 @@ class ChargingJobRepositoryTest {
                 hasProperty("number", is(1L)),
                 hasProperty("state", is(ChargingJobState.IN_PROGRESS)),
                 hasProperty("powerWt", is(1.0f)),
-                hasProperty("chargedKwh", is(2.0f)),
+                hasProperty("chargedWtH", is(2.0f)),
                 hasProperty("periodSec", is(10)),
                 hasProperty("stoppedOn", is(nullValue())),
                 hasProperty("station",
@@ -143,7 +140,7 @@ class ChargingJobRepositoryTest {
                 hasProperty("number", is(3L)),
                 hasProperty("state", is(ChargingJobState.IN_PROGRESS)),
                 hasProperty("powerWt", is(5.0f)),
-                hasProperty("chargedKwh", is(6.0f)),
+                hasProperty("chargedWtH", is(6.0f)),
                 hasProperty("periodSec", is(10)),
                 hasProperty("stoppedOn", is(nullValue())),
                 hasProperty("station",
@@ -158,7 +155,7 @@ class ChargingJobRepositoryTest {
                 hasProperty("number", is(4L)),
                 hasProperty("state", is(ChargingJobState.IN_PROGRESS)),
                 hasProperty("powerWt", is(7.0f)),
-                hasProperty("chargedKwh", is(8.0f)),
+                hasProperty("chargedWtH", is(8.0f)),
                 hasProperty("periodSec", is(10)),
                 hasProperty("stoppedOn", is(nullValue())),
                 hasProperty("station",
@@ -196,14 +193,14 @@ class ChargingJobRepositoryTest {
     assertEquals("", job.getReason());
     assertEquals(ChargingJobState.IN_PROGRESS, job.getState());
     assertEquals(0f, job.getPowerWt(), 0.00001f);
-    assertEquals(0f, job.getChargedKwh(), 0.00001f);
+    assertEquals(0f, job.getChargedWtH(), 0.00001f);
     assertEquals(10, job.getPeriodSec());
     assertNull(job.getStoppedOn());
     assertTrue(job.getCreatedOn().isAfter(onCreate.atOffset(ZoneOffset.UTC)));
     assertTrue(job.getUpdatedOn().isAfter(onCreate.atOffset(ZoneOffset.UTC)));
 
     job.setPowerWt(1f);
-    job.setChargedKwh(2f);
+    job.setChargedWtH(2f);
     job.setReason("OK");
     job.setState(ChargingJobState.DONE);
     job.setStoppedOn(OffsetDateTime.parse("2007-12-03T10:15:30+00:00"));
@@ -217,13 +214,12 @@ class ChargingJobRepositoryTest {
     assertEquals("OK", job.getReason());
     assertEquals(ChargingJobState.DONE, job.getState());
     assertEquals(1f, job.getPowerWt(), 0.00001f);
-    assertEquals(2f, job.getChargedKwh(), 0.00001f);
+    assertEquals(2f, job.getChargedWtH(), 0.00001f);
     assertEquals(
         OffsetDateTime.parse("2007-12-03T10:15:30+00:00").atZoneSameInstant(ZoneOffset.UTC),
         job.getStoppedOn().atZoneSameInstant(ZoneOffset.UTC));
 
     assertNotNull(job.getStation());
-    assertEquals(STATION_NAME, job.getStation().getName());
     assertEquals(STATION_NUMBER, job.getStation().getNumber());
     assertEquals(STATION_DEVICE, job.getStation().getDeviceId());
   }

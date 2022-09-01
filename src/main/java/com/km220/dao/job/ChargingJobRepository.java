@@ -1,6 +1,6 @@
 package com.km220.dao.job;
 
-import static com.km220.dao.job.ChargingJobEntity.CHARGED_KWH;
+import static com.km220.dao.job.ChargingJobEntity.CHARGED_WT_H;
 import static com.km220.dao.job.ChargingJobEntity.NUMBER;
 import static com.km220.dao.job.ChargingJobEntity.POWER_WT;
 import static com.km220.dao.job.ChargingJobEntity.REASON;
@@ -38,7 +38,7 @@ public class ChargingJobRepository {
   private static final String CHARGING_JOB_ALIAS = "j_";
 
   private static final String SELECT_QUERY = """
-      SELECT j.id as j_id, j.number as j_number, j.charged_kwh as j_charged_kwh,
+      SELECT j.id as j_id, j.number as j_number, j.charged_wt_h as j_charged_wt_h,
           j.power_wt as j_power_wt, j.voltage as j_voltage, j.reason as j_reason, j.state as j_state,
           j.created_on as j_created_on, j.updated_on as j_updated_on, j.period_sec as j_period_sec,
           j.stopped_on as j_stopped_on,
@@ -55,7 +55,7 @@ public class ChargingJobRepository {
 
   private static final String UPDATE_SQL = """
       UPDATE charging_job SET state = :state, reason = :reason, power_wt = :power_wt,
-      charged_kwh = :charged_kwh, voltage = :voltage,
+      charged_wt_h = :charged_wt_h, voltage = :voltage,
       stopped_on = :stopped_on where number = :number
       """;
 
@@ -153,7 +153,7 @@ public class ChargingJobRepository {
     parameters.put(STATE, chargingJob.getState().toString());
     parameters.put(REASON, chargingJob.getReason());
     parameters.put(POWER_WT, chargingJob.getPowerWt());
-    parameters.put(CHARGED_KWH, chargingJob.getChargedKwh());
+    parameters.put(CHARGED_WT_H, chargingJob.getChargedWtH());
     parameters.put(VOLTAGE, chargingJob.getVoltage());
     parameters.put(NUMBER, chargingJob.getNumber());
     parameters.put(STOPPED_ON, chargingJob.getStoppedOn());
