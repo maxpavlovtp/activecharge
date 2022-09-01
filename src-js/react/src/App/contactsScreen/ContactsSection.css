@@ -11,6 +11,16 @@
   color: #e3a108;
 }
 
+.instagram:hover {
+  color: #e8424e;
+}
+.telegram:hover {
+  color: #27ade3;
+}
+.watsapp:hover {
+  color: #44be54;
+}
+
 .telephoneContainer {
   display: flex;
   flex-direction: column;
