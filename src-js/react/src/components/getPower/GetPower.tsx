@@ -20,12 +20,12 @@ export default function GetPower({ station }: { station: any }) {
     return () => clearInterval(timerID);
   }, [deviceStatus?.state]);
 
-  let kWtCharged = Number(deviceStatus?.chargedWt) / 1000;
-  let kWtPower = Number(deviceStatus?.charginWt) / 1000;
+  let kWtCharged = Number(deviceStatus?.chargedWtH) / 1000;
+  let kWtPower = Number(deviceStatus?.powerWt) / 1000;
   let voltage = Number(Math.round(deviceStatus?.voltage));
 
   let carKwtKmRatio = 150;
-  let isZero = deviceStatus?.chargedWt === undefined;
+  let isZero = deviceStatus?.chargedWtH === undefined || 0;
   let chargeStatus = `${isZero ? " " : kWtCharged.toFixed(2)} ${t("wt")}`;
 
   return (
