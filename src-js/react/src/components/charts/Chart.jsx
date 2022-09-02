@@ -50,7 +50,7 @@ export function Chart({ leftS, stationNumber, voltage, power }) {
       ...old,
       {
         x: Date.now(),
-        y: power * 1000,
+        y: power,
       },
     ]);
     setVoltageChart((old) => [
