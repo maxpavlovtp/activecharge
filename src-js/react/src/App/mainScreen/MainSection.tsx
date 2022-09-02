@@ -13,6 +13,7 @@ import axios from "axios";
 import { Col, Container, Row } from "react-bootstrap";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { MainScreenLink } from "../../components/globalStyles";
+import { setDeviceStatusUndefind } from "../../store/reducers/FetchSlice";
 
 const MainSection: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -33,7 +34,9 @@ const MainSection: React.FC = () => {
 
   const startCharging = () => {
     dispatch(idStart(stationNumber));
+    dispatch(setDeviceStatusUndefind(undefined));
   };
+
 
   useEffect(() => {
     try {
