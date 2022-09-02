@@ -35,6 +35,7 @@ export function Chart({ leftS, stationNumber, voltage, power }) {
   const [voltageChart, setVoltageChart] = useState([]);
   const [powerChart, setPowerChart] = useState([]);
   const { t } = useTranslation();
+
   const labels = [];
   for (let time = 0; time <= 720; time++) {
     labels.push(time);
@@ -42,12 +43,14 @@ export function Chart({ leftS, stationNumber, voltage, power }) {
 
   const chartStop = leftS === 0 ? true : false;
 
-  const onRecieve = () => {
+  const onRecieve = (chart) => {
+    console.log(powerChart);
+    console.log(voltageChart);
     setPowerChart((old) => [
       ...old,
       {
         x: Date.now(),
-        y: power,
+        y: power * 1000,
       },
     ]);
     setVoltageChart((old) => [
@@ -57,7 +60,7 @@ export function Chart({ leftS, stationNumber, voltage, power }) {
         y: voltage,
       },
     ]);
-    // chart.update("quiet");
+    chart.update("quiet");
   };
 
   const data = {
@@ -96,7 +99,7 @@ export function Chart({ leftS, stationNumber, voltage, power }) {
       zoom: {
         pan: {
           enabled: true,
-          mode: "xy",
+          mode: "x",
         },
         zoom: {
           pinch: {
@@ -105,7 +108,7 @@ export function Chart({ leftS, stationNumber, voltage, power }) {
           wheel: {
             enabled: true,
           },
-          mode: "xy",
+          mode: "x",
         },
         limits: {
           xy: {
@@ -142,20 +145,14 @@ export function Chart({ leftS, stationNumber, voltage, power }) {
         distribution: "linear",
         realtime: {
           duration: 20000,
-          delay: 3000,
-          refresh: 2000,
+          delay: 4000,
           pause: chartStop,
           onRefresh: onRecieve,
+          time: {
+            displayFormat: "h:mm",
+          },
         },
         ticks: {
-          displayFormats: 3,
-          maxRotation: 0,
-          minRotation: 0,
-          stepSize: 1,
-          maxTicksLimit: 20,
-          minUnit: "second",
-          source: "auto",
-          autoSkip: true,
           callback: function (value) {
             return moment(value, "HH:mm:ss").format("mm:ss");
           },

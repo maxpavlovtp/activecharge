@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, Outlet, useSearchParams } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
+import { useAppSelector } from "../../hooks/reduxHooks";
 import "./layout.css";
 import logo from "../../assets/logo.png";
 import whiteLogo from "../../assets/whiteLogoNav.png";
@@ -73,7 +73,9 @@ export default function Layout() {
       setMainImgTheme(mainImg);
     }
   };
+
   let toggleStatus = !open ? "toggle-icon" : "open toggle-icon ";
+
   return (
     <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
       <>
@@ -204,7 +206,7 @@ export default function Layout() {
             </Navbar.Collapse>
           </NavBar>
 
-          <Outlet context={[mainImgTheme, setMainImgTheme]}/>
+          <Outlet context={[mainImgTheme, setMainImgTheme]} />
 
           <footer className="footerBox">
             <p className="footerText">
