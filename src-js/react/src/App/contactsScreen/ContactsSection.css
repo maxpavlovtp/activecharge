@@ -9,8 +9,19 @@
 }
 .viber {
   color: #e3a108;
+  cursor: pointer;
+
 }
 
+.instagram:hover {
+  color: #e8424e;
+}
+.telegram:hover {
+  color: #27ade3;
+}
+.watsapp:hover {
+  color: #44be54;
+}
 .telephoneContainer {
   display: flex;
   flex-direction: column;
@@ -20,6 +31,7 @@
   color: #2c2b2b;
   padding-bottom: 7px;
   border-bottom: 1px solid rgb(206, 206, 206);
+  
 }
 
 .telephone {

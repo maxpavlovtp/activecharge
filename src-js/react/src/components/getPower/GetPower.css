@@ -2,34 +2,27 @@
   font-family: "OpenSansRegular", Arial, Helvetica, sans-serif;
   font-weight: 400;
   font-size: calc(1.5rem + 1.5vw);
-  color: #2c2b2b;
 }
 
 .textTitle {
   font-family: "OpenSansSemiBold", Arial, Helvetica, sans-serif;
   font-weight: 600;
   font-size: calc(1.3rem + 1.9vw);
-  color: #8f00ff;
 }
 .voltTitle {
   font-size: calc(1rem + 1.3vw);
-}
-.text {
-  color: #2c2b2b;
 }
 
 .stationText {
   font-size: calc(1.3rem + 0.4vw);
   font-family: "OpenSansMedium", Arial, Helvetica, sans-serif;
   font-weight: 500;
-  color: #393939;
 }
 
 .stationNumber {
   font-size: calc(1.4rem + 0.7vw);
   font-family: "OpenSansSemiBold", Arial, Helvetica, sans-serif;
   font-weight: 600;
-  color: #393939;
 }
 
 .offCont {
@@ -40,11 +33,9 @@
   font-family: "OpenSansBold", Arial, Helvetica, sans-serif;
   font-weight: 700;
   font-size: calc(1.2rem + 1.5vw);
-  color: #8f00ff;
 }
 .finishText {
   font-family: "OpenSansMedium", Arial, Helvetica, sans-serif;
   font-weight: 500;
   font-size: calc(1rem + 1.5vw);
-  color: #2c2b2b;
 }

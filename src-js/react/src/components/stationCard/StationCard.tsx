@@ -6,6 +6,7 @@ import Timer from "../timer/Timer";
 import { useBackTime } from "../../hooks/useBackTime";
 import { t } from "i18next";
 import { useTranslation } from "react-i18next";
+import { CardLink, HomeCard, LinksColor } from "../globalStyles";
 
 export default function ({
   stationNumber,
@@ -38,12 +39,12 @@ export default function ({
   const { t } = useTranslation();
 
   return (
-    <Link
+    <CardLink
       reloadDocument={true}
       className={styles.linkToStation}
       to={`/start?station=${stationNumber}`}
     >
-      <div className={styles.container}>
+      <HomeCard className={styles.container}>
         <div className={styles.mainInfo}>
           <p className={styles.nameStation}>{t("station")}</p>
           <p className={styles.numberStation}>{stationNumber}</p>
@@ -75,7 +76,7 @@ export default function ({
             ></div>
           </div>
         )}
-      </div>
-    </Link>
+      </HomeCard>
+    </CardLink>
   );
 }
