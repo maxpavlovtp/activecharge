@@ -4,6 +4,7 @@ import com.km220.dao.job.ChargingJobEntity;
 import com.km220.service.device.update.ConsumptionUpdate;
 import com.km220.service.device.update.DeviceStatusUpdate;
 import com.km220.service.device.update.DeviceUpdater;
+import com.km220.service.metrics.MetricsCollector;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -12,9 +13,12 @@ import org.springframework.stereotype.Component;
 public class DeviceUpdateAdapter implements DeviceUpdater {
 
   private final ChargingJobService chargingJobService;
+  private final MetricsCollector metricsCollector;
 
-  public DeviceUpdateAdapter(final ChargingJobService chargingJobService) {
+  public DeviceUpdateAdapter(final ChargingJobService chargingJobService,
+      final MetricsCollector metricsCollector) {
     this.chargingJobService = chargingJobService;
+    this.metricsCollector = metricsCollector;
   }
 
   @Override
@@ -26,6 +30,7 @@ public class DeviceUpdateAdapter implements DeviceUpdater {
     if (jobEntity != null) {
       jobEntity.setChargedWtH(update.getOneKwh() * 1000);
       chargingJobService.update(jobEntity);
+      metricsCollector.onJobUpdate(jobEntity);
     }
   }
 
@@ -39,6 +44,7 @@ public class DeviceUpdateAdapter implements DeviceUpdater {
       jobEntity.setPowerWt(deviceStatusUpdate.getPower());
       jobEntity.setVoltage(deviceStatusUpdate.getVoltage());
       chargingJobService.update(jobEntity);
+      metricsCollector.onJobUpdate(jobEntity);
     }
   }
 }
