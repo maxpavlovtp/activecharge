@@ -1,6 +1,5 @@
 ewelink:
   email: jasper.ua@gmail.com
-  password: Nopassword1
 
 spring:
   flyway:
