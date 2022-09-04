@@ -19,13 +19,13 @@ class WSEwelinkDeviceApiTest extends AbstractEwelinkApiTest {
   void getDeviceStatus_shouldReturnDeviceStatus() {
     var wsEwelinkDeviceApi = ewelinkClient.wsDevices();
 
-    WssResponse response = wsEwelinkDeviceApi.getStatus(BOILER_DEVICE_ID).join();
-    LOGGER.info("Device id = {}. Response = {}.", BOILER_DEVICE_ID, response);
+    WssResponse response = wsEwelinkDeviceApi.getStatus(LOCAL_1).join();
+    LOGGER.info("Device id = {}. Response = {}.", LOCAL_1, response);
     assertNotNull(response);
     assertEquals(0, response.getError());
 
-    response = wsEwelinkDeviceApi.getStatus(BOILER_DEVICE_ID).join();
-    LOGGER.info("Device id = {}. Response = {}.", BOILER_DEVICE_ID, response);
+    response = wsEwelinkDeviceApi.getStatus(LOCAL_1).join();
+    LOGGER.info("Device id = {}. Response = {}.", LOCAL_1, response);
     assertNotNull(response);
     assertEquals(0, response.getError());
   }
@@ -35,24 +35,24 @@ class WSEwelinkDeviceApiTest extends AbstractEwelinkApiTest {
   void toggleDeviceState_shouldChangeDeviceToggleState() {
     var wsEwelinkDeviceApi = ewelinkClient.wsDevices();
 
-    WssResponse response = wsEwelinkDeviceApi.toggle(BOILER_DEVICE_ID, SwitchState.ON, 1).join();
-    LOGGER.info("Device id = {}. Response = {}.", BOILER_DEVICE_ID, response);
+    WssResponse response = wsEwelinkDeviceApi.toggle(LOCAL_1, SwitchState.ON, 1).join();
+    LOGGER.info("Device id = {}. Response = {}.", LOCAL_1, response);
     assertNotNull(response);
     assertEquals(0, response.getError());
 
-    response = wsEwelinkDeviceApi.getStatus(BOILER_DEVICE_ID).join();
-    LOGGER.info("Device id = {}. Response = {}.", BOILER_DEVICE_ID, response);
+    response = wsEwelinkDeviceApi.getStatus(LOCAL_1).join();
+    LOGGER.info("Device id = {}. Response = {}.", LOCAL_1, response);
     assertNotNull(response);
     assertEquals(0, response.getError());
     assertEquals(SwitchState.ON, response.getParams().getSwitchState());
 
-    response = wsEwelinkDeviceApi.toggle(BOILER_DEVICE_ID, SwitchState.OFF, 1).join();
-    LOGGER.info("Device id = {}. Response = {}.", BOILER_DEVICE_ID, response);
+    response = wsEwelinkDeviceApi.toggle(LOCAL_1, SwitchState.OFF, 1).join();
+    LOGGER.info("Device id = {}. Response = {}.", LOCAL_1, response);
     assertNotNull(response);
     assertEquals(0, response.getError());
 
-    response = wsEwelinkDeviceApi.getStatus(BOILER_DEVICE_ID).join();
-    LOGGER.info("Device id = {}. Response = {}.", BOILER_DEVICE_ID, response);
+    response = wsEwelinkDeviceApi.getStatus(LOCAL_1).join();
+    LOGGER.info("Device id = {}. Response = {}.", LOCAL_1, response);
     assertNotNull(response);
     assertEquals(0, response.getError());
     assertEquals(SwitchState.OFF, response.getParams().getSwitchState());

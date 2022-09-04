@@ -24,7 +24,7 @@ class EwelinkDeviceApiV2Test extends AbstractEwelinkApiTest {
 
   @Test
   void getDevice_shouldReturnDevice() {
-    DeviceV2 device = ewelinkDeviceApi.getStatus(STAGE_DEVICE_ID).join();
+    DeviceV2 device = ewelinkDeviceApi.getStatus(LOCAL_2).join();
 
     assertNotNull(device);
     assertNotNull(device.getData());
@@ -37,15 +37,15 @@ class EwelinkDeviceApiV2Test extends AbstractEwelinkApiTest {
     Function<String, Void> runnable = deviceId -> {
       for (int i = 0; i < 10; i++) {
         EwelinkDeviceApiV2 ewelinkDeviceApi = ewelinkClient.devicesV2();
-        DeviceV2 device = ewelinkDeviceApi.getStatus(STAGE_DEVICE_ID).join();
+        DeviceV2 device = ewelinkDeviceApi.getStatus(LOCAL_2).join();
 
         LOGGER.info("Thread: {}. Device: {}", Thread.currentThread().getName(), device);
       }
       return null;
     };
 
-    Runnable task1 = () -> runnable.apply(STAGE_DEVICE_ID);
-    Runnable task2 = () -> runnable.apply(BOILER_DEVICE_ID);
+    Runnable task1 = () -> runnable.apply(LOCAL_2);
+    Runnable task2 = () -> runnable.apply(LOCAL_1);
 
     Thread t1 = new Thread(task1);
     Thread t2 = new Thread(task2);
@@ -59,24 +59,24 @@ class EwelinkDeviceApiV2Test extends AbstractEwelinkApiTest {
 
   @Test
   void toggleDeviceState_shouldChangeDeviceToggleState() {
-    DeviceV2 response = ewelinkDeviceApi.toggle(STAGE_DEVICE_ID, SwitchState.ON, 1).join();
-    LOGGER.info("Device id = {}. Response = {}.", STAGE_DEVICE_ID, response);
+    DeviceV2 response = ewelinkDeviceApi.toggle(LOCAL_2, SwitchState.ON, 1).join();
+    LOGGER.info("Device id = {}. Response = {}.", LOCAL_2, response);
     assertNotNull(response);
     assertEquals(0, response.getError());
 
-    response = ewelinkDeviceApi.getStatus(STAGE_DEVICE_ID).join();
-    LOGGER.info("Device id = {}. Response = {}.", STAGE_DEVICE_ID, response);
+    response = ewelinkDeviceApi.getStatus(LOCAL_2).join();
+    LOGGER.info("Device id = {}. Response = {}.", LOCAL_2, response);
     assertNotNull(response);
     assertEquals(0, response.getError());
     assertEquals(SwitchState.ON, response.getData().getParams().getSwitchState());
 
-    response = ewelinkDeviceApi.toggle(STAGE_DEVICE_ID, SwitchState.OFF, 1).join();
-    LOGGER.info("Device id = {}. Response = {}.", STAGE_DEVICE_ID, response);
+    response = ewelinkDeviceApi.toggle(LOCAL_2, SwitchState.OFF, 1).join();
+    LOGGER.info("Device id = {}. Response = {}.", LOCAL_2, response);
     assertNotNull(response);
     assertEquals(0, response.getError());
 
-    response = ewelinkDeviceApi.getStatus(STAGE_DEVICE_ID).join();
-    LOGGER.info("Device id = {}. Response = {}.", STAGE_DEVICE_ID, response);
+    response = ewelinkDeviceApi.getStatus(LOCAL_2).join();
+    LOGGER.info("Device id = {}. Response = {}.", LOCAL_2, response);
     assertNotNull(response);
     assertEquals(0, response.getError());
     assertEquals(SwitchState.OFF, response.getData().getParams().getSwitchState());

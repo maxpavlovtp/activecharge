@@ -18,15 +18,15 @@ class EwelinkDeviceApiTest extends AbstractEwelinkApiTest {
   void getDeviceShouldReturnDevice() {
     EwelinkDeviceApi ewelinkDeviceApi = ewelinkClient.devices();
 
-    Device device = ewelinkDeviceApi.getDevice(BOILER_DEVICE_ID).join();
+    Device device = ewelinkDeviceApi.getDevice(LOCAL_1).join();
 
     assertNotNull(device);
-    assertEquals(BOILER_DEVICE_ID, device.getDeviceid());
+    assertEquals(LOCAL_1, device.getDeviceid());
 
-    device = ewelinkDeviceApi.getDevice(BOILER_DEVICE_ID).join();
+    device = ewelinkDeviceApi.getDevice(LOCAL_1).join();
 
     assertNotNull(device);
-    assertEquals(BOILER_DEVICE_ID, device.getDeviceid());
+    assertEquals(LOCAL_1, device.getDeviceid());
   }
 
   @Test
@@ -35,7 +35,7 @@ class EwelinkDeviceApiTest extends AbstractEwelinkApiTest {
     Function<String, Void> runnable = deviceId -> {
       for (int i = 0; i < 20; i++) {
         EwelinkDeviceApi ewelinkDeviceApi = ewelinkClient.devices();
-        Device device = ewelinkDeviceApi.getDevice(BOILER_DEVICE_ID).join();
+        Device device = ewelinkDeviceApi.getDevice(LOCAL_1).join();
         LOGGER.info("Thread: {}. Device: {}", Thread.currentThread().getName(), device);
 
         try {
@@ -48,8 +48,8 @@ class EwelinkDeviceApiTest extends AbstractEwelinkApiTest {
       return null;
     };
 
-    Runnable task1 = () -> runnable.apply(BOILER_DEVICE_ID);
-    Runnable task2 = () -> runnable.apply(STAGE_DEVICE_ID);
+    Runnable task1 = () -> runnable.apply(LOCAL_1);
+    Runnable task2 = () -> runnable.apply(LOCAL_2);
 
     Thread t1 = new Thread(task1);
     //Thread t2 = new Thread(task2);

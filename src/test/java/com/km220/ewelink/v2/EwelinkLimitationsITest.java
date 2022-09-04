@@ -23,8 +23,8 @@ public class EwelinkLimitationsITest extends AbstractEwelinkApiTest {
       return null;
     };
 
-    Runnable task1 = () -> runnable.apply(STAGE_DEVICE_ID);
-    Runnable task2 = () -> runnable.apply(BOILER_DEVICE_ID);
+    Runnable task1 = () -> runnable.apply(LOCAL_2);
+    Runnable task2 = () -> runnable.apply(LOCAL_1);
 
     Thread t1 = new Thread(task1);
     Thread t2 = new Thread(task2);
