@@ -1,6 +1,7 @@
 package com.km220.controller;
 
 import java.io.IOException;
+import java.util.Map;
 import javax.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,12 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoginController {
 
   @GetMapping("/ewelinkRedirect")
-  public ResponseEntity<String> generateCheckoutLink(
-      @NotBlank @RequestParam("code") String code,
-      @NotBlank @RequestParam("region") String region,
-      @NotBlank @RequestParam("state") String state
-  ) {
-    log.info("code: {}, region: {}, state: {}", code, region, state);
+  public ResponseEntity<String> ewelinkRedirect(@RequestParam Map<String, String> allParams) {
+    log.info("oAuth login call back from ewelink is: {}", allParams.entrySet());
 
     return ResponseEntity.status(HttpStatus.OK).body(null);
   }
