@@ -8,7 +8,7 @@
 }
 .textContainer {
   padding: 50px 100px;
-  background-color: #f2f2f2;
+  /* background-color: #f2f2f2; */
   border-radius: 10px;
   margin-top: 50px;
 }
@@ -37,9 +37,6 @@ p {
   color: #000;
 }
 
-.offerLink:active {
-  color: #000;
-}
 
 .congrats220 {
   color: #8f00ff;

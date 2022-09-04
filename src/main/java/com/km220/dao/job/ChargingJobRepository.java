@@ -1,9 +1,8 @@
 package com.km220.dao.job;
 
-import static com.km220.dao.job.ChargingJobEntity.CHARGED_WT;
-import static com.km220.dao.job.ChargingJobEntity.CHARGED_WT_WS;
-import static com.km220.dao.job.ChargingJobEntity.CHARGING_WT;
+import static com.km220.dao.job.ChargingJobEntity.CHARGED_WT_H;
 import static com.km220.dao.job.ChargingJobEntity.NUMBER;
+import static com.km220.dao.job.ChargingJobEntity.POWER_WT;
 import static com.km220.dao.job.ChargingJobEntity.REASON;
 import static com.km220.dao.job.ChargingJobEntity.STATE;
 import static com.km220.dao.job.ChargingJobEntity.STOPPED_ON;
@@ -39,8 +38,8 @@ public class ChargingJobRepository {
   private static final String CHARGING_JOB_ALIAS = "j_";
 
   private static final String SELECT_QUERY = """
-      SELECT j.id as j_id, j.number as j_number, j.charged_wt as j_charged_wt, j.charged_wt_ws as j_charged_wt_ws,
-          j.charging_wt as j_charging_wt, j.voltage as j_voltage, j.reason as j_reason, j.state as j_state,
+      SELECT j.id as j_id, j.number as j_number, j.charged_wt_h as j_charged_wt_h,
+          j.power_wt as j_power_wt, j.voltage as j_voltage, j.reason as j_reason, j.state as j_state,
           j.created_on as j_created_on, j.updated_on as j_updated_on, j.period_sec as j_period_sec,
           j.stopped_on as j_stopped_on,
           s.id as s_id, s.number as s_number, s.name as s_name, s.provider_device_id as s_provider_device_id,
@@ -50,15 +49,15 @@ public class ChargingJobRepository {
       """;
 
   private static final String INSERT_SQL = """
-        INSERT into charging_job(station_id, period_sec)
-        VALUES ((SELECT id FROM station WHERE number = :station_number), :period_sec);
-        """;
+      INSERT into charging_job(station_id, period_sec)
+      VALUES ((SELECT id FROM station WHERE number = :station_number), :period_sec);
+      """;
 
   private static final String UPDATE_SQL = """
-        UPDATE charging_job SET state = :state, reason = :reason, charging_wt = :charging_wt,
-        charged_wt = :charged_wt, charged_wt_ws = :charged_wt_ws, voltage = :voltage,
-        stopped_on = :stopped_on where number = :number
-        """;
+      UPDATE charging_job SET state = :state, reason = :reason, power_wt = :power_wt,
+      charged_wt_h = :charged_wt_h, voltage = :voltage,
+      stopped_on = :stopped_on where number = :number
+      """;
 
   private static final Logger logger = LoggerFactory.getLogger(ChargingJobRepository.class);
 
@@ -81,13 +80,13 @@ public class ChargingJobRepository {
     Objects.requireNonNull(stationNumber);
 
     var sql = SELECT_QUERY + """
-        WHERE j.state = 'IN_PROGRESS' AND s.number = :stationNumber
-        ORDER BY j.updated_on DESC
+        WHERE s.number = :stationNumber
+        ORDER BY j.created_on DESC
         LIMIT 1
         """;
 
-    return DataAccessUtils.singleResult(jdbcTemplate.query(sql, Map.of("stationNumber", stationNumber),
-        chargingJobRowMapper));
+    return DataAccessUtils.singleResult(
+        jdbcTemplate.query(sql, Map.of("stationNumber", stationNumber), chargingJobRowMapper));
   }
 
   @Transactional(readOnly = true)
@@ -153,9 +152,8 @@ public class ChargingJobRepository {
     var parameters = new HashMap<String, Object>();
     parameters.put(STATE, chargingJob.getState().toString());
     parameters.put(REASON, chargingJob.getReason());
-    parameters.put(CHARGING_WT, chargingJob.getChargingWt());
-    parameters.put(CHARGED_WT, chargingJob.getChargedWt());
-    parameters.put(CHARGED_WT_WS, chargingJob.getChargedWtWs());
+    parameters.put(POWER_WT, chargingJob.getPowerWt());
+    parameters.put(CHARGED_WT_H, chargingJob.getChargedWtH());
     parameters.put(VOLTAGE, chargingJob.getVoltage());
     parameters.put(NUMBER, chargingJob.getNumber());
     parameters.put(STOPPED_ON, chargingJob.getStoppedOn());

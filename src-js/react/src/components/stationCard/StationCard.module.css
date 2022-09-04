@@ -1,8 +1,4 @@
 .container {
-  /* max-width: 300px;
-  min-height: 170px;
-  max-height: 200px; */
-  background-color: rgb(252, 247, 247);
   border-radius: 20px;
   box-shadow: 12px 12px 2px 1px rgba(0, 0, 255, 0.2);
   margin: 20px;
@@ -16,14 +12,12 @@
   font-size: calc(1.4rem + 0.7vw);
   font-family: "OpenSansSemiBold", Arial, Helvetica, sans-serif;
   font-weight: 600;
-  color: #393939;
   margin-left: 5px;
 }
 .nameStation {
   font-size: calc(1.3rem + 0.4vw);
   font-family: "OpenSansMedium", Arial, Helvetica, sans-serif;
   font-weight: 500;
-  color: #393939;
   border-bottom: 1px solid #dbdbdb;
 
 }
@@ -36,7 +30,6 @@
   font-size: 30px;
   font-family: "OpenSansMedium", Arial, Helvetica, sans-serif;
   font-weight: 500;
-  color: #393939;
   margin-top: 20px;
   margin-bottom: 0;
 }

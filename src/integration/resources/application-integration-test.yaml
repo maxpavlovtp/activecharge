@@ -9,7 +9,7 @@ ewelink:
 deviceId: 10013bb124
 
 device:
-  chargeTimeSecs: 1200
+  freeChargeSecs: 1200
 
 station:
   scan-delay-ms: 3000
@@ -18,10 +18,15 @@ station:
   scan-interval-ms: 3000
 
 spring:
+
   datasource:
     url: jdbc:tc:postgresql:14.4://localhost:5432/test_database
     username: user
     password: password
 
-flyway:
-  locations: "classpath:db/migration/pg"
+  flyway:
+    locations: 'classpath:db/migration/postgres/common,/db/migration/postgres/local'
+
+monobank:
+  token: "uZR_Cp6hs2TiuLUIPEXKk0pWeKbwy5tNAWmhJg4DU5Zg"
+  callBackHost: "49.12.19.42"

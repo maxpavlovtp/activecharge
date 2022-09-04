@@ -16,9 +16,8 @@ public final class ChargingJobConverter implements Function<ChargingJobEntity, C
 
     var job = new ChargingJob(jobEntity.getStation().getNumber(),
         jobEntity.getCreatedOn().toEpochSecond(), jobEntity.getPeriodSec());
-    job.setCharginWt(jobEntity.getChargingWt());
-    job.setChargedWt(jobEntity.getChargedWt());
-    job.setChargedWtWs(jobEntity.getChargedWtWs());
+    job.setPowerWt(jobEntity.getPowerWt());
+    job.setChargedWtH(jobEntity.getChargedWtH());
     job.setVoltage(jobEntity.getVoltage());
     job.setState(jobEntity.getState());
     if (jobEntity.getStoppedOn() != null) {

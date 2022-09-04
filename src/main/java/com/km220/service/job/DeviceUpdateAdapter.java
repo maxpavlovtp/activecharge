@@ -1,6 +1,5 @@
 package com.km220.service.job;
 
-import com.km220.config.StationScanProperties;
 import com.km220.dao.job.ChargingJobEntity;
 import com.km220.service.device.update.ConsumptionUpdate;
 import com.km220.service.device.update.DeviceStatusUpdate;
@@ -12,13 +11,10 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class DeviceUpdateAdapter implements DeviceUpdater {
 
-  private final StationScanProperties stationScanProperties;
   private final ChargingJobService chargingJobService;
 
-  public DeviceUpdateAdapter(final ChargingJobService chargingJobService,
-      final StationScanProperties stationScanProperties) {
+  public DeviceUpdateAdapter(final ChargingJobService chargingJobService) {
     this.chargingJobService = chargingJobService;
-    this.stationScanProperties = stationScanProperties;
   }
 
   @Override
@@ -28,8 +24,7 @@ public class DeviceUpdateAdapter implements DeviceUpdater {
 
     ChargingJobEntity jobEntity = chargingJobService.findActive(update.getDeviceId());
     if (jobEntity != null) {
-      jobEntity.setChargedWtWs(update.getOneKwh());
-
+      jobEntity.setChargedWtH(update.getOneKwh() * 1000);
       chargingJobService.update(jobEntity);
     }
   }
@@ -41,14 +36,8 @@ public class DeviceUpdateAdapter implements DeviceUpdater {
 
     ChargingJobEntity jobEntity = chargingJobService.findActive(deviceStatusUpdate.getDeviceId());
     if (jobEntity != null) {
-      var dirtyHack = 2;
-      float chargedWt = jobEntity.getChargedWt() +
-          deviceStatusUpdate.getPower() * stationScanProperties.getScanIntervalMs() / (3600 * 1000
-              * dirtyHack);
-      jobEntity.setChargedWt(chargedWt);
-      jobEntity.setChargingWt(deviceStatusUpdate.getPower());
+      jobEntity.setPowerWt(deviceStatusUpdate.getPower());
       jobEntity.setVoltage(deviceStatusUpdate.getVoltage());
-
       chargingJobService.update(jobEntity);
     }
   }

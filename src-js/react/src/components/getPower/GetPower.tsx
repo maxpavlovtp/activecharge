@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import { getStationInfo } from "../../store/reducers/ActionCreators";
 import { useTranslation } from "react-i18next";
 import { Col, Container, Row } from "react-bootstrap";
+import { PowerMetricsColor } from "../globalStyles";
 
 export default function GetPower({ station }: { station: any }) {
   const dispatch = useAppDispatch();
@@ -20,12 +21,12 @@ export default function GetPower({ station }: { station: any }) {
     return () => clearInterval(timerID);
   }, [deviceStatus?.state]);
 
-  let kWtCharged = Number(deviceStatus?.chargedWt) / 1000;
-  let kWtPower = Number(deviceStatus?.charginWt) / 1000;
+  let kWtCharged = Number(deviceStatus?.chargedWtH) / 1000;
+  let kWtPower = Number(deviceStatus?.powerWt) / 1000;
   let voltage = Number(Math.round(deviceStatus?.voltage));
 
   let carKwtKmRatio = 150;
-  let isZero = deviceStatus?.chargedWt === undefined;
+  let isZero = deviceStatus?.chargedWtH === undefined || 0;
   let chargeStatus = `${isZero ? " " : kWtCharged.toFixed(2)} ${t("wt")}`;
 
   return (
@@ -48,7 +49,7 @@ export default function GetPower({ station }: { station: any }) {
               : "text-center"
           }
         >
-          <p className="mb-1 textTitle">{t("power")}</p>
+          <PowerMetricsColor className="mb-1 textTitle">{t("power")}</PowerMetricsColor>
           <p className="textTitle text">
             {kWtPower.toFixed(2)} {t("wt")}
           </p>
@@ -58,7 +59,7 @@ export default function GetPower({ station }: { station: any }) {
         deviceStatus?.state === "FAILED" ||
         deviceStatus?.leftS <= 3 ? (
           <Col xs="auto" lg="auto" className="text-center">
-            <p className="finishTitle">{t("chargedCongrats")} </p>
+            <PowerMetricsColor className="finishTitle">{t("chargedCongrats")} </PowerMetricsColor>
             <p className="finishText">
               {t("chargedkWt")}
               {chargeStatus}
@@ -66,7 +67,7 @@ export default function GetPower({ station }: { station: any }) {
           </Col>
         ) : (
           <Col className="text-center">
-            <p className="mb-1 textTitle">{t("charging")}</p>
+            <PowerMetricsColor className="mb-1 textTitle">{t("charging")}</PowerMetricsColor>
             <p className="textTitle text">{chargeStatus}</p>
           </Col>
         )}
@@ -84,7 +85,7 @@ export default function GetPower({ station }: { station: any }) {
                 : "text-center mb-4"
             }
           >
-            <p className="mb-1 textTitle voltTitle">{t("voltage")}</p>
+            <PowerMetricsColor className="mb-1 textTitle voltTitle">{t("voltage")}</PowerMetricsColor>
             <p className="voltTitle text">
               {voltage} {t("v")}
             </p>

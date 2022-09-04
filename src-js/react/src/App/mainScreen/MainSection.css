@@ -2,7 +2,7 @@
   font-size: calc(2rem + 1.5vw);
   font-family: "OpenSansBold", Arial, Helvetica, sans-serif;
   font-weight: 700;
-  color: #393939;
+  /* color: #393939; */
   text-align: center;
   padding-right: 7px;
   padding-left: 7px;
@@ -10,12 +10,16 @@
 
 .btnStart {
   background-color: #8f00ff;
-  color: white;
+  color: #FAFAFA;
   font-family: "OpenSansMedium", Arial, Helvetica, sans-serif;
   font-weight: 500;
   font-size: calc(1.5rem + 2vw);
   border-radius: 10px;
   padding: 7px;
+}
+.btnStart:hover {
+  text-decoration: none;
+  color: #FAFAFA;
 }
 .disableBtn {
   opacity: 0.3;
@@ -26,14 +30,14 @@
   font-size: calc(1.3rem + 0.4vw);
   font-family: "OpenSansMedium", Arial, Helvetica, sans-serif;
   font-weight: 500;
-  color: #393939;
+  /* color: #393939; */
 }
 
 .stationNumber {
   font-size: calc(1.4rem + 0.7vw);
   font-family: "OpenSansSemiBold", Arial, Helvetica, sans-serif;
   font-weight: 600;
-  color: #393939;
+  /* color: #393939; */
 }
 
 @media (max-width: 720px) {
