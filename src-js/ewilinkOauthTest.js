@@ -1,6 +1,6 @@
 // NodeJS
 const crypto = require('crypto');
-const clientId = 'xxx';
+const clientId = '4t2Xs57iZQRRwDBPWigvi9qHfQeCfg0X';
 const clientSecret = 'xxx';
 const seq = Date.now();
 const buffer = Buffer.from(`${clientId}_${seq}`, "utf-8");
