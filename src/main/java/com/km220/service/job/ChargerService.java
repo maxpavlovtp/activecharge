@@ -8,6 +8,7 @@ import com.km220.dao.job.ChargingJobState;
 import com.km220.dao.station.StationEntity;
 import com.km220.dao.station.StationRepository;
 import com.km220.service.device.DeviceService;
+import com.km220.service.metrics.JobMetricsCollector;
 import com.km220.utils.ExceptionUtils;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
@@ -25,13 +26,16 @@ public class ChargerService {
   private final DeviceService deviceService;
   private final StationRepository stationRepository;
   private final ChargingJobService chargingJobService;
+  private final JobMetricsCollector jobMetricsCollector;
 
   public ChargerService(final DeviceService deviceService,
       final ChargingJobService chargingJobService,
-      final StationRepository stationRepository) {
+      final StationRepository stationRepository,
+      final JobMetricsCollector jobMetricsCollector) {
     this.deviceService = deviceService;
     this.chargingJobService = chargingJobService;
     this.stationRepository = stationRepository;
+    this.jobMetricsCollector = jobMetricsCollector;
   }
 
   @Transactional
@@ -89,6 +93,8 @@ public class ChargerService {
       jobEntity.setReason("Completed");
       jobEntity.setState(ChargingJobState.DONE);
       jobEntity.setStoppedOn(OffsetDateTime.now(ZoneOffset.UTC));
+
+      jobMetricsCollector.removeJobMetric(jobEntity.getId());
 
       return true;
     }
