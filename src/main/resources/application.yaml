@@ -10,10 +10,10 @@ device:
   freeChargeSecs: 360
 
 station:
-  scan-delay-ms: 100
+  scan-delay-ms: 10000
   scan-batch-size: 1
   scan-threads: 1
-  scan-interval-ms: 100
+  scan-interval-ms: 2000
 
 spring:
   application:
