@@ -13,7 +13,7 @@ station:
   scan-delay-ms: 10000
   scan-batch-size: 5
   scan-threads: 1
-  scan-interval-ms: 2000
+  scan-interval-ms: 1000
 
 spring:
   application:
