@@ -10,7 +10,7 @@ device:
   freeChargeSecs: 360
 
 station:
-  scan-delay-ms: 0
+  scan-delay-ms: 1000
   scan-batch-size: 1
   scan-threads: 1
   scan-interval-ms: 1000
