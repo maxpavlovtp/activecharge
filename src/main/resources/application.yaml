@@ -31,7 +31,7 @@ server:
   forward-headers-strategy: framework
 
 monobank:
-  token: "uZR_Cp6hs2TiuLUIPEXKk0pWeKbwy5tNAWmhJg4DU5Zg"
+  token: "uu34IWrXJD1OqC8LdCAhZzWG89RSYVgAWteFJ9P2iJc0"
   callBackHost: "49.12.19.42"
 
 management:
