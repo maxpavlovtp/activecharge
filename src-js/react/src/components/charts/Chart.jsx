@@ -47,8 +47,8 @@ export function Chart({ leftS, power }) {
     setPowerChart((old) => [
       ...old,
       {
-        x: power,
-        y: Date.now(),
+        x: Date.now(),
+        y: Math.round(power),
       },
     ]);
   };
@@ -70,7 +70,6 @@ export function Chart({ leftS, power }) {
   };
 
   const options = {
-    indexAxis: "y",
     responsive: true,
     interaction: {
       intersect: false,
@@ -103,17 +102,17 @@ export function Chart({ leftS, power }) {
       },
     },
     scales: {
-      x: {
+      y: {
         type: "linear",
         display: true,
         min: 0,
         max: 8,
       },
-      y: {
+      x: {
         type: "realtime",
         distribution: "linear",
         realtime: {
-          duration: 5000,
+          duration: 20000,
           delay: 4000,
           pause: chartStop,
           onRefresh: onRecieve,

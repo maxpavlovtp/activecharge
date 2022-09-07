@@ -86,7 +86,7 @@ const MainSection: React.FC = () => {
         <Row className="justify-content-center mb-4">
           <Chart
             leftS={secondsBackend}
-            power={Number(Math.round(deviceStatus?.powerWt)) / 1000}
+            power={Number(deviceStatus?.powerWt) / 1000}
           />
         </Row>
       </Container>
