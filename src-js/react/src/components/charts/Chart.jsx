@@ -31,8 +31,7 @@ ChartJS.register(
   Filler
 );
 
-export function Chart({ leftS, stationNumber, voltage, power }) {
-  const [voltageChart, setVoltageChart] = useState([]);
+export function Chart({ leftS, power }) {
   const [powerChart, setPowerChart] = useState([]);
   const { t } = useTranslation();
 
@@ -45,7 +44,6 @@ export function Chart({ leftS, stationNumber, voltage, power }) {
 
   const onRecieve = (chart) => {
     console.log(powerChart);
-    console.log(voltageChart);
     setPowerChart((old) => [
       ...old,
       {
@@ -53,39 +51,20 @@ export function Chart({ leftS, stationNumber, voltage, power }) {
         y: power,
       },
     ]);
-    setVoltageChart((old) => [
-      ...old,
-      {
-        x: Date.now(),
-        y: voltage,
-      },
-    ]);
-    chart.update("quiet");
   };
 
   const data = {
     datasets: [
       {
         label: t("power"),
-        backgroundColor: "rgba(237, 140, 140, 0.5)",
-        fill: true,
-        lineTension: 0,
-        borderDash: [8, 4],
-        borderColor: "rgb(237, 121, 121)",
-        cubicInterpolationMode: "monotone",
-        yAxisID: "power",
-        data: powerChart,
-      },
-      {
-        label: t("voltage"),
         backgroundColor: "rgba(208, 188, 245, 0.5)",
         fill: true,
         lineTension: 0,
         borderDash: [8, 4],
         borderColor: "rgb(169, 149, 207)",
         cubicInterpolationMode: "monotone",
-        yAxisID: "voltage",
-        data: voltageChart,
+        yAxisID: "power",
+        data: powerChart,
       },
     ],
   };
@@ -127,18 +106,6 @@ export function Chart({ leftS, stationNumber, voltage, power }) {
         position: "left",
         min: 0,
         max: 8,
-      },
-      voltage: {
-        type: "linear",
-        display: true,
-        position: "right",
-        min: 180,
-        max: 260,
-
-        // grid line settings
-        grid: {
-          drawOnChartArea: false, // only want the grid lines for one axis to show up
-        },
       },
       xAxes: {
         type: "realtime",
