@@ -127,8 +127,8 @@ export function Chart({ leftS, power }) {
     },
   };
   return (
-    // <div style={{ maxHeight: 700, width: "100%" }}>
-    <Line options={options} data={data} />
-    // </div>
+    <div style={{ maxHeight: 700, width: "100%" }}>
+      <Line options={options} data={data} />
+    </div>
   );
 }
