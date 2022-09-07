@@ -75,31 +75,33 @@ export function Chart({ leftS, power }) {
     interaction: {
       intersect: false,
     },
-    // plugins: {
-    //   zoom: {
-    //     pan: {
-    //       enabled: true,
-    //       mode: "x",
-    //     },
-    //     zoom: {
-    //       pinch: {
-    //         enabled: true,
-    //       },
-    //       wheel: {
-    //         enabled: true,
-    //       },
-    //       mode: "x",
-    //     },
-    //     limits: {
-    //       xy: {
-    //         minDelay: null,
-    //         maxDelay: null,
-    //         minDuration: null,
-    //         maxDuration: null,
-    //       },
-    //     },
-    //   },
-    // },
+    plugins: {
+      zoom: {
+        pan: {
+          enabled: true, // Enable panning
+          mode: "y", // Allow panning in the x direction
+          rangeMin: {
+            y: null, // Min value of the delay option
+          },
+          rangeMax: {
+            y: null, // Max value of the delay option
+          },
+        },
+        zoom: {
+          wheel: {
+            enabled: true,
+          },
+          // Enable zooming
+          mode: "y", // Allow zooming in the x direction
+          rangeMin: {
+            y: null, // Min value of the duration option
+          },
+          rangeMax: {
+            y: null, // Max value of the duration option
+          },
+        },
+      },
+    },
     scales: {
       x: {
         type: "linear",
