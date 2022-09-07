@@ -78,12 +78,12 @@ export function Chart({ leftS, power }) {
       zoom: {
         pan: {
           enabled: true, // Enable panning
-          mode: "y", // Allow panning in the x direction
+          mode: "x", // Allow panning in the x direction
           rangeMin: {
-            y: null, // Min value of the delay option
+            x: null, // Min value of the delay option
           },
           rangeMax: {
-            y: null, // Max value of the delay option
+            x: null, // Max value of the delay option
           },
         },
         zoom: {
@@ -91,12 +91,12 @@ export function Chart({ leftS, power }) {
             enabled: true,
           },
           // Enable zooming
-          mode: "y", // Allow zooming in the x direction
+          mode: "x", // Allow zooming in the x direction
           rangeMin: {
-            y: null, // Min value of the duration option
+            x: null, // Min value of the duration option
           },
           rangeMax: {
-            y: null, // Max value of the duration option
+            x: null, // Max value of the duration option
           },
         },
       },
@@ -126,7 +126,7 @@ export function Chart({ leftS, power }) {
     },
   };
   return (
-    <div style={{ maxHeight: 700, width: "100%" }}>
+    <div style={{ maxWidth: 700, width: "100%" }}>
       <Line options={options} data={data} />
     </div>
   );
