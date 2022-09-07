@@ -6,6 +6,7 @@ import com.km220.dao.job.ChargingJobEntity;
 import com.km220.dao.job.ChargingJobState;
 import com.km220.model.ChargingJob;
 import com.km220.model.CreatedChargingJob;
+import com.km220.service.GPSService;
 import com.km220.service.job.ChargerService;
 import com.km220.service.job.ChargingJobService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -41,6 +42,7 @@ public class ChargerDeviceController {
   private final StationScanProperties stationScanProperties;
   private final ChargerService chargerService;
   private final ChargingJobService chargingJobService;
+  private final GPSService gpsService;
 
   @Operation(summary = "Start charging")
   @ApiResponses(value = {
@@ -69,6 +71,7 @@ public class ChargerDeviceController {
               schema = @Schema(implementation = ChargingJob.class))})
   })
   @GetMapping("/v2/status")
+  @Deprecated
   public ResponseEntity<ChargingJob> getStatus(
       @Parameter(description = "Charging job id") @NotBlank @RequestParam String id) {
 
@@ -93,9 +96,12 @@ public class ChargerDeviceController {
     ChargingJobEntity job = chargingJobService.findByStationNumber(stationNumber);
     if (job == null) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    } else {
+      ChargingJob result = ChargingJobConverter.INSTANCE.apply(job);
+      result.setUiNightMode(gpsService.getUiNightMode());
+      return ResponseEntity.status(HttpStatus.OK)
+          .body(result);
     }
-    return ResponseEntity.status(HttpStatus.OK)
-        .body(ChargingJobConverter.INSTANCE.apply(job));
   }
 
   @GetMapping("/v2/station/statusAll")
