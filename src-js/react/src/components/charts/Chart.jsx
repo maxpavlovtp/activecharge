@@ -47,8 +47,8 @@ export function Chart({ leftS, power }) {
     setPowerChart((old) => [
       ...old,
       {
-        x: Date.now(),
-        y: power,
+        x: power,
+        y: Date.now(),
       },
     ]);
   };
@@ -58,66 +58,63 @@ export function Chart({ leftS, power }) {
       {
         label: t("power"),
         backgroundColor: "rgba(208, 188, 245, 0.5)",
-        fill: true,
+        fill: false,
         lineTension: 0,
         borderDash: [8, 4],
         borderColor: "rgb(169, 149, 207)",
         cubicInterpolationMode: "monotone",
-        yAxisID: "power",
+        xAxisID: "x",
         data: powerChart,
       },
     ],
   };
 
   const options = {
+    indexAxis: "y",
     responsive: true,
     interaction: {
       intersect: false,
     },
-    plugins: {
-      zoom: {
-        pan: {
-          enabled: true,
-          mode: "x",
-        },
-        zoom: {
-          pinch: {
-            enabled: true,
-          },
-          wheel: {
-            enabled: true,
-          },
-          mode: "x",
-        },
-        limits: {
-          xy: {
-            minDelay: null,
-            maxDelay: null,
-            minDuration: null,
-            maxDuration: null,
-          },
-        },
-      },
-    },
+    // plugins: {
+    //   zoom: {
+    //     pan: {
+    //       enabled: true,
+    //       mode: "x",
+    //     },
+    //     zoom: {
+    //       pinch: {
+    //         enabled: true,
+    //       },
+    //       wheel: {
+    //         enabled: true,
+    //       },
+    //       mode: "x",
+    //     },
+    //     limits: {
+    //       xy: {
+    //         minDelay: null,
+    //         maxDelay: null,
+    //         minDuration: null,
+    //         maxDuration: null,
+    //       },
+    //     },
+    //   },
+    // },
     scales: {
-      power: {
+      x: {
         type: "linear",
         display: true,
-        position: "left",
         min: 0,
         max: 8,
       },
-      xAxes: {
+      y: {
         type: "realtime",
         distribution: "linear",
         realtime: {
-          duration: 20000,
+          duration: 5000,
           delay: 4000,
           pause: chartStop,
           onRefresh: onRecieve,
-          time: {
-            displayFormat: "h:mm",
-          },
         },
         ticks: {
           callback: function (value) {
@@ -128,8 +125,8 @@ export function Chart({ leftS, power }) {
     },
   };
   return (
-    <div style={{ maxWidth: 700, width: "100%" }}>
-      <Line options={options} data={data} />
-    </div>
+    // <div style={{ maxHeight: 700, width: "100%" }}>
+    <Line options={options} data={data} />
+    // </div>
   );
 }
