@@ -7,8 +7,30 @@ ewelink:
   appSecret: 4G91qSoboqYO4Y0XJ0LPPKIsq8reHdfa
 
 device:
-  chargeTimeSecs: 30
+  freeChargeSecs: 360
+
+station:
+  scan-delay-ms: 1000
+  scan-batch-size: 1
+  scan-threads: 1
+  scan-interval-ms: 2000
 
 # komariv
 deviceId: 10013bb124
+
+spring:
+  application:
+    name: km220.com
+  datasource:
+    # docker
+    url: jdbc:postgresql://localhost:5432/km220
+    username: km220
+    password: Nopassword1
+  flyway:
+    clean-on-validation-error: true
+    locations: 'classpath:db/migration/postgres/common,/db/migration/postgres/local'
+
+monobank:
+  token: "uZR_Cp6hs2TiuLUIPEXKk0pWeKbwy5tNAWmhJg4DU5Zg"
+  callBackHost: "49.12.19.42"
 
