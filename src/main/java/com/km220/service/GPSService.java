@@ -2,8 +2,6 @@ package com.km220.service;
 
 import static ca.rmen.sunrisesunset.SunriseSunset.getSunriseSunset;
 
-import java.time.LocalDate;
-import java.time.ZoneOffset;
 import java.util.Calendar;
 import java.util.Date;
 import lombok.extern.slf4j.Slf4j;
@@ -18,17 +16,9 @@ public class GPSService {
 // todo: should be gps coordinates from table station
         50.433557, 30.617229);
 
-    log.info("Sunrise for Kiev users at: " + sunriseSunset[0].getTime());
-    log.info("Sunset for Kiev users at: " + sunriseSunset[1].getTime());
+    Date sunset = sunriseSunset[1].getTime();
+    log.trace("Sunset for Kiev users at: " + sunset);
 
-    LocalDate now = LocalDate.now();
-
-    return now.isAfter(convertToLocalDateViaInstant(sunriseSunset[1].getTime()));
-  }
-
-  private LocalDate convertToLocalDateViaInstant(Date dateToConvert) {
-    return dateToConvert.toInstant()
-        .atZone(ZoneOffset.ofHours(3))
-        .toLocalDate();
+    return new Date().getTime()> sunset.getTime();
   }
 }
