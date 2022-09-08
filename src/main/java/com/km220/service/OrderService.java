@@ -1,5 +1,6 @@
 package com.km220.service;
 
+import com.km220.dao.station.StationRepository;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,12 +9,15 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class OrderService {
 
   @Value("${monobank.token}")
@@ -22,8 +26,9 @@ public class OrderService {
   @Value("${monobank.callBackHost}")
   private String callBackHost;
 
+  private final StationRepository stationRepository;
 
-  public String generateCheckoutLink(String station, Integer hours) throws IOException {
+  public String generateCheckoutLink(String stationNumber, Integer hours) throws IOException {
     String result = null;
 
     URL url = new URL("https://api.monobank.ua/api/merchant/invoice/create");
@@ -33,8 +38,7 @@ public class OrderService {
     http.setDoOutput(true);
     http.setRequestProperty("X-Token", monoToken);
 
-//    move to DB
-    int uahPerHour = 7;
+    float uahPerHour = stationRepository.getByNumber(stationNumber).getCostPerHour();
     String uahCents = String.valueOf(hours * uahPerHour * 100);
     String body = "{\n"
         + "    \"amount\": " + uahCents + ",\n"
@@ -44,7 +48,7 @@ public class OrderService {
         + "        \"destination\": \"" + hours + " годин зарядки\",\n"
         + "        \"basketOrder\": []\n"
         + "    },\n"
-        + "    \"redirectUrl\": \"http://" + callBackHost + "/charging?station=" + station + "\",\n"
+        + "    \"redirectUrl\": \"http://" + callBackHost + "/charging?stationNumber=" + stationNumber + "\",\n"
         + "    \"webHookUrl\": \"http://" + callBackHost + ":8080/order/callBackMono\",\n"
         + "    \"validity\": 3600,\n"
         + "    \"paymentType\": \"debit\"\n"
@@ -73,7 +77,7 @@ public class OrderService {
       br = new BufferedReader(new InputStreamReader(http.getErrorStream()));
       String strCurrentLine;
       while ((strCurrentLine = br.readLine()) != null) {
-        log.error("Error: {}", strCurrentLine);
+        log.error("Monobank error: {}", strCurrentLine);
       }
     }
 
