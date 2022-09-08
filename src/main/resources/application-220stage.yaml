@@ -8,3 +8,6 @@ spring:
     clean-on-validation-error: false
 ewelink:
   email: km220.com@gmail.com
+
+device:
+  freeChargeSecs: 3600
