@@ -33,6 +33,7 @@ ChartJS.register(
 export function Chart({ leftS, power }) {
   const [powerChart, setPowerChart] = useState([]);
   const [chartTap, setChartTap] = useState(false);
+  const [chartFinish, setChartFinish] = useState(false);
   const { t } = useTranslation();
 
   const labels = [];
@@ -40,12 +41,15 @@ export function Chart({ leftS, power }) {
     labels.push(time);
   }
 
-  const chartStop = leftS === 0 ? true : false;
+  const chartTimerFinish = () => {
+    leftS === 0 ? setChartFinish(true) : setChartFinish(false);
+  };
   const chartPauseTapping = () => {
     setChartTap(!chartTap);
   };
   const onRecieve = () => {
     console.log(powerChart);
+    chartTimerFinish();
     setPowerChart((old) => [
       ...old,
       {
@@ -104,8 +108,9 @@ export function Chart({ leftS, power }) {
           duration: 20000,
           // delay: 2000,
           refresh: 2000,
-          pause: chartTap || chartStop,
-          onRefresh: chartTap === false ? onRecieve : null,
+          pause: chartTap || chartFinish,
+          onRefresh:
+            chartTap === false || chartFinish === false ? onRecieve : null,
         },
         ticks: {
           callback: function (value) {
