@@ -11,16 +11,15 @@ import {
   Filler,
 } from "chart.js";
 import "chartjs-adapter-luxon";
-import zoomPlugin from "chartjs-plugin-zoom";
+import ZoomPlugin from "chartjs-plugin-zoom";
 import ChartStreaming from "chartjs-plugin-streaming";
 import { Line } from "react-chartjs-2";
-import { faker } from "@faker-js/faker";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
 
 ChartJS.register(
   CategoryScale,
-  zoomPlugin,
+  ZoomPlugin,
   LinearScale,
   PointElement,
   LineElement,
@@ -42,7 +41,7 @@ export function Chart({ leftS, power }) {
 
   const chartStop = leftS === 0 ? true : false;
 
-  const onRecieve = (chart) => {
+  const onRecieve = () => {
     console.log(powerChart);
     setPowerChart((old) => [
       ...old,
@@ -77,26 +76,25 @@ export function Chart({ leftS, power }) {
     plugins: {
       zoom: {
         pan: {
-          enabled: true, // Enable panning
-          mode: "x", // Allow panning in the x direction
-          rangeMin: {
-            x: null, // Min value of the delay option
-          },
+          enabled: true,
+          mode: "x",
           rangeMax: {
-            x: null, // Max value of the delay option
+            x: 4000,
+          },
+          rangeMin: {
+            x: 0,
           },
         },
         zoom: {
           wheel: {
             enabled: true,
           },
-          // Enable zooming
-          mode: "x", // Allow zooming in the x direction
-          rangeMin: {
-            x: null, // Min value of the duration option
-          },
+          mode: "x",
           rangeMax: {
-            x: null, // Max value of the duration option
+            x: 20000,
+          },
+          rangeMin: {
+            x: 1000,
           },
         },
       },
@@ -115,7 +113,7 @@ export function Chart({ leftS, power }) {
           duration: 20000,
           delay: 4000,
           pause: chartStop,
-          onRefresh: onRecieve,
+          onRefresh: chartStop === false ? onRecieve : console.log("stop"),
         },
         ticks: {
           callback: function (value) {
