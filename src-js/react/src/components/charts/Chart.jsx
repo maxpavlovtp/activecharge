@@ -32,6 +32,7 @@ ChartJS.register(
 
 export function Chart({ leftS, power }) {
   const [powerChart, setPowerChart] = useState([]);
+  const [chartTap, setChartTap] = useState(false);
   const { t } = useTranslation();
 
   const labels = [];
@@ -40,7 +41,9 @@ export function Chart({ leftS, power }) {
   }
 
   const chartStop = leftS === 0 ? true : false;
-
+  const chartPauseTapping = () => {
+    setChartTap(!chartTap);
+  };
   const onRecieve = () => {
     console.log(powerChart);
     setPowerChart((old) => [
@@ -85,18 +88,6 @@ export function Chart({ leftS, power }) {
             x: 0,
           },
         },
-        zoom: {
-          wheel: {
-            enabled: true,
-          },
-          mode: "x",
-          rangeMax: {
-            x: 20000,
-          },
-          rangeMin: {
-            x: 1000,
-          },
-        },
       },
     },
     scales: {
@@ -111,9 +102,10 @@ export function Chart({ leftS, power }) {
         distribution: "linear",
         realtime: {
           duration: 20000,
-          delay: 4000,
-          pause: chartStop,
-          onRefresh: chartStop === false ? onRecieve : console.log("stop"),
+          // delay: 2000,
+          refresh: 2000,
+          pause: chartTap || chartStop,
+          onRefresh: chartTap === false ? onRecieve : null,
         },
         ticks: {
           callback: function (value) {
@@ -125,7 +117,7 @@ export function Chart({ leftS, power }) {
   };
   return (
     <div style={{ maxWidth: 700, width: "100%" }}>
-      <Line options={options} data={data} />
+      <Line options={options} data={data} onClick={chartPauseTapping} />
     </div>
   );
 }
