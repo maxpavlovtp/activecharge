@@ -29,9 +29,16 @@ const MainSection: React.FC = () => {
     (state) => state.fetchReducer
   );
 
+  const [timer, setTimer] = useState<any>(null);
   useEffect(() => {
     if (isLoadingCharging === false) {
       dispatch(getStationInfo(stationNumbers));
+      if (deviceStatus) {
+        setTimer(
+          new Date(deviceStatus?.leftS * 1000).toISOString().slice(11, 19)
+        );
+        console.log(timer);
+      }
     }
   }, [isLoadingCharging]);
 
@@ -39,6 +46,12 @@ const MainSection: React.FC = () => {
     console.log(deviceStatus?.leftS);
     if (deviceStatus?.state === "DONE" && deviceStatus?.leftS === 0) {
       setLoading(false);
+    }
+    if (deviceStatus) {
+      setTimer(
+        new Date(deviceStatus?.leftS * 1000).toISOString().slice(11, 19)
+      );
+      console.log(timer);
     }
   }, [deviceStatus]);
 
@@ -64,7 +77,7 @@ const MainSection: React.FC = () => {
   return (
     <>
       <Container fluid>
-        {secondsTime >= 0 && (
+        {timer !== null && (
           <>
             <GetPower station={stationNumbers} />
             {deviceStatus?.state === "DONE" ||
@@ -72,18 +85,18 @@ const MainSection: React.FC = () => {
             deviceStatus?.leftS <= 3 ? (
               <></>
             ) : (
-              <Timer
-                hours={hoursTime}
-                minutes={minuteTime}
-                seconds={secondsTime}
-                fontSize={"calc(1.5rem + 1.5vw)"}
-                margin={"20px 0 30px 0"}
-              />
+              <div
+                style={{
+                  textAlign: "center",
+                  fontSize: "calc(1.5rem + 1.5vw)",
+                  margin: "20px 0 30px 0",
+                }}
+              >
+                {timer}
+              </div>
             )}
           </>
         )}
-
-       
       </Container>
     </>
   );
