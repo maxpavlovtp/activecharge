@@ -30,11 +30,10 @@ ChartJS.register(
   Filler
 );
 
-export function Chart({ leftS, power, voltage }) {
+export function Chart({ leftS, power, voltage, chartTap, setChartTap }) {
   const [powerChart, setPowerChart] = useState([]);
   const [voltageChart, setVoltageChart] = useState([]);
 
-  const [chartTap, setChartTap] = useState(false);
   const { t } = useTranslation();
 
   const labels = [];
@@ -45,7 +44,7 @@ export function Chart({ leftS, power, voltage }) {
   const chartTimerFinish = leftS === 0 ? true : false;
 
   const chartPauseTapping = () => {
-    setChartTap(!chartTap);
+    setChartTap(true);
   };
 
   const onRecieve = () => {
@@ -144,7 +143,7 @@ export function Chart({ leftS, power, voltage }) {
           // delay: 4000,
           refresh: 2050,
           pause: chartTap || chartTimerFinish,
-          onRefresh: chartTap === false ? onRecieve : null,
+          onRefresh: chartTap === false || chartTimerFinish === false ? onRecieve : null,
         },
         ticks: {
           callback: function (value) {

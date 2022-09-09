@@ -5,21 +5,26 @@ import { getStationInfo } from "../../store/reducers/ActionCreators";
 import { useTranslation } from "react-i18next";
 import { Col, Container, Row } from "react-bootstrap";
 import { PowerMetricsColor } from "../globalStyles";
+import { Chart } from "../charts/Chart";
 
 export default function GetPower({ station }: { station: any }) {
+  const [chartTap, setChartTap] = useState(false);
+
   const dispatch = useAppDispatch();
   const { deviceStatus } = useAppSelector((state) => state.fetchReducer);
   const { t } = useTranslation();
   const interval: any = localStorage.getItem("interval");
   const sec = interval ? interval : 5000;
   useEffect(() => {
-    const timerID = setInterval(() => {
-      if (deviceStatus?.state === "IN_PROGRESS") {
-        dispatch(getStationInfo(station));
-      }
-    }, sec);
-    return () => clearInterval(timerID);
-  }, [deviceStatus?.state]);
+    if (chartTap === false) {
+      const timerID = setInterval(() => {
+        if (deviceStatus?.state === "IN_PROGRESS") {
+          dispatch(getStationInfo(station));
+        }
+      }, sec);
+      return () => clearInterval(timerID);
+    }
+  }, [deviceStatus?.state, chartTap]);
 
   let kWtCharged = Number(deviceStatus?.chargedWtH) / 1000;
   let kWtPower = Number(deviceStatus?.powerWt) / 1000;
@@ -49,7 +54,9 @@ export default function GetPower({ station }: { station: any }) {
               : "text-center"
           }
         >
-          <PowerMetricsColor className="mb-1 textTitle">{t("power")}</PowerMetricsColor>
+          <PowerMetricsColor className="mb-1 textTitle">
+            {t("power")}
+          </PowerMetricsColor>
           <p className="textTitle text">
             {kWtPower.toFixed(2)} {t("wt")}
           </p>
@@ -59,7 +66,9 @@ export default function GetPower({ station }: { station: any }) {
         deviceStatus?.state === "FAILED" ||
         deviceStatus?.leftS <= 3 ? (
           <Col xs="auto" lg="auto" className="text-center">
-            <PowerMetricsColor className="finishTitle">{t("chargedCongrats")} </PowerMetricsColor>
+            <PowerMetricsColor className="finishTitle">
+              {t("chargedCongrats")}{" "}
+            </PowerMetricsColor>
             <p className="finishText">
               {t("chargedkWt")}
               {chargeStatus}
@@ -67,7 +76,9 @@ export default function GetPower({ station }: { station: any }) {
           </Col>
         ) : (
           <Col className="text-center">
-            <PowerMetricsColor className="mb-1 textTitle">{t("charging")}</PowerMetricsColor>
+            <PowerMetricsColor className="mb-1 textTitle">
+              {t("charging")}
+            </PowerMetricsColor>
             <p className="textTitle text">{chargeStatus}</p>
           </Col>
         )}
@@ -85,7 +96,9 @@ export default function GetPower({ station }: { station: any }) {
                 : "text-center mb-4"
             }
           >
-            <PowerMetricsColor className="mb-1 textTitle voltTitle">{t("voltage")}</PowerMetricsColor>
+            <PowerMetricsColor className="mb-1 textTitle voltTitle">
+              {t("voltage")}
+            </PowerMetricsColor>
             <p className="voltTitle text">
               {voltage} {t("v")}
             </p>
@@ -102,6 +115,15 @@ export default function GetPower({ station }: { station: any }) {
             {t("km")}
           </p>
         </Col>
+      </Row>
+      <Row className="justify-content-center mb-4">
+        <Chart
+          chartTap={chartTap}
+          setChartTap={setChartTap}
+          leftS={deviceStatus?.leftS}
+          power={Number(deviceStatus?.powerWt) / 1000}
+          voltage={Number(Math.round(deviceStatus?.voltage))}
+        />
       </Row>
     </>
   );
