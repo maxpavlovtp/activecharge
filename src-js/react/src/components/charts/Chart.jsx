@@ -143,7 +143,7 @@ export function Chart({ leftS, power, voltage, chartTap, setChartTap }) {
           // delay: 4000,
           refresh: 2050,
           pause: chartTap || chartTimerFinish,
-          onRefresh: chartTap === false || chartTimerFinish === false ? onRecieve : null,
+          onRefresh: chartTap === false ? onRecieve : null,
         },
         ticks: {
           callback: function (value) {
