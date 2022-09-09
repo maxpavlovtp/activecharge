@@ -1,15 +1,11 @@
 package com.km220.dao.ewelink;
 
-import com.km220.SpringProfile;
 import com.km220.dao.DatabaseEntity;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
 
 @SuperBuilder
 @Setter

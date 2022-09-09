@@ -20,7 +20,7 @@ jobs:
           node-version: '18.x'
 
       - name: 220 build BE
-        run: ./gradlew clean build -i
+        run: ./gradlew clean build -x test
 
       - name: 220 build FE
         run: cd src-js/react && npm i && npm run buildStage
