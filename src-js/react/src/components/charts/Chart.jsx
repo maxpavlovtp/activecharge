@@ -33,7 +33,6 @@ ChartJS.register(
 export function Chart({ leftS, power }) {
   const [powerChart, setPowerChart] = useState([]);
   const [chartTap, setChartTap] = useState(false);
-  const [chartFinish, setChartFinish] = useState(false);
   const { t } = useTranslation();
 
   const labels = [];
@@ -41,22 +40,21 @@ export function Chart({ leftS, power }) {
     labels.push(time);
   }
 
-  const chartTimerFinish = () => {
-    leftS === 0 ? setChartFinish(true) : setChartFinish(false);
-  };
+  const chartTimerFinish = leftS === 0 ? true : false;
   const chartPauseTapping = () => {
     setChartTap(!chartTap);
   };
   const onRecieve = () => {
     console.log(powerChart);
-    chartTimerFinish();
-    setPowerChart((old) => [
-      ...old,
-      {
-        x: Date.now(),
-        y: Math.round(power),
-      },
-    ]);
+    if (!chartTap) {
+      setPowerChart((old) => [
+        ...old,
+        {
+          x: Date.now(),
+          y: Math.round(power) + 3,
+        },
+      ]);
+    }
   };
 
   const data = {
@@ -64,7 +62,7 @@ export function Chart({ leftS, power }) {
       {
         label: t("power"),
         backgroundColor: "rgba(208, 188, 245, 0.5)",
-        fill: false,
+        fill: true,
         lineTension: 0,
         borderDash: [8, 4],
         borderColor: "rgb(169, 149, 207)",
@@ -106,11 +104,11 @@ export function Chart({ leftS, power }) {
         distribution: "linear",
         realtime: {
           duration: 20000,
-          // delay: 2000,
-          refresh: 2000,
-          pause: chartTap || chartFinish,
+          // delay: 4000,
+          refresh: 2050,
+          pause: chartTap || chartTimerFinish,
           onRefresh:
-            chartTap === false || chartFinish === false ? onRecieve : null,
+            chartTap === false ? onRecieve : null,
         },
         ticks: {
           callback: function (value) {
