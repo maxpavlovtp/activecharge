@@ -30,8 +30,10 @@ ChartJS.register(
   Filler
 );
 
-export function Chart({ leftS, power }) {
+export function Chart({ leftS, power, voltage }) {
   const [powerChart, setPowerChart] = useState([]);
+  const [voltageChart, setVoltageChart] = useState([]);
+
   const [chartTap, setChartTap] = useState(false);
   const { t } = useTranslation();
 
@@ -41,17 +43,27 @@ export function Chart({ leftS, power }) {
   }
 
   const chartTimerFinish = leftS === 0 ? true : false;
+
   const chartPauseTapping = () => {
     setChartTap(!chartTap);
   };
+
   const onRecieve = () => {
     console.log(powerChart);
+    console.log(voltageChart);
     if (!chartTap) {
+      setVoltageChart((old) => [
+        ...old,
+        {
+          x: Date.now() + 12,
+          y: voltage,
+        },
+      ]);
       setPowerChart((old) => [
         ...old,
         {
           x: Date.now(),
-          y: Math.round(power) + 3,
+          y: power,
         },
       ]);
     }
@@ -61,14 +73,25 @@ export function Chart({ leftS, power }) {
     datasets: [
       {
         label: t("power"),
+        backgroundColor: "rgba(110, 188, 245, 0.5)",
+        fill: true,
+        lineTension: 0,
+        borderDash: [8, 4],
+        borderColor: "rgb(105, 149, 207)",
+        cubicInterpolationMode: "monotone",
+        yAxisID: "power",
+        data: powerChart,
+      },
+      {
+        label: t("voltage"),
         backgroundColor: "rgba(208, 188, 245, 0.5)",
         fill: true,
         lineTension: 0,
         borderDash: [8, 4],
         borderColor: "rgb(169, 149, 207)",
         cubicInterpolationMode: "monotone",
-        xAxisID: "x",
-        data: powerChart,
+        yAxisID: "voltage",
+        data: voltageChart,
       },
     ],
   };
@@ -93,12 +116,26 @@ export function Chart({ leftS, power }) {
       },
     },
     scales: {
-      y: {
+      power: {
         type: "linear",
         display: true,
+        position: "right",
         min: 0,
         max: 8,
       },
+      voltage: {
+        type: "linear",
+        display: true,
+        position: "left",
+        min: 180,
+        max: 260,
+
+        // grid line settings
+        grid: {
+          drawOnChartArea: false, // only want the grid lines for one axis to show up
+        },
+      },
+
       x: {
         type: "realtime",
         distribution: "linear",
@@ -107,8 +144,7 @@ export function Chart({ leftS, power }) {
           // delay: 4000,
           refresh: 2050,
           pause: chartTap || chartTimerFinish,
-          onRefresh:
-            chartTap === false ? onRecieve : null,
+          onRefresh: chartTap === false ? onRecieve : null,
         },
         ticks: {
           callback: function (value) {

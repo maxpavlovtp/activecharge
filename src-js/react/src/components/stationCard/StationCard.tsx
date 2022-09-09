@@ -40,7 +40,6 @@ export default function ({
 
   return (
     <CardLink
-      reloadDocument={true}
       className={styles.linkToStation}
       to={`/start?station=${stationNumber}`}
     >

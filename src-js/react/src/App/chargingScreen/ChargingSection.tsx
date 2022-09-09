@@ -13,7 +13,7 @@ import { Chart } from "../../components/charts/Chart";
 
 const MainSection: React.FC = () => {
   const [loading, setLoading] = useState<any>(true);
-  const [secondsBackend, setSecondsBackend] = useState<any>();
+  // const [secondsBackend, setSecondsBackend] = useState<any>();
   const [hoursTime, setHoursTime] = useState<any>();
   const [minuteTime, setMinuteTime] = useState<any>();
   const [secondsTime, setSecondsTime] = useState<any>(0);
@@ -36,14 +36,14 @@ const MainSection: React.FC = () => {
   }, [isLoadingCharging]);
 
   useEffect(() => {
-    setSecondsBackend(deviceStatus?.leftS);
+    console.log(deviceStatus?.leftS);
     if (deviceStatus?.state === "DONE" && deviceStatus?.leftS === 0) {
       setLoading(false);
     }
   }, [deviceStatus]);
 
   useBackTime(
-    secondsBackend,
+    deviceStatus?.leftS,
     hoursTime,
     setHoursTime,
     setMinuteTime,
@@ -85,8 +85,9 @@ const MainSection: React.FC = () => {
 
         <Row className="justify-content-center mb-4">
           <Chart
-            leftS={secondsBackend}
+            leftS={deviceStatus?.leftS}
             power={Number(deviceStatus?.powerWt) / 1000}
+            voltage={Number(Math.round(deviceStatus?.voltage))}
           />
         </Row>
       </Container>
