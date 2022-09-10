@@ -8,7 +8,7 @@ ewelink:
   useOAuth: false
 
 device:
-  freeChargeSecs: 360
+  freeChargeSecs: 60
 
 station:
   scan-delay-ms: 1000
