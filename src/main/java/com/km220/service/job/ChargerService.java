@@ -94,7 +94,7 @@ public class ChargerService {
       jobEntity.setState(ChargingJobState.DONE);
       jobEntity.setStoppedOn(OffsetDateTime.now(ZoneOffset.UTC));
 
-      jobMetricsCollector.removeJobMetric(jobEntity.getId());
+      jobMetricsCollector.removeJobMetrics(jobEntity.getId());
 
       return true;
     }
