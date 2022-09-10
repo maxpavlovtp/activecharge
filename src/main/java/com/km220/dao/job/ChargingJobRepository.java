@@ -106,20 +106,19 @@ public class ChargingJobRepository {
 
   public List<ChargingJobEntity> scan(ChargingJobState state,
       int batchSize,
-      int delayTime) {
+      int intervalTimeMs) {
     Objects.requireNonNull(state);
 
     var sql = SELECT_QUERY + """
-        WHERE j.state = :state AND EXTRACT(EPOCH FROM (now() - j.updated_on)) < :delay_time
+        WHERE j.state = :state AND j.updated_on < now() - interval '%s seconds'
         ORDER BY j.updated_on
         LIMIT %s
         FOR UPDATE OF j SKIP LOCKED
         """;
-    sql = sql.formatted(batchSize);
+    sql = sql.formatted(intervalTimeMs / 1000, batchSize);
 
     var sqlParameterSource = new MapSqlParameterSource();
     sqlParameterSource.addValue("state", state, Types.OTHER);
-    sqlParameterSource.addValue("delay_time", delayTime, Types.INTEGER);
 
     return jdbcTemplate.query(sql, sqlParameterSource, chargingJobRowMapper);
   }
