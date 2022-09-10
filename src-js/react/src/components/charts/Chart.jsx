@@ -11,16 +11,15 @@ import {
   Filler,
 } from "chart.js";
 import "chartjs-adapter-luxon";
-import zoomPlugin from "chartjs-plugin-zoom";
+import ZoomPlugin from "chartjs-plugin-zoom";
 import ChartStreaming from "chartjs-plugin-streaming";
 import { Line } from "react-chartjs-2";
-import { faker } from "@faker-js/faker";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
 
 ChartJS.register(
   CategoryScale,
-  zoomPlugin,
+  ZoomPlugin,
   LinearScale,
   PointElement,
   LineElement,
@@ -31,9 +30,10 @@ ChartJS.register(
   Filler
 );
 
-export function Chart({ leftS, stationNumber, voltage, power }) {
-  const [voltageChart, setVoltageChart] = useState([]);
+export function Chart({ leftS, power, voltage, chartTap, setChartTap }) {
   const [powerChart, setPowerChart] = useState([]);
+  const [voltageChart, setVoltageChart] = useState([]);
+
   const { t } = useTranslation();
 
   const labels = [];
@@ -41,37 +41,42 @@ export function Chart({ leftS, stationNumber, voltage, power }) {
     labels.push(time);
   }
 
-  const chartStop = leftS === 0 ? true : false;
+  const chartTimerFinish = leftS === 0 ? true : false;
 
-  const onRecieve = (chart) => {
+  const chartPauseTapping = () => {
+    setChartTap(true);
+  };
+
+  const onRecieve = () => {
     console.log(powerChart);
     console.log(voltageChart);
-    setPowerChart((old) => [
-      ...old,
-      {
-        x: Date.now(),
-        y: power,
-      },
-    ]);
-    setVoltageChart((old) => [
-      ...old,
-      {
-        x: Date.now(),
-        y: voltage,
-      },
-    ]);
-    chart.update("quiet");
+    if (!chartTap) {
+      setVoltageChart((old) => [
+        ...old,
+        {
+          x: Date.now() + 12,
+          y: voltage,
+        },
+      ]);
+      setPowerChart((old) => [
+        ...old,
+        {
+          x: Date.now(),
+          y: power,
+        },
+      ]);
+    }
   };
 
   const data = {
     datasets: [
       {
         label: t("power"),
-        backgroundColor: "rgba(237, 140, 140, 0.5)",
+        backgroundColor: "rgba(110, 188, 245, 0.5)",
         fill: true,
         lineTension: 0,
         borderDash: [8, 4],
-        borderColor: "rgb(237, 121, 121)",
+        borderColor: "rgb(105, 149, 207)",
         cubicInterpolationMode: "monotone",
         yAxisID: "power",
         data: powerChart,
@@ -100,22 +105,11 @@ export function Chart({ leftS, stationNumber, voltage, power }) {
         pan: {
           enabled: true,
           mode: "x",
-        },
-        zoom: {
-          pinch: {
-            enabled: true,
+          rangeMax: {
+            x: 4000,
           },
-          wheel: {
-            enabled: true,
-          },
-          mode: "x",
-        },
-        limits: {
-          xy: {
-            minDelay: null,
-            maxDelay: null,
-            minDuration: null,
-            maxDuration: null,
+          rangeMin: {
+            x: 0,
           },
         },
       },
@@ -124,14 +118,14 @@ export function Chart({ leftS, stationNumber, voltage, power }) {
       power: {
         type: "linear",
         display: true,
-        position: "left",
+        position: "right",
         min: 0,
         max: 8,
       },
       voltage: {
         type: "linear",
         display: true,
-        position: "right",
+        position: "left",
         min: 180,
         max: 260,
 
@@ -140,17 +134,16 @@ export function Chart({ leftS, stationNumber, voltage, power }) {
           drawOnChartArea: false, // only want the grid lines for one axis to show up
         },
       },
-      xAxes: {
+
+      x: {
         type: "realtime",
         distribution: "linear",
         realtime: {
           duration: 20000,
-          delay: 4000,
-          pause: chartStop,
-          onRefresh: onRecieve,
-          time: {
-            displayFormat: "h:mm",
-          },
+          // delay: 4000,
+          refresh: 2050,
+          pause: chartTap || chartTimerFinish,
+          onRefresh: chartTap === false ? onRecieve : null,
         },
         ticks: {
           callback: function (value) {
@@ -162,7 +155,7 @@ export function Chart({ leftS, stationNumber, voltage, power }) {
   };
   return (
     <div style={{ maxWidth: 700, width: "100%" }}>
-      <Line options={options} data={data} />
+      <Line options={options} data={data} onClick={chartPauseTapping} />
     </div>
   );
 }

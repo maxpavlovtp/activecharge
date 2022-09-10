@@ -23,6 +23,8 @@ public class ChargingJob {
   @Getter(AccessLevel.NONE)
   private long leftS;
 
+  private boolean uiNightMode;
+
   public long getDurationS() {
     long endS = getStoppedS() != 0 ? getStoppedS() : Instant.now().getEpochSecond();
     return endS - getStartedS();

@@ -19,7 +19,7 @@ const MainSection: React.FC = () => {
   const [searchParams] = useSearchParams();
   const [payUrls, setPayUrls] = useState<any>([]);
   const [errorPay, setErrorPay] = useState<any>(null);
-  const [mainImgTheme, setMainImgTheme] = useOutletContext<any>();
+  const [mainImgTheme] = useOutletContext<any>();
 
   let stationNumber: any = searchParams.get("station");
   const urlPayment12h = `${process.env.REACT_APP_LINK_SERVE}order/generateCheckoutLink?station_number=${stationNumber}&&hours=12`;
@@ -37,19 +37,22 @@ const MainSection: React.FC = () => {
     dispatch(setDeviceStatusUndefind(undefined));
   };
 
-
   useEffect(() => {
     try {
-      axios
-        .all(payEndpoints.map((endpoint: any) => axios.get(endpoint)))
-        .then((data) => {
-          setPayUrls([]);
-          data?.map((link: any) => {
-            const { pageUrl } = link.data;
-            setPayUrls((pay: any) => [...pay, pageUrl]);
-            console.log(pageUrl);
+      if (process.env.REACT_APP_LINK_SERVE === "http://localhost:8080/") {
+        console.log("local dev");
+      } else {
+        axios
+          .all(payEndpoints.map((endpoint: any) => axios.get(endpoint)))
+          .then((data) => {
+            setPayUrls([]);
+            data?.map((link: any) => {
+              const { pageUrl } = link.data;
+              setPayUrls((pay: any) => [...pay, pageUrl]);
+              console.log(pageUrl);
+            });
           });
-        });
+      }
     } catch (e: any) {
       setErrorPay(e.message);
     }

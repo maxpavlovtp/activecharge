@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, Outlet, useSearchParams } from "react-router-dom";
-import { useAppSelector } from "../../hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import "./layout.css";
 import logo from "../../assets/logo.png";
 import whiteLogo from "../../assets/whiteLogoNav.png";
@@ -13,6 +13,7 @@ import MainImgLoadingLazy from "../lazyLoading/MainImgLoadingLazy";
 import placehoderSrc from "../../assets/logoTiny.png";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { ThemeProvider } from "styled-components";
+import { getStationInfo } from "../../store/reducers/ActionCreators";
 import {
   FooterLink,
   GlobalStyles,
@@ -23,6 +24,7 @@ import {
 } from "../globalStyles";
 import { lightTheme, darkTheme } from "../darkTheme/Theme";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
+import axios from "axios";
 
 export default function Layout() {
   const [routeTo, setRouteTo] = useState<any>("/main");
@@ -33,6 +35,7 @@ export default function Layout() {
   const { deviceStatus, isGotDeviceStatus } = useAppSelector(
     (state) => state.fetchReducer
   );
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     deviceStatus?.state === "IN_PROGRESS"
@@ -54,23 +57,42 @@ export default function Layout() {
 
   const [theme, setTheme] = useLocalStorage<string>("themeMode", "light");
   const [logoTheme, setLogoTheme] = useLocalStorage<string>("logoImg", logo);
-  const [modeImg, setModeImg] = useLocalStorage<string>("btnMode", lightMode);
+  const [modeImg, setModeImg] = useLocalStorage<string>("btnMode", nightMode);
   const [mainImgTheme, setMainImgTheme] = useLocalStorage<string>(
     "mainImg",
     mainImg
   );
 
+  const darkModeSetter = () => {
+    setTheme("dark");
+    setLogoTheme(whiteLogo);
+    setModeImg(lightMode);
+    setMainImgTheme(whiteMainImg);
+  };
+  const lightModeSetter = () => {
+    setTheme("light");
+    setLogoTheme(logo);
+    setMainImgTheme(mainImg);
+    setModeImg(nightMode);
+  };
+
+  useEffect(() => {
+    if (!localStorage.getItem("themeMode")) {
+      dispatch(getStationInfo(stationNumbers));
+      console.log(deviceStatus);
+      if (deviceStatus?.uiNightMode === false) {
+        lightModeSetter()
+      } else if (deviceStatus?.uiNightMode === true) {
+        darkModeSetter()
+      }
+    }
+  }, [deviceStatus?.uiNightMode]);
+
   const themeToggler = () => {
     if (theme === "light") {
-      setTheme("dark");
-      setLogoTheme(whiteLogo);
-      setModeImg(lightMode);
-      setMainImgTheme(whiteMainImg);
+      darkModeSetter()
     } else {
-      setTheme("light");
-      setLogoTheme(logo);
-      setModeImg(nightMode);
-      setMainImgTheme(mainImg);
+      lightModeSetter()
     }
   };
 
@@ -92,7 +114,6 @@ export default function Layout() {
           >
             <LinksColor
               to={routeTo}
-              reloadDocument={true}
               className="flex-row align-items-center"
             >
               <div className="logoContainer">

@@ -5,9 +5,10 @@ ewelink:
   countryCode: "+380"
   appId: YzfeftUVcZ6twZw1OoVKPRFYTrGEg01Q
   appSecret: 4G91qSoboqYO4Y0XJ0LPPKIsq8reHdfa
+  useOAuth: false
 
 device:
-  freeChargeSecs: 360
+  freeChargeSecs: 90
 
 station:
   scan-delay-ms: 1000
@@ -31,7 +32,7 @@ server:
   forward-headers-strategy: framework
 
 monobank:
-  token: "uZR_Cp6hs2TiuLUIPEXKk0pWeKbwy5tNAWmhJg4DU5Zg"
+  token: "u7U0wkyOHijJIRx_uIZGdY21uVWr8UYOUWMh2LpWJ3Uk"
   callBackHost: "49.12.19.42"
 
 management:

@@ -39,7 +39,7 @@ export const getStationInfo =
   (station: string) => async (dispatch: AppDispatch) => {
     try {
       dispatch(FetchSlice.actions.deviceStatusFetching());
-      axios.get(urlV2Status + station).then(function (result: any) {
+      await axios.get(urlV2Status + station).then(function (result: any) {
         dispatch(FetchSlice.actions.deviceStatusFetchingSuccess(result.data));
         console.log(result.data);
       });
