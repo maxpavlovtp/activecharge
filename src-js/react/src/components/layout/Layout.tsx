@@ -114,7 +114,6 @@ export default function Layout() {
           >
             <LinksColor
               to={routeTo}
-              reloadDocument={true}
               className="flex-row align-items-center"
             >
               <div className="logoContainer">

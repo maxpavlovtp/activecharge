@@ -24,7 +24,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 3,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -86,8 +85,8 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 9,
-        "w": 12,
+        "h": 28,
+        "w": 24,
         "x": 0,
         "y": 0
       },
@@ -133,7 +132,7 @@
       "type": "timeseries"
     }
   ],
-  "refresh": false,
+  "refresh": "5s",
   "schemaVersion": 37,
   "style": "dark",
   "tags": [],
@@ -141,13 +140,13 @@
     "list": []
   },
   "time": {
-    "from": "2022-09-04T18:21:56.984Z",
-    "to": "2022-09-04T18:46:13.729Z"
+    "from": "now-24h",
+    "to": "now"
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Charger job Copy",
+  "title": "Stage. Charging metrics",
   "uid": "81TBNvM4z",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }

@@ -30,10 +30,10 @@ ChartJS.register(
   Filler
 );
 
-export function Chart({ leftS, power }) {
+export function Chart({ leftS, power, voltage, chartTap, setChartTap }) {
   const [powerChart, setPowerChart] = useState([]);
-  const [chartTap, setChartTap] = useState(false);
-  const [chartFinish, setChartFinish] = useState(false);
+  const [voltageChart, setVoltageChart] = useState([]);
+
   const { t } = useTranslation();
 
   const labels = [];
@@ -41,36 +41,56 @@ export function Chart({ leftS, power }) {
     labels.push(time);
   }
 
-  const chartTimerFinish = () => {
-    leftS === 0 ? setChartFinish(true) : setChartFinish(false);
-  };
+  const chartTimerFinish = leftS === 0 ? true : false;
+
   const chartPauseTapping = () => {
-    setChartTap(!chartTap);
+    setChartTap(true);
   };
+
   const onRecieve = () => {
     console.log(powerChart);
-    chartTimerFinish();
-    setPowerChart((old) => [
-      ...old,
-      {
-        x: Date.now(),
-        y: Math.round(power),
-      },
-    ]);
+    console.log(voltageChart);
+    if (!chartTap) {
+      setVoltageChart((old) => [
+        ...old,
+        {
+          x: Date.now() + 12,
+          y: voltage,
+        },
+      ]);
+      setPowerChart((old) => [
+        ...old,
+        {
+          x: Date.now(),
+          y: power,
+        },
+      ]);
+    }
   };
 
   const data = {
     datasets: [
       {
         label: t("power"),
+        backgroundColor: "rgba(110, 188, 245, 0.5)",
+        fill: true,
+        lineTension: 0,
+        borderDash: [8, 4],
+        borderColor: "rgb(105, 149, 207)",
+        cubicInterpolationMode: "monotone",
+        yAxisID: "power",
+        data: powerChart,
+      },
+      {
+        label: t("voltage"),
         backgroundColor: "rgba(208, 188, 245, 0.5)",
-        fill: false,
+        fill: true,
         lineTension: 0,
         borderDash: [8, 4],
         borderColor: "rgb(169, 149, 207)",
         cubicInterpolationMode: "monotone",
-        xAxisID: "x",
-        data: powerChart,
+        yAxisID: "voltage",
+        data: voltageChart,
       },
     ],
   };
@@ -95,22 +115,35 @@ export function Chart({ leftS, power }) {
       },
     },
     scales: {
-      y: {
+      power: {
         type: "linear",
         display: true,
+        position: "right",
         min: 0,
         max: 8,
       },
+      voltage: {
+        type: "linear",
+        display: true,
+        position: "left",
+        min: 180,
+        max: 260,
+
+        // grid line settings
+        grid: {
+          drawOnChartArea: false, // only want the grid lines for one axis to show up
+        },
+      },
+
       x: {
         type: "realtime",
         distribution: "linear",
         realtime: {
           duration: 20000,
-          // delay: 2000,
-          refresh: 2000,
-          pause: chartTap || chartFinish,
-          onRefresh:
-            chartTap === false || chartFinish === false ? onRecieve : null,
+          // delay: 4000,
+          refresh: 2050,
+          pause: chartTap || chartTimerFinish,
+          onRefresh: chartTap === false ? onRecieve : null,
         },
         ticks: {
           callback: function (value) {

@@ -13,7 +13,7 @@ import { Chart } from "../../components/charts/Chart";
 
 const MainSection: React.FC = () => {
   const [loading, setLoading] = useState<any>(true);
-  const [secondsBackend, setSecondsBackend] = useState<any>();
+  // const [secondsBackend, setSecondsBackend] = useState<any>();
   const [hoursTime, setHoursTime] = useState<any>();
   const [minuteTime, setMinuteTime] = useState<any>();
   const [secondsTime, setSecondsTime] = useState<any>(0);
@@ -29,21 +29,34 @@ const MainSection: React.FC = () => {
     (state) => state.fetchReducer
   );
 
+  const [timer, setTimer] = useState<any>(null);
   useEffect(() => {
     if (isLoadingCharging === false) {
       dispatch(getStationInfo(stationNumbers));
+      if (deviceStatus) {
+        setTimer(
+          new Date(deviceStatus?.leftS * 1000).toISOString().slice(11, 19)
+        );
+        console.log(timer);
+      }
     }
   }, [isLoadingCharging]);
 
   useEffect(() => {
-    setSecondsBackend(deviceStatus?.leftS);
+    console.log(deviceStatus?.leftS);
     if (deviceStatus?.state === "DONE" && deviceStatus?.leftS === 0) {
       setLoading(false);
+    }
+    if (deviceStatus) {
+      setTimer(
+        new Date(deviceStatus?.leftS * 1000).toISOString().slice(11, 19)
+      );
+      console.log(timer);
     }
   }, [deviceStatus]);
 
   useBackTime(
-    secondsBackend,
+    deviceStatus?.leftS,
     hoursTime,
     setHoursTime,
     setMinuteTime,
@@ -64,7 +77,7 @@ const MainSection: React.FC = () => {
   return (
     <>
       <Container fluid>
-        {secondsTime >= 0 && (
+        {timer !== null && (
           <>
             <GetPower station={stationNumbers} />
             {deviceStatus?.state === "DONE" ||
@@ -72,23 +85,18 @@ const MainSection: React.FC = () => {
             deviceStatus?.leftS <= 3 ? (
               <></>
             ) : (
-              <Timer
-                hours={hoursTime}
-                minutes={minuteTime}
-                seconds={secondsTime}
-                fontSize={"calc(1.5rem + 1.5vw)"}
-                margin={"20px 0 30px 0"}
-              />
+              <div
+                style={{
+                  textAlign: "center",
+                  fontSize: "calc(1.5rem + 1.5vw)",
+                  margin: "20px 0 30px 0",
+                }}
+              >
+                {timer}
+              </div>
             )}
           </>
         )}
-
-        <Row className="justify-content-center mb-4">
-          <Chart
-            leftS={secondsBackend}
-            power={Number(deviceStatus?.powerWt) / 1000}
-          />
-        </Row>
       </Container>
     </>
   );
