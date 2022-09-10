@@ -140,13 +140,13 @@
     "list": []
   },
   "time": {
-    "from": "now-3h",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Stage. Charging metrics",
   "uid": "81TBNvM4z",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }
