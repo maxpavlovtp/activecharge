@@ -30,7 +30,7 @@ export default function GetPower({ station }: { station: any }) {
   let kWtPower = Number(deviceStatus?.lastJob?.powerWt) / 1000;
   let voltage = Number(Math.round(deviceStatus?.lastJob?.voltage));
 
-  let carKwtKmRatio = 150;
+  let carKwtKmRatio = 200;
   let isZero = deviceStatus?.lastJob?.chargedWtH === undefined || 0;
   let chargeStatus = `${isZero ? " " : kWtCharged.toFixed(2)} ${t("wt")}`;
 
