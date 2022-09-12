@@ -38,7 +38,7 @@ export default function Layout() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    deviceStatus?.state === "IN_PROGRESS"
+    deviceStatus?.lastJobPresented === false || deviceStatus?.lastJob?.state === "IN_PROGRESS"
       ? setRouteTo(`/charging?station=${stationNumbers}`)
       : setRouteTo(`/`);
   }, [isGotDeviceStatus]);
@@ -80,13 +80,13 @@ export default function Layout() {
     if (!localStorage.getItem("themeMode")) {
       dispatch(getStationInfo(stationNumbers));
       console.log(deviceStatus);
-      if (deviceStatus?.uiNightMode === false) {
+      if (deviceStatus?.lastJob?.uiNightMode === false) {
         lightModeSetter()
-      } else if (deviceStatus?.uiNightMode === true) {
+      } else if (deviceStatus?.lastJob?.uiNightMode === true) {
         darkModeSetter()
       }
     }
-  }, [deviceStatus?.uiNightMode]);
+  }, [deviceStatus?.lastJob?.uiNightMode]);
 
   const themeToggler = () => {
     if (theme === "light") {

@@ -33,9 +33,9 @@ const MainSection: React.FC = () => {
   useEffect(() => {
     if (isLoadingCharging === false) {
       dispatch(getStationInfo(stationNumbers));
-      if (deviceStatus) {
+      if (deviceStatus?.lastJob) {
         setTimer(
-          new Date(deviceStatus?.leftS * 1000).toISOString().slice(11, 19)
+          new Date(deviceStatus?.lastJob?.leftS * 1000).toISOString().slice(11, 19)
         );
         console.log(timer);
       }
@@ -43,20 +43,20 @@ const MainSection: React.FC = () => {
   }, [isLoadingCharging]);
 
   useEffect(() => {
-    console.log(deviceStatus?.leftS);
-    if (deviceStatus?.state === "DONE" && deviceStatus?.leftS === 0) {
+    console.log(deviceStatus?.lastJob?.leftS);
+    if (deviceStatus?.lastJob?.state === "DONE" && deviceStatus?.lastJob?.leftS === 0) {
       setLoading(false);
     }
-    if (deviceStatus) {
+    if (deviceStatus?.lastJob) {
       setTimer(
-        new Date(deviceStatus?.leftS * 1000).toISOString().slice(11, 19)
+        new Date(deviceStatus?.lastJob?.leftS * 1000).toISOString().slice(11, 19)
       );
       console.log(timer);
     }
-  }, [deviceStatus]);
+  }, [deviceStatus?.lastJob]);
 
   useBackTime(
-    deviceStatus?.leftS,
+    deviceStatus?.lastJob?.leftS,
     hoursTime,
     setHoursTime,
     setMinuteTime,
@@ -80,9 +80,9 @@ const MainSection: React.FC = () => {
         {timer !== null && (
           <>
             <GetPower station={stationNumbers} />
-            {deviceStatus?.state === "DONE" ||
-            deviceStatus?.state === "FAILED" ||
-            deviceStatus?.leftS <= 3 ? (
+            {deviceStatus?.lastJob?.state === "DONE" ||
+            deviceStatus?.lastJob?.state === "FAILED" ||
+            deviceStatus?.lastJob?.leftS <= 3 ? (
               <></>
             ) : (
               <div
