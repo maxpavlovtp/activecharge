@@ -21,10 +21,11 @@ export default function HomeScreen() {
     }
   }, []);
   return (
-    <Container >
+    <Container>
       <Row className="justify-content-center">
-         {statusALl?.map((data: any) => {
+        {statusALl?.map((data: any) => {
           if (data?.state) {
+            console.log(data?.stationNumber);
             return (
               <Col lg={4} md={6} key={Math.random()}>
                 <StationCard
@@ -42,7 +43,6 @@ export default function HomeScreen() {
           }
         })}
       </Row>
-       
     </Container>
   );
 }
