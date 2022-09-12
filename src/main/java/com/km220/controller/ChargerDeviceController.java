@@ -4,7 +4,6 @@ import com.km220.config.StationScanProperties;
 import com.km220.controller.converters.ChargingJobConverter;
 import com.km220.controller.converters.StationStateConverter;
 import com.km220.dao.job.ChargingJobEntity;
-import com.km220.dao.job.ChargingJobState;
 import com.km220.model.ChargingJob;
 import com.km220.model.CreatedChargingJob;
 import com.km220.model.StationState;
@@ -17,10 +16,9 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import java.util.Arrays;
+
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import javax.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import com.km220.utils.SQLDatabaseConnection;
 
 @RestController
 @RequestMapping("/device")
@@ -105,22 +104,7 @@ public class ChargerDeviceController {
 
   @GetMapping("/v2/station/statusAll")
   public ResponseEntity<List<ChargingJob>> getStatusAll() {
-    String[] stations = {"1", "2", "3", "4", "5"};
-
-    // todo implemtent
-    List<ChargingJob> jobs = chargingJobService.getInProgressJobs();
-
-    jobs = Arrays.stream(stations)
-        .map(id -> new ChargingJob(id, System.currentTimeMillis(), 3600))
-        .map(job -> {
-          if ("1".equals(job.getStationNumber())) {
-            job.setState(ChargingJobState.DONE);
-          } else {
-            job.setState(ChargingJobState.IN_PROGRESS);
-          }
-          return job;
-        })
-        .collect(Collectors.toList());
+    List<ChargingJob> jobs = SQLDatabaseConnection.pollJobs();
 
     return ResponseEntity.status(HttpStatus.OK).body(jobs);
   }
