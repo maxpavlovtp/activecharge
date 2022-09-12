@@ -32,31 +32,17 @@ public class OrderRepository {
 
     var sql = "SELECT * from order_220 WHERE invoice_id = :invoiceId";
 
-    return DataAccessUtils.singleResult(jdbcTemplate.query(sql, Map.of("invoice_id", invoiceId),
-        orderRowMapper));
+    return DataAccessUtils.singleResult(
+        jdbcTemplate.query(sql, Map.of("invoice_id", invoiceId), orderRowMapper));
   }
 
   private static final String INSERT_SQL = """
-      INSERT into order_220(invoice_id)
-      VALUES ((SELECT id FROM station WHERE number = :station_number), :period_sec);
+      INSERT into order_220(station_id, invoice_id)
+      VALUES ((SELECT id FROM station WHERE number = :station_number), :invoice_id);
       """;
-  public UUID add(String invoiceId) {
-    Objects.requireNonNull(invoiceId);
-
-    var parameters = new MapSqlParameterSource()
-        .addValue("invoice_id", invoiceId);
-    final KeyHolder keyHolder = new GeneratedKeyHolder();
-
-    if (jdbcTemplate.update(INSERT_SQL, parameters, keyHolder) > 0) {
-      logger.info("Charging job created in DB. Station number = {}, period = {} seconds",
-          stationNumber,
-          periodSeconds);
-
-      return (UUID) keyHolder.getKeyList().get(0).get("id");
-    }
-
-    throw new ChargerDatabaseException("Couldn't create charging job. Station number = "
-        + stationNumber);
-  }
+  private static final String UPDATE_SQL = """
+      UPDATE order_220 SET state = :state,
+      where invoice_id = :invoice_id
+      """;
 
 }
