@@ -22,6 +22,6 @@ public class ScheduledTasks {
   @Scheduled(fixedDelayString = "${station.scan-delay-ms}", initialDelay = 1000)
   public void scanChargingJobs() {
     chargerService.refreshStatus(stationScanProperties.getScanBatchSize(),
-        stationScanProperties.getScanDelayMs());
+        stationScanProperties.getScanIntervalMs());
   }
 }

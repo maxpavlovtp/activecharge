@@ -38,8 +38,8 @@ public class ChargingJobService {
     chargingJobRepository.update(jobEntity);
   }
 
-  public List<ChargingJobEntity> scanActive(int batchSize, int delayTime) {
-    return chargingJobRepository.scan(IN_PROGRESS, batchSize, delayTime);
+  public List<ChargingJobEntity> scanActive(int batchSize, int intervalTimeMs) {
+    return chargingJobRepository.scan(IN_PROGRESS, batchSize, intervalTimeMs);
   }
 
   public ChargingJobEntity findByJobId(String jobId) {

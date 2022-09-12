@@ -3,6 +3,7 @@ package com.km220.ewelink;
 import com.km220.ewelink.v2.EwelinkDeviceApiV2;
 import com.km220.ewelink.v2.WSEwelinkDeviceApiV2;
 import java.net.http.HttpClient;
+import java.time.Duration;
 import java.util.Optional;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,7 +33,9 @@ public class EwelinkClient {
     this.applicationId = applicationId;
     this.applicationSecret = applicationSecret;
     this.credentialsStorage = credentialsStorage;
-    this.httpClient = Optional.ofNullable(httpClient).orElseGet(HttpClient::newHttpClient);
+    this.httpClient = Optional.ofNullable(httpClient).orElseGet(() -> HttpClient.newBuilder()
+        .connectTimeout(Duration.ofSeconds(3))
+        .build());
   }
 
   public EwelinkDeviceApi devices() {

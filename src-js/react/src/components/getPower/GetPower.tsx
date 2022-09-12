@@ -18,20 +18,20 @@ export default function GetPower({ station }: { station: any }) {
   useEffect(() => {
     if (chartTap === false) {
       const timerID = setInterval(() => {
-        if (deviceStatus?.state === "IN_PROGRESS") {
+        if (deviceStatus?.lastJob?.state === "IN_PROGRESS") {
           dispatch(getStationInfo(station));
         }
       }, sec);
       return () => clearInterval(timerID);
     }
-  }, [deviceStatus?.state, chartTap]);
+  }, [deviceStatus?.lastJob?.state, chartTap]);
 
-  let kWtCharged = Number(deviceStatus?.chargedWtH) / 1000;
-  let kWtPower = Number(deviceStatus?.powerWt) / 1000;
-  let voltage = Number(Math.round(deviceStatus?.voltage));
+  let kWtCharged = Number(deviceStatus?.lastJob?.chargedWtH) / 1000;
+  let kWtPower = Number(deviceStatus?.lastJob?.powerWt) / 1000;
+  let voltage = Number(Math.round(deviceStatus?.lastJob?.voltage));
 
   let carKwtKmRatio = 150;
-  let isZero = deviceStatus?.chargedWtH === undefined || 0;
+  let isZero = deviceStatus?.lastJob?.chargedWtH === undefined || 0;
   let chargeStatus = `${isZero ? " " : kWtCharged.toFixed(2)} ${t("wt")}`;
 
   return (
@@ -47,9 +47,9 @@ export default function GetPower({ station }: { station: any }) {
           xs
           lg={6}
           className={
-            deviceStatus?.state === "DONE" ||
-            deviceStatus?.state === "FAILED" ||
-            deviceStatus?.leftS <= 3
+            deviceStatus?.lastJob?.state === "DONE" ||
+            deviceStatus?.lastJob?.state === "FAILED" ||
+            deviceStatus?.lastJob?.leftS <= 3
               ? "offCont"
               : "text-center"
           }
@@ -62,9 +62,9 @@ export default function GetPower({ station }: { station: any }) {
           </p>
         </Col>
 
-        {deviceStatus?.state === "DONE" ||
-        deviceStatus?.state === "FAILED" ||
-        deviceStatus?.leftS <= 3 ? (
+        {deviceStatus?.lastJob?.state === "DONE" ||
+        deviceStatus?.lastJob?.state === "FAILED" ||
+        deviceStatus?.lastJob?.leftS <= 3 ? (
           <Col xs="auto" lg="auto" className="text-center">
             <PowerMetricsColor className="finishTitle">
               {t("chargedCongrats")}{" "}
@@ -85,13 +85,13 @@ export default function GetPower({ station }: { station: any }) {
       </Row>
 
       <Row className="justify-content-center mt-4">
-        {deviceStatus?.state === "IN_PROGRESS" && (
+        {deviceStatus?.lastJob?.state === "IN_PROGRESS" && (
           <Col
             xs="auto"
             className={
-              deviceStatus?.state === "DONE" ||
-              deviceStatus?.state === "FAILED" ||
-              deviceStatus?.leftS <= 3
+              deviceStatus?.lastJob?.state === "DONE" ||
+              deviceStatus?.lastJob?.state === "FAILED" ||
+              deviceStatus?.lastJob?.leftS <= 3
                 ? "offCont"
                 : "text-center mb-4"
             }
@@ -120,9 +120,9 @@ export default function GetPower({ station }: { station: any }) {
         <Chart
           chartTap={chartTap}
           setChartTap={setChartTap}
-          leftS={deviceStatus?.leftS}
-          power={Number(deviceStatus?.powerWt) / 1000}
-          voltage={Number(Math.round(deviceStatus?.voltage))}
+          leftS={deviceStatus?.lastJob?.leftS}
+          power={Number(deviceStatus?.lastJob?.powerWt) / 1000}
+          voltage={Number(Math.round(deviceStatus?.lastJob?.voltage))}
         />
       </Row>
     </>
