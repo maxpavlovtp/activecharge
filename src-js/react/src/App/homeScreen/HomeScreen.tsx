@@ -9,12 +9,15 @@ const urlV2StatusAll = `${process.env.REACT_APP_LINK_SERVE}device/v2/station/sta
 
 export default function HomeScreen() {
   const [statusALl, setStatusAll] = useState<any>();
+
   const { t } = useTranslation();
+
   useEffect(() => {
     try {
       axios.get(urlV2StatusAll).then(function (result: any) {
         setStatusAll(result.data);
-        console.log(result.data);
+
+        console.log(result?.data);
       });
     } catch (e: any) {
       console.log(e.message);
@@ -30,7 +33,7 @@ export default function HomeScreen() {
               <Col lg={4} md={6} key={Math.random()}>
                 <StationCard
                   state={data?.state}
-                  leftS={data?.leftS}
+                  leftS={data?.periodS}
                   stationNumber={data?.stationNumber}
                 />
               </Col>
