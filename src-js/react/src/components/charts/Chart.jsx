@@ -155,7 +155,7 @@ export function Chart({ leftS, power, voltage, chartTap, setChartTap }) {
   };
   return (
     <div style={{ maxWidth: 700, width: "100%" }}>
-      <Line options={options} data={data} onClick={chartPauseTapping} />
+      <Line options={options} data={data} onTouchStart={chartPauseTapping} onClick={chartPauseTapping} />
     </div>
   );
 }

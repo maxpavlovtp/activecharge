@@ -38,7 +38,8 @@ export default function Layout() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    deviceStatus?.lastJobPresented === false || deviceStatus?.lastJob?.state === "IN_PROGRESS"
+    deviceStatus?.lastJobPresented === false ||
+    deviceStatus?.lastJob?.state === "IN_PROGRESS"
       ? setRouteTo(`/charging?station=${stationNumbers}`)
       : setRouteTo(`/`);
   }, [isGotDeviceStatus]);
@@ -81,18 +82,18 @@ export default function Layout() {
       dispatch(getStationInfo(stationNumbers));
       console.log(deviceStatus);
       if (deviceStatus?.lastJob?.uiNightMode === false) {
-        lightModeSetter()
+        lightModeSetter();
       } else if (deviceStatus?.lastJob?.uiNightMode === true) {
-        darkModeSetter()
+        darkModeSetter();
       }
     }
   }, [deviceStatus?.lastJob?.uiNightMode]);
 
   const themeToggler = () => {
     if (theme === "light") {
-      darkModeSetter()
+      darkModeSetter();
     } else {
-      lightModeSetter()
+      lightModeSetter();
     }
   };
 
@@ -112,10 +113,7 @@ export default function Layout() {
             expand="lg"
             collapseOnSelect
           >
-            <LinksColor
-              to={routeTo}
-              className="flex-row align-items-center"
-            >
+            <LinksColor to={routeTo} className="flex-row align-items-center">
               <div className="logoContainer">
                 <MainImgLoadingLazy
                   src={logoTheme}
@@ -156,7 +154,11 @@ export default function Layout() {
                       onClick={closeMenu}
                       eventKey="2"
                       as={Link}
-                      to={`/start?station=${stationNumbers}`}
+                      to={
+                        deviceStatus?.lastJob?.state === "IN_PROGRESS"
+                          ? `/charging?station=${stationNumbers}`
+                          : `/start?station=${stationNumbers}`
+                      }
                     >
                       <NavLink>{t("chargeLink")}</NavLink>
                     </Nav.Link>

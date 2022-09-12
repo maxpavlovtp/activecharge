@@ -7,6 +7,7 @@ import { useBackTime } from "../../hooks/useBackTime";
 import { t } from "i18next";
 import { useTranslation } from "react-i18next";
 import { CardLink, HomeCard, LinksColor } from "../globalStyles";
+import { useAppSelector } from "../../hooks/reduxHooks";
 
 export default function ({
   stationNumber,
@@ -38,10 +39,16 @@ export default function ({
 
   const { t } = useTranslation();
 
+  const { deviceStatus } = useAppSelector((state) => state.fetchReducer);
+
   return (
     <CardLink
       className={styles.linkToStation}
-      to={`/start?station=${stationNumber}`}
+      to={
+        deviceStatus?.lastJob?.state === "IN_PROGRESS"
+          ? `/charging?station=${stationNumber}`
+          : `/start?station=${stationNumber}`
+      }
     >
       <HomeCard className={styles.container}>
         <div className={styles.mainInfo}>
