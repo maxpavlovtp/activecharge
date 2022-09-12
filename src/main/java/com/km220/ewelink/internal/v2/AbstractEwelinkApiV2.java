@@ -26,6 +26,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse;
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -162,6 +163,7 @@ public abstract class AbstractEwelinkApiV2 {
                 headers.entrySet().stream()
                     .flatMap(entry -> Stream.of(entry.getKey(), entry.getValue()))
                     .toArray(String[]::new))
+            .timeout(Duration.ofSeconds(3))
             .build();
 
     LOGGER.debug("Request: {}", apiHttpRequest);

@@ -2,10 +2,12 @@ package com.km220.controller;
 
 import com.km220.config.StationScanProperties;
 import com.km220.controller.converters.ChargingJobConverter;
+import com.km220.controller.converters.StationStateConverter;
 import com.km220.dao.job.ChargingJobEntity;
 import com.km220.dao.job.ChargingJobState;
 import com.km220.model.ChargingJob;
 import com.km220.model.CreatedChargingJob;
+import com.km220.model.StationState;
 import com.km220.service.GPSService;
 import com.km220.service.job.ChargerService;
 import com.km220.service.job.ChargingJobService;
@@ -71,7 +73,6 @@ public class ChargerDeviceController {
               schema = @Schema(implementation = ChargingJob.class))})
   })
   @GetMapping("/v2/status")
-  @Deprecated
   public ResponseEntity<ChargingJob> getStatus(
       @Parameter(description = "Charging job id") @NotBlank @RequestParam String id) {
 
@@ -90,18 +91,16 @@ public class ChargerDeviceController {
               schema = @Schema(implementation = ChargingJob.class))})
   })
   @GetMapping("/v2/station/status")
-  public ResponseEntity<ChargingJob> getStationStatus(
+  public ResponseEntity<StationState> getStationStatus(
       @Parameter(description = "Station number") @NotBlank @RequestParam("station_number") String stationNumber) {
 
     ChargingJobEntity job = chargingJobService.findByStationNumber(stationNumber);
-    if (job == null) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-    } else {
-      ChargingJob result = ChargingJobConverter.INSTANCE.apply(job);
-      result.setUiNightMode(gpsService.getUiNightMode());
-      return ResponseEntity.status(HttpStatus.OK)
-          .body(result);
+    StationState stationState = StationStateConverter.INSTANCE.apply(job);
+    //TODO: refactor
+    if (stationState.getLastJob() != null) {
+      stationState.getLastJob().setUiNightMode(gpsService.getUiNightMode());
     }
+    return ResponseEntity.status(HttpStatus.OK).body(stationState);
   }
 
   @GetMapping("/v2/station/statusAll")
