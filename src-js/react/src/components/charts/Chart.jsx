@@ -154,7 +154,7 @@ export function Chart({ leftS, power, voltage, chartTap, setChartTap }) {
     },
   };
   return (
-    <div style={{ maxWidth: 700, width: "100%" }}>
+    <div style={{ maxWidth: 700, width: "100%", padding: '0 20px 0 20px' }}>
       <Line
         options={options}
         data={data}

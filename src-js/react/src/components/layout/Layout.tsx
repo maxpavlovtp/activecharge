@@ -96,6 +96,11 @@ export default function Layout() {
     }
   };
 
+  const themeFunc = () => {
+    themeToggler();
+    closeMenu();
+  };
+
   let toggleStatus = !open ? "toggle-icon" : "open toggle-icon ";
 
   return (
@@ -213,16 +218,18 @@ export default function Layout() {
                   </Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <button
-                    style={{ backgroundColor: "transparent", border: "none" }}
-                    onClick={themeToggler}
-                  >
-                    <img
-                      style={{ width: "30px", height: "30px" }}
-                      src={modeImg}
-                      alt={"theme"}
-                    />
-                  </button>
+                  <Nav.Link eventKey="6" onClick={closeMenu}>
+                    <button
+                      style={{ backgroundColor: "transparent", border: "none" }}
+                      onClick={themeToggler}
+                    >
+                      <img
+                        style={{ width: "30px", height: "30px" }}
+                        src={modeImg}
+                        alt={"theme"}
+                      />
+                    </button>
+                  </Nav.Link>
                 </Nav.Item>
               </Nav>
             </Navbar.Collapse>

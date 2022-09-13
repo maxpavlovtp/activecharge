@@ -2,7 +2,8 @@ import React from "react";
 import { Col, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { Chart } from "../charts/Chart";
-import { PowerMetricsColor } from "../globalStyles";
+import { FullInfoContainer, PowerMetricsColor } from "../globalStyles";
+import '../getPower/GetPower.css'
 
 export default function FullInfo({
   deviceStatus,
@@ -21,14 +22,14 @@ export default function FullInfo({
 }) {
   const { t } = useTranslation();
   return (
-    <>
+    <FullInfoContainer className="fullInfoCont">
       <Row className="justify-content-center">
         <Col xs lg={6} className="text-center">
           <PowerMetricsColor className="mb-1 textTitle">
             {t("power")}
           </PowerMetricsColor>
           <p className="textTitle text">
-            {kWtPower.toFixed(2)} {t("wt")}
+            {kWtPower.toFixed(2)} {t("powerWt")}
           </p>
         </Col>
 
@@ -48,6 +49,6 @@ export default function FullInfo({
           voltage={Number(Math.round(deviceStatus?.lastJob?.voltage))}
         />
       </Row>
-    </>
+    </FullInfoContainer>
   );
 }

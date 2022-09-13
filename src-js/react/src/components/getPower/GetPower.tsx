@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import { getStationInfo } from "../../store/reducers/ActionCreators";
 import { useTranslation } from "react-i18next";
 import { Col, Row } from "react-bootstrap";
-import { PowerMetricsColor } from "../globalStyles";
+import { PowerMetricsColor, VoltageBtn } from "../globalStyles";
 import FullInfo from "../fullInfo/FullInfo";
 
 export default function GetPower({
@@ -63,7 +63,7 @@ export default function GetPower({
               : "text-center"
           }
         >
-          <PowerMetricsColor className="textTitle">
+          <PowerMetricsColor className="mb-1 textTitle">
             {t("power")}
           </PowerMetricsColor>
           <p className="textTitle text">
@@ -114,14 +114,24 @@ export default function GetPower({
       )}
       <Row className="justify-content-center mt-4">
         {deviceStatus?.lastJob?.state === "IN_PROGRESS" && (
-          <Col
+          <VoltageBtn
             xs="auto"
+            style={
+              openInfo === true
+                ? {
+                    borderTopLeftRadius: "10px",
+                    borderTopRightRadius: "10px",
+                  }
+                : {
+                    borderRadius: "10px",
+                  }
+            }
             className={
               deviceStatus?.lastJob?.state === "DONE" ||
               deviceStatus?.lastJob?.state === "FAILED" ||
               deviceStatus?.lastJob?.leftS <= 3
                 ? "offCont"
-                : "text-center mb-4"
+                : "text-center btnVoltage"
             }
             onClick={toggleMoreInfo}
           >
@@ -131,7 +141,7 @@ export default function GetPower({
             <p className="voltTitle text">
               {voltage} {t("v")}
             </p>
-          </Col>
+          </VoltageBtn>
         )}
       </Row>
 
