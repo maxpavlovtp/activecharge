@@ -13,6 +13,7 @@
 4. http://178.18.251.90:9090/graph?g0.expr=&g0.tab=1&g0.stacked=0&g0.show_exemplars=0&g0.range_input=1h
 5. metrics Java: [admin/Nopassword1] http://157.90.252.84:3000/d/J8DlY3MVz/jvm-micrometer?orgId=1
 6. metrics Charging: [admin/Nopassword1] http://157.90.252.84:3000/d/81TBNvM4z/stage-charging-metrics?orgId=1
+7. openvpn: [stage-admin/Nopassword1] https://157.90.252.84/
 
 ## Setup dev env:
 1. install java 17 from https://www.azul.com/downloads/?version=java-17-lts&package=jdk
