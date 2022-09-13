@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import LoadingTime from "./LoadingTime";
 import styles from "./StationCard.module.css";
-import { t } from "i18next";
 import { useTranslation } from "react-i18next";
 import { CardLink, HomeCard, LinksColor } from "../globalStyles";
 import { useAppSelector } from "../../hooks/reduxHooks";
@@ -16,7 +13,6 @@ export default function ({
   leftS: any;
   state: any;
 }) {
-  const [loading, setLoading] = useState<any>(true);
   const [timer, setTimer] = useState<any>(null);
 
   const { t } = useTranslation();
@@ -24,7 +20,7 @@ export default function ({
   const { deviceStatus } = useAppSelector((state) => state.fetchReducer);
   useEffect(() => {
     setTimer(new Date(leftS * 1000).toISOString().slice(11, 19));
-  }, [leftS]);
+  }, []);
 
   return (
     <CardLink

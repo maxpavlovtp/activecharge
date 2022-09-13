@@ -94,3 +94,15 @@ export const OfferLinksColor = styled.a`
 export const FooterLink = styled.a`
   color: ${({ theme }: { theme: any }) => theme.footerColorLink};
 `;
+
+export const VoltageBtn = styled(Col)`
+  color: ${({ theme }: { theme: any }) => theme.a};
+
+  background-color: ${({ theme }: { theme: any }) => theme.navBarBg};
+  transition: all 0.5s linear;
+`;
+
+export const FullInfoContainer = styled.div`
+  background-color: ${({ theme }: { theme: any }) => theme.navBarBg};
+  transition: all 0.5s linear;
+`;

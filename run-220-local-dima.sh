@@ -1,5 +1,7 @@
 cd "$(dirname "$0")" || exit
+  #"http://localhost:8080/"
 
+pkill -f java
 pkill -f react
 
 lsof -ti tcp:8080 | xargs kill -kill
