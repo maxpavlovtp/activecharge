@@ -2,7 +2,7 @@ name: CI/CD Prod new
 
 on:
   push:
-    branches: [ develop ]
+    branches: [ master ]
 
 jobs:
   build-and-depploy-on-prod:
