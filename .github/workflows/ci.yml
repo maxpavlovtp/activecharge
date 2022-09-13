@@ -86,7 +86,7 @@ jobs:
         uses: fifsky/ssh-action@master
         with:
           command: |
-            cd /opt/220/metrics/activecharge/ && git pull && docker-compose down && docker-compose up -d
-          host: 178.18.251.90
+            cd /220/activecharge/ && git pull && docker-compose down --remove-orphans && docker-compose -f ./metrics-docker-compose.yml up -d
+          host: 157.90.252.84
           user: root
           key: ${{ secrets.PRIVATE_KEY}}
