@@ -24,7 +24,6 @@ import {
 } from "../globalStyles";
 import { lightTheme, darkTheme } from "../darkTheme/Theme";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
-import axios from "axios";
 
 export default function Layout() {
   const [routeTo, setRouteTo] = useState<any>("/main");

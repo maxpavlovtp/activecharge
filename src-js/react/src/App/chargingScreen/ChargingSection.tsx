@@ -6,8 +6,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import { getStationInfo } from "../../store/reducers/ActionCreators";
 import GetPower from "../../components/getPower/GetPower";
 import { useSearchParams } from "react-router-dom";
-import { Container, Row } from "react-bootstrap";
-import { Chart } from "../../components/charts/Chart";
+import { Container } from "react-bootstrap";
 
 const MainSection: React.FC = () => {
   const [loading, setLoading] = useState<any>(true);
@@ -51,7 +50,7 @@ const MainSection: React.FC = () => {
           .toISOString()
           .slice(11, 19)
       );
-      setLoading(false)
+      setLoading(false);
     }
   }, [deviceStatus?.lastJob]);
 
@@ -68,26 +67,7 @@ const MainSection: React.FC = () => {
   return (
     <>
       <Container fluid>
-        {timer !== null && (
-          <>
-            <GetPower station={stationNumbers} />
-            {deviceStatus?.lastJob?.state === "DONE" ||
-            deviceStatus?.lastJob?.state === "FAILED" ||
-            deviceStatus?.lastJob?.leftS <= 3 ? (
-              <></>
-            ) : (
-              <div
-                style={{
-                  textAlign: "center",
-                  fontSize: "calc(1.5rem + 1.5vw)",
-                  margin: "20px 0 30px 0",
-                }}
-              >
-                {timer}
-              </div>
-            )}
-          </>
-        )}
+        {timer !== null && <GetPower station={stationNumbers} timer={timer} />}
       </Container>
     </>
   );

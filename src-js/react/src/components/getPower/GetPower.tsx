@@ -3,13 +3,19 @@ import "./GetPower.css";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import { getStationInfo } from "../../store/reducers/ActionCreators";
 import { useTranslation } from "react-i18next";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import { PowerMetricsColor } from "../globalStyles";
-import { Chart } from "../charts/Chart";
+import FullInfo from "../fullInfo/FullInfo";
 
-export default function GetPower({ station }: { station: any }) {
+export default function GetPower({
+  station,
+  timer,
+}: {
+  station: any;
+  timer: any;
+}) {
   const [chartTap, setChartTap] = useState(false);
-
+  const [openInfo, setOpenInfo] = useState(false);
   const dispatch = useAppDispatch();
   const { deviceStatus } = useAppSelector((state) => state.fetchReducer);
   const { t } = useTranslation();
@@ -26,13 +32,17 @@ export default function GetPower({ station }: { station: any }) {
     }
   }, [deviceStatus?.lastJob?.state, chartTap]);
 
+  let voltage = Number(Math.round(deviceStatus?.lastJob?.voltage));
+  let isZero = deviceStatus?.lastJob?.chargedWtH === undefined || 0;
+
   let kWtCharged = Number(deviceStatus?.lastJob?.chargedWtH) / 1000;
   let kWtPower = Number(deviceStatus?.lastJob?.powerWt) / 1000;
-  let voltage = Number(Math.round(deviceStatus?.lastJob?.voltage));
-
-  let carKwtKmRatio = 200;
-  let isZero = deviceStatus?.lastJob?.chargedWtH === undefined || 0;
   let chargeStatus = `${isZero ? " " : kWtCharged.toFixed(2)} ${t("wt")}`;
+  let carKwtKmRatio = 200;
+
+  const toggleMoreInfo = () => {
+    setOpenInfo(!openInfo);
+  };
 
   return (
     <>
@@ -41,7 +51,6 @@ export default function GetPower({ station }: { station: any }) {
           {t("station")}: <span className="stationNumber">{station}</span>
         </p>
       </Row>
-
       <Row className="justify-content-center">
         <Col
           xs
@@ -54,14 +63,14 @@ export default function GetPower({ station }: { station: any }) {
               : "text-center"
           }
         >
-          <PowerMetricsColor className="mb-1 textTitle">
+          <PowerMetricsColor className="textTitle">
             {t("power")}
           </PowerMetricsColor>
           <p className="textTitle text">
-            {kWtPower.toFixed(2)} {t("wt")}
+            {(Number(kWtPower.toFixed(2)) * 1000) / Math.round(carKwtKmRatio)}{" "}
+            {t("powerKm")}
           </p>
         </Col>
-
         {deviceStatus?.lastJob?.state === "DONE" ||
         deviceStatus?.lastJob?.state === "FAILED" ||
         deviceStatus?.lastJob?.leftS <= 3 ? (
@@ -79,11 +88,30 @@ export default function GetPower({ station }: { station: any }) {
             <PowerMetricsColor className="mb-1 textTitle">
               {t("charging")}
             </PowerMetricsColor>
-            <p className="textTitle text">{chargeStatus}</p>
+            <p className="textTitle text">
+              {isZero
+                ? 0
+                : Math.round((kWtCharged * 1000) / Math.round(carKwtKmRatio))}
+              {t("km")}
+            </p>
           </Col>
         )}
       </Row>
-
+      {deviceStatus?.lastJob?.state === "DONE" ||
+      deviceStatus?.lastJob?.state === "FAILED" ||
+      deviceStatus?.lastJob?.leftS <= 3 ? (
+        <></>
+      ) : (
+        <div
+          style={{
+            textAlign: "center",
+            fontSize: "calc(1.5rem + 1.5vw)",
+            margin: "25px 0 30px 0",
+          }}
+        >
+          {timer}
+        </div>
+      )}
       <Row className="justify-content-center mt-4">
         {deviceStatus?.lastJob?.state === "IN_PROGRESS" && (
           <Col
@@ -95,6 +123,7 @@ export default function GetPower({ station }: { station: any }) {
                 ? "offCont"
                 : "text-center mb-4"
             }
+            onClick={toggleMoreInfo}
           >
             <PowerMetricsColor className="mb-1 textTitle voltTitle">
               {t("voltage")}
@@ -106,25 +135,16 @@ export default function GetPower({ station }: { station: any }) {
         )}
       </Row>
 
-      <Row className="justify-content-center">
-        <Col xs="auto" className="text-center">
-          <p className="kmCharged">
-            {isZero
-              ? 0
-              : Math.round((kWtCharged * 1000) / Math.round(carKwtKmRatio))}
-            {t("km")}
-          </p>
-        </Col>
-      </Row>
-      <Row className="justify-content-center mb-4">
-        <Chart
+      {openInfo === true && (
+        <FullInfo
+          deviceStatus={deviceStatus}
           chartTap={chartTap}
           setChartTap={setChartTap}
-          leftS={deviceStatus?.lastJob?.leftS}
-          power={Number(deviceStatus?.lastJob?.powerWt) / 1000}
-          voltage={Number(Math.round(deviceStatus?.lastJob?.voltage))}
+          kWtPower={kWtPower}
+          kWtCharged={kWtCharged}
+          chargeStatus={chargeStatus}
         />
-      </Row>
+      )}
     </>
   );
 }
