@@ -90,6 +90,8 @@ export default function GetPower({
                   {Math.round((kWtCharged * 1000) / Math.round(carKwtKmRatio))}{" "}
                   {t("km")}
                 </FinishKmStap>
+                <br />
+                <FinishKmStap>{chargeStatus}</FinishKmStap  >
               </p>
             </Col>
           ) : (
