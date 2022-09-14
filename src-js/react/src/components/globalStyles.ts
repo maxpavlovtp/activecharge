@@ -1,6 +1,8 @@
 import styled, { createGlobalStyle } from "styled-components";
 import { Link } from "react-router-dom";
 import { Col, Nav, Navbar } from "react-bootstrap";
+import { AnimatePresence, motion } from "framer-motion";
+
 export const GlobalStyles = createGlobalStyle`
   body {
     background: ${({ theme }: { theme: any }) => theme.body};
