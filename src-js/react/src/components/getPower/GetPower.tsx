@@ -46,7 +46,7 @@ export default function GetPower({
 
   return (
     <>
-      <Row className="justify-content-center mb-4">
+      <Row className="justify-content-center mb-1">
         <p className="stationText">
           {t("station")}: <span className="stationNumber">{station}</span>
         </p>
@@ -67,7 +67,10 @@ export default function GetPower({
             {t("power")}
           </PowerMetricsColor>
           <p className="textTitle text">
-            {(Number(kWtPower.toFixed(2)) * 1000) / Math.round(carKwtKmRatio)}{" "}
+            {(
+              (Number(kWtPower.toFixed(2)) * 1000) /
+              Math.round(carKwtKmRatio)
+            ).toFixed(2)}{" "}
             {t("powerKm")}
           </p>
         </Col>
@@ -106,7 +109,7 @@ export default function GetPower({
           style={{
             textAlign: "center",
             fontSize: "calc(1.5rem + 1.5vw)",
-            margin: "25px 0 30px 0",
+            margin: "15px 0 20px 0",
           }}
         >
           {timer}
