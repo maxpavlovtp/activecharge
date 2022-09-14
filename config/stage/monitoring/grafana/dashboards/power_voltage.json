@@ -24,6 +24,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
+  "id": 2,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -32,7 +33,7 @@
         "type": "prometheus",
         "uid": "P1809F7CD0C75ACF3"
       },
-      "description": "",
+      "description": "Charging job metrics. Power, voltage",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -106,42 +107,114 @@
       },
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "P1809F7CD0C75ACF3"
-          },
           "editorMode": "builder",
-          "expr": "job_power_joules",
+          "expr": "job_power_joules{application=\"$application\", instance=\"$instance\", station_number=\"$station_number\", job_id=~\"$job_id\"}",
+          "format": "time_series",
+          "hide": false,
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "P1809F7CD0C75ACF3"
-          },
           "editorMode": "builder",
-          "expr": "job_voltage_volts",
+          "expr": "job_voltage_volts{application=\"$application\", instance=\"$instance\", station_number=\"$station_number\", job_id=~\"$job_id\"}",
           "hide": false,
           "legendFormat": "__auto",
           "range": true,
           "refId": "B"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "P1809F7CD0C75ACF3"
+        }
+      ],
+      "title": "Device voltage/power.",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "P1809F7CD0C75ACF3"
+      },
+      "description": "Charging job metrics. Consumption.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
           },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 28,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
           "editorMode": "builder",
-          "expr": "job_consumption_joules",
+          "expr": "job_consumption_joules{application=\"$application\", instance=\"$instance\", station_number=\"$station_number\", job_id=~\"$job_id\"}",
           "hide": false,
           "legendFormat": "__auto",
           "range": true,
           "refId": "C"
         }
       ],
-      "title": "Job metrics",
+      "title": "Device consumption [Wt/Hours].",
       "type": "timeseries"
     }
   ],
@@ -150,16 +223,103 @@
   "style": "dark",
   "tags": [],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "prometheus",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Application",
+        "multi": false,
+        "name": "application",
+        "options": [],
+        "query": "label_values(application)",
+        "refresh": 2,
+        "regex": "",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allFormat": "glob",
+        "allValue": null,
+        "current": {},
+        "datasource": "prometheus",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Instance",
+        "multi": false,
+        "multiFormat": "glob",
+        "name": "instance",
+        "options": [],
+        "query": "label_values(job_power_joules{application=\"$application\"}, instance)",
+        "refresh": 2,
+        "regex": "",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allFormat": "glob",
+        "allValue": null,
+        "current": {},
+        "datasource": "prometheus",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Station",
+        "multi": false,
+        "multiFormat": "glob",
+        "name": "station_number",
+        "options": [],
+        "query": "label_values(job_power_joules{application=\"$application\", instance=\"$instance\"}, station_number)",
+        "refresh": 2,
+        "regex": "",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allFormat": "glob",
+        "allValue": null,
+        "current": {},
+        "datasource": "prometheus",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Job",
+        "multi": false,
+        "multiFormat": "glob",
+        "name": "job_id",
+        "options": [],
+        "query": "label_values(job_power_joules{application=\"$application\", instance=\"$instance\", station_number=\"$station_number\"}, job_id)",
+        "refresh": 2,
+        "regex": "",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
   },
   "time": {
-    "from": "now-24h",
+    "from": "now-8h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Stage. Charging metrics",
-  "uid": "81TBNvM4z",
-  "version": 3,
+  "title": "Charging jobs",
+  "uid": "81TBNvN5o",
+  "version": 2,
   "weekStart": ""
 }
