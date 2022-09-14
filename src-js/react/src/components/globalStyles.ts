@@ -7,7 +7,7 @@ export const GlobalStyles = createGlobalStyle`
   body {
     background: ${({ theme }: { theme: any }) => theme.body};
     color: ${({ theme }: { theme: any }) => theme.text};
-    transition: all 0.50s linear;
+    transition: all 0.5s linear;
   }
   `;
 
@@ -106,5 +106,10 @@ export const VoltageBtn = styled(Col)`
 
 export const FullInfoContainer = styled.div`
   background-color: ${({ theme }: { theme: any }) => theme.navBarBg};
+  transition: all 0.5s linear;
+`;
+
+export const FinishKmStap = styled.span`
+  color: ${({ theme }: { theme: any }) => theme.colorSpan};
   transition: all 0.5s linear;
 `;

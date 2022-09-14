@@ -54,7 +54,7 @@ export default function FullInfo({
                 <PowerMetricsColor className="mb-1 textTitle voltTitle">
                   {t("power")}
                 </PowerMetricsColor>
-                <p className="textTitle voltTitle text">
+                <p className="textInfo voltTitle text">
                   {kWtPower.toFixed(2)} {t("powerWt")}
                 </p>
               </Col>
@@ -63,7 +63,7 @@ export default function FullInfo({
                 <PowerMetricsColor className="mb-1 textTitle voltTitle">
                   {t("charging")}
                 </PowerMetricsColor>
-                <p className="textTitle voltTitle text">{chargeStatus}</p>
+                <p className="textInfo voltTitle text">{chargeStatus}</p>
               </Col>
             </Row>
           </FullInfoContainer>

@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import { getStationInfo } from "../../store/reducers/ActionCreators";
 import { useTranslation } from "react-i18next";
 import { Col, Row } from "react-bootstrap";
-import { PowerMetricsColor, VoltageBtn } from "../globalStyles";
+import { FinishKmStap, PowerMetricsColor, VoltageBtn } from "../globalStyles";
 import FullInfo from "../fullInfo/FullInfo";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -68,7 +68,7 @@ export default function GetPower({
             <PowerMetricsColor className="mb-1 textTitle">
               {t("power")}
             </PowerMetricsColor>
-            <p className="textTitle text">
+            <p className="textInfo text">
               {(
                 (Number(kWtPower.toFixed(2)) * 1000) /
                 Math.round(carKwtKmRatio)
@@ -85,7 +85,13 @@ export default function GetPower({
               </PowerMetricsColor>
               <p className="finishText">
                 {t("chargedkWt")}
-                {chargeStatus}
+                <br />
+                <FinishKmStap>
+                  {Math.round((kWtCharged * 1000) / Math.round(carKwtKmRatio))}{" "}
+                  {t("km")}
+                </FinishKmStap>
+                <br />
+                <FinishKmStap>{chargeStatus}</FinishKmStap  >
               </p>
             </Col>
           ) : (
@@ -93,7 +99,7 @@ export default function GetPower({
               <PowerMetricsColor className="mb-1 textTitle">
                 {t("charging")}
               </PowerMetricsColor>
-              <p className="textTitle text">
+              <p className="textInfo text">
                 {isZero
                   ? 0
                   : Math.round((kWtCharged * 1000) / Math.round(carKwtKmRatio))}
@@ -143,7 +149,7 @@ export default function GetPower({
               <PowerMetricsColor className="mb-1 textTitle voltTitle">
                 {t("voltage")}
               </PowerMetricsColor>
-              <p className="voltTitle text">
+              <p className="voltTitle textInfo text">
                 {voltage} {t("v")}
               </p>
             </VoltageBtn>

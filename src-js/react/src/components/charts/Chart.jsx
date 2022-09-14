@@ -83,11 +83,11 @@ export function Chart({ leftS, power, voltage, chartTap, setChartTap }) {
       },
       {
         label: t("power"),
-        backgroundColor: "rgba(110, 188, 245, 0.5)",
+        backgroundColor: "rgba(245, 188, 188, 0.5)",
         fill: true,
         lineTension: 0,
         borderDash: [8, 4],
-        borderColor: "rgb(105, 149, 207)",
+        borderColor: "rgb(207, 149, 149)",
         cubicInterpolationMode: "monotone",
         yAxisID: "power",
         data: powerChart,
@@ -154,7 +154,7 @@ export function Chart({ leftS, power, voltage, chartTap, setChartTap }) {
     },
   };
   return (
-    <div style={{ maxWidth: 700, width: "100%", padding: '0 20px 0 20px' }}>
+    <div style={{ maxWidth: 700, width: "100%", padding: "0 20px 0 20px" }}>
       <Line
         options={options}
         data={data}
