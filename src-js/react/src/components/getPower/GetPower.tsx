@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { Col, Row } from "react-bootstrap";
 import { PowerMetricsColor, VoltageBtn } from "../globalStyles";
 import FullInfo from "../fullInfo/FullInfo";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function GetPower({
   station,
@@ -46,115 +47,119 @@ export default function GetPower({
 
   return (
     <>
-      <Row className="justify-content-center mb-4">
-        <p className="stationText">
-          {t("station")}: <span className="stationNumber">{station}</span>
-        </p>
-      </Row>
-      <Row className="justify-content-center">
-        <Col
-          xs
-          lg={6}
-          className={
-            deviceStatus?.lastJob?.state === "DONE" ||
-            deviceStatus?.lastJob?.state === "FAILED" ||
-            deviceStatus?.lastJob?.leftS <= 3
-              ? "offCont"
-              : "text-center"
-          }
-        >
-          <PowerMetricsColor className="mb-1 textTitle">
-            {t("power")}
-          </PowerMetricsColor>
-          <p className="textTitle text">
-            {(Number(kWtPower.toFixed(2)) * 1000) / Math.round(carKwtKmRatio)}{" "}
-            {t("powerKm")}
+      <div className="mainBlock">
+        <Row className="justify-content-center mb-1">
+          <p className="stationText">
+            {t("station")}: <span className="stationNumber">{station}</span>
           </p>
-        </Col>
-        {deviceStatus?.lastJob?.state === "DONE" ||
-        deviceStatus?.lastJob?.state === "FAILED" ||
-        deviceStatus?.lastJob?.leftS <= 3 ? (
-          <Col xs="auto" lg="auto" className="text-center">
-            <PowerMetricsColor className="finishTitle">
-              {t("chargedCongrats")}{" "}
-            </PowerMetricsColor>
-            <p className="finishText">
-              {t("chargedkWt")}
-              {chargeStatus}
-            </p>
-          </Col>
-        ) : (
-          <Col className="text-center">
-            <PowerMetricsColor className="mb-1 textTitle">
-              {t("charging")}
-            </PowerMetricsColor>
-            <p className="textTitle text">
-              {isZero
-                ? 0
-                : Math.round((kWtCharged * 1000) / Math.round(carKwtKmRatio))}
-              {t("km")}
-            </p>
-          </Col>
-        )}
-      </Row>
-      {deviceStatus?.lastJob?.state === "DONE" ||
-      deviceStatus?.lastJob?.state === "FAILED" ||
-      deviceStatus?.lastJob?.leftS <= 3 ? (
-        <></>
-      ) : (
-        <div
-          style={{
-            textAlign: "center",
-            fontSize: "calc(1.5rem + 1.5vw)",
-            margin: "25px 0 30px 0",
-          }}
-        >
-          {timer}
-        </div>
-      )}
-      <Row className="justify-content-center mt-4">
-        {deviceStatus?.lastJob?.state === "IN_PROGRESS" && (
-          <VoltageBtn
-            xs="auto"
-            style={
-              openInfo === true
-                ? {
-                    borderTopLeftRadius: "10px",
-                    borderTopRightRadius: "10px",
-                  }
-                : {
-                    borderRadius: "10px",
-                  }
-            }
+        </Row>
+        <Row className="justify-content-center">
+          <Col
+            xs
+            lg={6}
             className={
               deviceStatus?.lastJob?.state === "DONE" ||
               deviceStatus?.lastJob?.state === "FAILED" ||
               deviceStatus?.lastJob?.leftS <= 3
                 ? "offCont"
-                : "text-center btnVoltage"
+                : "text-center"
             }
-            onClick={toggleMoreInfo}
           >
-            <PowerMetricsColor className="mb-1 textTitle voltTitle">
-              {t("voltage")}
+            <PowerMetricsColor className="mb-1 textTitle">
+              {t("power")}
             </PowerMetricsColor>
-            <p className="voltTitle text">
-              {voltage} {t("v")}
+            <p className="textTitle text">
+              {(
+                (Number(kWtPower.toFixed(2)) * 1000) /
+                Math.round(carKwtKmRatio)
+              ).toFixed(2)}{" "}
+              {t("powerKm")}
             </p>
-          </VoltageBtn>
+          </Col>
+          {deviceStatus?.lastJob?.state === "DONE" ||
+          deviceStatus?.lastJob?.state === "FAILED" ||
+          deviceStatus?.lastJob?.leftS <= 3 ? (
+            <Col xs="auto" lg="auto" className="text-center">
+              <PowerMetricsColor className="finishTitle">
+                {t("chargedCongrats")}{" "}
+              </PowerMetricsColor>
+              <p className="finishText">
+                {t("chargedkWt")}
+                {chargeStatus}
+              </p>
+            </Col>
+          ) : (
+            <Col className="text-center">
+              <PowerMetricsColor className="mb-1 textTitle">
+                {t("charging")}
+              </PowerMetricsColor>
+              <p className="textTitle text">
+                {isZero
+                  ? 0
+                  : Math.round((kWtCharged * 1000) / Math.round(carKwtKmRatio))}
+                {t("km")}
+              </p>
+            </Col>
+          )}
+        </Row>
+        {deviceStatus?.lastJob?.state === "DONE" ||
+        deviceStatus?.lastJob?.state === "FAILED" ||
+        deviceStatus?.lastJob?.leftS <= 3 ? (
+          <></>
+        ) : (
+          <div
+            style={{
+              textAlign: "center",
+              fontSize: "calc(1.5rem + 1.5vw)",
+              margin: "15px 0 20px 0",
+            }}
+          >
+            {timer}
+          </div>
         )}
-      </Row>
+        <Row className="justify-content-center mt-4">
+          {deviceStatus?.lastJob?.state === "IN_PROGRESS" && (
+            <VoltageBtn
+              xs="auto"
+              style={
+                openInfo === true
+                  ? {
+                      borderTopLeftRadius: "10px",
+                      borderTopRightRadius: "10px",
+                    }
+                  : {
+                      borderRadius: "10px",
+                    }
+              }
+              className={
+                deviceStatus?.lastJob?.state === "DONE" ||
+                deviceStatus?.lastJob?.state === "FAILED" ||
+                deviceStatus?.lastJob?.leftS <= 3
+                  ? "offCont"
+                  : "text-center btnVoltage"
+              }
+              onClick={toggleMoreInfo}
+            >
+              <PowerMetricsColor className="mb-1 textTitle voltTitle">
+                {t("voltage")}
+              </PowerMetricsColor>
+              <p className="voltTitle text">
+                {voltage} {t("v")}
+              </p>
+            </VoltageBtn>
+          )}
+        </Row>
+      </div>
 
-      {openInfo === true && (
-        <FullInfo
-          deviceStatus={deviceStatus}
-          chartTap={chartTap}
-          setChartTap={setChartTap}
-          kWtPower={kWtPower}
-          kWtCharged={kWtCharged}
-          chargeStatus={chargeStatus}
-        />
-      )}
+      <FullInfo
+        openInfo={openInfo}
+        deviceStatus={deviceStatus}
+        chartTap={chartTap}
+        setChartTap={setChartTap}
+        kWtPower={kWtPower}
+        kWtCharged={kWtCharged}
+        chargeStatus={chargeStatus}
+      />
     </>
   );
 }

@@ -1,3 +1,7 @@
+.mainBlock {
+  transition-duration: 1s;
+}
+
 .kmCharged {
   font-family: "OpenSansRegular", Arial, Helvetica, sans-serif;
   font-weight: 400;
@@ -7,9 +11,10 @@
 .textTitle {
   font-family: "OpenSansSemiBold", Arial, Helvetica, sans-serif;
   font-weight: 600;
-  font-size: calc(1.3rem + 1.9vw);
+  font-size: calc(1.2rem + 1.8vw);
   padding: 0 5px 0 5px;
 }
+
 .voltTitle {
   font-size: calc(1rem + 1.3vw);
   margin-bottom: 0;
@@ -42,16 +47,25 @@
   font-size: calc(1rem + 1.5vw);
 }
 
-.btnVoltage{
+.btnVoltage {
   cursor: pointer;
   padding: 10px 0 10px 0;
 }
 
-.fullInfoCont{
+.fullInfoCont {
   padding-top: 20px;
   padding-bottom: 1px;
   margin-bottom: 20px;
   border-radius: 10px;
   width: 100%;
-  
+}
+
+.infoActive {
+  transform: scale(1);
+  transition: 1s all;
+}
+
+.info {
+  transform: scale(0.5);
+  transition: 1s all;
 }

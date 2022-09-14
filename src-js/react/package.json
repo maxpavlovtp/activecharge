@@ -28,7 +28,7 @@
     "chartjs-plugin-zoom": "^1.2.1",
     "dotenv": "^16.0.0",
     "env-cmd": "^10.1.0",
-    "framer-motion": "^6.3.3",
+    "framer-motion": "^6.5.1",
     "i18next": "^21.8.5",
     "i18next-browser-languagedetector": "^6.1.4",
     "i18next-http-backend": "^1.4.1",
@@ -48,6 +48,7 @@
   },
   "scripts": {
     "startLocal": "env-cmd -e local react-scripts start",
+    "startLocalLimited": "env-cmd -e localLimited react-scripts start",
     "buildDev": "CI=false && env-cmd -e dev react-scripts build",
     "buildProd": "CI=false && env-cmd -e prod react-scripts build",
     "buildStage": "CI=false && env-cmd -e stage react-scripts build",
