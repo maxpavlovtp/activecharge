@@ -113,7 +113,3 @@ export const FinishKmStap = styled.span`
   color: ${({ theme }: { theme: any }) => theme.colorSpan};
   transition: all 0.5s linear;
 `;
-export const FinishKwtStap = styled.span`
-  color: ${({ theme }: { theme: any }) => theme.text};
-  transition: all 0.5s linear;
-`;
