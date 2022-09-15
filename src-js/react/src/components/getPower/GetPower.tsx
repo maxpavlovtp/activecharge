@@ -4,7 +4,12 @@ import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import { getStationInfo } from "../../store/reducers/ActionCreators";
 import { useTranslation } from "react-i18next";
 import { Col, Row } from "react-bootstrap";
-import { FinishKmStap, PowerMetricsColor, VoltageBtn } from "../globalStyles";
+import {
+  FinishKmStap,
+  FinishKwtStap,
+  PowerMetricsColor,
+  VoltageBtn,
+} from "../globalStyles";
 import FullInfo from "../fullInfo/FullInfo";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -91,7 +96,7 @@ export default function GetPower({
                   {t("km")}
                 </FinishKmStap>
                 <br />
-                <FinishKmStap>{chargeStatus}</FinishKmStap  >
+                <FinishKwtStap style={{fontSize: "calc(0.9rem + 1.3vw)"}}>{chargeStatus}</FinishKwtStap>
               </p>
             </Col>
           ) : (
