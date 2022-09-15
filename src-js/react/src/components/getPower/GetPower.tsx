@@ -4,12 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import { getStationInfo } from "../../store/reducers/ActionCreators";
 import { useTranslation } from "react-i18next";
 import { Col, Row } from "react-bootstrap";
-import {
-  FinishKmStap,
-  FinishKwtStap,
-  PowerMetricsColor,
-  VoltageBtn,
-} from "../globalStyles";
+import { FinishKmStap, PowerMetricsColor, VoltageBtn } from "../globalStyles";
 import FullInfo from "../fullInfo/FullInfo";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -21,7 +16,7 @@ export default function GetPower({
   timer: any;
 }) {
   const [chartTap, setChartTap] = useState(false);
-  const [openInfo, setOpenInfo] = useState(true);
+  const [openInfo, setOpenInfo] = useState(false);
   const dispatch = useAppDispatch();
   const { deviceStatus } = useAppSelector((state) => state.fetchReducer);
   const { t } = useTranslation();
@@ -37,16 +32,6 @@ export default function GetPower({
       return () => clearInterval(timerID);
     }
   }, [deviceStatus?.lastJob?.state, chartTap]);
-
-  useEffect(() => {
-    if (
-      deviceStatus?.lastJob?.state === "DONE" ||
-      deviceStatus?.lastJob?.state === "FAILED" ||
-      deviceStatus?.lastJob?.leftS <= 3
-    ) {
-      setOpenInfo(false);
-    }
-  }, [deviceStatus.lastJob.state]);
 
   let voltage = Number(Math.round(deviceStatus?.lastJob?.voltage));
   let isZero = deviceStatus?.lastJob?.chargedWtH === undefined || 0;
@@ -106,9 +91,7 @@ export default function GetPower({
                   {t("km")}
                 </FinishKmStap>
                 <br />
-                <FinishKwtStap style={{ fontSize: "calc(0.9rem + 1.3vw)" }}>
-                  {chargeStatus}
-                </FinishKwtStap>
+                <FinishKmStap>{chargeStatus}</FinishKmStap  >
               </p>
             </Col>
           ) : (
