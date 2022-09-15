@@ -1,0 +1,689 @@
+{
+	"info": {
+		"_postman_id": "2a492975-ce28-4d26-8673-72811d6bb486",
+		"name": "CoolKit Oauth2.0",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4786211"
+	},
+	"item": [
+		{
+			"name": "Get Token",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"function createSign(appsecret, message) {",
+							"    return CryptoJS.enc.Base64.stringify(CryptoJS.HmacSHA256(message, appsecret));",
+							"}",
+							"",
+							"const appsecret = pm.environment.get(\"appsecret\");",
+							"const message = pm.request.body.raw;",
+							"const sign = createSign(appsecret, message);",
+							"pm.environment.set('sign', sign);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseData = pm.response.json();",
+							"",
+							"if (responseData !== undefined) {",
+							"    //custom",
+							"    if (responseData.error === 0) {",
+							"        const at = responseData.data.accessToken;",
+							"        const rt = responseData.data.refreshToken;",
+							"        pm.test(\"get accessToken\", function () {",
+							"            pm.expect(at).to.be.exist;",
+							"        })",
+							"        pm.test(\"get refreshToken\", function () {",
+							"            pm.expect(rt).to.be.exist;",
+							"        })",
+							"        pm.environment.set(\"accessToken\", at);",
+							"        pm.environment.set(\"refreshToken\", rt);",
+							"    }",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-CK-Nonce",
+						"value": "{{nonce}}"
+					},
+					{
+						"key": "Authorization",
+						"value": "Sign {{sign}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-CK-Appid",
+						"value": "{{appid}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"code\": \"6f40ac58-327b-451f-a84c-672dd1bb958f\",\n    \"redirectUrl\": \"http://49.12.19.42:8080/login/ewelinkRedirect\",\n    \"grantType\": \"authorization_code\"\n}"
+				},
+				"url": {
+					"raw": "https://{{domain}}/v2/user/oauth/token",
+					"protocol": "https",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"v2",
+						"user",
+						"oauth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Refresh Token",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"function createSign(appsecret, message) {",
+							"    return CryptoJS.enc.Base64.stringify(CryptoJS.HmacSHA256(message, appsecret));",
+							"}",
+							"",
+							"const appsecret = pm.environment.get(\"appsecret\");",
+							"const rt=pm.environment.get('refreshToken');",
+							"",
+							"const requestBodyStr=pm.request.body.raw;",
+							"const requestBody =JSON.parse(requestBodyStr);",
+							"",
+							"let sign;",
+							"",
+							"if(requestBody.rt===\"{{refreshToken}}\"){",
+							"    const message= JSON.stringify({rt:rt});",
+							"    console.info(message);",
+							"    sign = createSign(appsecret,message);",
+							"}else{",
+							"    sign = createSign(appsecret,requestBodyStr);",
+							"}",
+							"pm.environment.set('sign', sign);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseData = pm.response.json();\r",
+							"\r",
+							"const requestName = pm.info.requestName;\r",
+							"\r",
+							"if (responseData !== undefined) {\r",
+							"    pm.test(requestName, function () {\r",
+							"        pm.expect(responseData.error, responseData.msg).to.equal(0);\r",
+							"    });\r",
+							"\r",
+							"    //custom\r",
+							"    if (responseData.error === 0) {\r",
+							"        const at = responseData.data.at;\r",
+							"        const rt = responseData.data.rt;\r",
+							"        pm.test(\"get accessToken\", function () {\r",
+							"            pm.expect(at).to.be.exist;\r",
+							"        })\r",
+							"        pm.test(\"get refreshToken\", function () {\r",
+							"            pm.expect(rt).to.be.exist;\r",
+							"        })\r",
+							"        pm.environment.set(\"accessToken\", at);\r",
+							"        pm.environment.set(\"refreshToken\", rt);\r",
+							"    }\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-CK-Appid",
+						"value": "{{appid}}"
+					},
+					{
+						"key": "X-CK-Nonce",
+						"value": "{{nonce}}"
+					},
+					{
+						"key": "Authorization",
+						"value": "Sign {{sign}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"rt\":\"{{refreshToken}}\"}"
+				},
+				"url": {
+					"raw": "https://{{domain}}/v2/user/refresh",
+					"protocol": "https",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"v2",
+						"user",
+						"refresh"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Homes and Rooms",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-CK-Nonce",
+						"value": "{{nonce}}"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{accessToken}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{domain}}/v2/family",
+					"protocol": "https",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"v2",
+						"family"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Thing List",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-CK-Nonce",
+						"value": "{{nonce}}"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{accessToken}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{domain}}/v2/device/thing",
+					"protocol": "https",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"v2",
+						"device",
+						"thing"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Specified Things List",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-CK-Nonce",
+						"value": "{{nonce}}"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{accessToken}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"thingList\":[\n        {\n            \"itemType\":1,\n            \"id\":\"1000164468\"\n        }\n    ]\n}"
+				},
+				"url": {
+					"raw": "https://{{domain}}/v2/device/thing",
+					"protocol": "https",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"v2",
+						"device",
+						"thing"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Device or Group Status",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-CK-Nonce",
+						"value": "{{nonce}}"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{accessToken}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{domain}}/v2/device/thing/status?type=1&id=1000164468&params=switch|pulse",
+					"protocol": "https",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"v2",
+						"device",
+						"thing",
+						"status"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "1"
+						},
+						{
+							"key": "id",
+							"value": "1000164468"
+						},
+						{
+							"key": "params",
+							"value": "switch|pulse"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update the Status of a Device or Group",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-CK-Nonce",
+						"value": "{{nonce}}"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{accessToken}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"type\":1,\n    \"id\":\"1000213ac8\",\n    \"params\":{\n        \"switch\":\"on\"\n    }\n}"
+				},
+				"url": {
+					"raw": "https://{{domain}}/v2/device/thing/status",
+					"protocol": "https",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"v2",
+						"device",
+						"thing",
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update the Status of Multiple Devices or Groups",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseData = pm.response.json();\r",
+							"\r",
+							"const requestName = pm.info.requestName;\r",
+							"\r",
+							"if (responseData !== undefined) {\r",
+							"    pm.test(requestName, function () {\r",
+							"        pm.expect(responseData.error, responseData.msg).to.equal(0);\r",
+							"    });\r",
+							"\r",
+							"    //custom\r",
+							"    if (responseData.error === 0) {\r",
+							"        \r",
+							"    }\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-CK-Nonce",
+						"value": "{{nonce}}"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{accessToken}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"thingList\":[\n        {\n            \"type\":1,\n            \"id\":\"100085c78c\",\n            \"params\":{\n                \"switch\":\"on\"\n            }\n        },\n        {\n            \"type\":2,\n            \"id\":\"groupid\",\n            \"params\":{\n                \"switch\":\"off\"\n            }\n        }\n    ],\n    \"timeout\":2000\n}"
+				},
+				"url": {
+					"raw": "https://{{domain}}/v2/device/thing/batch-status",
+					"protocol": "https",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"v2",
+						"device",
+						"thing",
+						"batch-status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Unbind Account Link",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"function createSign(appsecret, message) {",
+							"    return CryptoJS.enc.Base64.stringify(CryptoJS.HmacSHA256(message, appsecret));",
+							"}",
+							"",
+							"const appsecret = pm.environment.get(\"appsecret\");",
+							"const message = pm.request.body.raw;",
+							"const sign = createSign(appsecret, message);",
+							"pm.environment.set('sign', sign);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "X-CK-Nonce",
+						"value": "{{nonce}}"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{accessToken}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-CK-Appid",
+						"value": "{{appid}}"
+					}
+				],
+				"url": {
+					"raw": "https://{{domain}}/v2/user/oauth/token",
+					"protocol": "https",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"v2",
+						"user",
+						"oauth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"function randomWord(length) {",
+					"    let str = \"\",",
+					"    arr = [",
+					"            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l','m', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',",
+					"            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L','M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',",
+					"            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'",
+					"        ];",
+					"    for (let i = 0; i < length; i++) {",
+					"        pos = Math.round(Math.random() * (arr.length - 1));",
+					"        str += arr[pos];",
+					"    }",
+					"    return str;",
+					"}",
+					"",
+					"const domainMap=new Map();",
+					"domainMap.set('cn','cn-apia.coolkit.cn');",
+					"domainMap.set('as','as-apia.coolkit.cc');",
+					"domainMap.set('us','us-apia.coolkit.cc');",
+					"domainMap.set('eu','eu-apia.coolkit.cc');",
+					"domainMap.set('au','au-apia.coolkit.info');",
+					"domainMap.set('test','test-apia.coolkit.cn');",
+					"",
+					"const domain=domainMap.get(pm.environment.get('region'));",
+					"pm.environment.set('domain',domain);",
+					"",
+					"const nonce=randomWord(8);",
+					"pm.environment.set('nonce',nonce);",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
