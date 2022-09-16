@@ -8,5 +8,5 @@ groups:
         labels:
           severity: major
         annotations:
-          summary: "Instance {{ $labels.instance }} down"
+          summary: "Instance prod node-1 {{ $labels.instance }} down"
           description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 30 seconds."
