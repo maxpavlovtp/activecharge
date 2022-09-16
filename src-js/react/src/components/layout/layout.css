@@ -1,0 +1,65 @@
+.toggle-icon {
+  display: none;
+}
+
+.logoText {
+  font-family: "OpenSansBold", Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  font-size: calc(0.9rem + 1.2vw);
+}
+
+.links {
+  font-family: "OpenSansRegular", Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  font-size: calc(0.9rem + 0.4vw);
+}
+
+.btnLang {
+  font-family: "OpenSansRegular", Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  font-size: calc(0.9rem + 0.4vw);
+  border: none;
+
+}
+.btnLang:not(:last-child) {
+  border-right: 2px solid #a5adb4;
+  padding-right: 5px;
+}
+
+@media (max-width: 991px) {
+  .toggle-icon {
+    display: block;
+    background-image: url("../../assets/icons8-menu-24.svg");
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background-color: #f8f9fa;
+    border-radius: 3px;
+  }
+  .open {
+    background-image: url("../../assets/icons8-close-24.svg");
+  }
+}
+
+.footerText {
+  text-align: center;
+  padding: 10px 12px 0;
+  border-top: 1px solid #e6e6e6;
+  font-family: "OpenSansRegular", Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  font-size: calc(0.6rem + 0.3vw);
+  /* color: #6e6e6e; */
+  /* background-color: #fff; */
+}
+
+.footerLink {
+  text-decoration: none;
+  /* color: #2997ff; */
+}
+
+.footerLink:hover {
+  text-decoration: underline;
+}
+
+

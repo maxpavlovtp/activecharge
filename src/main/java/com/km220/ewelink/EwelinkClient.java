@@ -1,7 +1,9 @@
 package com.km220.ewelink;
 
 import com.km220.ewelink.v2.EwelinkDeviceApiV2;
+import com.km220.ewelink.v2.WSEwelinkDeviceApiV2;
 import java.net.http.HttpClient;
+import java.time.Duration;
 import java.util.Optional;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,7 +19,7 @@ public class EwelinkClient {
   private EwelinkParameters parameters;
   private String applicationId;
   private String applicationSecret;
-  private TokenStorage tokenStorage;
+  private CredentialsStorage credentialsStorage;
   private HttpClient httpClient;
 
   @Builder
@@ -25,13 +27,15 @@ public class EwelinkClient {
   private EwelinkClient(@NonNull final EwelinkParameters parameters,
       @NonNull final String applicationId,
       @NonNull final String applicationSecret,
-      @NonNull final TokenStorage tokenStorage,
+      @NonNull final CredentialsStorage credentialsStorage,
       final HttpClient httpClient) {
     this.parameters = parameters;
     this.applicationId = applicationId;
     this.applicationSecret = applicationSecret;
-    this.tokenStorage = tokenStorage;
-    this.httpClient = Optional.ofNullable(httpClient).orElseGet(HttpClient::newHttpClient);
+    this.credentialsStorage = credentialsStorage;
+    this.httpClient = Optional.ofNullable(httpClient).orElseGet(() -> HttpClient.newBuilder()
+        .connectTimeout(Duration.ofSeconds(3))
+        .build());
   }
 
   public EwelinkDeviceApi devices() {
@@ -40,7 +44,12 @@ public class EwelinkClient {
 
   public EwelinkDeviceApiV2 devicesV2() {
     return new EwelinkDeviceApiV2(parameters, applicationId, applicationSecret,
-        tokenStorage, httpClient);
+        credentialsStorage, httpClient);
+  }
+
+  public WSEwelinkDeviceApiV2 wsDevicesV2(WSClientListener wsClientListener) {
+    return new WSEwelinkDeviceApiV2(parameters, applicationId, applicationSecret,
+        credentialsStorage, wsClientListener, httpClient);
   }
 
   public WSEwelinkDeviceApi wsDevices() {

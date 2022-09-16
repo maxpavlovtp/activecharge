@@ -14,5 +14,5 @@ export default function PrivateRoute({ children }: { children: any }) {
     console.log(deviceStatus?.state)
   }, []);
 
-  return deviceStatus?.state === "IN_PROGRESS" ? <Navigate to={`/charging?station=${stationNumbers}`}/> : children;
+  return deviceStatus?.lastJob?.state === "IN_PROGRESS" ? <Navigate to={`/charging?station=${stationNumbers}`}/> : children;
 }

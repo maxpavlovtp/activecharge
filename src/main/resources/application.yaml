@@ -1,40 +1,45 @@
 ewelink:
   region: eu
-  email: km220.com@gmail.com
+  email: eskimorollerr@gmail.com
   password: Nopassword1
   countryCode: "+380"
   appId: YzfeftUVcZ6twZw1OoVKPRFYTrGEg01Q
   appSecret: 4G91qSoboqYO4Y0XJ0LPPKIsq8reHdfa
+  useOAuth: false
 
 device:
-  chargeTimeSecs: 30
+  freeChargeSecs: 120
 
 station:
   scan-delay-ms: 1000
-  scan-batch-size: 5
+  scan-batch-size: 1
   scan-threads: 1
-  scan-interval-ms: 2000
+  scan-interval-ms: 1000
 
-# docker
 spring:
+  application:
+    name: km220.com
   datasource:
+    # docker
     url: jdbc:postgresql://localhost:5432/km220
     username: km220
     password: Nopassword1
   flyway:
-    clean-on-validation-error: false
-
-flyway:
-  locations: "classpath:db/migration/pg"
-
+    clean-on-validation-error: true
+    locations: 'classpath:db/migration/postgres/common,/db/migration/postgres/local'
 
 server:
   forward-headers-strategy: framework
 
 monobank:
-  token: "ux9Fn-4ob62pBQtM0O9z_gOKYhSo9SYBHk3g-2Bivw70"
-  callBackHost: "178.18.251.90"
+  token: "u7U0wkyOHijJIRx_uIZGdY21uVWr8UYOUWMh2LpWJ3Uk"
+  callBackHost: "49.12.19.42"
 
-# #backup
-# #ewelink.appid = 'oeVkj2lYFGnJu5XUtWisfW4utiN4u9Mq';
-# #ewelink.appSecret = '6Nz4n0xA8s8qdxQf2GqurZj2Fs55FUvM';
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, metrics, prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}

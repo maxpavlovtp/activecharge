@@ -1,29 +1,27 @@
 package com.km220.schedulingtasks;
 
 import com.km220.config.StationScanProperties;
-import com.km220.service.job.ChargingService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.km220.service.job.ChargerService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
+@Slf4j
 public class ScheduledTasks {
 
-  private static final Logger logger = LoggerFactory.getLogger(ScheduledTasks.class);
-
-  private final ChargingService chargingService;
+  private final ChargerService chargerService;
   private final StationScanProperties stationScanProperties;
 
-  public ScheduledTasks(ChargingService chargingService,
+  public ScheduledTasks(final ChargerService chargerService,
       StationScanProperties stationScanProperties) {
-    this.chargingService = chargingService;
+    this.chargerService = chargerService;
     this.stationScanProperties = stationScanProperties;
   }
 
   @Scheduled(fixedDelayString = "${station.scan-delay-ms}", initialDelay = 1000)
   public void scanChargingJobs() {
-    chargingService.refresh(stationScanProperties.getScanBatchSize(),
-        stationScanProperties.getScanDelayMs(), stationScanProperties.getScanIntervalMs());
+    chargerService.refreshStatus(stationScanProperties.getScanBatchSize(),
+        stationScanProperties.getScanIntervalMs());
   }
 }

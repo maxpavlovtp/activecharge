@@ -9,6 +9,7 @@ import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.Instant;
@@ -23,6 +24,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Repository;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
@@ -34,7 +36,9 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @ActiveProfiles("integration-test")
 class ChargingJobRepositoryTest {
 
-  private static final String STATION_NUMBER = "2";
+  private static final String STATION_NUMBER = "1";
+  private static final String STATION_NAME = "1-vlad-garage36";
+  private static final String STATION_DEVICE = "1001323420";
 
   @Autowired
   private ChargingJobRepository chargingJobRepository;
@@ -53,17 +57,15 @@ class ChargingJobRepositoryTest {
     assertTrue(job.getNumber() > 0);
     assertEquals("", job.getReason());
     assertEquals(ChargingJobState.IN_PROGRESS, job.getState());
-    assertEquals(0f, job.getChargingWt(), 0.00001f);
-    assertEquals(0f, job.getChargedWt(), 0.00001f);
+    assertEquals(0f, job.getPowerWt(), 0.00001f);
+    assertEquals(0f, job.getChargedWtH(), 0.00001f);
     assertEquals(10, job.getPeriodSec());
     assertNull(job.getStoppedOn());
     assertTrue(job.getCreatedOn().isAfter(now.atOffset(ZoneOffset.UTC)));
     assertTrue(job.getUpdatedOn().isAfter(now.atOffset(ZoneOffset.UTC)));
 
     assertNotNull(job.getStation());
-    assertEquals("stage", job.getStation().getName());
-    assertEquals("2", job.getStation().getNumber());
-    assertEquals("10013bb124", job.getStation().getDeviceId());
+    assertEquals(STATION_DEVICE, job.getStation().getDeviceId());
   }
 
   @Test
@@ -80,15 +82,15 @@ class ChargingJobRepositoryTest {
     assertTrue(job.getNumber() > 0);
     assertEquals("", job.getReason());
     assertEquals(ChargingJobState.IN_PROGRESS, job.getState());
-    assertEquals(0f, job.getChargingWt(), 0.00001f);
-    assertEquals(0f, job.getChargedWt(), 0.00001f);
+    assertEquals(0f, job.getPowerWt(), 0.00001f);
+    assertEquals(0f, job.getChargedWtH(), 0.00001f);
     assertEquals(10, job.getPeriodSec());
     assertNull(job.getStoppedOn());
     assertTrue(job.getCreatedOn().isAfter(onCreate.atOffset(ZoneOffset.UTC)));
     assertTrue(job.getUpdatedOn().isAfter(onCreate.atOffset(ZoneOffset.UTC)));
 
-    job.setChargingWt(1f);
-    job.setChargedWt(2f);
+    job.setPowerWt(1f);
+    job.setChargedWtH(2f);
     job.setReason("OK");
     job.setState(ChargingJobState.DONE);
     job.setStoppedOn(OffsetDateTime.parse("2007-12-03T10:15:30+00:00"));
@@ -101,15 +103,15 @@ class ChargingJobRepositoryTest {
     assertTrue(job.getNumber() > 0);
     assertEquals("OK", job.getReason());
     assertEquals(ChargingJobState.DONE, job.getState());
-    assertEquals(1f, job.getChargingWt(), 0.00001f);
-    assertEquals(2f, job.getChargedWt(), 0.00001f);
-    assertEquals(OffsetDateTime.parse("2007-12-03T10:15:30+00:00").atZoneSameInstant(ZoneOffset.UTC),
+    assertEquals(1f, job.getPowerWt(), 0.00001f);
+    assertEquals(2f, job.getChargedWtH(), 0.00001f);
+    assertEquals(
+        OffsetDateTime.parse("2007-12-03T10:15:30+00:00").atZoneSameInstant(ZoneOffset.UTC),
         job.getStoppedOn().atZoneSameInstant(ZoneOffset.UTC));
 
     assertNotNull(job.getStation());
-    assertEquals("stage", job.getStation().getName());
-    assertEquals("2", job.getStation().getNumber());
-    assertEquals("10013bb124", job.getStation().getDeviceId());
+    assertEquals(STATION_NUMBER, job.getStation().getNumber());
+    assertEquals(STATION_DEVICE, job.getStation().getDeviceId());
   }
 
   @Test
@@ -122,8 +124,8 @@ class ChargingJobRepositoryTest {
             allOf(
                 hasProperty("number", is(1L)),
                 hasProperty("state", is(ChargingJobState.IN_PROGRESS)),
-                hasProperty("chargingWt", is(1.0f)),
-                hasProperty("chargedWt", is(2.0f)),
+                hasProperty("powerWt", is(1.0f)),
+                hasProperty("chargedWtH", is(2.0f)),
                 hasProperty("periodSec", is(10)),
                 hasProperty("stoppedOn", is(nullValue())),
                 hasProperty("station",
@@ -137,8 +139,8 @@ class ChargingJobRepositoryTest {
             allOf(
                 hasProperty("number", is(3L)),
                 hasProperty("state", is(ChargingJobState.IN_PROGRESS)),
-                hasProperty("chargingWt", is(5.0f)),
-                hasProperty("chargedWt", is(6.0f)),
+                hasProperty("powerWt", is(5.0f)),
+                hasProperty("chargedWtH", is(6.0f)),
                 hasProperty("periodSec", is(10)),
                 hasProperty("stoppedOn", is(nullValue())),
                 hasProperty("station",
@@ -152,8 +154,8 @@ class ChargingJobRepositoryTest {
             allOf(
                 hasProperty("number", is(4L)),
                 hasProperty("state", is(ChargingJobState.IN_PROGRESS)),
-                hasProperty("chargingWt", is(7.0f)),
-                hasProperty("chargedWt", is(8.0f)),
+                hasProperty("powerWt", is(7.0f)),
+                hasProperty("chargedWtH", is(8.0f)),
                 hasProperty("periodSec", is(10)),
                 hasProperty("stoppedOn", is(nullValue())),
                 hasProperty("station",
@@ -170,7 +172,55 @@ class ChargingJobRepositoryTest {
 
   @Test
   void addMultipleChargingsForSameStation_shouldThrowError() {
-    chargingJobRepository.add(STATION_NUMBER, 10);
-    chargingJobRepository.add(STATION_NUMBER, 10);
+    assertThrows(DuplicateKeyException.class, () -> {
+      chargingJobRepository.add(STATION_NUMBER, 10);
+      chargingJobRepository.add(STATION_NUMBER, 10);
+    });
+  }
+
+  @Test
+  void getJob_shouldUpdateChargingJob() {
+    Instant onCreate = Instant.now();
+
+    UUID uuid = chargingJobRepository.add(STATION_NUMBER, 10);
+
+    assertNotNull(uuid);
+
+    ChargingJobEntity job = chargingJobRepository.getById(uuid);
+
+    assertNotNull(job);
+    assertTrue(job.getNumber() > 0);
+    assertEquals("", job.getReason());
+    assertEquals(ChargingJobState.IN_PROGRESS, job.getState());
+    assertEquals(0f, job.getPowerWt(), 0.00001f);
+    assertEquals(0f, job.getChargedWtH(), 0.00001f);
+    assertEquals(10, job.getPeriodSec());
+    assertNull(job.getStoppedOn());
+    assertTrue(job.getCreatedOn().isAfter(onCreate.atOffset(ZoneOffset.UTC)));
+    assertTrue(job.getUpdatedOn().isAfter(onCreate.atOffset(ZoneOffset.UTC)));
+
+    job.setPowerWt(1f);
+    job.setChargedWtH(2f);
+    job.setReason("OK");
+    job.setState(ChargingJobState.DONE);
+    job.setStoppedOn(OffsetDateTime.parse("2007-12-03T10:15:30+00:00"));
+
+    chargingJobRepository.update(job);
+
+    job = chargingJobRepository.getById(uuid);
+
+    assertNotNull(job);
+    assertTrue(job.getNumber() > 0);
+    assertEquals("OK", job.getReason());
+    assertEquals(ChargingJobState.DONE, job.getState());
+    assertEquals(1f, job.getPowerWt(), 0.00001f);
+    assertEquals(2f, job.getChargedWtH(), 0.00001f);
+    assertEquals(
+        OffsetDateTime.parse("2007-12-03T10:15:30+00:00").atZoneSameInstant(ZoneOffset.UTC),
+        job.getStoppedOn().atZoneSameInstant(ZoneOffset.UTC));
+
+    assertNotNull(job.getStation());
+    assertEquals(STATION_NUMBER, job.getStation().getNumber());
+    assertEquals(STATION_DEVICE, job.getStation().getDeviceId());
   }
 }

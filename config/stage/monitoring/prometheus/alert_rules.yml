@@ -1,0 +1,21 @@
+groups:
+  - name: km220
+    rules:
+
+      - alert: service_down_node_1
+        expr: up{job="km220-actuator-node-1"} == 0
+        for: 30s
+        labels:
+          severity: major
+        annotations:
+          summary: "Instance {{ $labels.instance }} down"
+          description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 30 seconds."
+
+#      - alert: service_down_node_2
+#        expr: up{job="km220-actuator-node-2"} == 0
+#        for: 30s
+#        labels:
+#          severity: major
+#        annotations:
+#          summary: "Instance {{ $labels.instance }} down"
+#          description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 30 seconds."

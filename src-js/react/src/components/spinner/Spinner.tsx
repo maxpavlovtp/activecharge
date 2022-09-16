@@ -1,11 +1,11 @@
-import React from 'react'
-import styles from "./Spinner.module.css";
+import React from "react";
+import "./Spinner.css";
 import { IoEarthOutline } from "react-icons/io5";
 
 export default function Spinner() {
   return (
-    <div className={styles.load_animation}>
-        <IoEarthOutline className={styles.animation} />
-      </div>
-  )
+    <div className="loadAnimation">
+      <IoEarthOutline className="animation" />
+    </div>
+  );
 }

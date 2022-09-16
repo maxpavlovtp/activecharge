@@ -1,7 +1,7 @@
 package com.km220.controller;
 
 import com.km220.service.OrderService;
-import com.km220.service.job.ChargingService;
+import com.km220.service.job.ChargerService;
 import java.io.IOException;
 import java.util.HashMap;
 import javax.validation.constraints.NotBlank;
@@ -26,7 +26,7 @@ public class OrderController {
   @Autowired
   private OrderService orderService;
   @Autowired
-  private ChargingService chargingService;
+  private ChargerService chargerService;
 
   //  todo move to DB
   private static final HashMap<String, String> invoiceCache = new HashMap<>();
@@ -36,6 +36,9 @@ public class OrderController {
       @NotBlank @RequestParam("station_number") String stationNumber,
       @NotBlank @RequestParam("hours") String hours) throws IOException {
     String monoResponse = orderService.generateCheckoutLink(stationNumber, Integer.valueOf(hours));
+    if (monoResponse == null) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("check orderService logs");
+    }
     // todo extract to service
     String invoiceId = fetchInvoiceId(monoResponse);
     invoiceCache.put(invoiceId, stationNumber + ";" + hours);
@@ -56,7 +59,7 @@ public class OrderController {
       String stationNumberFromCache = invoiceCache.get(invoiceId).split(";")[0];
       String hours = invoiceCache.get(invoiceId).split(";")[1];
       log.info("stationNumberFromCache: {}", stationNumberFromCache);
-      chargingService.start(stationNumberFromCache, Integer.parseInt(hours) * 3600);
+      chargerService.start(stationNumberFromCache, Integer.parseInt(hours) * 3600);
     }
 
     return ResponseEntity.status(HttpStatus.OK).body(null);

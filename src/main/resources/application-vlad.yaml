@@ -1,4 +1,10 @@
 ewelink:
   email: jasper.ua@gmail.com
-  password: 12345678
 
+spring:
+  flyway:
+    locations: 'classpath:db/migration/postgres/common,/db/migration/postgres/vlad'
+    clean-on-validation-error: false
+
+device:
+  freeChargeSecs: 30

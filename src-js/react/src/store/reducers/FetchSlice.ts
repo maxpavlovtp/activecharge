@@ -47,7 +47,6 @@ export const FetchSlice = createSlice({
     ) {
       state.error = action.payload;
     },
-    
     setDeviceStatusUndefind(state: FetchState, action: PayloadAction<any>) {
       state.deviceStatus = action.payload;
     },

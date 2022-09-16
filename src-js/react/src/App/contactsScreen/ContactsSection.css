@@ -1,0 +1,45 @@
+.instagram {
+  color: #e8424e;
+}
+.telegram {
+  color: #27ade3;
+}
+.watsapp {
+  color: #44be54;
+}
+.viber {
+  color: #e3a108;
+  cursor: pointer;
+
+}
+
+.instagram:hover {
+  color: #e8424e;
+}
+.telegram:hover {
+  color: #27ade3;
+}
+.watsapp:hover {
+  color: #44be54;
+}
+.telephoneContainer {
+  display: flex;
+  flex-direction: column;
+}
+.tapForCall {
+  font-family: "OpenSansExtraBold", Arial, Helvetica, sans-serif;
+  color: #2c2b2b;
+  padding-bottom: 7px;
+  border-bottom: 1px solid rgb(206, 206, 206);
+  
+}
+
+.telephone {
+  font-family: "OpenSansMedium", Arial, Helvetica, sans-serif;
+  color: #2c2b2b;
+  text-decoration: none;
+  margin-left: 5px;
+}
+.numberCont:last-child {
+  margin-top: 15px;
+}
