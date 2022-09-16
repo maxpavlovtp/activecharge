@@ -11,7 +11,7 @@
 1. http://localhost:8080/swagger-ui/index.html
 3. http://49.12.19.42:8080/swagger-ui/index.html
 4. metrics Java: [admin/Nopassword1] http://157.90.252.84:3000/d/J8DlY3MVz/jvm-micrometer?orgId=1
-5. metrics Charging: [admin/Nopassword1] http://157.90.252.84:3000/d/81TBNvM4z/stage-charging-metrics?orgId=1
+5. metrics Charging: [admin/Nopassword1] http://157.90.252.84:3000/d/81TBNvN5o/charging-jobs?orgId=1&refresh=5s
 6. logs loki: http://157.90.252.84:3000/explore?orgId=1&left=%7B%22datasource%22:%22P982945308D3682D1%22,%22queries%22:%5B%7B%22refId%22:%22A%22,%22editorMode%22:%22builder%22,%22expr%22:%22%7Bfilename%3D%5C%22%2Fvar%2Flog%2Fbackend-2022-09-16%2014-21-13.log%5C%22%7D%20%7C%3D%20%60%60%22,%22queryType%22:%22range%22%7D%5D,%22range%22:%7B%22from%22:%22now-30m%22,%22to%22:%22now%22%7D%7D
 7. openvpn: [stage-admin/Nopassword1] https://157.90.252.84/
 
