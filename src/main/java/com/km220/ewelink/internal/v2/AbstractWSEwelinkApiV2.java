@@ -42,8 +42,10 @@ public abstract class AbstractWSEwelinkApiV2 extends AbstractEwelinkApiV2 implem
       final String applicationSecret,
       final CredentialsStorage credentialsStorage,
       WSClientListener clientListener,
-      final HttpClient httpClient) {
-    super(parameters, applicationId, applicationSecret, credentialsStorage, httpClient);
+      final HttpClient httpClient,
+      final int httpRequestTimeoutSec) {
+    super(parameters, applicationId, applicationSecret, credentialsStorage, httpClient,
+        httpRequestTimeoutSec);
 
     this.clientListener = clientListener;
 
@@ -54,9 +56,6 @@ public abstract class AbstractWSEwelinkApiV2 extends AbstractEwelinkApiV2 implem
     logger.info("Open websocket.. ");
 
     var latch = new CountDownLatch(1);
-
-    //TODO: might not be working on multiple nodes
-    login();
 
     var dispatchResponse = apiGetObjectRequest(DISPATCH_APP_API_URL,
         Map.of(),
