@@ -101,7 +101,7 @@ public class ChargerDeviceController {
 
   @GetMapping("/v2/station/statusAll")
   public ResponseEntity<List<ChargingJob>> getStatusAll() {
-    String[] stations = {"1"};
+    String[] stations = {"1", "2", "3", "4", "5", "6", "7", "8", "9"};
 
     // todo implemtent
     List<ChargingJob> jobs = chargingJobService.getInProgressJobs();
