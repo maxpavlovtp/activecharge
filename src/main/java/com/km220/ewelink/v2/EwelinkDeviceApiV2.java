@@ -28,8 +28,10 @@ public final class EwelinkDeviceApiV2 extends AbstractEwelinkApiV2 {
   private static final Logger logger = LoggerFactory.getLogger(EwelinkDeviceApiV2.class);
 
   public EwelinkDeviceApiV2(final EwelinkParameters parameters, final String applicationId,
-      final String applicationSecret, final CredentialsStorage credentialsStorage, final HttpClient httpClient) {
-    super(parameters, applicationId, applicationSecret, credentialsStorage, httpClient);
+      final String applicationSecret, final CredentialsStorage credentialsStorage,
+      final HttpClient httpClient, final int httpRequestTimeoutSec) {
+    super(parameters, applicationId, applicationSecret, credentialsStorage, httpClient,
+        httpRequestTimeoutSec);
   }
 
   public CompletableFuture<DeviceV2> getStatus(String deviceId) {

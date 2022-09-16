@@ -1,0 +1,97 @@
+version: '3.7'
+
+volumes:
+  prometheus_data: { }
+  grafana_data: { }
+  loki_data: { }
+
+networks:
+  km220_monitoring:
+
+services:
+
+  alertmanager:
+    image: prom/alertmanager:v0.24.0
+    container_name: alertmanager
+    restart: always
+    volumes:
+      - ./config/${ENV}/monitoring/alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml
+    command:
+      - '--config.file=/etc/alertmanager/alertmanager.yml'
+    networks:
+      - km220_monitoring
+    ports:
+      - 9093:9093
+    env_file:
+      - .env
+
+  prometheus:
+    image: prom/prometheus:v2.38.0
+    container_name: prometheus
+    volumes:
+      - ./config/${ENV}/monitoring/prometheus:/etc/prometheus
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    links:
+      - alertmanager:alertmanager
+    networks:
+      - km220_monitoring
+    ports:
+      - 9090:9090
+    restart: always
+    deploy:
+      mode: global
+    env_file:
+      - .env
+
+  grafana:
+    image: grafana/grafana:9.1.1
+    container_name: grafana
+    volumes:
+      - ./config/monitoring/grafana/dashboards:/var/lib/grafana/dashboards
+      - ./config/monitoring/grafana/provisioning:/etc/grafana/provisioning
+      - grafana_data:/var/lib/grafana
+    links:
+      - prometheus
+    networks:
+      - km220_monitoring
+    ports:
+      - 3000:3000
+    restart: always
+    env_file:
+      - .env
+
+  loki:
+    image: grafana/loki:latest
+    container_name: loki
+    networks:
+      - km220_monitoring
+    ports:
+      - 3100:3100
+    volumes:
+      - ./config/${ENV}/monitoring/loki/loki-config.yaml:/etc/loki/local-config.yaml
+      - loki_data:/data/loki
+    command:
+      - '--config.file=/etc/loki/local-config.yaml'
+    restart: always
+    env_file:
+      - .env
+
+  promtail:
+    image: grafana/promtail:latest
+    container_name: promtail
+    networks:
+      - km220_monitoring
+    volumes:
+      - /var/log/km220/:/var/log/
+      - ./config/${ENV}/monitoring/loki/promtail-config.yaml:/etc/promtail/config.yml
+    command:
+      - '--config.file=/etc/promtail/config.yml'
+    depends_on:
+      - loki
+    restart: always
+    env_file:
+      - .env
