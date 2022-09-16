@@ -1,4 +1,4 @@
-name: CI/CD
+name: CI/CD Stage
 
 on:
   push:
@@ -20,7 +20,7 @@ jobs:
           node-version: '18.x'
 
       - name: 220 build BE
-        run: ./gradlew clean build -x test
+        run: ./gradlew clean build -i
 
       - name: 220 build FE
         run: cd src-js/react && npm i && npm run buildStage
@@ -86,7 +86,7 @@ jobs:
         uses: fifsky/ssh-action@master
         with:
           command: |
-            cd /220/activecharge/ && git pull && docker-compose down --remove-orphans && docker-compose -f ./metrics-docker-compose.yml up -d
+            cd /220/activecharge/ && git pull && docker-compose down --remove-orphans && docker-compose -f ./monitoring-docker-compose.yml up -d
           host: 157.90.252.84
           user: root
           key: ${{ secrets.PRIVATE_KEY}}
