@@ -86,7 +86,7 @@
 		"overrides": []
 	  },
 	  "gridPos": {
-		"h": 16,
+		"h": 22,
 		"w": 24,
 		"x": 0,
 		"y": 0
@@ -176,8 +176,8 @@
 		"allFormat": "glob",
 		"current": {
 		  "selected": false,
-		  "text": "88.198.164.178:8080",
-		  "value": "88.198.164.178:8080"
+		  "text": "157.90.254.213:8080",
+		  "value": "157.90.254.213:8080"
 		},
 		"datasource": {
 		  "type": "prometheus",
@@ -281,6 +281,6 @@
   "timezone": "",
   "title": "Charging jobs",
   "uid": "81TBNvN5o",
-  "version": 1,
+  "version": 3,
   "weekStart": ""
 }
