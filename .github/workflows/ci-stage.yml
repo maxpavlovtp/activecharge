@@ -86,7 +86,7 @@ jobs:
         uses: fifsky/ssh-action@master
         with:
           command: |
-            cd /220/activecharge/ && git pull && docker-compose down --remove-orphans && docker-compose -f ./monitoring-docker-compose.yml up -d
+            cd /220/activecharge/ && git pull && docker-compose down --remove-orphans && docker-compose -f ./monitoring-docker-compose.yml up -d alertmanager prometheus grafana loki promtail
           host: 157.90.252.84
           user: root
           key: ${{ secrets.PRIVATE_KEY}}
