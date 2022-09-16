@@ -21,6 +21,7 @@ public abstract class AbstractEwelinkApiTest {
         .applicationId(APP_ID)
         .applicationSecret(APP_SECRET)
         .credentialsStorage(new MemoryCredentialsStorage())
+        .httpRequestTimeoutSec(10)
         .build();
   }
 }

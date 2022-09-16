@@ -1,4 +1,4 @@
-name: CI/CD Prod new
+name: CI/CD Prod
 
 on:
   push:
@@ -58,7 +58,7 @@ jobs:
         uses: fifsky/ssh-action@master
         with:
           command: |
-            cd /220/activecharge/ && git pull && docker-compose down --remove-orphans && docker-compose -f ./metrics-docker-compose.yml up -d
+            cd /220/activecharge/ && git pull && docker-compose down --remove-orphans && docker-compose -f ./monitoring-docker-compose.yml up -d
           host: 188.34.176.16
           user: root
           key: ${{ secrets.PRIVATE_KEY}}

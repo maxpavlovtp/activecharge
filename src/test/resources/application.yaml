@@ -34,3 +34,6 @@ monobank:
   token: "uZR_Cp6hs2TiuLUIPEXKk0pWeKbwy5tNAWmhJg4DU5Zg"
   callBackHost: "49.12.19.42"
 
+http-client:
+  requestTimeoutSec: 10
+
