@@ -31,7 +31,7 @@ jobs:
         uses: fifsky/ssh-action@master
         with:
           command: |
-            rm -rf /220/**
+            rm -rf /220/build && rm -rf /220/src-js
           host: 157.90.254.213
           user: root
           key: ${{ secrets.PRIVATE_KEY}}
