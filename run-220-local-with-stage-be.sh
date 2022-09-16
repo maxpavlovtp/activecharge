@@ -6,5 +6,5 @@ pkill -f react
 lsof -ti tcp:3000 | xargs kill -kill
 
 #FE
-// todo add new
+#todo add new
 nohup ./src-js/react/run-react-local.sh &
