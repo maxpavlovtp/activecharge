@@ -26,7 +26,7 @@ import { lightTheme, darkTheme } from "../darkTheme/Theme";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 export default function Layout() {
-  const [routeTo, setRouteTo] = useState<any>("/main");
+  const [routeTo, setRouteTo] = useState<any>("/start");
   const [open, setOpen] = useState<any>(null);
 
   const [searchParams] = useSearchParams();
@@ -40,7 +40,7 @@ export default function Layout() {
     deviceStatus?.lastJobPresented === false ||
     deviceStatus?.lastJob?.state === "IN_PROGRESS"
       ? setRouteTo(`/charging?station=${stationNumbers}`)
-      : setRouteTo(`/`);
+      : setRouteTo(`/start?station=${stationNumbers}`);
   }, [isGotDeviceStatus]);
 
   const closeMenu = () => {
