@@ -62,3 +62,15 @@ jobs:
           host: 188.34.176.16
           user: root
           key: ${{ secrets.PRIVATE_KEY}}
+
+  update-promtail-on-prod-node1:
+    runs-on: 'ubuntu-latest'
+    steps:
+      - name: update-prometheus-on-stage
+        uses: fifsky/ssh-action@master
+        with:
+          command: |
+            cd /220/activecharge/ && git pull && docker-compose down --remove-orphans && docker-compose -f ./monitoring-docker-compose.yml up -d promtail
+          host: 88.198.164.178
+          user: root
+          key: ${{ secrets.PRIVATE_KEY}}
