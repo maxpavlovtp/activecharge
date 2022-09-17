@@ -225,7 +225,7 @@
 		"name": "station_number",
 		"options": [],
 		"query": {
-		  "query": "label_values(job_power_joules{application=\"$application\", instance=\"$instance\"}, station_number)",
+		  "query": "label_values(job_power_joules{application=\"$application\", instance=\"$instance\", station_number=\"$station_number\"}, station_number)",
 		  "refId": "prometheus-station_number-Variable-Query"
 		},
 		"refresh": 2,
