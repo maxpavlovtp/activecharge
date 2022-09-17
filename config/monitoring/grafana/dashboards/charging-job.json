@@ -218,7 +218,7 @@
 		},
 		"definition": "",
 		"hide": 0,
-		"includeAll": false,
+		"includeAll": true,
 		"label": "Station",
 		"multi": false,
 		"multiFormat": "glob",
