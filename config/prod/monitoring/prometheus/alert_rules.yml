@@ -3,7 +3,7 @@ groups:
     rules:
 
       - alert: service_down
-        expr: up{job="km220-actuator"} == 0
+        expr: up{job="km220-actuator-node-1"} == 0
         for: 30s
         labels:
           severity: major
