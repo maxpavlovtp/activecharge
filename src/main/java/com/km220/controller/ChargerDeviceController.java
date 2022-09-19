@@ -109,7 +109,7 @@ public class ChargerDeviceController {
 	@GetMapping("/v/station/statusAll")
 	public ResponseEntity<List<ChargingJob>> getStatusAll() {
 
-		String[] stations = Arrays.stream(env.getActiveProfiles()).toList().contains("prod") ?
+		String[] stations = Arrays.stream(env.getActiveProfiles()).toList().contains("220prod") ?
 				new String[]{"1"} :
 				new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9"};
 
