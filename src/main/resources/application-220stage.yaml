@@ -1,15 +1,13 @@
 spring:
   datasource:
     url: jdbc:postgresql://10.1.0.6:5432/km220
-    username: km220
-    password: Nopassword1
   flyway:
     locations: 'classpath:db/migration/postgres/common,/db/migration/postgres/220stage'
     clean-on-validation-error: false
 ewelink:
   email: km220.com@gmail.com
 #  should be manually updated once per month
-  useOAuth: false
+  useOAuth: true
   oAuth-token: 'd916ca22109fdedf398f2503a892c0e67884bd5c'
   oAuth-apiKey: 'e01b0584-0e12-4a67-95ec-8bf4cc87da85'
 
