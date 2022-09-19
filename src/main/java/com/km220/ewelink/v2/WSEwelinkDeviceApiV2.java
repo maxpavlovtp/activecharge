@@ -27,8 +27,10 @@ public final class WSEwelinkDeviceApiV2 extends AbstractWSEwelinkApiV2 {
       final String applicationSecret,
       final CredentialsStorage credentialsStorage,
       final WSClientListener wsClientListener,
-      final HttpClient httpClient) {
-    super(parameters, applicationId, applicationSecret, credentialsStorage, wsClientListener, httpClient);
+      final HttpClient httpClient,
+      final int httpRequestTimeoutSec) {
+    super(parameters, applicationId, applicationSecret, credentialsStorage, wsClientListener,
+        httpClient, httpRequestTimeoutSec);
   }
 
   public void queryStatus(String deviceId) {

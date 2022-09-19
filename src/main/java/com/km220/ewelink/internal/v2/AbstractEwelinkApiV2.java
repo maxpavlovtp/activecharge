@@ -45,6 +45,7 @@ public abstract class AbstractEwelinkApiV2 {
   protected final String applicationSecret;
   private final CredentialsStorage credentialsStorage;
   protected final HttpClient httpClient;
+  private final int httpRequestTimeoutSec;
 
   private static final String API_BASE_URI = "https://%s-apia.coolkit.cc/v2";
   private static final String LOGIN_URI = "/user/login";
@@ -54,14 +55,18 @@ public abstract class AbstractEwelinkApiV2 {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(AbstractEwelinkApiV2.class);
 
-  protected AbstractEwelinkApiV2(final EwelinkParameters parameters, final String applicationId,
-      final String applicationSecret, final CredentialsStorage credentialsStorage,
-      final HttpClient httpClient) {
+  protected AbstractEwelinkApiV2(final EwelinkParameters parameters,
+      final String applicationId,
+      final String applicationSecret,
+      final CredentialsStorage credentialsStorage,
+      final HttpClient httpClient,
+      final int httpRequestTimeoutSec) {
     this.parameters = Objects.requireNonNull(parameters);
     this.applicationId = Objects.requireNonNull(applicationId);
     this.applicationSecret = Objects.requireNonNull(applicationSecret);
     this.httpClient = Objects.requireNonNull(httpClient);
     this.credentialsStorage = Objects.requireNonNull(credentialsStorage);
+    this.httpRequestTimeoutSec = httpRequestTimeoutSec;
   }
 
   protected final <T> CompletableFuture<T> apiGetObjectRequest(final String apiUri,
@@ -112,7 +117,8 @@ public abstract class AbstractEwelinkApiV2 {
     return requestCompletableFuture.exceptionallyCompose(e -> {
       Throwable cause = e.getCause();
       if (cause instanceof EwelinkApiException && (((EwelinkApiException) cause).getCode() == 401 ||
-          ((EwelinkApiException) cause).getCode() == 406 || ((EwelinkApiException) cause).getCode() == 403)) {
+          ((EwelinkApiException) cause).getCode() == 406
+          || ((EwelinkApiException) cause).getCode() == 403)) {
         LOGGER.info("Auth error. {}", e.getMessage());
         LOGGER.info("Retry to get new access token");
         return requestExecutor.apply(
@@ -163,7 +169,7 @@ public abstract class AbstractEwelinkApiV2 {
                 headers.entrySet().stream()
                     .flatMap(entry -> Stream.of(entry.getKey(), entry.getValue()))
                     .toArray(String[]::new))
-            .timeout(Duration.ofSeconds(3))
+            .timeout(Duration.ofSeconds(httpRequestTimeoutSec))
             .build();
 
     LOGGER.debug("Request: {}", apiHttpRequest);

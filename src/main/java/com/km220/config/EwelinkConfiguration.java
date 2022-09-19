@@ -16,7 +16,7 @@ public class EwelinkConfiguration {
   }
 
   @Bean
-  EwelinkClient ewelinkClient(CredentialsStorage credentialsStorage) {
+  EwelinkClient ewelinkClient(CredentialsStorage credentialsStorage, HttpClientProperties httpClientProperties) {
     return EwelinkClient.builder()
         .applicationId(ewelinkProperties.getAppId())
         .applicationSecret(ewelinkProperties.getAppSecret())
@@ -29,6 +29,7 @@ public class EwelinkConfiguration {
             )
         )
         .credentialsStorage(credentialsStorage)
+        .httpRequestTimeoutSec(httpClientProperties.getRequestTimeoutSec())
         .build();
   }
 }
