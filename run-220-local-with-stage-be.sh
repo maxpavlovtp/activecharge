@@ -4,4 +4,4 @@ pkill -f react
 lsof -ti tcp:3000 | xargs kill -kill
 
 #FE
-nohup ./src-js/react/run-react-localWithStageBE.sh &
+./src-js/react/run-220-local-with-stage-be.sh
