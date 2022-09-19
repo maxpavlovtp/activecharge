@@ -24,6 +24,7 @@ import {
 } from "../globalStyles";
 import { lightTheme, darkTheme } from "../darkTheme/Theme";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { setDeviceStatusUndefind } from "../../store/reducers/FetchSlice";
 
 export default function Layout() {
   const [routeTo, setRouteTo] = useState<any>("/start");
@@ -37,10 +38,14 @@ export default function Layout() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    deviceStatus?.lastJobPresented === false ||
-    deviceStatus?.lastJob?.state === "IN_PROGRESS"
-      ? setRouteTo(`/charging?station=${stationNumbers}`)
-      : setRouteTo(`/start?station=${stationNumbers}`);
+    if (deviceStatus?.lastJob?.state === "IN_PROGRESS") {
+      setRouteTo(`/charging?station=${stationNumbers}`);
+    } else if (
+      deviceStatus?.lastJob?.state === "DONE" ||
+      deviceStatus?.lastJobPresented === false
+    ) {
+      setRouteTo(`/start?station=${stationNumbers}`);
+    }
   }, [isGotDeviceStatus]);
 
   const closeMenu = () => {
@@ -95,12 +100,6 @@ export default function Layout() {
       lightModeSetter();
     }
   };
-
-  const themeFunc = () => {
-    themeToggler();
-    closeMenu();
-  };
-
   let toggleStatus = !open ? "toggle-icon" : "open toggle-icon ";
 
   return (
@@ -116,6 +115,7 @@ export default function Layout() {
             className="justify-content-between align-items-center shadow-sm"
             expand="lg"
             collapseOnSelect
+            // ref={domNode}
           >
             <LinksColor to={routeTo} className="flex-row align-items-center">
               <div className="logoContainer">
