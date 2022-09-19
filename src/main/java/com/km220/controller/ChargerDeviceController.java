@@ -106,7 +106,7 @@ public class ChargerDeviceController {
 	@Autowired
 	Environment env;
 
-	@GetMapping("/v/station/statusAll")
+	@GetMapping("/v2/station/statusAll")
 	public ResponseEntity<List<ChargingJob>> getStatusAll() {
 
 		String[] stations = Arrays.stream(env.getActiveProfiles()).toList().contains("220prod") ?
@@ -125,8 +125,7 @@ public class ChargerDeviceController {
 						job.setState(ChargingJobState.IN_PROGRESS);
 					}
 					return job;
-				})
-				.collect(Collectors.toList());
+				}).collect(Collectors.toList());
 
 		return ResponseEntity.status(HttpStatus.OK).body(jobs);
 	}
