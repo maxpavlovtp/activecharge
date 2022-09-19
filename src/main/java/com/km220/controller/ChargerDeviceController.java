@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 import javax.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,6 +45,9 @@ public class ChargerDeviceController {
 	private final ChargingJobService chargingJobService;
 	private final GPSService gpsService;
 
+	@Value("${device.freeChargeSecs}")
+	private int freeChargeSecs;
+
 	@Operation(summary = "Start charging")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "201", description = "Created charging job",
@@ -53,10 +57,8 @@ public class ChargerDeviceController {
 	@PostMapping("/v2/start")
 	public ResponseEntity<CreatedChargingJob> start(
 			@Parameter(description = "Charge request parameters") @RequestBody ChargeRequest chargeRequest) {
-		int chargePeriodInSeconds = chargeRequest.getChargePeriodInSeconds();
 
-		UUID id = chargerService.start(chargeRequest.getStationNumber(),
-				chargePeriodInSeconds);
+		UUID id = chargerService.start(chargeRequest.getStationNumber(), freeChargeSecs);
 		return ResponseEntity.status(HttpStatus.CREATED).body(CreatedChargingJob.builder()
 				.id(id.toString())
 				.scanIntervalMs(stationScanProperties.getScanIntervalMs())
