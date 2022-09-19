@@ -39,7 +39,7 @@ const MainSection: React.FC = () => {
 
   useEffect(() => {
     try {
-      if (process.env.REACT_APP_LINK_SERVE === "http://49.12.19.42:8080/") {
+      if (process.env.REACT_APP_LINK_SERVE === "http://localhost:8080/") {
         console.log("local dev");
       } else {
         axios
