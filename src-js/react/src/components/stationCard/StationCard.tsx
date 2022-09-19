@@ -13,24 +13,33 @@ export default function ({
   leftS: any;
   state: any;
 }) {
+  const [routeTo, setRouteTo] = useState<any>("/start");
+
   const [timer, setTimer] = useState<any>(null);
 
   const { t } = useTranslation();
 
-  const { deviceStatus } = useAppSelector((state) => state.fetchReducer);
+  const { deviceStatus, isGotDeviceStatus } = useAppSelector(
+    (state) => state.fetchReducer
+  );
+
   useEffect(() => {
     setTimer(new Date(leftS * 1000).toISOString().slice(11, 19));
   }, []);
 
+  useEffect(() => {
+    if (deviceStatus?.lastJob?.state === "IN_PROGRESS") {
+      setRouteTo(`/charging?station=${stationNumber}`);
+    } else if (
+      deviceStatus?.lastJob?.state === "DONE" ||
+      deviceStatus?.lastJobPresented === false
+    ) {
+      setRouteTo(`/start?station=${stationNumber}`);
+    }
+  }, [isGotDeviceStatus]);
+
   return (
-    <CardLink
-      className={styles.linkToStation}
-      to={
-        deviceStatus?.lastJob?.state === "IN_PROGRESS"
-          ? `/charging?station=${stationNumber}`
-          : `/start?station=${stationNumber}`
-      }
-    >
+    <CardLink className={styles.linkToStation} to={routeTo}>
       <HomeCard className={styles.container}>
         <div className={styles.mainInfo}>
           <p className={styles.nameStation}>{t("station")}</p>
