@@ -8,10 +8,9 @@ nohup ./src-js/react/run-react-local.sh &
 
 #BE
 #docker-compose down && rm -rf ./db-data
-nohup docker compose up &
+nohup docker-compose up &
 ./gradlew clean build -x test
-echo "sleep for 10 secs..."
-sleep 10
+#sudo mkdir /var/log/km220/ && sudo chmod 777 /var/log/km220/
 java -jar build/libs/220-km.com-0.0.1-SNAPSHOT.jar
 
-#tail -f nohup.out 
+#tail -f nohup.out
