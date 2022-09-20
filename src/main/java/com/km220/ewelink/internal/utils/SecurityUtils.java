@@ -1,6 +1,6 @@
 package com.km220.ewelink.internal.utils;
 
-import com.km220.ewelink.EwelinkClientException;
+import com.km220.ewelink.error.EwelinkClientException;
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.util.Base64;
