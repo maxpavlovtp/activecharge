@@ -13,7 +13,7 @@ export default function ({
   leftS: any;
   state: any;
 }) {
-  const [routeTo, setRouteTo] = useState<any>("/start");
+  const [routeTo, setRouteTo] = useState<any>("");
 
   const [timer, setTimer] = useState<any>(null);
 
@@ -34,9 +34,9 @@ export default function ({
       deviceStatus?.lastJob?.state === "DONE" ||
       deviceStatus?.lastJobPresented === false
     ) {
-      setRouteTo(`/start?station=${stationNumber}`);
+      setRouteTo(`/start?station=${stationNumber}`);    
     }
-  }, [isGotDeviceStatus]);
+  }, [routeTo, isGotDeviceStatus]);
 
   return (
     <CardLink className={styles.linkToStation} to={routeTo}>
