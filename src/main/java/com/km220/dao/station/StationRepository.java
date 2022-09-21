@@ -21,9 +21,9 @@ public class StationRepository {
 
   public StationRepository(NamedParameterJdbcTemplate jdbcTemplate) {
     this.jdbcTemplate = jdbcTemplate;
-    this.stationRowMapper = new StationRowMapper(STATION_ALIAS);
+    this.stationRowMapper = new StationRowMapper();
     this.stationJobRowMapper = new StationJobRowMapper(STATION_ALIAS,
-        new ChargingJobRowMapper(stationRowMapper, CHARGING_JOB_ALIAS));
+        new ChargingJobRowMapper(new StationRowMapper(STATION_ALIAS), CHARGING_JOB_ALIAS));
   }
 
   @Transactional(readOnly = true)
