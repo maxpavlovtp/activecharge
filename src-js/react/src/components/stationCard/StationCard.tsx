@@ -19,22 +19,17 @@ export default function ({
 
   const { t } = useTranslation();
 
-  const { deviceStatus, isGotDeviceStatus } = useAppSelector(
-    (state) => state.fetchReducer
-  );
+  const { isGotDeviceStatus } = useAppSelector((state) => state.fetchReducer);
 
   useEffect(() => {
     setTimer(new Date(leftS * 1000).toISOString().slice(11, 19));
   }, []);
 
   useEffect(() => {
-    if (deviceStatus?.lastJob?.state === "IN_PROGRESS") {
+    if (state === "IN_PROGRESS") {
       setRouteTo(`/charging?station=${stationNumber}`);
-    } else if (
-      deviceStatus?.lastJob?.state === "DONE" ||
-      deviceStatus?.lastJobPresented === false
-    ) {
-      setRouteTo(`/start?station=${stationNumber}`);    
+    } else if (state === "DONE") {
+      setRouteTo(`/start?station=${stationNumber}`);
     }
   }, [routeTo, isGotDeviceStatus]);
 
