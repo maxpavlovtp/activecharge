@@ -1,6 +1,8 @@
 package com.km220.dao.station;
 
 import com.km220.dao.DatabaseEntity;
+import com.km220.dao.job.ChargingJobEntity;
+import com.km220.model.ChargingJob;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -19,5 +21,6 @@ public final class StationEntity extends DatabaseEntity {
   private String name;
   private String number;
   private String deviceId;
+  private ChargingJobEntity activeJob;
 
 }
