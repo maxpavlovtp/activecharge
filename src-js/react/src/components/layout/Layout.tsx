@@ -85,13 +85,13 @@ export default function Layout() {
     if (!localStorage.getItem("themeMode")) {
       dispatch(getStationInfo(stationNumbers));
       console.log(deviceStatus);
-      if (deviceStatus?.lastJob?.uiNightMode === false) {
+      if (deviceStatus?.uiNightMode === false) {
         lightModeSetter();
-      } else if (deviceStatus?.lastJob?.uiNightMode === true) {
+      } else if (deviceStatus?.uiNightMode === true) {
         darkModeSetter();
       }
     }
-  }, [deviceStatus?.lastJob?.uiNightMode]);
+  }, [deviceStatus?.uiNightMode]);
 
   const themeToggler = () => {
     if (theme === "light") {

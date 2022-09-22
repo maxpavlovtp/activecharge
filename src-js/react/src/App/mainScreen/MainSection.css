@@ -9,6 +9,8 @@
 }
 
 .btnStart {
+  cursor: pointer;
+  text-align: center;
   background-color: #8f00ff;
   color: #FAFAFA;
   font-family: "OpenSansMedium", Arial, Helvetica, sans-serif;
