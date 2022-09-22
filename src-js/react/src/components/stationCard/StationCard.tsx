@@ -40,9 +40,7 @@ export default function ({
           <p className={styles.nameStation}>{t("station")}</p>
           <p className={styles.numberStation}>{stationNumber}</p>
         </div>
-        {process.env.REACT_APP_LINK_SERVE === "http://220-km.com:8080/" ? (
-          <></>
-        ) : (
+
           <div className={styles.status}>
             {state === "IN_PROGRESS" ? (
               <p className={styles.readyCharge}>{timer}</p>
@@ -56,7 +54,7 @@ export default function ({
               }
             ></div>
           </div>
-        )}
+
       </HomeCard>
     </CardLink>
   );
