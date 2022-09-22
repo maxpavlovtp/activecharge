@@ -85,6 +85,8 @@ const MainSection: React.FC = () => {
       <Row className="justify-content-center mt-2 mb-5">
         <Col
           xs="3"
+          sm="2"
+          lg="2"
           as={Link}
           to={`/charging?station=${stationNumber}`}
           className="btnStart"
@@ -95,7 +97,9 @@ const MainSection: React.FC = () => {
 
         <Col
           as={"a"}
-          xs="3"
+          xs="2"
+          sm="1"
+          lg="1"
           className={`ml-2 ${statusBtn}`}
           onClick={goPaySix}
           target="_blank"
@@ -110,6 +114,8 @@ const MainSection: React.FC = () => {
         <Col
           as={"a"}
           xs="3"
+          sm="2"
+          lg="2"
           className={`ml-2 ${statusBtn}`}
           onClick={goPayTwelve}
           target="_blank"

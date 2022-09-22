@@ -7,7 +7,7 @@ export function LoadingTime() {
 
 export function PayLinkLoading() {
   return (
-    <div style={{ padding: "7px 15px", display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
       <div className={styles.loading}></div>
     </div>
   );
