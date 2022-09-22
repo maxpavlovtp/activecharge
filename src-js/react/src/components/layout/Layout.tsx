@@ -24,9 +24,10 @@ import {
 } from "../globalStyles";
 import { lightTheme, darkTheme } from "../darkTheme/Theme";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { setDeviceStatusUndefind } from "../../store/reducers/FetchSlice";
 
 export default function Layout() {
-  const [routeTo, setRouteTo] = useState<any>("/main");
+  const [routeTo, setRouteTo] = useState<any>("/start");
   const [open, setOpen] = useState<any>(null);
 
   const [searchParams] = useSearchParams();
@@ -37,10 +38,14 @@ export default function Layout() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    deviceStatus?.lastJobPresented === false ||
-    deviceStatus?.lastJob?.state === "IN_PROGRESS"
-      ? setRouteTo(`/charging?station=${stationNumbers}`)
-      : setRouteTo(`/`);
+    if (deviceStatus?.lastJob?.state === "IN_PROGRESS") {
+      setRouteTo(`/charging?station=${stationNumbers}`);
+    } else if (
+      deviceStatus?.lastJob?.state === "DONE" ||
+      deviceStatus?.lastJobPresented === false
+    ) {
+      setRouteTo(`/start?station=${stationNumbers}`);
+    }
   }, [isGotDeviceStatus]);
 
   const closeMenu = () => {
@@ -80,13 +85,13 @@ export default function Layout() {
     if (!localStorage.getItem("themeMode")) {
       dispatch(getStationInfo(stationNumbers));
       console.log(deviceStatus);
-      if (deviceStatus?.lastJob?.uiNightMode === false) {
+      if (deviceStatus?.uiNightMode === false) {
         lightModeSetter();
-      } else if (deviceStatus?.lastJob?.uiNightMode === true) {
+      } else if (deviceStatus?.uiNightMode === true) {
         darkModeSetter();
       }
     }
-  }, [deviceStatus?.lastJob?.uiNightMode]);
+  }, [deviceStatus?.uiNightMode]);
 
   const themeToggler = () => {
     if (theme === "light") {
@@ -95,12 +100,6 @@ export default function Layout() {
       lightModeSetter();
     }
   };
-
-  const themeFunc = () => {
-    themeToggler();
-    closeMenu();
-  };
-
   let toggleStatus = !open ? "toggle-icon" : "open toggle-icon ";
 
   return (
@@ -116,6 +115,7 @@ export default function Layout() {
             className="justify-content-between align-items-center shadow-sm"
             expand="lg"
             collapseOnSelect
+            // ref={domNode}
           >
             <LinksColor to={routeTo} className="flex-row align-items-center">
               <div className="logoContainer">

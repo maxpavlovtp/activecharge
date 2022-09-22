@@ -107,7 +107,7 @@
 	  "targets": [
 		{
 		  "editorMode": "builder",
-		  "expr": "job_power_joules{application=\"$application\", instance=\"$instance\", station_number=\"$station_number\", job_id=~\"$job_id\"}",
+		  "expr": "job_power_joules{application=\"$application\", instance=\"$instance\", station_number=~\"$station_number\", job_id=~\"$job_id\"}",
 		  "format": "time_series",
 		  "hide": false,
 		  "legendFormat": "__auto",
@@ -116,7 +116,7 @@
 		},
 		{
 		  "editorMode": "builder",
-		  "expr": "job_voltage_volts{application=\"$application\", instance=\"$instance\", station_number=\"$station_number\", job_id=~\"$job_id\"}",
+		  "expr": "job_voltage_volts{application=\"$application\", instance=\"$instance\", station_number=~\"$station_number\", job_id=~\"$job_id\"}",
 		  "hide": false,
 		  "legendFormat": "__auto",
 		  "range": true,
@@ -124,7 +124,7 @@
 		},
 		{
 		  "editorMode": "builder",
-		  "expr": "job_consumption_joules{application=\"$application\", instance=\"$instance\", station_number=\"$station_number\", job_id=~\"$job_id\"}",
+		  "expr": "job_consumption_joules{application=\"$application\", instance=\"$instance\", station_number=~\"$station_number\", job_id=~\"$job_id\"}",
 		  "hide": false,
 		  "legendFormat": "__auto",
 		  "range": true,
@@ -218,7 +218,7 @@
 		},
 		"definition": "",
 		"hide": 0,
-		"includeAll": false,
+		"includeAll": true,
 		"label": "Station",
 		"multi": false,
 		"multiFormat": "glob",

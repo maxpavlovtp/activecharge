@@ -2,13 +2,14 @@ package com.km220.controller;
 
 import com.km220.config.StationScanProperties;
 import com.km220.controller.converters.ChargingJobConverter;
-import com.km220.controller.converters.StationStateConverter;
+import com.km220.controller.converters.StationConverter;
 import com.km220.dao.job.ChargingJobEntity;
-import com.km220.dao.job.ChargingJobState;
 import com.km220.model.ChargingJob;
 import com.km220.model.CreatedChargingJob;
+import com.km220.model.Station;
 import com.km220.model.StationState;
 import com.km220.service.GPSService;
+import com.km220.service.StationService;
 import com.km220.service.job.ChargerService;
 import com.km220.service.job.ChargingJobService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,30 +18,34 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import javax.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.constraints.NotBlank;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/device")
 @RequiredArgsConstructor
 public class ChargerDeviceController {
 
-  @Value("${device.freeChargeSecs}")
-  private int freeChargeSecs;
-
   private final StationScanProperties stationScanProperties;
   private final ChargerService chargerService;
+  private final StationService stationService;
   private final ChargingJobService chargingJobService;
   private final GPSService gpsService;
+
+  @Value("${device.freeChargeSecs}")
+  private int freeChargeSecs;
 
   @Operation(summary = "Start charging")
   @ApiResponses(value = {
@@ -51,10 +56,8 @@ public class ChargerDeviceController {
   @PostMapping("/v2/start")
   public ResponseEntity<CreatedChargingJob> start(
       @Parameter(description = "Charge request parameters") @RequestBody ChargeRequest chargeRequest) {
-    int chargePeriodInSeconds = this.freeChargeSecs;
 
-    UUID id = chargerService.start(chargeRequest.getStationNumber(),
-        chargePeriodInSeconds);
+    UUID id = chargerService.start(chargeRequest.getStationNumber(), freeChargeSecs);
     return ResponseEntity.status(HttpStatus.CREATED).body(CreatedChargingJob.builder()
         .id(id.toString())
         .scanIntervalMs(stationScanProperties.getScanIntervalMs())
@@ -90,34 +93,24 @@ public class ChargerDeviceController {
   public ResponseEntity<StationState> getStationStatus(
       @Parameter(description = "Station number") @NotBlank @RequestParam("station_number") String stationNumber) {
 
+    boolean uiNightMode = gpsService.getUiNightMode();
     ChargingJobEntity job = chargingJobService.findByStationNumber(stationNumber);
-    StationState stationState = StationStateConverter.INSTANCE.apply(job);
-    //TODO: refactor
-    if (stationState.getLastJob() != null) {
-      stationState.getLastJob().setUiNightMode(gpsService.getUiNightMode());
-    }
+
+    var stationState = StationState.builder()
+        .uiNightMode(uiNightMode)
+        .lastJobPresented(job != null)
+        .lastJob(Optional.ofNullable(job).map(ChargingJobConverter.INSTANCE).orElse(null))
+        .build();
+
     return ResponseEntity.status(HttpStatus.OK).body(stationState);
   }
 
   @GetMapping("/v2/station/statusAll")
-  public ResponseEntity<List<ChargingJob>> getStatusAll() {
-    String[] stations = {"1", "2", "3", "4", "5", "6", "7", "8", "9"};
-
-    // todo implemtent
-    List<ChargingJob> jobs = chargingJobService.getInProgressJobs();
-
-    jobs = Arrays.stream(stations)
-        .map(id -> new ChargingJob(id, System.currentTimeMillis(), 3600))
-        .map(job -> {
-          if ("1".equals(job.getStationNumber())) {
-            job.setState(ChargingJobState.DONE);
-          } else {
-            job.setState(ChargingJobState.IN_PROGRESS);
-          }
-          return job;
-        })
-        .collect(Collectors.toList());
-
-    return ResponseEntity.status(HttpStatus.OK).body(jobs);
+  public ResponseEntity<List<Station>> getStatusAll() {
+    List<Station> stations = stationService.getAllStations()
+        .stream()
+        .map(StationConverter.INSTANCE)
+        .toList();
+    return ResponseEntity.status(HttpStatus.OK).body(stations);
   }
 }

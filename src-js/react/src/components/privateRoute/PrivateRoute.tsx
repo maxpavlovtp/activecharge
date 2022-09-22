@@ -8,11 +8,15 @@ export default function PrivateRoute({ children }: { children: any }) {
   const { deviceStatus } = useAppSelector((state) => state.fetchReducer);
   const [searchParams] = useSearchParams();
   let stationNumbers: any = searchParams.get("station");
-  
+
   useEffect(() => {
     dispatch(getStationInfo(stationNumbers));
-    console.log(deviceStatus?.state)
+    console.log(deviceStatus?.state);
   }, []);
 
-  return deviceStatus?.lastJob?.state === "IN_PROGRESS" ? <Navigate to={`/charging?station=${stationNumbers}`}/> : children;
+  if (deviceStatus?.lastJob?.state === "IN_PROGRESS") {
+    return <Navigate to={`/charging?station=${stationNumbers}`} />;
+  } else if (deviceStatus?.lastJob?.state === "DONE" || deviceStatus?.lastJobPresented === false) {
+    return children;
+  }
 }

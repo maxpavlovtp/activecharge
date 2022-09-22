@@ -90,7 +90,7 @@ i18n
           v: "V",
           km: " km",
           chargedCongrats: "Congrats!!!",
-          chargedkWt: "Charged your car by ",
+          chargedkWt: "Your car has benn charged by ",
           power: "Power",
           powerKm: "km/h",
           charging: "Charged",

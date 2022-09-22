@@ -48,8 +48,7 @@
   },
   "scripts": {
     "startLocal": "env-cmd -e local react-scripts start",
-    "startLocalLimited": "env-cmd -e localLimited react-scripts start",
-    "buildDev": "CI=false && env-cmd -e dev react-scripts build",
+    "startLocalWithStageBE": "env-cmd -e stage react-scripts start",
     "buildProd": "CI=false && env-cmd -e prod react-scripts build",
     "buildStage": "CI=false && env-cmd -e stage react-scripts build",
     "test": "react-scripts test",

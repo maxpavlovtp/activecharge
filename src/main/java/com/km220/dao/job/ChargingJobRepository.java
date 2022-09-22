@@ -30,9 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ChargingJobRepository {
 
   private final NamedParameterJdbcTemplate jdbcTemplate;
-  private final StationRowMapper stationRowMapper = new StationRowMapper(STATION_ALIAS);
-  private final ChargingJobRowMapper chargingJobRowMapper = new ChargingJobRowMapper(
-      stationRowMapper, CHARGING_JOB_ALIAS);
+  private final ChargingJobRowMapper chargingJobRowMapper;
 
   private static final String STATION_ALIAS = "s_";
   private static final String CHARGING_JOB_ALIAS = "j_";
@@ -63,6 +61,8 @@ public class ChargingJobRepository {
 
   public ChargingJobRepository(NamedParameterJdbcTemplate jdbcTemplate) {
     this.jdbcTemplate = jdbcTemplate;
+    this.chargingJobRowMapper = new ChargingJobRowMapper(new StationRowMapper(STATION_ALIAS),
+        CHARGING_JOB_ALIAS);
   }
 
   @Transactional(readOnly = true)

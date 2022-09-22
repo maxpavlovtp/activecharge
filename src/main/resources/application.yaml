@@ -5,10 +5,9 @@ ewelink:
   countryCode: "+380"
   appId: YzfeftUVcZ6twZw1OoVKPRFYTrGEg01Q
   appSecret: 4G91qSoboqYO4Y0XJ0LPPKIsq8reHdfa
-  useOAuth: false
 
 device:
-  freeChargeSecs: 120
+  freeChargeSecs: 60
 
 station:
   scan-delay-ms: 1000

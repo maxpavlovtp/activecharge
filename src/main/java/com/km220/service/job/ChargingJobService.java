@@ -5,7 +5,6 @@ import static java.lang.String.format;
 
 import com.km220.dao.job.ChargingJobEntity;
 import com.km220.dao.job.ChargingJobRepository;
-import com.km220.model.ChargingJob;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
@@ -52,9 +51,5 @@ public class ChargingJobService {
 
   public ChargingJobEntity findActive(String deviceId) {
     return chargingJobRepository.getActiveByDeviceId(deviceId);
-  }
-
-  public List<ChargingJob> getInProgressJobs() {
-    return null;
   }
 }
