@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Timer from "../../components/timer/Timer";
 import ErrorPage from "../../components/error-page/ErrorPage";
 import { useTranslation } from "react-i18next";
 import Spinner from "../../components/spinner/Spinner";
@@ -7,17 +6,11 @@ import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import { getStationInfo } from "../../store/reducers/ActionCreators";
 import GetPower from "../../components/getPower/GetPower";
 import { useSearchParams } from "react-router-dom";
-import { useBackTime } from "../../hooks/useBackTime";
-import { Container, Row } from "react-bootstrap";
-import { Chart } from "../../components/charts/Chart";
+import { Container } from "react-bootstrap";
 
 const MainSection: React.FC = () => {
   const [loading, setLoading] = useState<any>(true);
-  // const [secondsBackend, setSecondsBackend] = useState<any>();
-  const [hoursTime, setHoursTime] = useState<any>();
-  const [minuteTime, setMinuteTime] = useState<any>();
-  const [secondsTime, setSecondsTime] = useState<any>(0);
-
+  const [timer, setTimer] = useState<any>(null);
   const [searchParams] = useSearchParams();
   let stationNumbers: any = searchParams.get("station");
 
@@ -29,13 +22,14 @@ const MainSection: React.FC = () => {
     (state) => state.fetchReducer
   );
 
-  const [timer, setTimer] = useState<any>(null);
   useEffect(() => {
     if (isLoadingCharging === false) {
       dispatch(getStationInfo(stationNumbers));
-      if (deviceStatus) {
+      if (deviceStatus?.lastJob) {
         setTimer(
-          new Date(deviceStatus?.leftS * 1000).toISOString().slice(11, 19)
+          new Date(deviceStatus?.lastJob?.leftS * 1000)
+            .toISOString()
+            .slice(11, 19)
         );
         console.log(timer);
       }
@@ -43,26 +37,22 @@ const MainSection: React.FC = () => {
   }, [isLoadingCharging]);
 
   useEffect(() => {
-    console.log(deviceStatus?.leftS);
-    if (deviceStatus?.state === "DONE" && deviceStatus?.leftS === 0) {
+    console.log(deviceStatus?.lastJob?.leftS);
+    if (
+      deviceStatus?.lastJob?.state === "DONE" &&
+      deviceStatus?.lastJob?.leftS === 0
+    ) {
       setLoading(false);
     }
-    if (deviceStatus) {
+    if (deviceStatus?.lastJob) {
       setTimer(
-        new Date(deviceStatus?.leftS * 1000).toISOString().slice(11, 19)
+        new Date(deviceStatus?.lastJob?.leftS * 1000)
+          .toISOString()
+          .slice(11, 19)
       );
-      console.log(timer);
+      setLoading(false);
     }
-  }, [deviceStatus]);
-
-  useBackTime(
-    deviceStatus?.leftS,
-    hoursTime,
-    setHoursTime,
-    setMinuteTime,
-    setSecondsTime,
-    setLoading
-  );
+  }, [deviceStatus?.lastJob]);
 
   if (error)
     return (
@@ -77,26 +67,7 @@ const MainSection: React.FC = () => {
   return (
     <>
       <Container fluid>
-        {timer !== null && (
-          <>
-            <GetPower station={stationNumbers} />
-            {deviceStatus?.state === "DONE" ||
-            deviceStatus?.state === "FAILED" ||
-            deviceStatus?.leftS <= 3 ? (
-              <></>
-            ) : (
-              <div
-                style={{
-                  textAlign: "center",
-                  fontSize: "calc(1.5rem + 1.5vw)",
-                  margin: "20px 0 30px 0",
-                }}
-              >
-                {timer}
-              </div>
-            )}
-          </>
-        )}
+        {timer !== null && <GetPower station={stationNumbers} timer={timer} />}
       </Container>
     </>
   );

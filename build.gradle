@@ -1,10 +1,10 @@
 plugins {
-    id 'org.springframework.boot' version '2.7.0'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id 'java'
-    id 'jvm-test-suite'
-    id 'idea'
-    id "org.flywaydb.flyway" version "9.0.3"
+	id 'org.springframework.boot' version '2.7.0'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+	id 'jvm-test-suite'
+	id 'idea'
+	id "org.flywaydb.flyway" version "9.0.3"
 }
 
 group = 'com.activecharge'
@@ -12,93 +12,91 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
 repositories {
-    mavenCentral()
+	mavenCentral()
 }
 
 configurations {
-    all {
-        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
-    }
+	all {
+		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+	}
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
-    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
-    implementation 'org.springdoc:springdoc-openapi-ui:1.6.4'
+	implementation 'org.springdoc:springdoc-openapi-ui:1.6.4'
+	implementation 'io.micrometer:micrometer-registry-prometheus:1.9.3'
 
-    implementation 'io.micrometer:micrometer-registry-prometheus:1.9.3'
+	implementation 'com.google.code.gson:gson:2.9.0'
+	compileOnly 'org.projectlombok:lombok:1.18.24'
+	implementation 'com.google.guava:guava:31.1-jre'
+	implementation 'ca.rmen:lib-sunrise-sunset:1.1.1'
 
-    implementation 'com.google.code.gson:gson:2.9.0'
-    implementation 'org.java-websocket:Java-WebSocket:1.5.3'
+	annotationProcessor 'org.projectlombok:lombok:1.18.24'
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
-    compileOnly 'org.projectlombok:lombok:1.18.24'
+	//TODO: run migrations in separate mode by gradle plugin or cli. This dependency should be compileOnly!
+	implementation("org.flywaydb:flyway-core:8.5.13")
+	runtimeOnly("org.postgresql:postgresql:42.5.0")
 
-    annotationProcessor 'org.projectlombok:lombok:1.18.24'
-    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-
-    //TODO: run migrations in separate mode by gradle plugin or cli. This dependency should be compileOnly!
-    implementation("org.flywaydb:flyway-core:8.5.13")
-    runtimeOnly("org.postgresql:postgresql:42.4.0")
-    implementation 'ca.rmen:lib-sunrise-sunset:1.1.1'
-
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.hamcrest:hamcrest:2.2'
-    testCompileOnly 'org.projectlombok:lombok:1.18.24'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.hamcrest:hamcrest:2.2'
+	testCompileOnly 'org.projectlombok:lombok:1.18.24'
+	testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
 }
 
 
 flyway {
-    driver = 'org.postgresql.Driver'
-    url = 'jdbc:postgresql://localhost:5432/km220'
-    user = 'km220'
-    password = 'Nopassword1'
-    connectRetries = 10
-    initSql = 'SET ROLE \'km220\''
-    schemas = ['public']
-    skipDefaultCallbacks = false
-    cleanDisabled = false
-    workingDirectory = './'
+	driver = 'org.postgresql.Driver'
+	url = 'jdbc:postgresql://localhost:5432/km220'
+	user = 'km220'
+	password = 'Nopassword1'
+	connectRetries = 10
+	initSql = 'SET ROLE \'km220\''
+	schemas = ['public']
+	skipDefaultCallbacks = false
+	cleanDisabled = false
+	workingDirectory = './'
 }
 
 testing {
-    suites {
-        test {
-            useJUnitJupiter()
-        }
+	suites {
+		test {
+			useJUnitJupiter()
+		}
 
-        integrationTest(JvmTestSuite) {
-            testType = TestSuiteType.INTEGRATION_TEST
+		integrationTest(JvmTestSuite) {
+			testType = TestSuiteType.INTEGRATION_TEST
 
-            dependencies {
-                implementation project
+			dependencies {
+				implementation project
 
-                implementation 'org.testcontainers:postgresql:1.17.3'
-                implementation 'org.testcontainers:junit-jupiter:1.17.3'
-                implementation 'org.flywaydb:flyway-core:8.5.13'
+				implementation 'org.testcontainers:postgresql:1.17.3'
+				implementation 'org.testcontainers:junit-jupiter:1.17.3'
+				implementation 'org.flywaydb:flyway-core:8.5.13'
 
-                configurations.integrationTestImplementation.extendsFrom configurations.testImplementation
-            }
+				configurations.integrationTestImplementation.extendsFrom configurations.testImplementation
+			}
 
-            sources {
-                java {
-                    srcDirs = ['src/integration/java']
-                }
-                resources {
-                    srcDirs = ['src/integration/resources']
-                }
-            }
+			sources {
+				java {
+					srcDirs = ['src/integration/java']
+				}
+				resources {
+					srcDirs = ['src/integration/resources']
+				}
+			}
 
-            targets {
-                all {
-                    testTask.configure {
-                        shouldRunAfter(test)
-                    }
-                }
-            }
-        }
-    }
+			targets {
+				all {
+					testTask.configure {
+						shouldRunAfter(test)
+					}
+				}
+			}
+		}
+	}
 }

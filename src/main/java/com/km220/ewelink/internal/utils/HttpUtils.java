@@ -1,5 +1,18 @@
 package com.km220.ewelink.internal.utils;
 
+import com.km220.ewelink.error.EwelinkApiException;
+import com.km220.ewelink.error.EwelinkHttpException;
+import com.km220.utils.ExceptionUtils;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.net.http.HttpResponse.BodyHandler;
+import java.util.Locale;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public final class HttpUtils {
 
   public static final String HTTP_POST = "POST";
@@ -20,6 +33,41 @@ public final class HttpUtils {
 
   public static final String HOST_HEADER = "Host";
 
+  private static final int MAX_RESEND = 10;
+
   private HttpUtils() {
+  }
+
+  public static boolean isEwelinkAuthorizationError(Throwable throwable) {
+    if (throwable instanceof EwelinkApiException error) {
+      return error.getCode() == 401 || error.getCode() == 406 || error.getCode() == 403;
+    }
+    return false;
+  }
+
+  public static boolean shouldRetry(HttpResponse<?> response, Throwable error, int count, int expectedStatus) {
+    if (count >= MAX_RESEND) {
+      return false;
+    }
+    return error != null || response.statusCode() != expectedStatus;
+  }
+
+  public static <T> CompletableFuture<HttpResponse<T>> tryResend(HttpClient client, HttpRequest request,
+      BodyHandler<T> handler, int count, HttpResponse<T> response, Throwable error, int expectedStatus) {
+    if (shouldRetry(response, error, count, expectedStatus)) {
+      log.warn("Retry sending http request..");
+      ExceptionUtils.runSafely(() -> Thread.sleep(250));
+      return client.sendAsync(request, handler)
+          .handleAsync((r, x) -> tryResend(client, request, handler, count + 1, r, x, expectedStatus))
+          .thenCompose(Function.identity());
+    }
+
+    if (response.statusCode() != expectedStatus) {
+      throw new EwelinkHttpException(
+          String.format(Locale.ROOT, "Expected status=%d, but API responded with status=%d",
+              expectedStatus, response.statusCode()), response.statusCode());
+    }
+
+    return CompletableFuture.completedFuture(response);
   }
 }

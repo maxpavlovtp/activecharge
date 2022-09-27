@@ -1,5 +1,7 @@
 cd "$(dirname "$0")" || exit
+  #"http://localhost:8080/"
 
+pkill -f java
 pkill -f react
 
 lsof -ti tcp:8080 | xargs kill -kill
@@ -9,7 +11,7 @@ lsof -ti tcp:3000 | xargs kill -kill
 nohup ./src-js/react/run-react-local.sh &
 
 #BE
-docker compose down && rm -rf ./db-data
+# docker compose down && rm -rf ./db-data
 nohup docker compose up &
 ./gradlew clean build -x test
 echo "sleep for 10 secs..."

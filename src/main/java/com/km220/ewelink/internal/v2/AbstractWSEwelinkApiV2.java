@@ -12,6 +12,7 @@ import com.km220.ewelink.internal.utils.JsonUtils;
 import com.km220.ewelink.internal.utils.SecurityUtils;
 import com.km220.ewelink.internal.ws.DispatchResponse;
 import com.km220.ewelink.internal.ws.WssLogin;
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.WebSocket;
@@ -19,9 +20,11 @@ import java.nio.ByteBuffer;
 import java.time.Instant;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@Slf4j
 public abstract class AbstractWSEwelinkApiV2 extends AbstractEwelinkApiV2 implements AutoCloseable {
 
   private static final String WSS_URI_TEMPLATE = "wss://%s:%s/api/ws";
@@ -39,8 +42,10 @@ public abstract class AbstractWSEwelinkApiV2 extends AbstractEwelinkApiV2 implem
       final String applicationSecret,
       final CredentialsStorage credentialsStorage,
       WSClientListener clientListener,
-      final HttpClient httpClient) {
-    super(parameters, applicationId, applicationSecret, credentialsStorage, httpClient);
+      final HttpClient httpClient,
+      final int httpRequestTimeoutSec) {
+    super(parameters, applicationId, applicationSecret, credentialsStorage, httpClient,
+        httpRequestTimeoutSec);
 
     this.clientListener = clientListener;
 
@@ -51,9 +56,6 @@ public abstract class AbstractWSEwelinkApiV2 extends AbstractEwelinkApiV2 implem
     logger.info("Open websocket.. ");
 
     var latch = new CountDownLatch(1);
-
-    //TODO: might not be working on multiple nodes
-    login();
 
     var dispatchResponse = apiGetObjectRequest(DISPATCH_APP_API_URL,
         Map.of(),
@@ -112,7 +114,16 @@ public abstract class AbstractWSEwelinkApiV2 extends AbstractEwelinkApiV2 implem
     }
     var messageWithApiKey = JsonUtils.addPropertyToJson(message, "apikey", apiKey);
     logger.debug("Sending websocket msg: {}", messageWithApiKey);
-    webSocket.sendText(messageWithApiKey, true).join();
+    var sendTextFuture = webSocket.sendText(messageWithApiKey, true);
+    sendTextFuture.exceptionallyCompose(e -> {
+      if (e.getCause() instanceof IOException) {
+        logger.info("Websocket sent message error: {}", e.getMessage());
+        logger.info("Retry to reconnect..");
+        openWebSocket(clientListener);
+        sendMessage(message);
+      }
+      return sendTextFuture;
+    }).join();
   }
 
   protected void sendMessage(String message) {
@@ -125,6 +136,7 @@ public abstract class AbstractWSEwelinkApiV2 extends AbstractEwelinkApiV2 implem
   }
 
   private class WebSocketHandlerImpl implements WebSocketHandler {
+
     @Override
     public void ping() {
       var payload = ByteBuffer.wrap("ping".getBytes(UTF_8));

@@ -23,11 +23,6 @@ public class ChargingJobRowMapper extends DatabaseEntityRowMapper<ChargingJobEnt
 
   private static final Supplier<ChargingJobEntity> supplier = ChargingJobEntity::new;
 
-  public ChargingJobRowMapper(final StationRowMapper stationRowMapper) {
-    super(supplier);
-    this.stationRowMapper = stationRowMapper;
-  }
-
   public ChargingJobRowMapper(final StationRowMapper stationRowMapper, String alias) {
     super(supplier, alias);
     this.stationRowMapper = stationRowMapper;

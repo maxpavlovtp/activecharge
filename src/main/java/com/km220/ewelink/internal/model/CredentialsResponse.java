@@ -17,12 +17,12 @@ import lombok.extern.jackson.Jacksonized;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CredentialsResponse {
 
-  private String at;
-  private String rt;
-  private User user;
-  private String region;
-  private int error;
-  private String msg;
-  @Default
-  private Map<String, Object> additionalProperties = new HashMap<>();
+	private String at;
+	private String rt;
+	private User user;
+	private String region;
+	private int error;
+	private String msg;
+	@Default
+	private Map<String, Object> additionalProperties = new HashMap<>();
 }

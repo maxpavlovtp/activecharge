@@ -1,0 +1,20 @@
+apiVersion: 1
+
+# list of datasources that should be deleted from the database
+deleteDatasources:
+  - name: prometheus
+  - name:  loki
+    orgId: 1
+
+datasources:
+  - name: 'prometheus'
+    type: 'prometheus'
+    access: 'proxy'
+    org_id: 1
+    url: 'http://prometheus:9090'
+    is_default: true
+  - name: 'loki'
+    type: 'loki'
+    access: 'proxy'
+    org_id: 1
+    url: 'http://loki:3100'
