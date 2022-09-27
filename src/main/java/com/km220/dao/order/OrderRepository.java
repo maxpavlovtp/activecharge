@@ -40,6 +40,25 @@ public class OrderRepository {
       INSERT into order_220(station_id, invoice_id)
       VALUES ((SELECT id FROM station WHERE number = :station_number), :invoice_id);
       """;
+	public UUID add(String invoice_id, String station_number ) {
+		Objects.requireNonNull(invoice_id);
+
+		var parameters = new MapSqlParameterSource()
+				.addValue("invoice_id", invoice_id)
+				.addValue("station_number", station_number);
+		final KeyHolder keyHolder = new GeneratedKeyHolder();
+
+		if (jdbcTemplate.update(INSERT_SQL, parameters, keyHolder) > 0) {
+			logger.info("Order has been created in DB. invoice_id = {}, station_number = {}",
+					invoice_id, station_number);
+
+			return (UUID) keyHolder.getKeyList().get(0).get("id");
+		}
+
+		throw new ChargerDatabaseException("Couldn't create charging job. Station number = "
+				+ invoice_id);
+	}
+
   private static final String UPDATE_SQL = """
       UPDATE order_220 SET state = :state,
       where invoice_id = :invoice_id

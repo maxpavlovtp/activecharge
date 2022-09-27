@@ -36,17 +36,7 @@ public class OrderController {
       @NotBlank @RequestParam("station_number") String stationNumber,
       @NotBlank @RequestParam("hours") String hours) throws IOException {
     String monoResponse = orderService.generateCheckoutLink(stationNumber, Integer.valueOf(hours));
-    if (monoResponse == null) {
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("check orderService logs");
-    }
-    // todo extract to service
-    String invoiceId = fetchInvoiceId(monoResponse);
-    invoiceCache.put(invoiceId, stationNumber + ";" + hours);
     return ResponseEntity.status(HttpStatus.OK).body(monoResponse);
-  }
-
-  private String fetchInvoiceId(String monoResponse) {
-    return monoResponse.replace("{\"invoiceId\":\"", "").split("\"")[0];
   }
 
   @PostMapping("/callBackMono")
@@ -54,7 +44,7 @@ public class OrderController {
     log.info("Call back from monobank: {}", callBackMono);
     // todo move to service
     if (callBackMono.contains("\"status\":\"success\"")) {
-      String invoiceId = fetchInvoiceId(callBackMono);
+      String invoiceId = orderService.fetchInvoiceId(callBackMono);
       log.info("invoiceId: {}", invoiceId);
       String stationNumberFromCache = invoiceCache.get(invoiceId).split(";")[0];
       String hours = invoiceCache.get(invoiceId).split(";")[1];

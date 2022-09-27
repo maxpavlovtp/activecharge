@@ -9,12 +9,13 @@ lsof -ti tcp:3000 | xargs kill -kill
 #FE
 nohup ./src-js/react/run-react-local.sh &
 
-#BE
+#DB
 #docker-compose down && rm -rf ./db-data
 nohup docker-compose up &
+
+#BE
 ./gradlew clean build -x test
-echo "sleep for 10 secs..."
-sleep 10
+#sudo mkdir /var/log/km220/ && sudo chmod 777 /var/log/km220/
 java -jar -Dspring.profiles.active=vlad build/libs/220-km.com-0.0.1-SNAPSHOT.jar
 
-#tail -f nohup.out 
+#tail -f nohup.out
