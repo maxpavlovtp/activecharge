@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./MainSection.css";
-
 import { Link, useOutletContext, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
@@ -18,16 +17,13 @@ const MainSection: React.FC = () => {
   const [errorPay, setErrorPay] = useState<any>(null);
   const [mainImgTheme] = useOutletContext<any>();
 
-  const [loadingSixPayLink, setLoadingSixPayLink] = useState(false);
-  const [loadingTwelvePayLink, setLoadingTwelvePayLink] = useState(false);
+  const [loadingPayLink, setLoadingPayLink] = useState(false);
 
   let stationNumber: any = searchParams.get("station");
-  const urlPayment12h = `${process.env.REACT_APP_LINK_SERVE}order/generateCheckoutLink?station_number=${stationNumber}&&hours=12`;
-  const urlPayment6h = `${process.env.REACT_APP_LINK_SERVE}order/generateCheckoutLink?station_number=${stationNumber}&&hours=6`;
 
   const { t } = useTranslation();
 
-  const { error } = useAppSelector((state) => state.fetchReducer);
+  const { errorStart } = useAppSelector((state) => state.fetchReducer);
 
   const dispatch = useAppDispatch();
 
@@ -35,28 +31,18 @@ const MainSection: React.FC = () => {
     dispatch(idStart(stationNumber));
     dispatch(setDeviceStatusUndefind(undefined));
   };
-  // http://49.12.19.42:8080/
-  // http://localhost:8080/
 
-  const goPaySix = () => {
-    setLoadingSixPayLink(true);
+  const goPayLink = (hours: number) => {
+    setLoadingPayLink(true);
     try {
-      axios.get(urlPayment6h).then((link) => {
-        window.open(link.data.pageUrl, "_blank");
-        setLoadingSixPayLink(false);
-      });
-    } catch (e: any) {
-      setErrorPay(e.message);
-    }
-  };
-
-  const goPayTwelve = () => {
-    setLoadingTwelvePayLink(true);
-    try {
-      axios.get(urlPayment12h).then((link) => {
-        window.open(link.data.pageUrl, "_blank");
-        setLoadingTwelvePayLink(false);
-      });
+      axios
+        .get(
+          `${process.env.REACT_APP_LINK_SERVE}order/generateCheckoutLink?station_number=${stationNumber}&&hours=${hours}`
+        )
+        .then((link) => {
+          window.open(link.data.pageUrl, "_blank");
+          setLoadingPayLink(false);
+        });
     } catch (e: any) {
       setErrorPay(e.message);
     }
@@ -64,7 +50,7 @@ const MainSection: React.FC = () => {
 
   let statusBtn = errorPay !== null ? "btnStart disableBtn" : "btnStart";
 
-  if (error) {
+  if (errorStart) {
     return (
       <ErrorPage
         errorHeader={t("errorDevHeader")}
@@ -101,15 +87,11 @@ const MainSection: React.FC = () => {
           sm="1"
           lg="1"
           className={`ml-2 ${statusBtn}`}
-          onClick={goPaySix}
+          onClick={() => goPayLink(6)}
           target="_blank"
           rel="noreferrer"
         >
-          {loadingSixPayLink === true ? (
-            <PayLinkLoading />
-          ) : (
-            `6${t("btns.start")}`
-          )}
+          {loadingPayLink === true ? <PayLinkLoading /> : `6${t("btns.start")}`}
         </Col>
         <Col
           as={"a"}
@@ -117,11 +99,11 @@ const MainSection: React.FC = () => {
           sm="2"
           lg="2"
           className={`ml-2 ${statusBtn}`}
-          onClick={goPayTwelve}
+          onClick={() => goPayLink(12)}
           target="_blank"
           rel="noreferrer"
         >
-          {loadingTwelvePayLink === true ? (
+          {loadingPayLink === true ? (
             <PayLinkLoading />
           ) : (
             `12${t("btns.start")}`

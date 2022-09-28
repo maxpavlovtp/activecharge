@@ -4,14 +4,16 @@ export interface FetchState {
   deviceStatus: any;
   isLoadingCharging: boolean;
   isGotDeviceStatus: boolean;
-  error: string;
+  errorStart: string;
+  errorCharging: string;
 }
 
 export const initialState: FetchState = {
   deviceStatus: null,
   isLoadingCharging: false,
   isGotDeviceStatus: false,
-  error: "",
+  errorStart: "",
+  errorCharging: "",
 };
 
 export const FetchSlice = createSlice({
@@ -23,14 +25,14 @@ export const FetchSlice = createSlice({
     },
     chargingDataFetchingSuccess(state: FetchState) {
       state.isLoadingCharging = false;
-      state.error = "";
+      state.errorStart = "";
     },
     chargingDataFetchingError(
       state: FetchState,
       action: PayloadAction<string>
     ) {
       state.isLoadingCharging = false;
-      state.error = action.payload;
+      state.errorStart = action.payload;
     },
 
     deviceStatusFetching(state: FetchState) {
@@ -38,14 +40,14 @@ export const FetchSlice = createSlice({
     },
     deviceStatusFetchingSuccess(state: FetchState, action: PayloadAction<any>) {
       state.isGotDeviceStatus = false;
-      state.error = "";
+      state.errorCharging = "";
       state.deviceStatus = action.payload;
     },
     deviceStatusFetchingError(
       state: FetchState,
       action: PayloadAction<string>
     ) {
-      state.error = action.payload;
+      state.errorCharging = action.payload;
     },
     setDeviceStatusUndefind(state: FetchState, action: PayloadAction<any>) {
       state.deviceStatus = action.payload;

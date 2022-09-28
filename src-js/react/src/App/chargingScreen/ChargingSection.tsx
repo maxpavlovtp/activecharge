@@ -18,7 +18,7 @@ const MainSection: React.FC = () => {
 
   const { t } = useTranslation();
 
-  const { isLoadingCharging, deviceStatus, error } = useAppSelector(
+  const { isLoadingCharging, deviceStatus, errorCharging } = useAppSelector(
     (state) => state.fetchReducer
   );
 
@@ -55,12 +55,12 @@ const MainSection: React.FC = () => {
   }, [deviceStatus?.lastJob]);
 
   useEffect(() => {
-    if (error) {
+    if (errorCharging !== '') {
       setLoading(false);
     }
-  }, [error]);
+  }, [errorCharging]);
 
-  if (error) {
+  if (errorCharging) {
     return (
       <ErrorPage
         errorHeader={t("errorDevHeader")}
