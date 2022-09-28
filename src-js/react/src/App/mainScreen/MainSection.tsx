@@ -54,13 +54,7 @@ const MainSection: React.FC = () => {
           setLoadingTwelvePayLink(false);
         });
     } catch (err: any) {
-      if (err.response) {
-        setErrorPay(err.response.data.errors);
-      } else if (err.request) {
-        console.log(err.request);
-      } else {
-        console.log(`Error: ${err.message}`);
-      }
+      console.log(err.message);
     }
   };
 
