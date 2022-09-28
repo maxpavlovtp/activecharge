@@ -93,7 +93,6 @@ export default function Layout() {
       if (deviceStatus?.uiNightMode === false) {
         lightModeSetter();
       } else if (deviceStatus?.uiNightMode === true) {
-        localStorage.removeItem("themeTogglerStatus");
         darkModeSetter();
       }
     }
