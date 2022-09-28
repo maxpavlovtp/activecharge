@@ -54,13 +54,20 @@ const MainSection: React.FC = () => {
     }
   }, [deviceStatus?.lastJob]);
 
-  if (error)
+  useEffect(() => {
+    if (error) {
+      setLoading(false);
+    }
+  }, [error]);
+
+  if (error) {
     return (
       <ErrorPage
         errorHeader={t("errorDevHeader")}
         errorBody={t("errorDevBody")}
       />
     );
+  }
 
   if (loading === true) return <Spinner />;
 
