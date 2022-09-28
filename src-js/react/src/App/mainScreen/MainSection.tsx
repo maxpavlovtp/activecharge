@@ -48,7 +48,10 @@ const MainSection: React.FC = () => {
     }
   };
 
-  let statusBtn = errorPay !== null ? "btnStart disableBtn" : "btnStart";
+  let statusBtn =
+    errorPay !== null || loadingPayLink === true
+      ? "btnStart disableBtn"
+      : "btnStart";
 
   if (errorStart) {
     return (
