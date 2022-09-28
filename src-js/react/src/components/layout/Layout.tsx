@@ -90,9 +90,10 @@ export default function Layout() {
     if (togglerStatus === false) {
       dispatch(getStationInfo(stationNumbers));
       console.log(deviceStatus);
-      if (deviceStatus?.uiNightMode === true) {
+      if (deviceStatus?.uiNightMode === false) {
         lightModeSetter();
-      } else if (deviceStatus?.uiNightMode === false) {
+      } else if (deviceStatus?.uiNightMode === true) {
+        localStorage.removeItem("themeTogglerStatus");
         darkModeSetter();
       }
     }
