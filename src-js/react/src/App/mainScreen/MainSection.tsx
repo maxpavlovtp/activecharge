@@ -18,6 +18,8 @@ const MainSection: React.FC = () => {
   const [mainImgTheme] = useOutletContext<any>();
 
   const [loadingPayLink, setLoadingPayLink] = useState(false);
+  const [loadingSixPayLink, setLoadingSixPayLink] = useState(false);
+  const [loadingTwelvePayLink, setLoadingTwelvePayLink] = useState(false);
 
   let stationNumber: any = searchParams.get("station");
 
@@ -34,17 +36,31 @@ const MainSection: React.FC = () => {
 
   const goPayLink = (hours: number) => {
     setLoadingPayLink(true);
+    if (hours === 6) setLoadingSixPayLink(true);
+    if (hours === 12) setLoadingTwelvePayLink(true);
     try {
       axios
         .get(
           `${process.env.REACT_APP_LINK_SERVE}order/generateCheckoutLink?station_number=${stationNumber}&&hours=${hours}`
         )
-        .then((link) => {
+        .catch(function (error: any) {
+          setErrorPay(error.message);
+          console.log(error.message);
+        })
+        .then((link: any) => {
           window.open(link.data.pageUrl, "_blank");
           setLoadingPayLink(false);
+          setLoadingSixPayLink(false);
+          setLoadingTwelvePayLink(false);
         });
-    } catch (e: any) {
-      setErrorPay(e.message);
+    } catch (err: any) {
+      if (err.response) {
+        setErrorPay(err.response.data.errors);
+      } else if (err.request) {
+        console.log(err.request);
+      } else {
+        console.log(`Error: ${err.message}`);
+      }
     }
   };
 
@@ -52,6 +68,15 @@ const MainSection: React.FC = () => {
     errorPay !== null || loadingPayLink === true
       ? "btnStart disableBtn"
       : "btnStart";
+
+  if (errorPay) {
+    return (
+      <ErrorPage
+        errorHeader={t("errorPayHeader")}
+        errorBody={t("errorPayBody")}
+      />
+    );
+  }
 
   if (errorStart) {
     return (
@@ -94,7 +119,11 @@ const MainSection: React.FC = () => {
           target="_blank"
           rel="noreferrer"
         >
-          {loadingPayLink === true ? <PayLinkLoading /> : `6${t("btns.start")}`}
+          {loadingSixPayLink === true ? (
+            <PayLinkLoading />
+          ) : (
+            `6${t("btns.start")}`
+          )}
         </Col>
         <Col
           as={"a"}
@@ -106,7 +135,7 @@ const MainSection: React.FC = () => {
           target="_blank"
           rel="noreferrer"
         >
-          {loadingPayLink === true ? (
+          {loadingTwelvePayLink === true ? (
             <PayLinkLoading />
           ) : (
             `12${t("btns.start")}`
