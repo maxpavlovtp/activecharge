@@ -60,6 +60,11 @@ export default function Layout() {
 
   const { t, i18n } = useTranslation();
 
+  const [togglerStatus, setTogglerStatus] = useLocalStorage<boolean>(
+    "themeTogglerStatus",
+    false
+  );
+
   const [theme, setTheme] = useLocalStorage<string>("themeMode", "light");
   const [logoTheme, setLogoTheme] = useLocalStorage<string>("logoImg", logo);
   const [modeImg, setModeImg] = useLocalStorage<string>("btnMode", nightMode);
@@ -82,7 +87,7 @@ export default function Layout() {
   };
 
   useEffect(() => {
-    if (!localStorage.getItem("themeMode")) {
+    if (togglerStatus === false) {
       dispatch(getStationInfo(stationNumbers));
       console.log(deviceStatus);
       if (deviceStatus?.uiNightMode === false) {
@@ -94,6 +99,7 @@ export default function Layout() {
   }, [deviceStatus?.uiNightMode]);
 
   const themeToggler = () => {
+    setTogglerStatus(true);
     if (theme === "light") {
       darkModeSetter();
     } else {
