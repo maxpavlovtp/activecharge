@@ -24,10 +24,10 @@ import {
 } from "../globalStyles";
 import { lightTheme, darkTheme } from "../darkTheme/Theme";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
-import axios from "axios";
+import { setDeviceStatusUndefind } from "../../store/reducers/FetchSlice";
 
 export default function Layout() {
-  const [routeTo, setRouteTo] = useState<any>("/main");
+  const [routeTo, setRouteTo] = useState<any>("/start");
   const [open, setOpen] = useState<any>(null);
 
   const [searchParams] = useSearchParams();
@@ -38,9 +38,14 @@ export default function Layout() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    deviceStatus?.state === "IN_PROGRESS"
-      ? setRouteTo(`/charging?station=${stationNumbers}`)
-      : setRouteTo(`/`);
+    if (deviceStatus?.lastJob?.state === "IN_PROGRESS") {
+      setRouteTo(`/charging?station=${stationNumbers}`);
+    } else if (
+      deviceStatus?.lastJob?.state === "DONE" ||
+      deviceStatus?.lastJobPresented === false
+    ) {
+      setRouteTo(`/start?station=${stationNumbers}`);
+    }
   }, [isGotDeviceStatus]);
 
   const closeMenu = () => {
@@ -54,6 +59,11 @@ export default function Layout() {
   };
 
   const { t, i18n } = useTranslation();
+
+  const [togglerStatus, setTogglerStatus] = useLocalStorage<boolean>(
+    "themeTogglerStatus",
+    false
+  );
 
   const [theme, setTheme] = useLocalStorage<string>("themeMode", "light");
   const [logoTheme, setLogoTheme] = useLocalStorage<string>("logoImg", logo);
@@ -77,25 +87,25 @@ export default function Layout() {
   };
 
   useEffect(() => {
-    if (!localStorage.getItem("themeMode")) {
+    if (togglerStatus === false) {
       dispatch(getStationInfo(stationNumbers));
       console.log(deviceStatus);
       if (deviceStatus?.uiNightMode === false) {
-        lightModeSetter()
+        lightModeSetter();
       } else if (deviceStatus?.uiNightMode === true) {
-        darkModeSetter()
+        darkModeSetter();
       }
     }
   }, [deviceStatus?.uiNightMode]);
 
   const themeToggler = () => {
+    setTogglerStatus(true);
     if (theme === "light") {
-      darkModeSetter()
+      darkModeSetter();
     } else {
-      lightModeSetter()
+      lightModeSetter();
     }
   };
-
   let toggleStatus = !open ? "toggle-icon" : "open toggle-icon ";
 
   return (
@@ -111,11 +121,9 @@ export default function Layout() {
             className="justify-content-between align-items-center shadow-sm"
             expand="lg"
             collapseOnSelect
+            // ref={domNode}
           >
-            <LinksColor
-              to={routeTo}
-              className="flex-row align-items-center"
-            >
+            <LinksColor to={routeTo} className="flex-row align-items-center">
               <div className="logoContainer">
                 <MainImgLoadingLazy
                   src={logoTheme}
@@ -156,7 +164,11 @@ export default function Layout() {
                       onClick={closeMenu}
                       eventKey="2"
                       as={Link}
-                      to={`/start?station=${stationNumbers}`}
+                      to={
+                        deviceStatus?.lastJob?.state === "IN_PROGRESS"
+                          ? `/charging?station=${stationNumbers}`
+                          : `/start?station=${stationNumbers}`
+                      }
                     >
                       <NavLink>{t("chargeLink")}</NavLink>
                     </Nav.Link>
@@ -212,16 +224,18 @@ export default function Layout() {
                   </Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <button
-                    style={{ backgroundColor: "transparent", border: "none" }}
-                    onClick={themeToggler}
-                  >
-                    <img
-                      style={{ width: "30px", height: "30px" }}
-                      src={modeImg}
-                      alt={"theme"}
-                    />
-                  </button>
+                  <Nav.Link eventKey="6" onClick={closeMenu}>
+                    <button
+                      style={{ backgroundColor: "transparent", border: "none" }}
+                      onClick={themeToggler}
+                    >
+                      <img
+                        style={{ width: "30px", height: "30px" }}
+                        src={modeImg}
+                        alt={"theme"}
+                      />
+                    </button>
+                  </Nav.Link>
                 </Nav.Item>
               </Nav>
             </Navbar.Collapse>

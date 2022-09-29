@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import LoadingTime from "./LoadingTime";
 import styles from "./StationCard.module.css";
-import Timer from "../timer/Timer";
-import { useBackTime } from "../../hooks/useBackTime";
-import { t } from "i18next";
 import { useTranslation } from "react-i18next";
 import { CardLink, HomeCard, LinksColor } from "../globalStyles";
+import { useAppSelector } from "../../hooks/reduxHooks";
 
 export default function ({
   stationNumber,
@@ -17,53 +13,37 @@ export default function ({
   leftS: any;
   state: any;
 }) {
-  const [loading, setLoading] = useState<any>(true);
-  const [secondsBackend, setSecondsBackend] = useState<any>();
-  const [hoursTime, setHoursTime] = useState<any>();
-  const [minuteTime, setMinuteTime] = useState<any>();
-  const [secondsTime, setSecondsTime] = useState<any>(0);
+  const [routeTo, setRouteTo] = useState<any>("");
 
-  useEffect(() => {
-    setSecondsBackend(leftS);
-  }, []);
-
-  useBackTime(
-    secondsBackend,
-    hoursTime,
-    setHoursTime,
-    setMinuteTime,
-    setSecondsTime,
-    setLoading
-  );
+  const [timer, setTimer] = useState<any>(null);
 
   const { t } = useTranslation();
 
+  const { isGotDeviceStatus } = useAppSelector((state) => state.fetchReducer);
+
+  useEffect(() => {
+    setTimer(new Date(leftS * 1000).toISOString().slice(11, 19));
+  }, []);
+
+  useEffect(() => {
+    if (state === "IN_PROGRESS") {
+      setRouteTo(`/charging?station=${stationNumber}`);
+    } else if (state === "DONE") {
+      setRouteTo(`/start?station=${stationNumber}`);
+    }
+  }, [routeTo, isGotDeviceStatus]);
+
   return (
-    <CardLink
-      className={styles.linkToStation}
-      to={`/start?station=${stationNumber}`}
-    >
+    <CardLink className={styles.linkToStation} to={routeTo}>
       <HomeCard className={styles.container}>
         <div className={styles.mainInfo}>
           <p className={styles.nameStation}>{t("station")}</p>
           <p className={styles.numberStation}>{stationNumber}</p>
         </div>
-        {process.env.REACT_APP_LINK_SERVE === "http://220-km.com:8080/" ? (
-          <></>
-        ) : (
+
           <div className={styles.status}>
             {state === "IN_PROGRESS" ? (
-              loading === true ? (
-                <LoadingTime />
-              ) : (
-                <Timer
-                  hours={1}
-                  minutes={30}
-                  seconds={0}
-                  margin={"20px 0 0 0"}
-                  fontSize={"30px"}
-                />
-              )
+              <p className={styles.readyCharge}>{timer}</p>
             ) : (
               <p className={styles.readyCharge}>Ready!</p>
             )}
@@ -74,7 +54,7 @@ export default function ({
               }
             ></div>
           </div>
-        )}
+
       </HomeCard>
     </CardLink>
   );

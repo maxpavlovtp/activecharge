@@ -9,17 +9,23 @@
 }
 
 .btnStart {
+  cursor: pointer;
+  text-align: center;
   background-color: #8f00ff;
-  color: #FAFAFA;
+  color: #fafafa;
   font-family: "OpenSansMedium", Arial, Helvetica, sans-serif;
   font-weight: 500;
-  font-size: calc(1.5rem + 2vw);
+  font-size: calc(1rem + 1.7vw);
   border-radius: 10px;
-  padding: 7px;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  padding-top: 7px !important;
+  padding-bottom: 7px !important;
+
 }
 .btnStart:hover {
   text-decoration: none;
-  color: #FAFAFA;
+  color: #fafafa;
 }
 .disableBtn {
   opacity: 0.3;

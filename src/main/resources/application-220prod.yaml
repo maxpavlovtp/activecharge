@@ -1,4 +1,8 @@
 spring:
+  datasource:
+    url: jdbc:postgresql://10.0.0.4:5432/km220
+    username: km220
+    password: Nopassword1
   flyway:
     clean-on-validation-error: false
     locations: 'classpath:db/migration/postgres/common,/db/migration/postgres/220prod'

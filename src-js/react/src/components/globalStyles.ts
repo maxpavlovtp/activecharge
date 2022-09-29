@@ -1,11 +1,13 @@
 import styled, { createGlobalStyle } from "styled-components";
 import { Link } from "react-router-dom";
 import { Col, Nav, Navbar } from "react-bootstrap";
+import { AnimatePresence, motion } from "framer-motion";
+
 export const GlobalStyles = createGlobalStyle`
   body {
     background: ${({ theme }: { theme: any }) => theme.body};
     color: ${({ theme }: { theme: any }) => theme.text};
-    transition: all 0.50s linear;
+    transition: all 0.5s linear;
   }
   `;
 
@@ -93,4 +95,26 @@ export const OfferLinksColor = styled.a`
 
 export const FooterLink = styled.a`
   color: ${({ theme }: { theme: any }) => theme.footerColorLink};
+`;
+
+export const VoltageBtn = styled(Col)`
+  color: ${({ theme }: { theme: any }) => theme.a};
+
+  background-color: ${({ theme }: { theme: any }) => theme.navBarBg};
+  transition: all 0.5s linear;
+`;
+
+export const FullInfoContainer = styled.div`
+  background-color: ${({ theme }: { theme: any }) => theme.navBarBg};
+  transition: all 0.5s linear;
+`;
+
+export const FinishKmStap = styled.span`
+  color: ${({ theme }: { theme: any }) => theme.colorSpan};
+  transition: all 0.5s linear;
+`;
+
+export const FinishKwtStap = styled.span`
+  color: ${({ theme }: { theme: any }) => theme.text};
+  transition: all 0.5s linear;
 `;

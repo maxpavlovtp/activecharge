@@ -71,17 +71,6 @@ export function Chart({ leftS, power, voltage, chartTap, setChartTap }) {
   const data = {
     datasets: [
       {
-        label: t("power"),
-        backgroundColor: "rgba(110, 188, 245, 0.5)",
-        fill: true,
-        lineTension: 0,
-        borderDash: [8, 4],
-        borderColor: "rgb(105, 149, 207)",
-        cubicInterpolationMode: "monotone",
-        yAxisID: "power",
-        data: powerChart,
-      },
-      {
         label: t("voltage"),
         backgroundColor: "rgba(208, 188, 245, 0.5)",
         fill: true,
@@ -91,6 +80,17 @@ export function Chart({ leftS, power, voltage, chartTap, setChartTap }) {
         cubicInterpolationMode: "monotone",
         yAxisID: "voltage",
         data: voltageChart,
+      },
+      {
+        label: t("power"),
+        backgroundColor: "rgba(245, 188, 188, 0.5)",
+        fill: true,
+        lineTension: 0,
+        borderDash: [8, 4],
+        borderColor: "rgb(207, 149, 149)",
+        cubicInterpolationMode: "monotone",
+        yAxisID: "power",
+        data: powerChart,
       },
     ],
   };
@@ -120,7 +120,7 @@ export function Chart({ leftS, power, voltage, chartTap, setChartTap }) {
         display: true,
         position: "right",
         min: 0,
-        max: 8,
+        max: 5,
       },
       voltage: {
         type: "linear",
@@ -154,8 +154,13 @@ export function Chart({ leftS, power, voltage, chartTap, setChartTap }) {
     },
   };
   return (
-    <div style={{ maxWidth: 700, width: "100%" }}>
-      <Line options={options} data={data} onClick={chartPauseTapping} />
+    <div style={{ maxWidth: 700, width: "100%", padding: "0 20px 0 20px" }}>
+      <Line
+        options={options}
+        data={data}
+        onTouchStart={chartPauseTapping}
+        onClick={chartPauseTapping}
+      />
     </div>
   );
 }

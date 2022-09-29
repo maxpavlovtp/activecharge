@@ -58,8 +58,8 @@ public class ChargerService {
   }
 
   @Transactional
-  public void refreshStatus(int batchSize, int scanDelayMs) {
-    List<ChargingJobEntity> jobs = chargingJobService.scanActive(batchSize, scanDelayMs);
+  public void refreshStatus(int batchSize, int intervalTimeMs) {
+    List<ChargingJobEntity> jobs = chargingJobService.scanActive(batchSize, intervalTimeMs);
     for (ChargingJobEntity jobEntity : jobs) {
       try {
         boolean updated = refreshStatus(jobEntity);
@@ -94,7 +94,7 @@ public class ChargerService {
       jobEntity.setState(ChargingJobState.DONE);
       jobEntity.setStoppedOn(OffsetDateTime.now(ZoneOffset.UTC));
 
-      jobMetricsCollector.removeJobMetric(jobEntity.getId());
+      jobMetricsCollector.removeJobMetrics(jobEntity.getId());
 
       return true;
     }

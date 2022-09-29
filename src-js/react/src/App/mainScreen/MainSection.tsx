@@ -1,34 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./MainSection.css";
-
 import { Link, useOutletContext, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
-import { getStationInfo, idStart } from "../../store/reducers/ActionCreators";
+import { idStart } from "../../store/reducers/ActionCreators";
 import MainImgLoadingLazy from "../../components/lazyLoading/MainImgLoadingLazy";
 import placehoderSrc from "../../assets/chargingTiny.png";
 import ErrorPage from "../../components/error-page/ErrorPage";
-// import { setDeviceStatusUndefind } from "../../store/reducers/FetchSlice";
 import axios from "axios";
 import { Col, Container, Row } from "react-bootstrap";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
-import { MainScreenLink } from "../../components/globalStyles";
 import { setDeviceStatusUndefind } from "../../store/reducers/FetchSlice";
+import { PayLinkLoading } from "../../components/stationCard/LoadingTime";
 
 const MainSection: React.FC = () => {
   const [searchParams] = useSearchParams();
-  const [payUrls, setPayUrls] = useState<any>([]);
   const [errorPay, setErrorPay] = useState<any>(null);
   const [mainImgTheme] = useOutletContext<any>();
 
+  const [loadingPayLink, setLoadingPayLink] = useState(false);
+  const [loadingSixPayLink, setLoadingSixPayLink] = useState(false);
+  const [loadingTwelvePayLink, setLoadingTwelvePayLink] = useState(false);
+
   let stationNumber: any = searchParams.get("station");
-  const urlPayment12h = `${process.env.REACT_APP_LINK_SERVE}order/generateCheckoutLink?station_number=${stationNumber}&&hours=12`;
-  const urlPayment6h = `${process.env.REACT_APP_LINK_SERVE}order/generateCheckoutLink?station_number=${stationNumber}&&hours=6`;
-  const payEndpoints = [urlPayment6h, urlPayment12h];
 
   const { t } = useTranslation();
 
-  const { error } = useAppSelector((state) => state.fetchReducer);
+  const { errorStart } = useAppSelector((state) => state.fetchReducer);
 
   const dispatch = useAppDispatch();
 
@@ -37,30 +34,45 @@ const MainSection: React.FC = () => {
     dispatch(setDeviceStatusUndefind(undefined));
   };
 
-  useEffect(() => {
+  const goPayLink = (hours: number) => {
+    setLoadingPayLink(true);
+    if (hours === 6) setLoadingSixPayLink(true);
+    if (hours === 12) setLoadingTwelvePayLink(true);
     try {
-      if (process.env.REACT_APP_LINK_SERVE === "http://localhost:8080/") {
-        console.log("local dev");
-      } else {
-        axios
-          .all(payEndpoints.map((endpoint: any) => axios.get(endpoint)))
-          .then((data) => {
-            setPayUrls([]);
-            data?.map((link: any) => {
-              const { pageUrl } = link.data;
-              setPayUrls((pay: any) => [...pay, pageUrl]);
-              console.log(pageUrl);
-            });
-          });
-      }
-    } catch (e: any) {
-      setErrorPay(e.message);
+      axios
+        .get(
+          `${process.env.REACT_APP_LINK_SERVE}order/generateCheckoutLink?station_number=${stationNumber}&&hours=${hours}`
+        )
+        .catch(function (error: any) {
+          setErrorPay(error.message);
+          console.log(error.message);
+        })
+        .then((link: any) => {
+          window.open(link.data.pageUrl, "_blank");
+          setLoadingPayLink(false);
+          setLoadingSixPayLink(false);
+          setLoadingTwelvePayLink(false);
+        });
+    } catch (err: any) {
+      console.log(err.message);
     }
-  }, []);
+  };
 
-  let statusBtn = errorPay !== null ? "btnStart disableBtn" : "btnStart";
+  let statusBtn =
+    errorPay !== null || loadingPayLink === true
+      ? "btnStart disableBtn"
+      : "btnStart";
 
-  if (error) {
+  if (errorPay) {
+    return (
+      <ErrorPage
+        errorHeader={t("errorPayHeader")}
+        errorBody={t("errorPayBody")}
+      />
+    );
+  }
+
+  if (errorStart) {
     return (
       <ErrorPage
         errorHeader={t("errorDevHeader")}
@@ -80,7 +92,9 @@ const MainSection: React.FC = () => {
       </Row>
       <Row className="justify-content-center mt-2 mb-5">
         <Col
-          xs="auto"
+          xs="3"
+          sm="2"
+          lg="2"
           as={Link}
           to={`/charging?station=${stationNumber}`}
           className="btnStart"
@@ -91,23 +105,35 @@ const MainSection: React.FC = () => {
 
         <Col
           as={"a"}
-          xs="auto"
+          xs="2"
+          sm="1"
+          lg="1"
           className={`ml-2 ${statusBtn}`}
-          href={`${payUrls[0]}`}
+          onClick={() => goPayLink(6)}
           target="_blank"
           rel="noreferrer"
         >
-          6{t("btns.start")}
+          {loadingSixPayLink === true ? (
+            <PayLinkLoading />
+          ) : (
+            `6${t("btns.start")}`
+          )}
         </Col>
         <Col
           as={"a"}
-          xs="auto"
+          xs="3"
+          sm="2"
+          lg="2"
           className={`ml-2 ${statusBtn}`}
-          href={`${payUrls[1]}`}
+          onClick={() => goPayLink(12)}
           target="_blank"
           rel="noreferrer"
         >
-          12{t("btns.start")}
+          {loadingTwelvePayLink === true ? (
+            <PayLinkLoading />
+          ) : (
+            `12${t("btns.start")}`
+          )}
         </Col>
       </Row>
 

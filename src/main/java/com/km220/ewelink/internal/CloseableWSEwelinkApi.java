@@ -1,7 +1,6 @@
 package com.km220.ewelink.internal;
 
-import com.km220.ewelink.EwelinkApiException;
-import com.km220.ewelink.EwelinkClientException;
+import com.km220.ewelink.error.EwelinkClientException;
 import com.km220.ewelink.EwelinkParameters;
 import com.km220.ewelink.WSClientListener;
 import com.km220.ewelink.model.ws.WssResponse;

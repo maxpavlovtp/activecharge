@@ -14,6 +14,8 @@ export const lightTheme = {
 
   footerColorLink: "#1b85f7",
 
+  colorSpan: "#8f00ff",
+
   a: "#2c2b2b",
 };
 export const darkTheme = {
@@ -32,6 +34,8 @@ export const darkTheme = {
   offerLinksColor: "#ddb9fa",
 
   footerColorLink: "#73b4fa",
+
+  colorSpan: "#ddb9fa",
 
   a: "#fafafa",
 };

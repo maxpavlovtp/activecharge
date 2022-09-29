@@ -49,7 +49,7 @@ public class DatabaseEntityRowMapper<T extends DatabaseEntity> implements RowMap
     return databaseEntity;
   }
 
-  protected String name(String columnName) {
+  public String name(String columnName) {
     return alias + columnName;
   }
 }

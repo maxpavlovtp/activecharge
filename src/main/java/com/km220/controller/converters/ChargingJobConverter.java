@@ -13,7 +13,6 @@ public final class ChargingJobConverter implements Function<ChargingJobEntity, C
     if (jobEntity == null) {
       return null;
     }
-
     var job = new ChargingJob(jobEntity.getStation().getNumber(),
         jobEntity.getCreatedOn().toEpochSecond(), jobEntity.getPeriodSec());
     job.setPowerWt(jobEntity.getPowerWt());
@@ -23,7 +22,6 @@ public final class ChargingJobConverter implements Function<ChargingJobEntity, C
     if (jobEntity.getStoppedOn() != null) {
       job.setStoppedS(jobEntity.getStoppedOn().toEpochSecond());
     }
-
     return job;
   }
 }
