@@ -94,7 +94,9 @@ const MainSection: React.FC = () => {
 
         <Col
           as={"a"}
-          xs="auto"
+          xs="2"
+          sm="1"
+          lg="1"
           className={`ml-2 ${statusBtn}`}
           href={`${payUrls[0]}`}
           target="_blank"
@@ -104,7 +106,9 @@ const MainSection: React.FC = () => {
         </Col>
         <Col
           as={"a"}
-          xs="auto"
+          xs="3"
+          sm="2"
+          lg="2"
           className={`ml-2 ${statusBtn}`}
           href={`${payUrls[1]}`}
           target="_blank"
