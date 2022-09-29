@@ -15,6 +15,8 @@ export default function HomeScreen() {
   const [loading, setLoading] = useState<any>(true);
   const [statusALl, setStatusAll] = useState<any>();
   const [searchParams] = useSearchParams();
+  const [errorAll, setErrorAll] = useState<any>(null);
+
   let stationNumber: any = searchParams.get("station");
   const interval: any = localStorage.getItem("interval");
   const sec = 5000;
@@ -23,11 +25,17 @@ export default function HomeScreen() {
 
   useEffect(() => {
     try {
-      axios.get(urlV2StatusAll).then(function (result: any) {
-        setStatusAll(result.data);
-        statusALl !== null && setLoading(false);
-        console.log(result?.data);
-      });
+      axios
+        .get(urlV2StatusAll)
+        .catch(function (error: any) {
+          setErrorAll(error.message);
+          console.log(error.message);
+        })
+        .then(function (result: any) {
+          setStatusAll(result.data);
+          statusALl !== null && setLoading(false);
+          console.log(result?.data);
+        });
     } catch (e: any) {
       console.log(e.message);
     }
@@ -44,6 +52,15 @@ export default function HomeScreen() {
     }, sec);
     return () => clearInterval(timerID);
   }, []);
+
+  if (errorAll) {
+    return (
+      <ErrorPage
+        errorHeader={t("errorDevHeader")}
+        errorBody={t("errorDevBody")}
+      />
+    );
+  }
 
   if (loading === true) return <Spinner />;
 

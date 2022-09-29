@@ -21,6 +21,10 @@ export const idStart = (station: string) => async (dispatch: AppDispatch) => {
   };
   dispatch(FetchSlice.actions.chargingDataFetching());
   await axios(config)
+    .catch(function (error: any) {
+      dispatch(FetchSlice.actions.chargingDataFetchingError(error.message));
+      console.log(error.message);
+    })
     .then(function (response: any) {
       localStorage.setItem(
         "interval",
@@ -39,10 +43,16 @@ export const getStationInfo =
   (station: string) => async (dispatch: AppDispatch) => {
     try {
       dispatch(FetchSlice.actions.deviceStatusFetching());
-      await axios.get(urlV2Status + station).then(function (result: any) {
-        dispatch(FetchSlice.actions.deviceStatusFetchingSuccess(result.data));
-        console.log(result.data);
-      });
+      await axios
+        .get(urlV2Status + station)
+        .catch(function (error: any) {
+          dispatch(FetchSlice.actions.deviceStatusFetchingError(error.message));
+          console.log(error.message);
+        })
+        .then(function (result: any) {
+          dispatch(FetchSlice.actions.deviceStatusFetchingSuccess(result.data));
+          console.log(result.data);
+        });
     } catch (e: any) {
       dispatch(FetchSlice.actions.deviceStatusFetchingError(e.message));
       console.log(e.message);

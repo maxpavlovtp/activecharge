@@ -40,10 +40,14 @@ i18n
           charging: "Зарядили",
           voltage: "Вольтаж",
           chargingSpeed: "Швидкість заряду",
+
           errorDevHeader: "Помилка серверу!",
-          errorDevBody: "Ми вже вирішуємо проблему, і скоро повернимось :)",
+          errorDevBody: "Ми вже вирішуємо проблему і скоро повернимось :)",
           errorHeader: "Девайс офлайн",
           errorBody: "Вибачте! Девайс офлайн. Спробуйте, будь ласка, пізніше",
+          errorPayHeader: "Оплата недоступна!",
+          errorPayBody: "Ми вже вирішуємо проблему і скоро повернимось :)",
+
           offerTitle: "Договір публічної оферти",
           contents: "Зміст",
           callUs: "Зателефонувати",
@@ -96,10 +100,14 @@ i18n
           charging: "Charged",
           voltage: "Voltage",
           chargingSpeed: "Charging speed",
+
           errorDevHeader: "Server error!",
           errorDevBody: "We are reinventing and will be back soon :)",
           errorHeader: "Device is offline",
           errorBody: "Sorry! Device is offline. Please, try later",
+          errorPayHeader: "Payment is unavailable!",
+          errorPayBody: "Sorry! We are reinventing and will be back soon :)",
+
           offerTitle: "Public offer agreement",
           contents: "Contents",
           callUs: "Call Us",

@@ -18,7 +18,7 @@ const MainSection: React.FC = () => {
 
   const { t } = useTranslation();
 
-  const { isLoadingCharging, deviceStatus, error } = useAppSelector(
+  const { isLoadingCharging, deviceStatus, errorCharging } = useAppSelector(
     (state) => state.fetchReducer
   );
 
@@ -54,13 +54,20 @@ const MainSection: React.FC = () => {
     }
   }, [deviceStatus?.lastJob]);
 
-  if (error)
+  useEffect(() => {
+    if (errorCharging !== '') {
+      setLoading(false);
+    }
+  }, [errorCharging]);
+
+  if (errorCharging) {
     return (
       <ErrorPage
         errorHeader={t("errorDevHeader")}
         errorBody={t("errorDevBody")}
       />
     );
+  }
 
   if (loading === true) return <Spinner />;
 
