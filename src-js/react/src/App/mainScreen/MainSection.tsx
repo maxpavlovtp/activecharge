@@ -10,7 +10,6 @@ import ErrorPage from "../../components/error-page/ErrorPage";
 import axios from "axios";
 import { Col, Container, Row } from "react-bootstrap";
 import { setDeviceStatusUndefind } from "../../store/reducers/FetchSlice";
-import { PayLinkLoading } from "../../components/stationCard/LoadingTime";
 
 const MainSection: React.FC = () => {
   const [searchParams] = useSearchParams();
