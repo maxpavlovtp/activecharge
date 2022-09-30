@@ -4,6 +4,7 @@ import com.km220.ewelink.WSClientListener;
 import com.km220.ewelink.model.device.SwitchState;
 import com.km220.ewelink.model.ws.WssResponse;
 import com.km220.service.device.update.ConsumptionUpdate;
+import com.km220.service.device.update.DeviceStateUpdate;
 import com.km220.service.device.update.DeviceStatusUpdate;
 import com.km220.service.device.update.DeviceUpdater;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +28,8 @@ class WebSocketListenerImpl implements WSClientListener {
     }
 
     //consumption
-    if (message.getConfig() != null && StringUtils.isNotEmpty(message.getConfig().getOneKwhData())) {
+    if (message.getConfig() != null && StringUtils.isNotEmpty(
+        message.getConfig().getOneKwhData())) {
       var oneKwh = Float.parseFloat(message.getConfig().getOneKwhData());
       var consumptionUpdate = ConsumptionUpdate.builder()
           .deviceId(message.getDeviceid())
@@ -38,19 +40,31 @@ class WebSocketListenerImpl implements WSClientListener {
       deviceUpdater.onConsumption(consumptionUpdate);
     }
 
+    var params = message.getParams();
+
     //device status
     if (message.getParams() != null) {
-      var params = message.getParams();
-      if (StringUtils.isEmpty(params.getPower()) || StringUtils.isEmpty(params.getVoltage())) {
-        return;
+      if (StringUtils.isNotEmpty(params.getPower()) && StringUtils.isNotEmpty(
+          params.getVoltage())) {
+        var statusUpdate = DeviceStatusUpdate.builder()
+            .deviceId(message.getDeviceid())
+            .on(params.getSwitchState() == SwitchState.ON)
+            .power(Float.parseFloat(params.getPower()))
+            .voltage(Float.parseFloat(params.getVoltage()))
+            .build();
+        deviceUpdater.onStatus(statusUpdate);
       }
-      var statusUpdate = DeviceStatusUpdate.builder()
-          .deviceId(message.getDeviceid())
-          .on(params.getSwitchState() == SwitchState.ON)
-          .power(Float.parseFloat(params.getPower()))
-          .voltage(Float.parseFloat(params.getVoltage()))
-          .build();
-      deviceUpdater.onStatus(statusUpdate);
+    }
+
+    //device online offline
+    if (message.getParams() != null && "sysmsg".equals(message.getAction())) {
+      deviceUpdater.onState(
+          DeviceStateUpdate.builder()
+              .deviceId(message.getDeviceid())
+              .action(message.getAction())
+              .online(message.getParams().getOnline())
+              .build()
+      );
     }
   }
 

@@ -5,4 +5,6 @@ public interface DeviceUpdater {
   void onConsumption(ConsumptionUpdate consumptionUpdate);
 
   void onStatus(DeviceStatusUpdate deviceStatusUpdate);
+
+  void onState(DeviceStateUpdate deviceStateUpdate);
 }
