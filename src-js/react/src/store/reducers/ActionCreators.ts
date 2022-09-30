@@ -1,11 +1,12 @@
 import { AppDispatch } from "../store";
 import axios from "axios";
-import { FetchSlice } from "./FetchSlice";
+import { FetchSlice, setDeviceStatusUndefind } from "./FetchSlice";
 
 const urlV2Start = `${process.env.REACT_APP_LINK_SERVE}device/v2/start`;
 const urlV2Status = `${process.env.REACT_APP_LINK_SERVE}device/v2/station/status?station_number=`;
 
 export const idStart = (station: string) => async (dispatch: AppDispatch) => {
+  dispatch(setDeviceStatusUndefind(undefined));
   const data = JSON.stringify({
     station_number: station,
   });
