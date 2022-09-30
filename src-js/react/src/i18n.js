@@ -43,10 +43,13 @@ i18n
 
           errorDevHeader: "Помилка серверу!",
           errorDevBody: "Ми вже вирішуємо проблему і скоро повернимось :)",
-          errorHeader: "Девайс офлайн",
-          errorBody: "Вибачте! Девайс офлайн. Спробуйте, будь ласка, пізніше",
+          errorOfflineHeader: "Девайс офлайн",
+          errorOfflineBody:
+            "Вибачте! Девайс офлайн. Спробуйте, будь ласка, пізніше",
           errorPayHeader: "Оплата недоступна!",
-          errorPayBody: "Ми вже вирішуємо проблему і скоро повернимось :)",
+          errorPayBody: "Ми вже вирішуємо проблему і скоро повернемось :)",
+
+          helpCall: "Зателефонуйте нам :)",
 
           offerTitle: "Договір публічної оферти",
           contents: "Зміст",
@@ -103,10 +106,13 @@ i18n
 
           errorDevHeader: "Server error!",
           errorDevBody: "We are reinventing and will be back soon :)",
-          errorHeader: "Device is offline",
-          errorBody: "Sorry! Device is offline. Please, try later",
+          errorOfflineHeader: "Device is offline",
+          errorOfflineBody: "Sorry! Device is offline. Please, try later",
           errorPayHeader: "Payment is unavailable!",
           errorPayBody: "Sorry! We are reinventing and will be back soon :)",
+
+          helpCall: "Call us :)",
+
 
           offerTitle: "Public offer agreement",
           contents: "Contents",

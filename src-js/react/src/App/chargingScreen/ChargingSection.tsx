@@ -5,7 +5,7 @@ import Spinner from "../../components/spinner/Spinner";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import { getStationInfo } from "../../store/reducers/ActionCreators";
 import GetPower from "../../components/getPower/GetPower";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Container } from "react-bootstrap";
 
 const MainSection: React.FC = () => {
@@ -17,10 +17,10 @@ const MainSection: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
-  const { isLoadingCharging, deviceStatus, errorCharging } = useAppSelector(
-    (state) => state.fetchReducer
-  );
+  const { isLoadingCharging, deviceStatus, errorCharging, errorStart } =
+    useAppSelector((state) => state.fetchReducer);
 
   useEffect(() => {
     if (isLoadingCharging === false) {
@@ -55,7 +55,7 @@ const MainSection: React.FC = () => {
   }, [deviceStatus?.lastJob]);
 
   useEffect(() => {
-    if (errorCharging !== '') {
+    if (errorCharging !== "") {
       setLoading(false);
     }
   }, [errorCharging]);
@@ -67,6 +67,9 @@ const MainSection: React.FC = () => {
         errorBody={t("errorDevBody")}
       />
     );
+  }
+  if (errorStart) {
+    navigate(`/start?station=${stationNumbers}`)
   }
 
   if (loading === true) return <Spinner />;
