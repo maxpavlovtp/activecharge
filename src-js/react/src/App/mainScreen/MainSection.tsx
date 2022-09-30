@@ -9,8 +9,6 @@ import placehoderSrc from "../../assets/chargingTiny.png";
 import ErrorPage from "../../components/error-page/ErrorPage";
 import axios from "axios";
 import { Col, Container, Row } from "react-bootstrap";
-import { setDeviceStatusUndefind } from "../../store/reducers/FetchSlice";
-import { PayLinkLoading } from "../../components/stationCard/LoadingTime";
 
 const MainSection: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -31,7 +29,6 @@ const MainSection: React.FC = () => {
 
   const startCharging = () => {
     dispatch(idStart(stationNumber));
-    dispatch(setDeviceStatusUndefind(undefined));
   };
 
   useEffect(() => {
