@@ -30,7 +30,7 @@ public class DeviceMetricsCollector {
     stateMetrics.computeIfAbsent(deviceId, id -> Gauge.builder(DEVICE_STATE,
             () -> Optional.ofNullable(states.get(deviceId))
                 .map(BooleanUtils::toInteger)
-                .orElse(0)
+                .orElse(null)
         )
         .tags(Tags.of("device_id", deviceId))
         .register(meterRegistry));
