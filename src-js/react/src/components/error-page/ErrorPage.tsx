@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
+import ModalContacts from "../ModalContacts";
 import styles from "./ErrorPage.module.css";
 
 const ErrorPage = ({
@@ -8,10 +10,20 @@ const ErrorPage = ({
   errorHeader: string;
   errorBody: string;
 }) => {
+  const [modalActive, setModalActive] = useState(false);
+  const { t } = useTranslation();
+
   return (
     <div className={styles.container}>
       <p className={styles.title}>{errorHeader}</p>
       <p className={styles.body}>{errorBody}</p>
+      <div className={styles.btnHelp} onClick={() => setModalActive(true)}>{t("helpCall")}</div>
+      <div style={{textAlign: 'left'}}>
+        <ModalContacts
+          modalActive={modalActive}
+          setModalActive={setModalActive}
+        />
+      </div>
     </div>
   );
 };

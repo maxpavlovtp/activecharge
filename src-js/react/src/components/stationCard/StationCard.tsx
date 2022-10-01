@@ -45,7 +45,7 @@ export default function ({
             {state === "IN_PROGRESS" ? (
               <p className={styles.readyCharge}>{timer}</p>
             ) : (
-              <p className={styles.readyCharge}>Ready!</p>
+              <p className={styles.readyCharge}>{t("readyForUse")}</p>
             )}
 
             <div

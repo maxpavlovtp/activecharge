@@ -1,29 +1,44 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 60vh;
 }
 .numError {
-    font-family: "OpenSansRegular", Arial, Helvetica, sans-serif;
-    font-weight: 400;
-    font-size: calc(8rem + 3vw);
-    margin: 0;
-    /* color: #06935f; */
+  font-family: "OpenSansRegular", Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  font-size: calc(8rem + 3vw);
+  margin: 0;
+  /* color: #06935f; */
 }
 .title {
-    font-family: "OpenSansBold", Arial, Helvetica, sans-serif;
-    font-weight: 700;
-    font-size: calc(1.5rem + 1vw);
-    margin: 0;
-    /* color: #28464D; */
+  font-family: "OpenSansBold", Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  font-size: calc(1.5rem + 1vw);
+  margin: 0;
+  /* color: #28464D; */
 }
 .body {
-    font-family: "OpenSansRegular", Arial, Helvetica, sans-serif;
-    font-weight: 400;
-    font-size: calc(0.7rem + 0.2vw);
-    margin: 10px 0 0 0;
-    /* color: #28464D; */
+  font-family: "OpenSansRegular", Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  font-size: calc(0.7rem + 0.2vw);
+  margin: 10px 0 10px 0;
+  /* color: #28464D; */
+}
+.btnHelp {
+  cursor: pointer;
+  text-align: center;
+  background-color: #8f00ff;
+  color: #fafafa;
+  font-family: "OpenSansMedium", Arial, Helvetica, sans-serif;
+  font-weight: 500;
+  font-size: calc(0.8rem + 1vw);
+  margin-top: 10px;
+  border-radius: 10px;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+  padding-top: 6px !important;
+  padding-bottom: 6px !important;
 }

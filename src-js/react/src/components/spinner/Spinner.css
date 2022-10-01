@@ -16,19 +16,21 @@
   left: 50%;
   right: 50%;
   bottom: 50%;
+  color: #4e4e4e;
   border: 3px solid rgb(0, 0, 0);
   border-radius: 50%;
   box-sizing: content-box;
   padding: 10px;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) rotate(0deg);
   opacity: 0.5;
   animation: spinner 3s infinite;
-  transition: 0.5s;
+  transition: 1s;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  animation-direction: reverse;
 }
 @keyframes spinner {
   50% {
-    transform: translate(-50%, -50%) rotate(360deg);
+    transform: translate(-50%, -50%) rotate(-360deg);
     border: 2px solid rgba(0, 0, 0, 0.178);
     padding: 30px;
     color: #8f00ff;

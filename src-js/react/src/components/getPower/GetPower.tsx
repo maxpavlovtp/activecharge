@@ -21,7 +21,7 @@ export default function GetPower({
   const { deviceStatus } = useAppSelector((state) => state.fetchReducer);
   const { t } = useTranslation();
   const interval: any = localStorage.getItem("interval");
-  const sec = interval ? interval : 5000;
+  const sec = interval ? interval : 1000;
   useEffect(() => {
     if (chartTap === false) {
       const timerID = setInterval(() => {
