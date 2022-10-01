@@ -8,10 +8,12 @@ import com.km220.ewelink.EwelinkParameters;
 import com.km220.ewelink.WSClientListener;
 import com.km220.ewelink.internal.WebSocketClient;
 import com.km220.ewelink.internal.WebSocketHandler;
+import com.km220.ewelink.internal.utils.HttpUtils;
 import com.km220.ewelink.internal.utils.JsonUtils;
 import com.km220.ewelink.internal.utils.SecurityUtils;
 import com.km220.ewelink.internal.ws.DispatchResponse;
 import com.km220.ewelink.internal.ws.WssLogin;
+import com.km220.ewelink.model.ws.WssResponse;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -91,7 +93,11 @@ public abstract class AbstractWSEwelinkApiV2 extends AbstractEwelinkApiV2 implem
 
     try {
       latch.await();
-      apiSessionKey = webSocketClient.handshakeResponse.get().getApikey();
+      var wssResponse = webSocketClient.handshakeResponse.get();
+      if (HttpUtils.isAuthErrorCode(wssResponse.getError())) {
+        login();
+      }
+      apiSessionKey = wssResponse.getApikey();
     } catch (InterruptedException e) {
       Thread.currentThread().interrupt();
     }

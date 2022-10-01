@@ -114,7 +114,7 @@ public abstract class AbstractEwelinkApiV2 {
 
     CompletableFuture<JsonNode> requestCompletableFuture = requestExecutor.apply(credentials);
     return requestCompletableFuture.exceptionallyCompose(e -> {
-      if (HttpUtils.isEwelinkAuthorizationError(e)) {
+      if (HttpUtils.isEwelinkAuthorizationError(e.getCause())) {
         log.info("Ewelink auth error. {}", e.getMessage());
         log.info("Retry to get new access token");
         return requestExecutor.apply(
@@ -235,5 +235,9 @@ public abstract class AbstractEwelinkApiV2 {
 
   protected final EwelinkCredentials getCredentials() {
     return credentialsStorage.get(getCredentialsSupplier());
+  }
+
+  protected final void login() {
+    credentialsStorage.login(getCredentialsSupplier());
   }
 }
