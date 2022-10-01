@@ -10,6 +10,7 @@ import ErrorPage from "../../components/error-page/ErrorPage";
 import axios from "axios";
 import { Col, Container, Row } from "react-bootstrap";
 import { useVisitorData } from "@fingerprintjs/fingerprintjs-pro-react";
+import Spinner from "../../components/spinner/Spinner";
 
 const MainSection: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -78,6 +79,9 @@ const MainSection: React.FC = () => {
   if (data) {
     console.log(data.visitorFound);
     console.log(data.visitorId);
+    return (
+      <Spinner />
+    )
   }
   return (
     <Container fluid="lg">
