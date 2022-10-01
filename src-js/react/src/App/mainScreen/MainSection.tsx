@@ -77,12 +77,9 @@ const MainSection: React.FC = () => {
   }
 
   if (data) {
-    console.log(data.visitorFound);
     console.log(data.visitorId);
-    return (
-      <Spinner />
-    )
   }
+  
   return (
     <Container fluid="lg">
       <Row className="justify-content-center">

@@ -17,7 +17,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <FpjsProvider
     loadOptions={{
-      apiKey: "vfA2yYJN3cwuXD9zX0TE",
+      apiKey: "WwhYay4xivPAGlnQtelG",
       region: "eu",
     }}
   >
