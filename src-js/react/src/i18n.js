@@ -51,6 +51,8 @@ i18n
 
           helpCall: "Зателефонуйте нам :)",
 
+          readyForUse: "Готова!",
+
           offerTitle: "Договір публічної оферти",
           contents: "Зміст",
           callUs: "Зателефонувати",
@@ -113,6 +115,7 @@ i18n
 
           helpCall: "Call us :)",
 
+          readyForUse: "Ready!",
 
           offerTitle: "Public offer agreement",
           contents: "Contents",
