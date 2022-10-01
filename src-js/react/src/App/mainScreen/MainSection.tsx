@@ -79,7 +79,6 @@ const MainSection: React.FC = () => {
   if (data) {
     console.log(data.visitorId);
   }
-  
   return (
     <Container fluid="lg">
       <Row className="justify-content-center">
