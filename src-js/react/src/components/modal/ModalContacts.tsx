@@ -1,8 +1,8 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import Emoji from "./emoji/Emoji";
-import Modal from "./modal/Modal";
-import "../App/contactsScreen/ContactsSection.css";
+import Emoji from "../emoji/Emoji";
+import Modal from "./Modal";
+import "../../App/contactsScreen/ContactsSection.css";
 
 export default function ModalContacts({
   modalActive,

@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./StationCard.module.css";
 import { useTranslation } from "react-i18next";
-import { CardLink, HomeCard, LinksColor } from "../globalStyles";
+import { CardLink, HomeCard } from "../globalStyles";
 import { useAppSelector } from "../../hooks/reduxHooks";
 
-export default function ({
+export const StationCard = ({
   stationNumber,
   leftS,
   state,
@@ -12,7 +12,7 @@ export default function ({
   stationNumber: any;
   leftS: any;
   state: any;
-}) {
+}) => {
   const [routeTo, setRouteTo] = useState<any>("");
 
   const [timer, setTimer] = useState<any>(null);

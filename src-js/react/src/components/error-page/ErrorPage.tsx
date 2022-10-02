@@ -4,7 +4,7 @@ import {
   DIMA_PHONE_NUM,
   MAX_PHONE_NUM,
 } from "../../App/contactsScreen/ContactsSection";
-import ModalContacts from "../ModalContacts";
+import ModalContacts from "../modal/ModalContacts";
 import styles from "./ErrorPage.module.css";
 
 const ErrorPage = ({

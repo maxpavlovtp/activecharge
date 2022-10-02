@@ -1,5 +1,5 @@
-import React, { Suspense } from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { Suspense } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 import NotFoundPage from "./components/notFoundPage/NotFoundPage";
 import PrivateRoute from "./components/privateRoute/PrivateRoute";

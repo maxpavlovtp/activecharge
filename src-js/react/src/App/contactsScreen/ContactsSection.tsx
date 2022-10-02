@@ -9,7 +9,7 @@ import {
 import { faPhoneSquareAlt } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
 import { Col, Container, Row } from "react-bootstrap";
-import ModalContacts from "../../components/ModalContacts";
+import ModalContacts from "../../components/modal/ModalContacts";
 
 export const MAX_PHONE_NUM = [+380971983759, "097-198-37-59"];
 export const DIMA_PHONE_NUM = [+380978379316, "097-837-93-16"];

@@ -11,7 +11,6 @@ import {
   VoltageBtn,
 } from "../globalStyles";
 import FullInfo from "../fullInfo/FullInfo";
-import { AnimatePresence, motion } from "framer-motion";
 
 export default function GetPower({
   station,
