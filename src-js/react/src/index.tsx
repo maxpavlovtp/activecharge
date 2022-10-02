@@ -22,7 +22,7 @@ root.render(
     cacheTimeInSeconds={86399}
     cacheLocation={CacheLocation.LocalStorage}
     loadOptions={{
-      apiKey: "WwhYay4xivPAGlnQtelG",
+      apiKey: `${process.env.REACT_APP_FINGERPRINT_API}`,
       region: "eu",
     }}
   >
