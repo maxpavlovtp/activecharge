@@ -123,7 +123,11 @@ export default function Layout() {
             collapseOnSelect
             // ref={domNode}
           >
-            <LinksColor reloadDocument to={routeTo} className="flex-row align-items-center">
+            <LinksColor
+              reloadDocument
+              to={routeTo}
+              className="flex-row align-items-center"
+            >
               <div className="logoContainer">
                 <MainImgLoadingLazy
                   src={logoTheme}

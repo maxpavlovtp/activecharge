@@ -37,9 +37,9 @@
 }
 
 .modalContentActive {
-    padding: 20px;
-    border-radius: 12px;
-    background-color: #fff;
-    transform: scale(1);
-    transition: 0.4s all;
+  padding: 20px;
+  border-radius: 12px;
+  background-color: #fff;
+  transform: scale(1);
+  transition: 0.4s all;
 }

@@ -41,20 +41,17 @@ export default function ({
           <p className={styles.numberStation}>{stationNumber}</p>
         </div>
 
-          <div className={styles.status}>
-            {state === "IN_PROGRESS" ? (
-              <p className={styles.readyCharge}>{timer}</p>
-            ) : (
-              <p className={styles.readyCharge}>{t("readyForUse")}</p>
-            )}
+        <div className={styles.status}>
+          {state === "IN_PROGRESS" ? (
+            <p className={styles.readyCharge}>{timer}</p>
+          ) : (
+            <p className={styles.readyCharge}>{t("readyForUse")}</p>
+          )}
 
-            <div
-              className={
-                state === "IN_PROGRESS" ? styles.online : styles.offline
-              }
-            ></div>
-          </div>
-
+          <div
+            className={state === "IN_PROGRESS" ? styles.online : styles.offline}
+          ></div>
+        </div>
       </HomeCard>
     </CardLink>
   );

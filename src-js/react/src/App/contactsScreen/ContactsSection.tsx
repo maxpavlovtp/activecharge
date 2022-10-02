@@ -8,10 +8,11 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { faPhoneSquareAlt } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
-import Modal from "../../components/modal/Modal";
-import Emoji from "../../components/emoji/Emoji";
 import { Col, Container, Row } from "react-bootstrap";
 import ModalContacts from "../../components/ModalContacts";
+
+export const MAX_PHONE_NUM = [+380971983759, "097-198-37-59"];
+export const DIMA_PHONE_NUM = [+380978379316, "097-837-93-16"];
 
 const MainSection: React.FC = () => {
   const [modalActive, setModalActive] = useState(false);
@@ -44,7 +45,7 @@ const MainSection: React.FC = () => {
       <Row className="justify-content-center">
         <Col
           as={"a"}
-          href="https://wa.me/+380971983759"
+          href={`https://wa.me/${MAX_PHONE_NUM[0]}`}
           className="text-center watsapp"
         >
           <FontAwesomeIcon icon={faWhatsapp} size="4x" />
@@ -63,6 +64,8 @@ const MainSection: React.FC = () => {
         <ModalContacts
           modalActive={modalActive}
           setModalActive={setModalActive}
+          MAX_PHONE_NUM={MAX_PHONE_NUM}
+          DIMA_PHONE_NUM={DIMA_PHONE_NUM}
         />
       </Row>
     </Container>
