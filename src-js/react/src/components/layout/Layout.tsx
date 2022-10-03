@@ -24,7 +24,6 @@ import {
 } from "../globalStyles";
 import { lightTheme, darkTheme } from "../darkTheme/Theme";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
-import { setDeviceStatusUndefind } from "../../store/reducers/FetchSlice";
 
 export default function Layout() {
   const [routeTo, setRouteTo] = useState<any>("/start");
@@ -123,7 +122,11 @@ export default function Layout() {
             collapseOnSelect
             // ref={domNode}
           >
-            <LinksColor reloadDocument to={routeTo} className="flex-row align-items-center">
+            <LinksColor
+              reloadDocument
+              to={routeTo}
+              className="flex-row align-items-center"
+            >
               <div className="logoContainer">
                 <MainImgLoadingLazy
                   src={logoTheme}

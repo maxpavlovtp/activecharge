@@ -1,3 +1,3 @@
 export interface IFetch {
-    data: object;
+  data: object;
 }

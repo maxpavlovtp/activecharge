@@ -1,15 +1,19 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import Emoji from "./emoji/Emoji";
-import Modal from "./modal/Modal";
-import "../App/contactsScreen/ContactsSection.css";
+import Emoji from "../emoji/Emoji";
+import Modal from "./Modal";
+import "../../App/contactsScreen/ContactsSection.css";
 
 export default function ModalContacts({
   modalActive,
   setModalActive,
+  MAX_PHONE_NUM,
+  DIMA_PHONE_NUM,
 }: {
   modalActive: any;
   setModalActive: any;
+  MAX_PHONE_NUM: any;
+  DIMA_PHONE_NUM: any;
 }) {
   const { t } = useTranslation();
 
@@ -19,14 +23,14 @@ export default function ModalContacts({
         <p className="tapForCall">{t("tapCall")}:</p>
         <div className="numberCont">
           <Emoji symbol="📲" label="phone" />
-          <a href="tel:+380971983759" className="telephone">
-            {t("telMax")}: 097-198-37-59
+          <a href={`tel:${MAX_PHONE_NUM[0]}`} className="telephone">
+            {t("telMax")}: {MAX_PHONE_NUM[1]}
           </a>
         </div>
         <div className="numberCont">
           <Emoji symbol="📲" label="phone" />
-          <a href="tel:+380978379316" className="telephone">
-            {t("telDima")}: 097-837-93-16
+          <a href={`tel:${DIMA_PHONE_NUM[0]}`} className="telephone">
+            {t("telDima")}: {DIMA_PHONE_NUM[1]}
           </a>
         </div>
       </div>

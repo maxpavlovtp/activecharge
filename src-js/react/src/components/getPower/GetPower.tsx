@@ -4,9 +4,13 @@ import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import { getStationInfo } from "../../store/reducers/ActionCreators";
 import { useTranslation } from "react-i18next";
 import { Col, Row } from "react-bootstrap";
-import { FinishKmStap, FinishKwtStap, PowerMetricsColor, VoltageBtn } from "../globalStyles";
+import {
+  FinishKmStap,
+  FinishKwtStap,
+  PowerMetricsColor,
+  VoltageBtn,
+} from "../globalStyles";
 import FullInfo from "../fullInfo/FullInfo";
-import { AnimatePresence, motion } from "framer-motion";
 
 export default function GetPower({
   station,

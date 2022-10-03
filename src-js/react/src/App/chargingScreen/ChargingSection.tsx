@@ -69,7 +69,7 @@ const MainSection: React.FC = () => {
     );
   }
   if (errorStart) {
-    navigate(`/start?station=${stationNumbers}`)
+    navigate(`/start?station=${stationNumbers}`);
   }
 
   if (loading === true) return <Spinner />;

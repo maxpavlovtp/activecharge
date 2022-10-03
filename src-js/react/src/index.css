@@ -2,32 +2,32 @@ html {
   height: 100vh;
 }
 @font-face {
-  font-family: 'OpenSansRegular';
-  src: local('OpenSans'), url(./fonts/OpenSans-Regular.ttf) format('truetype');
+  font-family: "OpenSansRegular";
+  src: local("OpenSans"), url(./fonts/OpenSans-Regular.ttf) format("truetype");
   font-display: swap;
 }
 @font-face {
-  font-family: 'OpenSansSemiBold';
-  src: local('OpenSans'), url(./fonts/OpenSans-SemiBold.ttf) format('truetype');
+  font-family: "OpenSansSemiBold";
+  src: local("OpenSans"), url(./fonts/OpenSans-SemiBold.ttf) format("truetype");
   font-display: swap;
 }
 @font-face {
-  font-family: 'OpenSansMedium';
-  src: local('OpenSans'), url(./fonts/OpenSans-Medium.ttf) format('truetype');
+  font-family: "OpenSansMedium";
+  src: local("OpenSans"), url(./fonts/OpenSans-Medium.ttf) format("truetype");
   font-display: swap;
 }
 @font-face {
-  font-family: 'OpenSansLight';
-  src: local('OpenSans'), url(./fonts/OpenSans-Light.ttf) format('truetype');
+  font-family: "OpenSansLight";
+  src: local("OpenSans"), url(./fonts/OpenSans-Light.ttf) format("truetype");
   font-display: swap;
 }
 @font-face {
-  font-family: 'OpenSansBold';
-  src: local('OpenSans'), url(./fonts/OpenSans-Bold.ttf) format('truetype');
+  font-family: "OpenSansBold";
+  src: local("OpenSans"), url(./fonts/OpenSans-Bold.ttf) format("truetype");
   font-display: swap;
 }
 @font-face {
-  font-family: 'OpenSansExtraBold';
-  src: local('OpenSans'), url(./fonts/OpenSans-ExtraBold.ttf) format('truetype');
+  font-family: "OpenSansExtraBold";
+  src: local("OpenSans"), url(./fonts/OpenSans-ExtraBold.ttf) format("truetype");
   font-display: swap;
 }

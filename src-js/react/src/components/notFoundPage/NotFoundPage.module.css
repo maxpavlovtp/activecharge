@@ -1,13 +1,13 @@
 .container {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .textError {
-    /* color: #2c2c2c; */
-    font-size: calc(2rem + 1.5vw);
-    font-family: 'OpenSansBold';
-    font-weight: 700;
+  /* color: #2c2c2c; */
+  font-size: calc(2rem + 1.5vw);
+  font-family: "OpenSansBold";
+  font-weight: 700;
 }

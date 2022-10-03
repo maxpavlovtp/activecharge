@@ -10,7 +10,6 @@ import ErrorPage from "../../components/error-page/ErrorPage";
 import axios from "axios";
 import { Col, Container, Row } from "react-bootstrap";
 import { useVisitorData } from "@fingerprintjs/fingerprintjs-pro-react";
-import Spinner from "../../components/spinner/Spinner";
 
 const MainSection: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -23,7 +22,7 @@ const MainSection: React.FC = () => {
   const urlPayment6h = `${process.env.REACT_APP_LINK_SERVE}order/generateCheckoutLink?station_number=${stationNumber}&&hours=6`;
   const payEndpoints = [urlPayment6h, urlPayment12h];
 
-  const { isLoading, error, data } = useVisitorData();
+  const { data } = useVisitorData();
 
   const { t } = useTranslation();
 

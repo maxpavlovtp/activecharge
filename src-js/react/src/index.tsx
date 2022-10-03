@@ -19,9 +19,10 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <FpjsProvider
+    cacheTimeInSeconds={86399}
     cacheLocation={CacheLocation.LocalStorage}
     loadOptions={{
-      apiKey: "WwhYay4xivPAGlnQtelG",
+      apiKey: `${process.env.REACT_APP_FINGERPRINT_ID}`,
       region: "eu",
     }}
   >
