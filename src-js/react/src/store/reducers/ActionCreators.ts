@@ -12,7 +12,6 @@ export const idStart = (station: string) => async (dispatch: AppDispatch) => {
   dispatch(setDeviceStatusUndefind(undefined));
   const data = JSON.stringify({
     station_number: station,
-    user_UID: parsedUID.body.visitorId,
   });
 
   const config = {
@@ -46,11 +45,7 @@ export const getStationInfo =
   (station: string) => async (dispatch: AppDispatch) => {
     dispatch(FetchSlice.actions.deviceStatusFetching());
     await axios
-      .get(
-        urlV2Status +
-          `station_number=${station}` +
-          `&user_uid=${parsedUID.body.visitorId}`
-      )
+      .get(urlV2Status + `station_number=${station}`)
       .catch(function (error: any) {
         dispatch(FetchSlice.actions.deviceStatusFetchingError(error.message));
         console.log(error.message);
