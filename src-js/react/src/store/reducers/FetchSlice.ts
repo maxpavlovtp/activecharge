@@ -2,16 +2,16 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface FetchState {
   deviceStatus: any;
-  isLoadingCharging: boolean;
-  isGotDeviceStatus: boolean;
+  isLoadingCharging: any;
+  isGotDeviceStatus: any;
   errorStart: string;
   errorCharging: string;
 }
 
 export const initialState: FetchState = {
   deviceStatus: null,
-  isLoadingCharging: false,
-  isGotDeviceStatus: false,
+  isLoadingCharging: null,
+  isGotDeviceStatus: null,
   errorStart: "",
   errorCharging: "",
 };
