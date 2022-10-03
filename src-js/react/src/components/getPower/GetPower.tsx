@@ -81,8 +81,7 @@ export default function GetPower({
             </p>
           </Col>
           {deviceStatus?.lastJob?.state === "DONE" ||
-          deviceStatus?.lastJob?.state === "FAILED" ||
-          deviceStatus?.lastJob?.leftS <= 3 ? (
+          deviceStatus?.lastJob?.state === "FAILED" ? (
             <Col xs="auto" lg="auto" className="text-center">
               <PowerMetricsColor className="finishTitle">
                 {t("chargedCongrats")}{" "}
