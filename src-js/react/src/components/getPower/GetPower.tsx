@@ -63,8 +63,7 @@ export default function GetPower({
             lg={6}
             className={
               deviceStatus?.lastJob?.state === "DONE" ||
-              deviceStatus?.lastJob?.state === "FAILED" ||
-              deviceStatus?.lastJob?.leftS <= 3
+              deviceStatus?.lastJob?.state === "FAILED"
                 ? "offCont"
                 : "text-center"
             }
@@ -114,8 +113,7 @@ export default function GetPower({
           )}
         </Row>
         {deviceStatus?.lastJob?.state === "DONE" ||
-        deviceStatus?.lastJob?.state === "FAILED" ||
-        deviceStatus?.lastJob?.leftS <= 3 ? (
+        deviceStatus?.lastJob?.state === "FAILED" ? (
           <></>
         ) : (
           <div
@@ -144,8 +142,7 @@ export default function GetPower({
               }
               className={
                 deviceStatus?.lastJob?.state === "DONE" ||
-                deviceStatus?.lastJob?.state === "FAILED" ||
-                deviceStatus?.lastJob?.leftS <= 3
+                deviceStatus?.lastJob?.state === "FAILED"
                   ? "offCont"
                   : "text-center btnVoltage"
               }
