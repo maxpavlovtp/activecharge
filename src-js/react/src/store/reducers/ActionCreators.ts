@@ -64,11 +64,7 @@ export const getStationInfo =
 export const getUiNightMode =
   (station: string) => async (dispatch: AppDispatch) => {
     await axios
-      .get(
-        urlV2Status +
-          `station_number=${station}` +
-          `&user_uid=${parsedUID.body.visitorId}`
-      )
+      .get(urlV2Status + `station_number=${station}`)
       .catch(function (error: any) {
         dispatch(FetchSlice.actions.deviceStatusFetchingError(error.message));
         console.log(error.message);
