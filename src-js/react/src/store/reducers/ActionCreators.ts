@@ -44,15 +44,22 @@ export const idStart = (station: string) => async (dispatch: AppDispatch) => {
 
 export const getStationInfo =
   (station: string) => async (dispatch: AppDispatch) => {
-    dispatch(FetchSlice.actions.deviceStatusFetching());
-    await axios
-      .get(urlV2Status + `station_number=${station}` + `&user_uid=${parsedUID.body.visitorId}`)
-      .catch(function (error: any) {
-        dispatch(FetchSlice.actions.deviceStatusFetchingError(error.message));
-        console.log(error.message);
-      })
-      .then(function (result: any) {
-        dispatch(FetchSlice.actions.deviceStatusFetchingSuccess(result.data));
-        console.log(result.data);
-      });
+    const timeoutId = setTimeout(() => {
+      dispatch(FetchSlice.actions.deviceStatusFetching());
+      axios
+        .get(
+          urlV2Status +
+            `station_number=${station}` +
+            `&user_uid=${parsedUID.body.visitorId}`
+        )
+        .catch(function (error: any) {
+          dispatch(FetchSlice.actions.deviceStatusFetchingError(error.message));
+          console.log(error.message);
+        })
+        .then(function (result: any) {
+          dispatch(FetchSlice.actions.deviceStatusFetchingSuccess(result.data));
+          console.log(result.data);
+        });
+    }, 2000);
+    return () => clearTimeout(timeoutId);
   };
