@@ -31,7 +31,7 @@ export default function Layout() {
 
   const [searchParams] = useSearchParams();
   let stationNumbers: any = searchParams.get("station");
-  const { deviceStatus, isGotDeviceStatus, uiNightMode } = useAppSelector(
+  const { deviceStatus, isGotDeviceStatus } = useAppSelector(
     (state) => state.fetchReducer
   );
   const dispatch = useAppDispatch();

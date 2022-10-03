@@ -46,20 +46,13 @@ export const getStationInfo =
   (station: string) => async (dispatch: AppDispatch) => {
     dispatch(FetchSlice.actions.deviceStatusFetching());
     await axios
-      .get(
-        urlV2Status +
-          `station_number=${station}` +
-          `&user_uid=${parsedUID.body.visitorId}`
-      )
+      .get(urlV2Status + `station_number=${station}` + `&user_uid=${parsedUID.body.visitorId}`)
       .catch(function (error: any) {
         dispatch(FetchSlice.actions.deviceStatusFetchingError(error.message));
         console.log(error.message);
       })
       .then(function (result: any) {
         dispatch(FetchSlice.actions.deviceStatusFetchingSuccess(result.data));
-        dispatch(
-          FetchSlice.actions.deviceStatusUiMode(result.data.uiNightMode)
-        );
         console.log(result.data);
       });
   };
