@@ -11,8 +11,8 @@ export interface FetchState {
 
 export const initialState: FetchState = {
   deviceStatus: null,
-  isLoadingCharging: null,
-  isGotDeviceStatus: null,
+  isLoadingCharging: false,
+  isGotDeviceStatus: false,
   uiNightMode: false,
   errorStart: "",
   errorCharging: "",
