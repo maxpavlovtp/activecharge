@@ -31,7 +31,7 @@ export default function Layout() {
 
   const [searchParams] = useSearchParams();
   let stationNumbers: any = searchParams.get("station");
-  const { deviceStatus, isGotDeviceStatus } = useAppSelector(
+  const { deviceStatus, isGotDeviceStatus, uiNightMode } = useAppSelector(
     (state) => state.fetchReducer
   );
   const dispatch = useAppDispatch();
@@ -85,17 +85,17 @@ export default function Layout() {
     setModeImg(nightMode);
   };
 
-  useEffect(() => {
-    if (togglerStatus === false) {
-      dispatch(getStationInfo(stationNumbers));
-      console.log(deviceStatus);
-      if (deviceStatus?.uiNightMode === false) {
-        lightModeSetter();
-      } else if (deviceStatus?.uiNightMode === true) {
-        darkModeSetter();
-      }
-    }
-  }, [deviceStatus?.uiNightMode]);
+  // useEffect(() => {
+  //   if (togglerStatus === false) {
+  //     dispatch(getStationInfo(stationNumbers));
+  //     console.log(deviceStatus?.uiNightMode);
+  //     if (deviceStatus?.uiNightMode === false) {
+  //       lightModeSetter();
+  //     } else if (deviceStatus?.uiNightMode === true) {
+  //       darkModeSetter();
+  //     }
+  //   }
+  // }, [uiNightMode]);
 
   const themeToggler = () => {
     setTogglerStatus(true);
