@@ -88,7 +88,7 @@ i18n
             start: "h",
             startFree: "Free",
           },
-          title: "Charge 220 kilometers during the night park",
+          title: "Charge 220 kilometers",
           station: "Station",
           chargeLink: "Charging",
           landingLink: "Home",
