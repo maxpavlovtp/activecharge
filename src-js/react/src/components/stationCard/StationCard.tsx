@@ -23,6 +23,7 @@ export const StationCard = ({
 
   useEffect(() => {
     setTimer(new Date(leftS * 1000).toISOString().slice(11, 19));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -31,6 +32,7 @@ export const StationCard = ({
     } else if (state === "DONE") {
       setRouteTo(`/start?station=${stationNumber}`);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [routeTo, isGotDeviceStatus]);
 
   return (
@@ -55,4 +57,4 @@ export const StationCard = ({
       </HomeCard>
     </CardLink>
   );
-}
+};

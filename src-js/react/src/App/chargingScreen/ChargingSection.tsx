@@ -34,6 +34,7 @@ const MainSection: React.FC = () => {
         console.log(timer);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoadingCharging]);
 
   useEffect(() => {
