@@ -24,13 +24,23 @@ import {
 } from "../globalStyles";
 import { lightTheme, darkTheme } from "../darkTheme/Theme";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { setModalOpen } from "../../store/reducers/FetchSlice";
 
 export default function Layout() {
   const [routeTo, setRouteTo] = useState<any>("/start");
   const [open, setOpen] = useState<any>(null);
 
+  const [theme, setTheme] = useLocalStorage<string>("themeMode", "light");
+  const [logoTheme, setLogoTheme] = useLocalStorage<string>("logoImg", logo);
+  const [modeImg, setModeImg] = useLocalStorage<string>("btnMode", nightMode);
+  const [mainImgTheme, setMainImgTheme] = useLocalStorage<string>(
+    "mainImg",
+    mainImg
+  );
+
   const [searchParams] = useSearchParams();
   let stationNumbers: any = searchParams.get("station");
+
   const { deviceStatus, isGotDeviceStatus, uiNightMode } = useAppSelector(
     (state) => state.fetchReducer
   );
@@ -50,6 +60,7 @@ export default function Layout() {
 
   const closeMenu = () => {
     setOpen(!open);
+    dispatch(setModalOpen(false));
     console.log(open);
   };
 
@@ -63,14 +74,6 @@ export default function Layout() {
   const [togglerStatus, setTogglerStatus] = useLocalStorage<boolean>(
     "themeTogglerStatus",
     false
-  );
-
-  const [theme, setTheme] = useLocalStorage<string>("themeMode", "light");
-  const [logoTheme, setLogoTheme] = useLocalStorage<string>("logoImg", logo);
-  const [modeImg, setModeImg] = useLocalStorage<string>("btnMode", nightMode);
-  const [mainImgTheme, setMainImgTheme] = useLocalStorage<string>(
-    "mainImg",
-    mainImg
   );
 
   const darkModeSetter = () => {

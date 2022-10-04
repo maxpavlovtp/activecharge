@@ -2,10 +2,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface FetchState {
   deviceStatus: any;
-  isDeviceOffline: any;
-  isLoadingCharging: any;
-  isGotDeviceStatus: any;
-  uiNightMode: any;
+  isDeviceOffline: boolean;
+  isLoadingCharging: boolean;
+  isGotDeviceStatus: boolean;
+  isModalOpen: boolean;
+  uiNightMode: boolean;
   errorStart: string;
   errorCharging: string;
 }
@@ -15,6 +16,7 @@ export const initialState: FetchState = {
   isDeviceOffline: false,
   isLoadingCharging: false,
   isGotDeviceStatus: false,
+  isModalOpen: false,
   uiNightMode: false,
   errorStart: "",
   errorCharging: "",
@@ -54,18 +56,22 @@ export const FetchSlice = createSlice({
       state.errorCharging = action.payload;
     },
 
-    uiNightModeGet(state: FetchState, action: PayloadAction<any>) {
-      state.uiNightMode = action.payload;
-    },
     deviceOfflineStatus(state: FetchState, action: PayloadAction<any>) {
       state.isDeviceOffline = action.payload;
     },
+    uiNightModeGet(state: FetchState, action: PayloadAction<any>) {
+      state.uiNightMode = action.payload;
+    },
+    
     setDeviceStatusUndefind(state: FetchState, action: PayloadAction<any>) {
       state.deviceStatus = action.payload;
+    },
+    setModalOpen(state: FetchState, action: PayloadAction<boolean>) {
+      state.isModalOpen = action.payload;
     },
   },
 });
 
-export const { setDeviceStatusUndefind } = FetchSlice.actions;
+export const { setDeviceStatusUndefind, setModalOpen } = FetchSlice.actions;
 
 export default FetchSlice.reducer;
