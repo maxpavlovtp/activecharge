@@ -2,8 +2,10 @@ package com.km220.service.job;
 
 import com.km220.dao.job.ChargingJobEntity;
 import com.km220.service.device.update.ConsumptionUpdate;
+import com.km220.service.device.update.DeviceStateUpdate;
 import com.km220.service.device.update.DeviceStatusUpdate;
 import com.km220.service.device.update.DeviceUpdater;
+import com.km220.service.metrics.DeviceMetricsCollector;
 import com.km220.service.metrics.JobMetricsCollector;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -14,11 +16,14 @@ public class DeviceUpdateAdapter implements DeviceUpdater {
 
   private final ChargingJobService chargingJobService;
   private final JobMetricsCollector jobMetricsCollector;
+  private final DeviceMetricsCollector deviceMetricsCollector;
 
   public DeviceUpdateAdapter(final ChargingJobService chargingJobService,
-      final JobMetricsCollector jobMetricsCollector) {
+      final JobMetricsCollector jobMetricsCollector,
+      final DeviceMetricsCollector deviceMetricsCollector) {
     this.chargingJobService = chargingJobService;
     this.jobMetricsCollector = jobMetricsCollector;
+    this.deviceMetricsCollector = deviceMetricsCollector;
   }
 
   @Override
@@ -46,5 +51,14 @@ public class DeviceUpdateAdapter implements DeviceUpdater {
       chargingJobService.update(jobEntity);
       jobMetricsCollector.updateJobMetric(jobEntity);
     }
+  }
+
+  @Override
+  public void onState(final DeviceStateUpdate deviceStateUpdate) {
+    log.debug("Received state update. device id = {}, is online = {}",
+        deviceStateUpdate.getDeviceId(),
+        deviceStateUpdate.isOnline());
+    deviceMetricsCollector.updateStateMetric(deviceStateUpdate.getDeviceId(),
+        deviceStateUpdate.isOnline());
   }
 }

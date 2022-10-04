@@ -9,8 +9,7 @@ import placehoderSrc from "../../assets/chargingTiny.png";
 import ErrorPage from "../../components/error-page/ErrorPage";
 import axios from "axios";
 import { Col, Container, Row } from "react-bootstrap";
-import { setDeviceStatusUndefind } from "../../store/reducers/FetchSlice";
-import { PayLinkLoading } from "../../components/stationCard/LoadingTime";
+import { useVisitorData } from "@fingerprintjs/fingerprintjs-pro-react";
 
 const MainSection: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -23,21 +22,27 @@ const MainSection: React.FC = () => {
   const urlPayment6h = `${process.env.REACT_APP_LINK_SERVE}order/generateCheckoutLink?station_number=${stationNumber}&&hours=6`;
   const payEndpoints = [urlPayment6h, urlPayment12h];
 
+  const { data } = useVisitorData();
+
   const { t } = useTranslation();
 
-  const { errorStart } = useAppSelector((state) => state.fetchReducer);
+  const { errorCharging, errorStart } = useAppSelector(
+    (state) => state.fetchReducer
+  );
 
   const dispatch = useAppDispatch();
 
   const startCharging = () => {
     dispatch(idStart(stationNumber));
-    dispatch(setDeviceStatusUndefind(undefined));
   };
 
   useEffect(() => {
     try {
       axios
         .all(payEndpoints.map((endpoint: any) => axios.get(endpoint)))
+        .catch(function (error: any) {
+          setErrorPay(error.message);
+        })
         .then((data) => {
           setPayUrls([]);
           data?.map((link: any) => {
@@ -50,13 +55,13 @@ const MainSection: React.FC = () => {
       setErrorPay(e.message);
     }
   }, []);
-  let statusBtn = errorPay !== null ? "btnStart disableBtn" : "btnStart";
+  let statusBtn = payUrls.length === 0 ? "btnStart disableBtn" : "btnStart";
 
-  if (errorPay) {
+  if (errorCharging) {
     return (
       <ErrorPage
-        errorHeader={t("errorPayHeader")}
-        errorBody={t("errorPayBody")}
+        errorHeader={t("errorDevHeader")}
+        errorBody={t("errorDevBody")}
       />
     );
   }
@@ -64,10 +69,14 @@ const MainSection: React.FC = () => {
   if (errorStart) {
     return (
       <ErrorPage
-        errorHeader={t("errorDevHeader")}
-        errorBody={t("errorDevBody")}
+        errorHeader={t("errorOfflineHeader")}
+        errorBody={t("errorOfflineBody")}
       />
     );
+  }
+
+  if (data) {
+    console.log(data.visitorId);
   }
   return (
     <Container fluid="lg">
@@ -85,7 +94,7 @@ const MainSection: React.FC = () => {
           sm="2"
           lg="2"
           as={Link}
-          to={`/charging?station=${stationNumber}`}
+          to={!errorStart && `/charging?station=${stationNumber}`}
           className="btnStart"
           onClick={startCharging}
         >

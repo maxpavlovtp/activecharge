@@ -1,5 +1,5 @@
-import React, { Suspense } from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { Suspense } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 import NotFoundPage from "./components/notFoundPage/NotFoundPage";
 import PrivateRoute from "./components/privateRoute/PrivateRoute";
@@ -17,7 +17,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route path="*" element={<NotFoundPage />} />
             <Route path="/contract" element={<ContractSection />} />
-            <Route path="/contacts" element={<ContactsSection/>} />
+            <Route path="/contacts" element={<ContactsSection />} />
             <Route path="/charging" element={<ChargingSection />} />
             <Route
               path="/start"
