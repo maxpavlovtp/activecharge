@@ -35,6 +35,7 @@ export default function GetPower({
       }, sec);
       return () => clearInterval(timerID);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deviceStatus?.lastJob?.state, chartTap]);
 
   let voltage = Number(Math.round(deviceStatus?.lastJob?.voltage));

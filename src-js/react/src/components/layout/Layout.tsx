@@ -13,10 +13,7 @@ import MainImgLoadingLazy from "../lazyLoading/MainImgLoadingLazy";
 import placehoderSrc from "../../assets/logoTiny.png";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { ThemeProvider } from "styled-components";
-import {
-  getStationInfo,
-  getUiNightMode,
-} from "../../store/reducers/ActionCreators";
+import { getUiNightMode } from "../../store/reducers/ActionCreators";
 import {
   FooterLink,
   GlobalStyles,
@@ -48,6 +45,7 @@ export default function Layout() {
     ) {
       setRouteTo(`/start?station=${stationNumbers}`);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isGotDeviceStatus]);
 
   const closeMenu = () => {
@@ -98,6 +96,7 @@ export default function Layout() {
         darkModeSetter();
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [uiNightMode]);
 
   const themeToggler = () => {

@@ -3,7 +3,10 @@ import "./MainSection.css";
 import { Link, useOutletContext, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
-import { idStart } from "../../store/reducers/ActionCreators";
+import {
+  getDeviceOfflineStatus,
+  idStart,
+} from "../../store/reducers/ActionCreators";
 import MainImgLoadingLazy from "../../components/lazyLoading/MainImgLoadingLazy";
 import placehoderSrc from "../../assets/chargingTiny.png";
 import ErrorPage from "../../components/error-page/ErrorPage";
@@ -26,7 +29,7 @@ const MainSection: React.FC = () => {
 
   const { t } = useTranslation();
 
-  const { errorCharging, errorStart } = useAppSelector(
+  const { errorCharging, errorStart, isDeviceOffline } = useAppSelector(
     (state) => state.fetchReducer
   );
 
@@ -37,6 +40,8 @@ const MainSection: React.FC = () => {
   };
 
   useEffect(() => {
+    // uncomment when BE will ready
+    // dispatch(getDeviceOfflineStatus(stationNumber));
     try {
       axios
         .all(payEndpoints.map((endpoint: any) => axios.get(endpoint)))
@@ -54,6 +59,8 @@ const MainSection: React.FC = () => {
     } catch (e: any) {
       setErrorPay(e.message);
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   let statusBtn = payUrls.length === 0 ? "btnStart disableBtn" : "btnStart";
 
@@ -66,7 +73,7 @@ const MainSection: React.FC = () => {
     );
   }
 
-  if (errorStart) {
+  if (errorStart || isDeviceOffline) {
     return (
       <ErrorPage
         errorHeader={t("errorOfflineHeader")}
