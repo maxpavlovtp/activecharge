@@ -72,7 +72,10 @@ const MainSection: React.FC = () => {
             </OfferLinksColor>
           </p>
           <p>
-            <OfferLinksColor className={styles.offerLink} href="#childConfidential">
+            <OfferLinksColor
+              className={styles.offerLink}
+              href="#childConfidential"
+            >
               <strong>10. </strong>
               <strong>Конфіденційність по відношенню до дітей</strong>
             </OfferLinksColor>
@@ -108,14 +111,14 @@ const MainSection: React.FC = () => {
               Терміни “Ми”, “Нас”, “Наше”, “Компанія”, “Веб-сайт” і “220-km.com”
               -{" "}
             </strong>
-            відносяться до інвестиційного фонду "ZeBoosterLab"
-            (далі - "ZeBoosterLab")
+            відносяться до інвестиційного фонду "ZeBoosterLab" (далі -
+            "ZeBoosterLab")
           </p>
           <p>
             <strong>Веб-сайт - </strong>
             відкритий для вільного візуального ознайомлення, публічно доступний,
-            що належить "ZeBoosterLab", розташований в мережі
-            Інтернет за адресою{" "}
+            що належить "ZeBoosterLab", розташований в мережі Інтернет за
+            адресою{" "}
             <OfferLinksColor
               className={styles.offerLink}
               href="http://220-km.com"
@@ -184,9 +187,9 @@ const MainSection: React.FC = () => {
             договору-оферти (надалі, "Договір").
           </p>
           <p>
-            2.1. "ZeBoosterLab" зобов'язується надати Клієнту
-            послуги відповідно до умов цієї оферти, а Клієнт зобов'язується
-            оплатити послуги за встановленою вартістю.
+            2.1. "ZeBoosterLab" зобов'язується надати Клієнту послуги відповідно
+            до умов цієї оферти, а Клієнт зобов'язується оплатити послуги за
+            встановленою вартістю.
           </p>
           <p>
             2.2. Справжній публічний договір-оферти вважається укладеним (акцепт
@@ -322,9 +325,9 @@ const MainSection: React.FC = () => {
           </p>
           <p>
             6.3 Послуга вважається виконаною належним чином і в повному обсязі
-            після відображення: 
-            <OfferLinksColor> Вітаннячка!</OfferLinksColor> Ми зарядили в
-            тачку (кількість кіловатт)
+            після відображення:
+            <OfferLinksColor> Вітаннячка!</OfferLinksColor> Ми зарядили в тачку
+            (кількість кіловатт)
           </p>
           <p id="revocation">
             <strong>

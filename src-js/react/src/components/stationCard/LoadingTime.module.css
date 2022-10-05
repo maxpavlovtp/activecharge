@@ -4,14 +4,18 @@
   height: 20px;
   border: 2px solid #e2e2e2;
   border-radius: 50%;
-  border-top-color: #8F00FF;
+  border-top-color: #8f00ff;
   animation: spin 1s ease-in-out infinite;
   -webkit-animation: spin 1s ease-in-out infinite;
 }
 
 @keyframes spin {
-  to { -webkit-transform: rotate(360deg); }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
 }
 @-webkit-keyframes spin {
-  to { -webkit-transform: rotate(360deg); }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
 }

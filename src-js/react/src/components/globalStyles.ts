@@ -1,7 +1,6 @@
 import styled, { createGlobalStyle } from "styled-components";
 import { Link } from "react-router-dom";
-import { Col, Nav, Navbar } from "react-bootstrap";
-import { AnimatePresence, motion } from "framer-motion";
+import { Col, Navbar } from "react-bootstrap";
 
 export const GlobalStyles = createGlobalStyle`
   body {

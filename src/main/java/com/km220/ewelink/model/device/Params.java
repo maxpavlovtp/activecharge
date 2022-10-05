@@ -60,6 +60,8 @@ public class Params {
   private String temperature;
   private String humidity;
 
+  private Boolean online;
+
   @Default
   private Map<String, Object> additionalProperties = new HashMap<>();
 }
