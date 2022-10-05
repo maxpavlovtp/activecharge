@@ -5,4 +5,3 @@ INSERT INTO station ("name", "number", provider_device_id)VALUES('6-stage-Garage
 INSERT INTO station ("name", "number", provider_device_id)VALUES('7-stage-Garage36','7', '100169082d');
 INSERT INTO station ("name", "number", provider_device_id)VALUES('8-stage-Garage36','8', '10016905cf');
 INSERT INTO station ("name", "number", provider_device_id)VALUES('9-stage-Garage36','9', '100169010c');
-INSERT INTO station ("name", "number", provider_device_id)VALUES('10-local-TyhranHome','10', '1001690629');
