@@ -92,7 +92,7 @@ i18n
           station: "Station",
           chargeLink: "Charging",
           landingLink: "Home",
-          contacts: "Contact Us",
+          contacts: "Contact us",
           offer: "Terms and conditions",
           wt: "kWt*h",
           powerWt: "kWt",
