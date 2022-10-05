@@ -3,7 +3,7 @@ const ewelink = require('ewelink-api');
 (async () => {
 
     const connection = new ewelink({
-        email: 'jasper.ua@gmail.com',
+        email: 'km220.com@gmail.com',
         password: 'Nopassword1',
         region:  'eu',
     });
