@@ -74,9 +74,9 @@ export default function GetPower({
             </PowerMetricsColor>
             <p className="textInfo text">
               {(
-                (Number(kWtPower.toFixed(2)) * 1000) /
+                (Number(Math.round(kWtPower)) * 1000) /
                 Math.round(carKwtKmRatio)
-              ).toFixed(2)}{" "}
+              )}{" "}
               {t("powerKm")}
             </p>
           </Col>
