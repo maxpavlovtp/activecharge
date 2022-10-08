@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./MainSection.css";
-
 import { Link, useOutletContext, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
@@ -10,67 +9,74 @@ import placehoderSrc from "../../assets/chargingTiny.png";
 import ErrorPage from "../../components/error-page/ErrorPage";
 import axios from "axios";
 import { Col, Container, Row } from "react-bootstrap";
-import { setDeviceStatusUndefind } from "../../store/reducers/FetchSlice";
-import { PayLinkLoading } from "../../components/stationCard/LoadingTime";
+import { useVisitorData } from "@fingerprintjs/fingerprintjs-pro-react";
 
 const MainSection: React.FC = () => {
   const [searchParams] = useSearchParams();
   const [errorPay, setErrorPay] = useState<any>(null);
   const [mainImgTheme] = useOutletContext<any>();
-
-  const [loadingSixPayLink, setLoadingSixPayLink] = useState(false);
-  const [loadingTwelvePayLink, setLoadingTwelvePayLink] = useState(false);
-
+  const [payUrls, setPayUrls] = useState<any>([]);
   let stationNumber: any = searchParams.get("station");
+
   const urlPayment12h = `${process.env.REACT_APP_LINK_SERVE}order/generateCheckoutLink?station_number=${stationNumber}&&hours=12`;
   const urlPayment6h = `${process.env.REACT_APP_LINK_SERVE}order/generateCheckoutLink?station_number=${stationNumber}&&hours=6`;
+  const payEndpoints = [urlPayment6h, urlPayment12h];
+
+  const { data } = useVisitorData();
 
   const { t } = useTranslation();
 
-  const { error } = useAppSelector((state) => state.fetchReducer);
+  const { errorCharging, errorStart } = useAppSelector(
+    (state) => state.fetchReducer
+  );
 
   const dispatch = useAppDispatch();
 
   const startCharging = () => {
     dispatch(idStart(stationNumber));
-    dispatch(setDeviceStatusUndefind(undefined));
   };
-  // http://49.12.19.42:8080/
-  // http://localhost:8080/
 
-  const goPaySix = () => {
-    setLoadingSixPayLink(true);
+  useEffect(() => {
     try {
-      axios.get(urlPayment6h).then((link) => {
-        window.open(link.data.pageUrl, "_blank");
-        setLoadingSixPayLink(false);
-      });
+      axios
+        .all(payEndpoints.map((endpoint: any) => axios.get(endpoint)))
+        .catch(function (error: any) {
+          setErrorPay(error.message);
+        })
+        .then((data) => {
+          setPayUrls([]);
+          data?.map((link: any) => {
+            const { pageUrl } = link.data;
+            setPayUrls((pay: any) => [...pay, pageUrl]);
+            console.log(pageUrl);
+          });
+        });
     } catch (e: any) {
       setErrorPay(e.message);
     }
-  };
+  }, []);
+  let statusBtn = payUrls.length === 0 ? "btnStart disableBtn" : "btnStart";
 
-  const goPayTwelve = () => {
-    setLoadingTwelvePayLink(true);
-    try {
-      axios.get(urlPayment12h).then((link) => {
-        window.open(link.data.pageUrl, "_blank");
-        setLoadingTwelvePayLink(false);
-      });
-    } catch (e: any) {
-      setErrorPay(e.message);
-    }
-  };
-
-  let statusBtn = errorPay !== null ? "btnStart disableBtn" : "btnStart";
-
-  if (error) {
+  if (errorCharging) {
     return (
       <ErrorPage
         errorHeader={t("errorDevHeader")}
         errorBody={t("errorDevBody")}
       />
     );
+  }
+
+  if (errorStart) {
+    return (
+      <ErrorPage
+        errorHeader={t("errorOfflineHeader")}
+        errorBody={t("errorOfflineBody")}
+      />
+    );
+  }
+
+  if (data) {
+    console.log(data.visitorId);
   }
   return (
     <Container fluid="lg">
@@ -88,7 +94,7 @@ const MainSection: React.FC = () => {
           sm="2"
           lg="2"
           as={Link}
-          to={`/charging?station=${stationNumber}`}
+          to={!errorStart && `/charging?station=${stationNumber}`}
           className="btnStart"
           onClick={startCharging}
         >
@@ -101,15 +107,11 @@ const MainSection: React.FC = () => {
           sm="1"
           lg="1"
           className={`ml-2 ${statusBtn}`}
-          onClick={goPaySix}
+          href={`${payUrls[0]}`}
           target="_blank"
           rel="noreferrer"
         >
-          {loadingSixPayLink === true ? (
-            <PayLinkLoading />
-          ) : (
-            `6${t("btns.start")}`
-          )}
+          6{t("btns.start")}
         </Col>
         <Col
           as={"a"}
@@ -117,15 +119,11 @@ const MainSection: React.FC = () => {
           sm="2"
           lg="2"
           className={`ml-2 ${statusBtn}`}
-          onClick={goPayTwelve}
+          href={`${payUrls[1]}`}
           target="_blank"
           rel="noreferrer"
         >
-          {loadingTwelvePayLink === true ? (
-            <PayLinkLoading />
-          ) : (
-            `12${t("btns.start")}`
-          )}
+          12{t("btns.start")}
         </Col>
       </Row>
 

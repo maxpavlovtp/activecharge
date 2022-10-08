@@ -16,7 +16,10 @@ export default function PrivateRoute({ children }: { children: any }) {
 
   if (deviceStatus?.lastJob?.state === "IN_PROGRESS") {
     return <Navigate to={`/charging?station=${stationNumbers}`} />;
-  } else if (deviceStatus?.lastJob?.state === "DONE" || deviceStatus?.lastJobPresented === false) {
+  } else if (
+    deviceStatus?.lastJob?.state === "DONE" ||
+    deviceStatus?.lastJobPresented === false
+  ) {
     return children;
   }
 }

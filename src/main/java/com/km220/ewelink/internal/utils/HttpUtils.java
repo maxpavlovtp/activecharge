@@ -40,9 +40,13 @@ public final class HttpUtils {
 
   public static boolean isEwelinkAuthorizationError(Throwable throwable) {
     if (throwable instanceof EwelinkApiException error) {
-      return error.getCode() == 401 || error.getCode() == 406 || error.getCode() == 403;
+      return isAuthErrorCode(error.getCode());
     }
     return false;
+  }
+
+  public static boolean isAuthErrorCode(int code) {
+    return code == 401 || code == 403 || code == 406;
   }
 
   public static boolean shouldRetry(HttpResponse<?> response, Throwable error, int count, int expectedStatus) {

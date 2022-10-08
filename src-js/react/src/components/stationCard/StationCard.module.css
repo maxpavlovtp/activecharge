@@ -19,7 +19,6 @@
   font-family: "OpenSansMedium", Arial, Helvetica, sans-serif;
   font-weight: 500;
   border-bottom: 1px solid #dbdbdb;
-
 }
 .status {
   display: flex;
@@ -37,14 +36,14 @@
   border-radius: 25px;
   width: 20px;
   height: 20px;
-  background-color: #8F00FF;
+  background-color: #8f00ff;
 }
-.offline{
-    border-radius: 25px;
-    width: 20px;
-    height: 20px;
-    background-color: #fff;
+.offline {
+  border-radius: 25px;
+  width: 20px;
+  height: 20px;
+  background-color: #fff;
 }
-.linkToStation{
-    text-decoration: none;
+.linkToStation {
+  text-decoration: none;
 }

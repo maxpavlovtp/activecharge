@@ -4,9 +4,13 @@ import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import { getStationInfo } from "../../store/reducers/ActionCreators";
 import { useTranslation } from "react-i18next";
 import { Col, Row } from "react-bootstrap";
-import { FinishKmStap, FinishKwtStap, PowerMetricsColor, VoltageBtn } from "../globalStyles";
+import {
+  FinishKmStap,
+  FinishKwtStap,
+  PowerMetricsColor,
+  VoltageBtn,
+} from "../globalStyles";
 import FullInfo from "../fullInfo/FullInfo";
-import { AnimatePresence, motion } from "framer-motion";
 
 export default function GetPower({
   station,
@@ -21,7 +25,7 @@ export default function GetPower({
   const { deviceStatus } = useAppSelector((state) => state.fetchReducer);
   const { t } = useTranslation();
   const interval: any = localStorage.getItem("interval");
-  const sec = interval ? interval : 5000;
+  const sec = interval ? interval : 1000;
   useEffect(() => {
     if (chartTap === false) {
       const timerID = setInterval(() => {
@@ -59,8 +63,7 @@ export default function GetPower({
             lg={6}
             className={
               deviceStatus?.lastJob?.state === "DONE" ||
-              deviceStatus?.lastJob?.state === "FAILED" ||
-              deviceStatus?.lastJob?.leftS <= 3
+              deviceStatus?.lastJob?.state === "FAILED"
                 ? "offCont"
                 : "text-center"
             }
@@ -77,8 +80,7 @@ export default function GetPower({
             </p>
           </Col>
           {deviceStatus?.lastJob?.state === "DONE" ||
-          deviceStatus?.lastJob?.state === "FAILED" ||
-          deviceStatus?.lastJob?.leftS <= 3 ? (
+          deviceStatus?.lastJob?.state === "FAILED" ? (
             <Col xs="auto" lg="auto" className="text-center">
               <PowerMetricsColor className="finishTitle">
                 {t("chargedCongrats")}{" "}
@@ -111,8 +113,7 @@ export default function GetPower({
           )}
         </Row>
         {deviceStatus?.lastJob?.state === "DONE" ||
-        deviceStatus?.lastJob?.state === "FAILED" ||
-        deviceStatus?.lastJob?.leftS <= 3 ? (
+        deviceStatus?.lastJob?.state === "FAILED" ? (
           <></>
         ) : (
           <div
@@ -141,8 +142,7 @@ export default function GetPower({
               }
               className={
                 deviceStatus?.lastJob?.state === "DONE" ||
-                deviceStatus?.lastJob?.state === "FAILED" ||
-                deviceStatus?.lastJob?.leftS <= 3
+                deviceStatus?.lastJob?.state === "FAILED"
                   ? "offCont"
                   : "text-center btnVoltage"
               }

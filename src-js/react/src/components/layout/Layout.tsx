@@ -13,7 +13,10 @@ import MainImgLoadingLazy from "../lazyLoading/MainImgLoadingLazy";
 import placehoderSrc from "../../assets/logoTiny.png";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { ThemeProvider } from "styled-components";
-import { getStationInfo } from "../../store/reducers/ActionCreators";
+import {
+  getStationInfo,
+  getUiNightMode,
+} from "../../store/reducers/ActionCreators";
 import {
   FooterLink,
   GlobalStyles,
@@ -24,7 +27,6 @@ import {
 } from "../globalStyles";
 import { lightTheme, darkTheme } from "../darkTheme/Theme";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
-import { setDeviceStatusUndefind } from "../../store/reducers/FetchSlice";
 
 export default function Layout() {
   const [routeTo, setRouteTo] = useState<any>("/start");
@@ -32,7 +34,7 @@ export default function Layout() {
 
   const [searchParams] = useSearchParams();
   let stationNumbers: any = searchParams.get("station");
-  const { deviceStatus, isGotDeviceStatus } = useAppSelector(
+  const { deviceStatus, isGotDeviceStatus, uiNightMode } = useAppSelector(
     (state) => state.fetchReducer
   );
   const dispatch = useAppDispatch();
@@ -60,6 +62,11 @@ export default function Layout() {
 
   const { t, i18n } = useTranslation();
 
+  const [togglerStatus, setTogglerStatus] = useLocalStorage<boolean>(
+    "themeTogglerStatus",
+    false
+  );
+
   const [theme, setTheme] = useLocalStorage<string>("themeMode", "light");
   const [logoTheme, setLogoTheme] = useLocalStorage<string>("logoImg", logo);
   const [modeImg, setModeImg] = useLocalStorage<string>("btnMode", nightMode);
@@ -82,18 +89,19 @@ export default function Layout() {
   };
 
   useEffect(() => {
-    if (!localStorage.getItem("themeMode")) {
-      dispatch(getStationInfo(stationNumbers));
+    if (togglerStatus === false) {
+      dispatch(getUiNightMode(stationNumbers));
       console.log(deviceStatus);
-      if (deviceStatus?.uiNightMode === false) {
+      if (uiNightMode === false) {
         lightModeSetter();
-      } else if (deviceStatus?.uiNightMode === true) {
+      } else if (uiNightMode === true) {
         darkModeSetter();
       }
     }
-  }, [deviceStatus?.uiNightMode]);
+  }, [uiNightMode]);
 
   const themeToggler = () => {
+    setTogglerStatus(true);
     if (theme === "light") {
       darkModeSetter();
     } else {
@@ -117,7 +125,11 @@ export default function Layout() {
             collapseOnSelect
             // ref={domNode}
           >
-            <LinksColor to={routeTo} className="flex-row align-items-center">
+            <LinksColor
+              reloadDocument
+              to={routeTo}
+              className="flex-row align-items-center"
+            >
               <div className="logoContainer">
                 <MainImgLoadingLazy
                   src={logoTheme}

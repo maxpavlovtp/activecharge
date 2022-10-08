@@ -1,6 +1,7 @@
 # Transform any public spot to EV charging station.
 [![CI/CD Stage](https://github.com/maxpavlovdp/activecharge/actions/workflows/ci-stage.yml/badge.svg)](https://github.com/maxpavlovdp/activecharge/actions/workflows/ci-stage.yml)
-[![CI/CD Prod](https://github.com/maxpavlovdp/activecharge/actions/workflows/ci-prod.yml/badge.svg)](https://github.com/maxpavlovdp/activecharge/actions/workflows/ci-prod.yml)
+[![CI/CD Prod](https://github.com/maxpavlovdp/activecharge/actions/workflows/ci-prod.yml/badge.svg)](https://github.com/maxpavlovdp/activecharge/actions/workflows/ci-prod.yml) 
+
 
 ## FE endpoints:
 1. local: http://localhost:3000

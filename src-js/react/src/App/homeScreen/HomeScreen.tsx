@@ -1,33 +1,35 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import { useSearchParams } from "react-router-dom";
 import ErrorPage from "../../components/error-page/ErrorPage";
 import Spinner from "../../components/spinner/Spinner";
-import StationCard from "../../components/stationCard/StationCard";
-import { useAppDispatch } from "../../hooks/reduxHooks";
-import { getStationInfo } from "../../store/reducers/ActionCreators";
+import { StationCard } from "../../components/stationCard/StationCard";
 
 const urlV2StatusAll = `${process.env.REACT_APP_LINK_SERVE}device/v2/station/statusAll`;
 
 export default function HomeScreen() {
   const [loading, setLoading] = useState<any>(true);
   const [statusALl, setStatusAll] = useState<any>();
-  const [searchParams] = useSearchParams();
-  let stationNumber: any = searchParams.get("station");
-  const interval: any = localStorage.getItem("interval");
+  const [errorAll, setErrorAll] = useState<any>(null);
+
   const sec = 5000;
 
   const { t } = useTranslation();
 
   useEffect(() => {
     try {
-      axios.get(urlV2StatusAll).then(function (result: any) {
-        setStatusAll(result.data);
-        statusALl !== null && setLoading(false);
-        console.log(result?.data);
-      });
+      axios
+        .get(urlV2StatusAll)
+        .catch(function (error: any) {
+          setErrorAll(error.message);
+          console.log(error.message);
+        })
+        .then(function (result: any) {
+          setStatusAll(result.data);
+          statusALl !== null && setLoading(false);
+          console.log(result?.data);
+        });
     } catch (e: any) {
       console.log(e.message);
     }
@@ -44,6 +46,15 @@ export default function HomeScreen() {
     }, sec);
     return () => clearInterval(timerID);
   }, []);
+
+  if (errorAll) {
+    return (
+      <ErrorPage
+        errorHeader={t("errorDevHeader")}
+        errorBody={t("errorDevBody")}
+      />
+    );
+  }
 
   if (loading === true) return <Spinner />;
 
@@ -75,6 +86,8 @@ export default function HomeScreen() {
               errorBody={t("errorDevBody")}
             />;
           }
+
+          return;
         })}
       </Row>
     </Container>

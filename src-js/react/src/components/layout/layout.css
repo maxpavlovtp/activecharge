@@ -19,7 +19,6 @@
   font-weight: 400;
   font-size: calc(0.9rem + 0.4vw);
   border: none;
-
 }
 .btnLang:not(:last-child) {
   border-right: 2px solid #a5adb4;
@@ -62,21 +61,19 @@
   text-decoration: underline;
 }
 
-.navbar{
-/*   z-index should be above .close-navbar-toggler */
-  z-index:2;
+.navbar {
+  /*   z-index should be above .close-navbar-toggler */
+  z-index: 2;
 }
-.close-navbar-toggler{
-  position:absolute;
-  top:0;
-  left:0;
-  height:100%;
-  width:100%;
-  z-index:1;
-  cursor:pointer;
+.close-navbar-toggler {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  cursor: pointer;
 }
-.close-navbar-toggler.collapsed{
-  z-index:-1;
-} 
-
-
+.close-navbar-toggler.collapsed {
+  z-index: -1;
+}
