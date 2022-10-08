@@ -11,6 +11,8 @@ import {
   VoltageBtn,
 } from "../globalStyles";
 import FullInfo from "../fullInfo/FullInfo";
+import { setModalOpen } from "../../store/reducers/FetchSlice";
+import ModalCalibrate from "../modal/ModalCalibrate";
 
 export default function GetPower({
   station,
@@ -35,7 +37,6 @@ export default function GetPower({
       }, sec);
       return () => clearInterval(timerID);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deviceStatus?.lastJob?.state, chartTap]);
 
   let voltage = Number(Math.round(deviceStatus?.lastJob?.voltage));
@@ -89,7 +90,12 @@ export default function GetPower({
               <p className="finishText">
                 {t("chargedkWt")}
                 <br />
-                <FinishKmStap style={{ fontSize: "calc(1.7rem + 1.6vw)" }}>
+                <FinishKmStap
+                  onClick={() => {
+                    dispatch(setModalOpen(true));
+                  }}
+                  style={{ fontSize: "calc(1.7rem + 1.6vw)" }}
+                >
                   {Math.round((kWtCharged * 1000) / Math.round(carKwtKmRatio))}{" "}
                   {t("km")}
                 </FinishKmStap>
@@ -169,6 +175,7 @@ export default function GetPower({
         kWtCharged={kWtCharged}
         chargeStatus={chargeStatus}
       />
+      <ModalCalibrate />
     </>
   );
 }
