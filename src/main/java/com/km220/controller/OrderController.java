@@ -23,35 +23,27 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class OrderController {
 
-  @Autowired
-  private OrderService orderService;
-  @Autowired
-  private ChargerService chargerService;
+	@Autowired
+	private OrderService orderService;
+	@Autowired
+	private ChargerService chargerService;
 
-  //  todo move to DB
-  private static final HashMap<String, String> invoiceCache = new HashMap<>();
+	//  todo move to DB
+	private static final HashMap<String, String> invoiceCache = new HashMap<>();
 
-  @GetMapping("/generateCheckoutLink")
-  public ResponseEntity<String> generateCheckoutLink(
-      @NotBlank @RequestParam("station_number") String stationNumber,
-      @NotBlank @RequestParam("hours") String hours) throws IOException {
-    String monoResponse = orderService.generateCheckoutLink(stationNumber, Integer.valueOf(hours));
-    return ResponseEntity.status(HttpStatus.OK).body(monoResponse);
-  }
+	@GetMapping("/generateCheckoutLink")
+	public ResponseEntity<String> generateCheckoutLink(
+			@NotBlank @RequestParam("station_number") String stationNumber,
+			@NotBlank @RequestParam("hours") String hours) throws IOException {
+		String monoResponse = orderService.generateCheckoutLink(stationNumber, Integer.valueOf(hours));
+		return ResponseEntity.status(HttpStatus.OK).body(monoResponse);
+	}
 
-  @PostMapping("/callBackMono")
-  public ResponseEntity<Void> callBackMono(@RequestBody String callBackMono) {
-    log.info("Call back from monobank: {}", callBackMono);
-    // todo move to service
-    if (callBackMono.contains("\"status\":\"success\"")) {
-      String invoiceId = orderService.fetchInvoiceId(callBackMono);
-      log.info("invoiceId: {}", invoiceId);
-      String stationNumberFromCache = invoiceCache.get(invoiceId).split(";")[0];
-      String hours = invoiceCache.get(invoiceId).split(";")[1];
-      log.info("stationNumberFromCache: {}", stationNumberFromCache);
-      chargerService.start(stationNumberFromCache, Integer.parseInt(hours) * 3600);
-    }
+	@PostMapping("/callBackMono")
+	public ResponseEntity<Void> callBackMono(@RequestBody String callBackMono) {
+		orderService.processOrder(callBackMono);
 
-    return ResponseEntity.status(HttpStatus.OK).body(null);
-  }
+		return ResponseEntity.status(HttpStatus.OK).body(null);
+	}
+
 }

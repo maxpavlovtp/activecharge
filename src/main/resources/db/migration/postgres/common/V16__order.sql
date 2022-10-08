@@ -1,4 +1,4 @@
-ALTER TABLE station ADD COLUMN cost_per_hour NUMERIC NOT NULL DEFAULT 7;
+ALTER TABLE station ADD COLUMN cost_per_hour varchar(255) NOT NULL DEFAULT 7;
 
 CREATE TYPE order_state AS ENUM (
 	'IN_PROGRESS',

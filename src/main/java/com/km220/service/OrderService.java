@@ -2,6 +2,7 @@ package com.km220.service;
 
 import com.km220.dao.order.OrderRepository;
 import com.km220.dao.station.StationRepository;
+import com.km220.service.job.ChargerService;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,6 +11,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,6 +30,7 @@ public class OrderService {
 
 	private final StationRepository stationRepository;
 	private final OrderRepository orderRepository;
+	private final ChargerService chargerService;
 
 	public String generateCheckoutLink(String stationNumber, Integer hours) throws IOException {
 		String result = null;
@@ -39,9 +42,8 @@ public class OrderService {
 		http.setDoOutput(true);
 		http.setRequestProperty("X-Token", monoToken);
 
-		float uahPerHour = stationRepository.getByNumber(stationNumber).getCostPerHour();
-//		String uahCents = String.valueOf(hours * uahPerHour * 100);
-		String uahCents = "22000";
+		String uahPerHour = stationRepository.getByNumber(stationNumber).getCostPerHour();
+		String uahCents = String.valueOf(hours * Integer.valueOf(uahPerHour) * 100);
 		String body = "{\n"
 				+ "    \"amount\": " + uahCents + ",\n"
 				+ "    \"ccy\": 980,\n"
@@ -94,5 +96,22 @@ public class OrderService {
 
 	public String fetchInvoiceId(String monoResponse) {
 		return monoResponse.replace("{\"invoiceId\":\"", "").split("\"")[0];
+	}
+
+	private UUID createOrder(String invoiceId, String stationNumber) {
+		return orderRepository.add(invoiceId, stationNumber);
+	}
+
+	public void processOrder(String callBackMono) {
+		log.info("Call back from monobank: {}", callBackMono);
+		// todo move to service
+		if (callBackMono.contains("\"status\":\"success\"")) {
+			String invoiceId = fetchInvoiceId(callBackMono);
+			log.info("invoiceId: {}", invoiceId);
+//			String stationNumberFromCache = invoiceCache.get(invoiceId).split(";")[0];
+//			String hours = invoiceCache.get(invoiceId).split(";")[1];
+//			log.info("stationNumberFromCache: {}", stationNumberFromCache);
+			chargerService.start("1", Integer.parseInt("6") * 3600);
+		}
 	}
 }
