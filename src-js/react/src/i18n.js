@@ -20,8 +20,8 @@ i18n
       ua: {
         translation: {
           btns: {
-            start: "",
-            startFree: "1 Фрі",
+            start: "h",
+            startFree: "Фрі",
           },
           title: "Заряди 220 кілометрів на завтра",
           station: "Станція",
@@ -85,8 +85,8 @@ i18n
       en: {
         translation: {
           btns: {
-            start: "",
-            startFree: "1 Free",
+            start: "h",
+            startFree: "Free",
           },
           title: "Charge 220 kilometers for tomorrow",
           station: "Station",
