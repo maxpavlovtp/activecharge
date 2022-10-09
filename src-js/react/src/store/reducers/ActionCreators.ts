@@ -7,12 +7,13 @@ const urlV2Status = `${process.env.REACT_APP_LINK_SERVE}device/v2/station/status
 
 const userUID = localStorage.getItem("@fpjs@client@__null__null__false");
 const parsedUID = JSON.parse(userUID as string);
+const urlUID = userUID ? `&user_uid=${parsedUID.body.visitorId}` : '';
 
 export const idStart = (station: string) => async (dispatch: AppDispatch) => {
   dispatch(setDeviceStatusUndefind(undefined));
   const data = JSON.stringify({
     station_number: station,
-    user_uid: parsedUID.body.visitorId,
+    user_uid: urlUID
   });
 
   const config = {
@@ -46,7 +47,11 @@ export const getStationInfo =
   (station: string) => async (dispatch: AppDispatch) => {
     dispatch(FetchSlice.actions.deviceStatusFetching());
     await axios
-      .get(urlV2Status + `station_number=${station}&` + `user_uid=${parsedUID.body.visitorId}`)
+      .get(
+        urlV2Status +
+          `station_number=${station}` +
+          urlUID
+      )
 
       .catch(function (error: any) {
         dispatch(FetchSlice.actions.deviceStatusFetchingError(error.message));
