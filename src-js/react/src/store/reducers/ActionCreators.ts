@@ -69,3 +69,19 @@ export const getUiNightMode =
         console.log(result.data);
       });
   };
+
+  export const getDeviceOfflineStatus =
+  (station: string) => async (dispatch: AppDispatch) => {
+    await axios
+      .get(urlV2Status + `station_number=${station}`)
+      .catch(function (error: any) {
+        dispatch(FetchSlice.actions.deviceStatusFetchingError(error.message));
+        console.log(error.message);
+      })
+      .then(function (result: any) {
+        dispatch(
+          FetchSlice.actions.deviceOfflineStatus(result.data.isDeviceOffline)
+        );
+        console.log(result.data);
+      });
+  };
