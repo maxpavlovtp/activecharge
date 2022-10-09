@@ -5,20 +5,16 @@ import Modal from "./Modal";
 import "../../App/contactsScreen/ContactsSection.css";
 
 export default function ModalContacts({
-  modalActive,
-  setModalActive,
   MAX_PHONE_NUM,
   DIMA_PHONE_NUM,
 }: {
-  modalActive: any;
-  setModalActive: any;
   MAX_PHONE_NUM: any;
   DIMA_PHONE_NUM: any;
 }) {
   const { t } = useTranslation();
 
   return (
-    <Modal active={modalActive} setActive={setModalActive}>
+    <Modal>
       <div className="telephoneContainer">
         <p className="tapForCall">{t("tapCall")}:</p>
         <div className="numberCont">
