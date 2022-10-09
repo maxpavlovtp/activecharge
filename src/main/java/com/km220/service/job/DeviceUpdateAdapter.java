@@ -1,11 +1,13 @@
 package com.km220.service.job;
 
 import com.km220.dao.job.ChargingJobEntity;
+import com.km220.dao.station.StationEntity;
+import com.km220.dao.station.StationRepository;
 import com.km220.service.device.update.ConsumptionUpdate;
 import com.km220.service.device.update.DeviceStateUpdate;
 import com.km220.service.device.update.DeviceStatusUpdate;
 import com.km220.service.device.update.DeviceUpdater;
-import com.km220.service.metrics.DeviceMetricsCollector;
+import com.km220.service.metrics.StationMetricsCollector;
 import com.km220.service.metrics.JobMetricsCollector;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -15,15 +17,18 @@ import org.springframework.stereotype.Component;
 public class DeviceUpdateAdapter implements DeviceUpdater {
 
   private final ChargingJobService chargingJobService;
+  private final StationRepository stationRepository;
   private final JobMetricsCollector jobMetricsCollector;
-  private final DeviceMetricsCollector deviceMetricsCollector;
+  private final StationMetricsCollector stationMetricsCollector;
 
   public DeviceUpdateAdapter(final ChargingJobService chargingJobService,
       final JobMetricsCollector jobMetricsCollector,
-      final DeviceMetricsCollector deviceMetricsCollector) {
+      final StationMetricsCollector stationMetricsCollector,
+      final StationRepository stationRepository) {
     this.chargingJobService = chargingJobService;
     this.jobMetricsCollector = jobMetricsCollector;
-    this.deviceMetricsCollector = deviceMetricsCollector;
+    this.stationMetricsCollector = stationMetricsCollector;
+    this.stationRepository = stationRepository;
   }
 
   @Override
@@ -58,7 +63,10 @@ public class DeviceUpdateAdapter implements DeviceUpdater {
     log.debug("Received state update. device id = {}, is online = {}",
         deviceStateUpdate.getDeviceId(),
         deviceStateUpdate.isOnline());
-    deviceMetricsCollector.updateStateMetric(deviceStateUpdate.getDeviceId(),
-        deviceStateUpdate.isOnline());
+    StationEntity station = stationRepository.getByDeviceId(deviceStateUpdate.getDeviceId());
+    if (station != null) {
+      stationMetricsCollector.updateOnlineMetric(station,
+          deviceStateUpdate.isOnline());
+    }
   }
 }

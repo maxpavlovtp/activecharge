@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.km220.ewelink.error.EwelinkClientException;
+import com.km220.ewelink.model.v2.ResponseV2;
+import java.util.List;
 import java.util.function.Function;
 
 public final class JsonUtils {
@@ -40,6 +42,28 @@ public final class JsonUtils {
     return jsonData -> {
       try {
         return OBJECT_MAPPER.treeToValue(jsonData, clazz);
+      } catch (JsonProcessingException e) {
+        throw new EwelinkClientException(e);
+      }
+    };
+  }
+
+  public static <T> Function<JsonNode, List<T>> jsonDataConverterForList(Class<T> clazz) {
+    return jsonData -> {
+      try {
+        return OBJECT_MAPPER.treeToValue(jsonData, OBJECT_MAPPER.getTypeFactory().
+            constructCollectionType(List.class, clazz));
+      } catch (JsonProcessingException e) {
+        throw new EwelinkClientException(e);
+      }
+    };
+  }
+
+  public static <T> Function<JsonNode, ResponseV2<T>> jsonGenericDataConverter(Class<T> clazz) {
+    return jsonData -> {
+      try {
+        return OBJECT_MAPPER.treeToValue(jsonData, OBJECT_MAPPER.getTypeFactory()
+            .constructParametricType(ResponseV2.class, clazz));
       } catch (JsonProcessingException e) {
         throw new EwelinkClientException(e);
       }
