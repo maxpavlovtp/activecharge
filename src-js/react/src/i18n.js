@@ -23,7 +23,7 @@ i18n
             start: "h",
             startFree: "Фрі",
           },
-          title: "Заряди 220 кілометрів на завтра",
+          title: "Заряди 220 кілометрів за ніч",
           station: "Станція",
           chargeLink: "Зарядка",
           landingLink: "Головна",
