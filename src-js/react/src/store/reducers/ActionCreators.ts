@@ -37,7 +37,7 @@ export const idStart = (station: string) => async (dispatch: AppDispatch) => {
         response.data ? response.data.scan_interval_ms : 2000
       );
       console.log(JSON.stringify(response.data));
-      console.log(parsedUID.body.visitorId);
+      // console.log(parsedUID.body.visitorId);
 
       dispatch(FetchSlice.actions.chargingDataFetchingSuccess());
     });
