@@ -1,0 +1,43 @@
+.calibrationCont {
+  display: flex;
+  flex-direction: column;
+}
+
+.calibrationTitle {
+  font-family: "OpenSansExtraBold", Arial, Helvetica, sans-serif;
+  color: #2c2b2b;
+  padding-bottom: 3px;
+  margin-bottom: 8px;
+  text-align: center;
+  border-bottom: 1px solid rgb(206, 206, 206);
+}
+
+.calibrationText {
+  font-family: "OpenSansExtraBold", Arial, Helvetica, sans-serif;
+  color: #2c2b2b;
+  margin-bottom: 8px;
+}
+
+.btnSend {
+  margin: 10px auto 0 auto;
+  cursor: pointer;
+  background-color: #8f00ff;
+  border-radius: 10px;
+  text-align: center;
+  color: #fafafa;
+  font-family: "OpenSansMedium", Arial, Helvetica, sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  padding-left: 7px;
+  padding-right: 7px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.calibrationSuccess {
+  font-family: "OpenSansExtraBold", Arial, Helvetica, sans-serif;
+  color: #2c2b2b;
+  padding-bottom: 3px;
+  margin-bottom: 8px;
+  text-align: center;
+}
