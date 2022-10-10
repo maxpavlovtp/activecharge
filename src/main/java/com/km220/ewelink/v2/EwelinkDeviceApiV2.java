@@ -12,10 +12,13 @@ import com.km220.ewelink.internal.utils.JsonUtils;
 import com.km220.ewelink.internal.v2.AbstractEwelinkApiV2;
 import com.km220.ewelink.model.device.Params;
 import com.km220.ewelink.model.device.SwitchState;
+import com.km220.ewelink.model.v2.DeviceList;
 import com.km220.ewelink.model.v2.DeviceV2;
+import com.km220.ewelink.model.v2.ResponseV2;
 import java.net.http.HttpClient;
 import java.time.Instant;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import org.slf4j.Logger;
@@ -24,6 +27,7 @@ import org.slf4j.LoggerFactory;
 public final class EwelinkDeviceApiV2 extends AbstractEwelinkApiV2 {
 
   static final String DEVICES_API_URI = "/device/thing/status";
+  static final String ALL_DEVICES_API_URI = "/device/thing";
 
   private static final Logger logger = LoggerFactory.getLogger(EwelinkDeviceApiV2.class);
 
@@ -43,6 +47,16 @@ public final class EwelinkDeviceApiV2 extends AbstractEwelinkApiV2 {
             "type", "1"
         ),
         JsonUtils.jsonDataConverter(DeviceV2.class)
+    );
+  }
+
+  public CompletableFuture<ResponseV2<DeviceList>> getStatus() {
+    logger.info("Get status of all devices.");
+
+    return apiGetObjectRequest(
+        ALL_DEVICES_API_URI,
+        Map.of("num", "0"),
+        JsonUtils.jsonGenericDataConverter(DeviceList.class)
     );
   }
 
