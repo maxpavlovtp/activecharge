@@ -4,9 +4,11 @@ import com.km220.dao.station.StationEntity;
 import com.km220.dao.station.StationRepository;
 import com.km220.service.device.DeviceService;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class StationService {
 
 	private final StationRepository stationRepository;
@@ -22,7 +24,13 @@ public class StationService {
 	}
 
 	public boolean isOnline(String station) {
-		return deviceService.getState(stationRepository.getByNumber(station).getDeviceId())
-				.getVoltage() > 0;
+		String deviceId = stationRepository.getByNumber(station).getDeviceId();
+		try {
+			deviceService.getState(deviceId);
+			return true;
+		} catch (Throwable t) {
+			log.error("error getting is online state: {}", t.getMessage());
+			return false;
+		}
 	}
 }
