@@ -5,6 +5,7 @@ export interface FetchState {
   isDeviceOffline: any;
   isLoadingCharging: any;
   isGotDeviceStatus: any;
+  isModalOpen: any;
   uiNightMode: any;
   errorStart: string;
   errorCharging: string;
@@ -15,6 +16,7 @@ export const initialState: FetchState = {
   isDeviceOffline: false,
   isLoadingCharging: false,
   isGotDeviceStatus: false,
+  isModalOpen: false,
   uiNightMode: false,
   errorStart: "",
   errorCharging: "",
@@ -62,9 +64,12 @@ export const FetchSlice = createSlice({
     deviceOfflineStatus(state: FetchState, action: PayloadAction<any>) {
       state.isDeviceOffline = action.payload;
     },
+    setModalOpen(state: FetchState, action: PayloadAction<any>) {
+      state.isModalOpen = action.payload;
+    },
   },
 });
 
-export const { setDeviceStatusUndefind } = FetchSlice.actions;
+export const { setDeviceStatusUndefind, setModalOpen } = FetchSlice.actions;
 
 export default FetchSlice.reducer;

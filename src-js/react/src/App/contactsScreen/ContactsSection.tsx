@@ -10,13 +10,15 @@ import { faPhoneSquareAlt } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
 import { Col, Container, Row } from "react-bootstrap";
 import ModalContacts from "../../components/modal/ModalContacts";
+import { useAppDispatch } from "../../hooks/reduxHooks";
+import { setModalOpen } from "../../store/reducers/FetchSlice";
 
 export const MAX_PHONE_NUM = [+380971983759, "097-198-37-59"];
 export const DIMA_PHONE_NUM = [+380978379316, "097-837-93-16"];
 
 const MainSection: React.FC = () => {
-  const [modalActive, setModalActive] = useState(false);
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
 
   return (
     <Container>
@@ -25,8 +27,7 @@ const MainSection: React.FC = () => {
           as={"div"}
           className="text-center viber"
           onClick={() => {
-            setModalActive(true);
-            console.log(modalActive);
+            dispatch(setModalOpen(true));
           }}
         >
           <FontAwesomeIcon icon={faPhoneSquareAlt} size="4x" />
@@ -62,8 +63,6 @@ const MainSection: React.FC = () => {
         </Col>
 
         <ModalContacts
-          modalActive={modalActive}
-          setModalActive={setModalActive}
           MAX_PHONE_NUM={MAX_PHONE_NUM}
           DIMA_PHONE_NUM={DIMA_PHONE_NUM}
         />
