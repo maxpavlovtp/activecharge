@@ -104,7 +104,7 @@ public class OrderService {
 		}
 	}
 
-	public String fetchInvoiceId(String monoResponse) {
+	private String fetchInvoiceId(String monoResponse) {
 		return monoResponse.replace("{\"invoiceId\":\"", "").split("\"")[0];
 	}
 
