@@ -3,6 +3,7 @@ package com.km220.service;
 import com.km220.dao.station.StationEntity;
 import com.km220.dao.station.StationRepository;
 import com.km220.service.device.DeviceService;
+import com.km220.service.device.DeviceState;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,10 +27,11 @@ public class StationService {
 	public boolean isOnline(String station) {
 		String deviceId = stationRepository.getByNumber(station).getDeviceId();
 		try {
-			deviceService.getState(deviceId);
+			DeviceState state = deviceService.getState(deviceId);
+			log.info("Got device state: {}", state);
 			return true;
 		} catch (Throwable t) {
-			log.error("error getting is online state: {}", t.getMessage());
+			log.error("Device is not online: {}", t.getMessage());
 			return false;
 		}
 	}
