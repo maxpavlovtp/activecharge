@@ -75,7 +75,7 @@ export const getUiNightMode =
       });
   };
 
-  export const getDeviceOfflineStatus =
+  export const getDeviceOnlineStatus =
   (station: string) => async (dispatch: AppDispatch) => {
 		await axios
       .get(`${urlStationIsOnline}station_number=${station}`)
@@ -85,7 +85,7 @@ export const getUiNightMode =
       })
       .then(function (result: any) {
         dispatch(
-          FetchSlice.actions.deviceOfflineStatus(result.data.isDeviceOffline)
+          FetchSlice.actions.deviceOnlineStatus(result.data)
         );
         console.log(result.data);
       });

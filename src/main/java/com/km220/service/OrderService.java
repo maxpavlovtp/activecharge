@@ -86,17 +86,17 @@ public class OrderService {
 			}
 		}
 
-		String invoiceId = fetchInvoiceId(checkoutLink);
+//		String invoiceId = fetchInvoiceId(checkoutLink);
+		String invoiceId = String.valueOf(System.currentTimeMillis());
 		orderRepository.add(invoiceId, stationNumber);
 
 		return checkoutLink;
 	}
-	public void processOrder(String callBackMono) {
-		log.info("Call back from monobank: {}", callBackMono);
+	public void processOrder(String paymentCallBack) {
+		log.info("Call back from monobank: {}", paymentCallBack);
 		// todo move to service
-		if (callBackMono.contains("\"status\":\"success\"")) {
-			String invoiceId = fetchInvoiceId(callBackMono);
-			log.info("invoiceId: {}", invoiceId);
+		if (paymentCallBack.contains("success")) {
+			String invoiceId = fetchInvoiceId(paymentCallBack);
 //			String stationNumberFromCache = invoiceCache.get(invoiceId).split(";")[0];
 //			String hours = invoiceCache.get(invoiceId).split(";")[1];
 //			log.info("stationNumberFromCache: {}", stationNumberFromCache);
@@ -104,8 +104,8 @@ public class OrderService {
 		}
 	}
 
-	private String fetchInvoiceId(String monoResponse) {
-		return monoResponse.replace("{\"invoiceId\":\"", "").split("\"")[0];
+	private String fetchInvoiceId(String paymentCallBack) {
+		return paymentCallBack.replace("{\"invoiceId\":\"", "").split("\"")[0];
 	}
 
 	private UUID createOrder(String invoiceId, String stationNumber) {
