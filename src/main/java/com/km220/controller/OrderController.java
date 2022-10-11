@@ -35,8 +35,8 @@ public class OrderController {
 	public ResponseEntity<String> generateCheckoutLink(
 			@NotBlank @RequestParam("station_number") String stationNumber,
 			@NotBlank @RequestParam("hours") String hours) throws IOException {
-		String monoResponse = orderService.generateCheckoutLink(stationNumber, Integer.valueOf(hours));
-		return ResponseEntity.status(HttpStatus.OK).body(monoResponse);
+		String checkoutLink = orderService.initOrder(stationNumber, Integer.valueOf(hours));
+		return ResponseEntity.status(HttpStatus.OK).body(checkoutLink);
 	}
 
 	@PostMapping("/callBackMono")

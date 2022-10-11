@@ -32,8 +32,8 @@ public class OrderService {
 	private final OrderRepository orderRepository;
 	private final ChargerService chargerService;
 
-	public String generateCheckoutLink(String stationNumber, Integer hours) throws IOException {
-		String result = null;
+	public String initOrder(String stationNumber, Integer hours) throws IOException {
+		String checkoutLink = null;
 
 		URL url = new URL("https://api.monobank.ua/api/merchant/invoice/create");
 		URLConnection con = url.openConnection();
@@ -76,7 +76,7 @@ public class OrderService {
 			String strCurrentLine;
 			while ((strCurrentLine = br.readLine()) != null) {
 				log.info("Checkout info: {}", strCurrentLine);
-				result = strCurrentLine;
+				checkoutLink = strCurrentLine;
 			}
 		} else {
 			br = new BufferedReader(new InputStreamReader(http.getErrorStream()));
@@ -86,22 +86,11 @@ public class OrderService {
 			}
 		}
 
-
-		// todo extract to service
-		String invoiceId = fetchInvoiceId(result);
+		String invoiceId = fetchInvoiceId(checkoutLink);
 		orderRepository.add(invoiceId, stationNumber);
 
-		return result;
+		return checkoutLink;
 	}
-
-	public String fetchInvoiceId(String monoResponse) {
-		return monoResponse.replace("{\"invoiceId\":\"", "").split("\"")[0];
-	}
-
-	private UUID createOrder(String invoiceId, String stationNumber) {
-		return orderRepository.add(invoiceId, stationNumber);
-	}
-
 	public void processOrder(String callBackMono) {
 		log.info("Call back from monobank: {}", callBackMono);
 		// todo move to service
@@ -113,5 +102,13 @@ public class OrderService {
 //			log.info("stationNumberFromCache: {}", stationNumberFromCache);
 			chargerService.start("1", Integer.parseInt("6") * 3600);
 		}
+	}
+
+	public String fetchInvoiceId(String monoResponse) {
+		return monoResponse.replace("{\"invoiceId\":\"", "").split("\"")[0];
+	}
+
+	private UUID createOrder(String invoiceId, String stationNumber) {
+		return orderRepository.add(invoiceId, stationNumber);
 	}
 }
