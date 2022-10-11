@@ -37,6 +37,16 @@ public class StationRepository {
   }
 
   @Transactional(readOnly = true)
+  public StationEntity getByDeviceId(String deviceId) {
+    Objects.requireNonNull(deviceId);
+
+    var sql = "SELECT * from station WHERE provider_device_id = :deviceId";
+
+    return DataAccessUtils.singleResult(jdbcTemplate.query(sql, Map.of("deviceId", deviceId),
+        stationRowMapper));
+  }
+
+  @Transactional(readOnly = true)
   public List<StationEntity> findAll() {
     var sql = """
         SELECT

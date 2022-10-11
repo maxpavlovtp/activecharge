@@ -4,14 +4,18 @@ import { FetchSlice, setDeviceStatusUndefind } from "./FetchSlice";
 
 const urlV2Start = `${process.env.REACT_APP_LINK_SERVE}device/v2/start`;
 const urlV2Status = `${process.env.REACT_APP_LINK_SERVE}device/v2/station/status?`;
+const urlStationIsOnline = `${process.env.REACT_APP_LINK_SERVE}device/v2/station/isOnline?`;
 
 const userUID = localStorage.getItem("@fpjs@client@__null__null__false");
 const parsedUID = JSON.parse(userUID as string);
+const statusUID = userUID ? `&user_uid=${parsedUID.body.visitorId}` : "";
+const startUID = userUID ? parsedUID.body.visitorId : "";
 
 export const idStart = (station: string) => async (dispatch: AppDispatch) => {
   dispatch(setDeviceStatusUndefind(undefined));
   const data = JSON.stringify({
     station_number: station,
+    user_uid: startUID,
   });
 
   const config = {
@@ -35,7 +39,7 @@ export const idStart = (station: string) => async (dispatch: AppDispatch) => {
         response.data ? response.data.scan_interval_ms : 2000
       );
       console.log(JSON.stringify(response.data));
-      console.log(parsedUID.body.visitorId);
+      // console.log(parsedUID.body.visitorId);
 
       dispatch(FetchSlice.actions.chargingDataFetchingSuccess());
     });
@@ -45,7 +49,8 @@ export const getStationInfo =
   (station: string) => async (dispatch: AppDispatch) => {
     dispatch(FetchSlice.actions.deviceStatusFetching());
     await axios
-      .get(urlV2Status + `station_number=${station}`)
+      .get(urlV2Status + `station_number=${station}` + statusUID)
+
       .catch(function (error: any) {
         dispatch(FetchSlice.actions.deviceStatusFetchingError(error.message));
         console.log(error.message);
@@ -66,6 +71,22 @@ export const getUiNightMode =
       })
       .then(function (result: any) {
         dispatch(FetchSlice.actions.uiNightModeGet(result.data.uiNightMode));
+        console.log(result.data);
+      });
+  };
+
+  export const getDeviceOfflineStatus =
+  (station: string) => async (dispatch: AppDispatch) => {
+		await axios
+      .get(`${urlStationIsOnline}station_number=${station}`)
+      .catch(function (error: any) {
+        dispatch(FetchSlice.actions.deviceStatusFetchingError(error.message));
+        console.log(error.message);
+      })
+      .then(function (result: any) {
+        dispatch(
+          FetchSlice.actions.deviceOfflineStatus(result.data.isDeviceOffline)
+        );
         console.log(result.data);
       });
   };

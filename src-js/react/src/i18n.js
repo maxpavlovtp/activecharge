@@ -23,7 +23,7 @@ i18n
             start: "h",
             startFree: "Фрі",
           },
-          title: "Заряди 220 кілометрів за ніч",
+          title: "Заряди 220 кілометрів",
           station: "Станція",
           chargeLink: "Зарядка",
           landingLink: "Головна",
@@ -53,6 +53,12 @@ i18n
 
           readyForUse: "Готова!",
 
+          calibration: "Відкалібруйте результат!",
+          enterYourKm: "Будь ласка, введіть заряджені кілометри",
+          sendKm: "Калібрувати",
+          calibratedKm: "Ваш результат відкалібровано",
+          btnRepeat: "Повторити",
+
           offerTitle: "Договір публічної оферти",
           contents: "Зміст",
           callUs: "Зателефонувати",
@@ -73,7 +79,6 @@ i18n
             overloadDetected: "Виявлено перевантаження",
             slowdown: "Будь ласка, зменшіть напругу до",
             repeat: "і спробуйте ще раз",
-            btnRepeat: "Спробуй ще",
           },
           footer: {
             part1: "Всі права захищені",
@@ -88,7 +93,7 @@ i18n
             start: "h",
             startFree: "Free",
           },
-          title: "Charge 220 kilometers for tomorrow",
+          title: "Charge 220 kilometers",
           station: "Station",
           chargeLink: "Charging",
           landingLink: "Home",
@@ -117,6 +122,12 @@ i18n
 
           readyForUse: "Ready!",
 
+          calibration: "Calibrate result!",
+          enterYourKm: "Please, enter your km",
+          sendKm: "Calibrate",
+          calibratedKm: "Your result was calibrated successfully",
+          btnRepeat: "Try Again",
+
           offerTitle: "Public offer agreement",
           contents: "Contents",
           callUs: "Call Us",
@@ -137,7 +148,6 @@ i18n
             overloadDetected: "Overload",
             slowdown: "Please, slow down to",
             repeat: "and try again",
-            btnRepeat: "Try Again",
           },
           footer: {
             part1: "All rights reserved",
