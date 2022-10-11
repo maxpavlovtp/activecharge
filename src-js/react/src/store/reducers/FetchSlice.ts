@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface FetchState {
   deviceStatus: any;
-  isDeviceOffline: any;
+  isDeviceOnline: any;
   isLoadingCharging: any;
   isGotDeviceStatus: any;
   isModalOpen: any;
@@ -13,7 +13,7 @@ export interface FetchState {
 
 export const initialState: FetchState = {
   deviceStatus: null,
-  isDeviceOffline: false,
+  isDeviceOnline: null,
   isLoadingCharging: false,
   isGotDeviceStatus: false,
   isModalOpen: false,
@@ -61,8 +61,8 @@ export const FetchSlice = createSlice({
     setDeviceStatusUndefind(state: FetchState, action: PayloadAction<any>) {
       state.deviceStatus = action.payload;
     },
-    deviceOfflineStatus(state: FetchState, action: PayloadAction<any>) {
-      state.isDeviceOffline = action.payload;
+    deviceOnlineStatus(state: FetchState, action: PayloadAction<any>) {
+      state.isDeviceOnline = action.payload;
     },
     setModalOpen(state: FetchState, action: PayloadAction<any>) {
       state.isModalOpen = action.payload;
@@ -70,6 +70,6 @@ export const FetchSlice = createSlice({
   },
 });
 
-export const { setDeviceStatusUndefind, setModalOpen } = FetchSlice.actions;
+export const { setDeviceStatusUndefind, setModalOpen, deviceOnlineStatus } = FetchSlice.actions;
 
 export default FetchSlice.reducer;

@@ -3,16 +3,21 @@ import "./MainSection.css";
 import { Link, useOutletContext, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
-import {getDeviceOfflineStatus, idStart} from "../../store/reducers/ActionCreators";
+import {
+  getDeviceOnlineStatus,
+  idStart,
+} from "../../store/reducers/ActionCreators";
 import MainImgLoadingLazy from "../../components/lazyLoading/MainImgLoadingLazy";
 import placehoderSrc from "../../assets/chargingTiny.png";
 import ErrorPage from "../../components/error-page/ErrorPage";
 import axios from "axios";
 import { Col, Container, Row } from "react-bootstrap";
 import { useVisitorData } from "@fingerprintjs/fingerprintjs-pro-react";
+import Spinner from "../../components/spinner/Spinner";
 
 const MainSection: React.FC = () => {
   const [searchParams] = useSearchParams();
+  // const [loading, setLoading] = useState<any>(true);
   const [errorPay, setErrorPay] = useState<any>(null);
   const [mainImgTheme] = useOutletContext<any>();
   const [payUrls, setPayUrls] = useState<any>([]);
@@ -26,7 +31,7 @@ const MainSection: React.FC = () => {
 
   const { t } = useTranslation();
 
-  const { errorCharging, errorStart } = useAppSelector(
+  const { errorCharging, errorStart, isDeviceOnline } = useAppSelector(
     (state) => state.fetchReducer
   );
 
@@ -37,7 +42,7 @@ const MainSection: React.FC = () => {
   };
 
   useEffect(() => {
-		dispatch(getDeviceOfflineStatus(stationNumber));
+    dispatch(getDeviceOnlineStatus(stationNumber));
     try {
       axios
         .all(payEndpoints.map((endpoint: any) => axios.get(endpoint)))
@@ -58,7 +63,7 @@ const MainSection: React.FC = () => {
   }, []);
   let statusBtn = payUrls.length === 0 ? "btnStart disableBtn" : "btnStart";
 
-  if (errorCharging) {
+  if (errorCharging || isDeviceOnline === false) {
     return (
       <ErrorPage
         errorHeader={t("errorDevHeader")}
@@ -79,6 +84,9 @@ const MainSection: React.FC = () => {
   if (data) {
     console.log(data.visitorId);
   }
+
+  if (isDeviceOnline === null) return <Spinner />;
+
   return (
     <Container fluid="lg">
       <Row className="justify-content-center">
