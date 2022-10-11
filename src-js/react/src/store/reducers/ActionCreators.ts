@@ -4,6 +4,7 @@ import { FetchSlice, setDeviceStatusUndefind } from "./FetchSlice";
 
 const urlV2Start = `${process.env.REACT_APP_LINK_SERVE}device/v2/start`;
 const urlV2Status = `${process.env.REACT_APP_LINK_SERVE}device/v2/station/status?`;
+const urlStationIsOnline = `${process.env.REACT_APP_LINK_SERVE}device/v2/station/isOnline?`;
 
 const userUID = localStorage.getItem("@fpjs@client@__null__null__false");
 const parsedUID = JSON.parse(userUID as string);
@@ -76,8 +77,8 @@ export const getUiNightMode =
 
   export const getDeviceOfflineStatus =
   (station: string) => async (dispatch: AppDispatch) => {
-    await axios
-      .get(urlV2Status + `station_number=${station}`)
+		await axios
+      .get(`${urlStationIsOnline}station_number=${station}`)
       .catch(function (error: any) {
         dispatch(FetchSlice.actions.deviceStatusFetchingError(error.message));
         console.log(error.message);

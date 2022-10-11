@@ -3,7 +3,7 @@ import "./MainSection.css";
 import { Link, useOutletContext, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
-import { idStart } from "../../store/reducers/ActionCreators";
+import {getDeviceOfflineStatus, idStart} from "../../store/reducers/ActionCreators";
 import MainImgLoadingLazy from "../../components/lazyLoading/MainImgLoadingLazy";
 import placehoderSrc from "../../assets/chargingTiny.png";
 import ErrorPage from "../../components/error-page/ErrorPage";
@@ -37,8 +37,7 @@ const MainSection: React.FC = () => {
   };
 
   useEffect(() => {
-    // uncomment when BE will ready
-    // dispatch(getDeviceOfflineStatus(stationNumber));
+		dispatch(getDeviceOfflineStatus(stationNumber));
     try {
       axios
         .all(payEndpoints.map((endpoint: any) => axios.get(endpoint)))
