@@ -37,6 +37,8 @@ const MainSection: React.FC = () => {
   };
 
   useEffect(() => {
+    // uncomment when BE will ready
+    // dispatch(getDeviceOfflineStatus(stationNumber));
     try {
       axios
         .all(payEndpoints.map((endpoint: any) => axios.get(endpoint)))
