@@ -50,7 +50,7 @@ public class StationRepository {
   public List<StationEntity> findAll() {
     var sql = """
         SELECT
-            s.id as s_id, s.name as s_name, s.number as s_number,
+            s.id as s_id, s.name as s_name, s.number as s_number, s.cost_per_hour as s_cost_per_hour,
             s.provider_device_id as s_provider_device_id, s.created_on as s_created_on,
             s.updated_on as s_updated_on, j.id as j_id, j.number as j_number, j.charged_wt_h as j_charged_wt_h,
             j.power_wt as j_power_wt, j.voltage as j_voltage, j.reason as j_reason, j.state as j_state,

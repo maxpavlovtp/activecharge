@@ -49,7 +49,7 @@ i18n
           errorPayHeader: "Оплата недоступна!",
           errorPayBody: "Ми вже вирішуємо проблему і скоро повернемось :)",
 
-          helpCall: "Зателефонуйте нам :)",
+          helpCall: "тицни щоб зателефонувати",
 
           readyForUse: "Готова!",
 
@@ -118,7 +118,7 @@ i18n
           errorPayHeader: "Payment is unavailable!",
           errorPayBody: "Sorry! We are reinventing and will be back soon :)",
 
-          helpCall: "Call us :)",
+          helpCall: "Call us",
 
           readyForUse: "Ready!",
 
