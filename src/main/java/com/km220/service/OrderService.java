@@ -2,6 +2,7 @@ package com.km220.service;
 
 import com.km220.dao.order.OrderEntity;
 import com.km220.dao.order.OrderRepository;
+import com.km220.dao.order.OrderState;
 import com.km220.dao.station.StationRepository;
 import com.km220.service.job.ChargerService;
 import java.io.BufferedReader;
@@ -47,9 +48,9 @@ public class OrderService {
 			OrderEntity order = orderRepository.getByInvoiceId(invoiceId);
 
 			chargerService.start(order.getStationNumber(), order.getPeriodSec());
+			order.setState(OrderState.IN_PROGRESS);
 
-//			todo: implement order mark done
-//			orderRepository.markDone(order.getId());
+			orderRepository.update(order);
 		}
 	}
 

@@ -1,9 +1,7 @@
 package com.km220.controller;
 
 import com.km220.service.OrderService;
-import com.km220.service.job.ChargerService;
 import java.io.IOException;
-import java.util.HashMap;
 import javax.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,11 +23,6 @@ public class OrderController {
 
 	@Autowired
 	private OrderService orderService;
-	@Autowired
-	private ChargerService chargerService;
-
-	//  todo move to DB
-	private static final HashMap<String, String> invoiceCache = new HashMap<>();
 
 	@GetMapping("/generateCheckoutLink")
 	public ResponseEntity<String> generateCheckoutLink(
@@ -41,6 +34,7 @@ public class OrderController {
 
 	@PostMapping("/callBackMono")
 	public ResponseEntity<Void> callBackMono(@RequestBody String callBackMono) {
+
 		orderService.processOrder(callBackMono);
 
 		return ResponseEntity.status(HttpStatus.OK).body(null);

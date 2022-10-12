@@ -1,6 +1,11 @@
 package com.km220.dao.order;
 
+
+import static com.km220.dao.order.OrderEntity.INVOICE_ID;
+import static com.km220.dao.order.OrderEntity.STATE;
+
 import com.km220.dao.ChargerDatabaseException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
@@ -61,8 +66,22 @@ public class OrderRepository {
 	}
 
   private static final String UPDATE_SQL = """
-      UPDATE order_220 SET state = :state,
+      UPDATE order_220 SET state = :state
       where invoice_id = :invoice_id
       """;
+	public void update(OrderEntity order) {
+		logger.debug("Updating order in DB: {}", order);
+
+		Objects.requireNonNull(order);
+
+		var parameters = new HashMap<String, Object>();
+		parameters.put(INVOICE_ID, order.getInvoiceId());
+		parameters.put(STATE, order.getState().toString());
+
+		if (jdbcTemplate.update(UPDATE_SQL, parameters) <= 0) {
+			throw new ChargerDatabaseException("Couldn't update order. Order invoiceId = "
+					+ order.getInvoiceId());
+		}
+	}
 
 }
