@@ -1,8 +1,10 @@
 package com.km220.service;
 
+import static com.km220.dao.order.OrderState.CREATED;
+import static com.km220.dao.order.OrderState.IN_PROGRESS;
+
 import com.km220.dao.order.OrderEntity;
 import com.km220.dao.order.OrderRepository;
-import com.km220.dao.order.OrderState;
 import com.km220.dao.station.StationRepository;
 import com.km220.service.job.ChargerService;
 import java.io.BufferedReader;
@@ -41,17 +43,28 @@ public class OrderService {
 		return checkoutLink;
 	}
 
-	public void processOrder(String paymentCallBack) {
+	public String processOrder(String paymentCallBack) {
+//		todo: implement aspect logging for all requests and responses
 		log.info("Call back from monobank: {}", paymentCallBack);
+
+		String invoiceId = fetchInvoiceId(paymentCallBack);
+		String result = "No action for invoiceId: " + invoiceId;
+
 		if (paymentCallBack.contains("success")) {
-			String invoiceId = fetchInvoiceId(paymentCallBack);
 			OrderEntity order = orderRepository.getByInvoiceId(invoiceId);
-
-			chargerService.start(order.getStationNumber(), order.getPeriodSec());
-			order.setState(OrderState.IN_PROGRESS);
-
-			orderRepository.update(order);
+			if (order.getState() != CREATED) {
+				return "Next time, we know you.";
+			} else {
+//				todo: implement cancel in case of failure
+				chargerService.start(order.getStationNumber(), order.getPeriodSec());
+				order.setState(IN_PROGRESS);
+				orderRepository.update(order);
+				result = "Started station for invoiceId: " + invoiceId;
+			}
 		}
+		//			todo: done state for order after charge finish
+
+		return result;
 	}
 
 	private String callMonobankRestAPI(String stationNumber, Integer hours) throws IOException {

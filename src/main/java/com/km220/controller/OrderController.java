@@ -33,11 +33,7 @@ public class OrderController {
 	}
 
 	@PostMapping("/callBackMono")
-	public ResponseEntity<Void> callBackMono(@RequestBody String callBackMono) {
-
-		orderService.processOrder(callBackMono);
-
-		return ResponseEntity.status(HttpStatus.OK).body(null);
+	public ResponseEntity<String> callBackMono(@RequestBody String callBackMono) {
+		return ResponseEntity.status(HttpStatus.OK).body(orderService.processOrder(callBackMono));
 	}
-
 }
