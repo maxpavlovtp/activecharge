@@ -175,7 +175,7 @@ export default function GetPower({
         kWtCharged={kWtCharged}
         chargeStatus={chargeStatus}
       />
-      <ModalCalibrate />
+      <ModalCalibrate station={station} chargedKm={Math.round((kWtCharged * 1000) / Math.round(carKwtKmRatio))}/>
     </>
   );
 }
