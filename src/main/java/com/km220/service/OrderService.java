@@ -86,7 +86,7 @@ public class OrderService {
 				+ "        \"destination\": \"" + hours + " годин зарядки\",\n"
 				+ "        \"basketOrder\": []\n"
 				+ "    },\n"
-				+ "    \"redirectUrl\": \"http://" + callBackHost + "/charging?stationNumber="
+				+ "    \"redirectUrl\": \"http://" + callBackHost + "/charging?station="
 				+ stationNumber + "\",\n"
 				+ "    \"webHookUrl\": \"http://" + callBackHost + ":8080/order/callBackMono\",\n"
 				+ "    \"validity\": 3600,\n"
