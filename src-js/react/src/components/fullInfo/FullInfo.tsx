@@ -34,10 +34,10 @@ export default function FullInfo({
           animate={{ height: "auto" }}
           exit={{
             height: 0,
-            transition: { duration: 1, ease: "easeOut" },
+            transition: { duration: 0.3, ease: "easeOut" },
           }}
           style={{ overflow: "hidden" }}
-          transition={{ duration: 1 }}
+          transition={{ duration: 0.3 }}
         >
           <FullInfoContainer className="fullInfoCont">
             <Row className="justify-content-center mb-4">

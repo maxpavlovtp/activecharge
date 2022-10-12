@@ -43,9 +43,9 @@ i18n
 
           errorDevHeader: "Помилка серверу!",
           errorDevBody: "Ми вже вирішуємо проблему і скоро повернимось :)",
-          errorOfflineHeader: "Девайс офлайн",
+          errorOfflineHeader: "Станція офлайн",
           errorOfflineBody:
-            "Вибачте! Девайс офлайн. Спробуйте, будь ласка, пізніше",
+            "Вибачте! Станція офлайн. Спробуйте, будь ласка, пізніше",
           errorPayHeader: "Оплата недоступна!",
           errorPayBody: "Ми вже вирішуємо проблему і скоро повернемось :)",
 
@@ -113,8 +113,8 @@ i18n
 
           errorDevHeader: "Server error!",
           errorDevBody: "We are reinventing and will be back soon :)",
-          errorOfflineHeader: "Device is offline",
-          errorOfflineBody: "Sorry! Device is offline. Please, try later",
+          errorOfflineHeader: "Station is offline",
+          errorOfflineBody: "Sorry! Station is offline. Please, try later",
           errorPayHeader: "Payment is unavailable!",
           errorPayBody: "Sorry! We are reinventing and will be back soon :)",
 
