@@ -63,7 +63,7 @@ const MainSection: React.FC = () => {
   }, []);
   let statusBtn = payUrls.length === 0 ? "btnStart disableBtn" : "btnStart";
 
-  if (errorCharging || isDeviceOnline === false) {
+  if (errorCharging) {
     return (
       <ErrorPage
         errorHeader={t("errorDevHeader")}
@@ -72,7 +72,7 @@ const MainSection: React.FC = () => {
     );
   }
 
-  if (errorStart) {
+  if (errorStart || isDeviceOnline === false) {
     return (
       <ErrorPage
         errorHeader={t("errorOfflineHeader")}
