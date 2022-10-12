@@ -1,5 +1,6 @@
 package com.km220.service;
 
+import com.km220.dao.order.OrderEntity;
 import com.km220.dao.order.OrderRepository;
 import com.km220.dao.station.StationRepository;
 import com.km220.service.job.ChargerService;
@@ -11,7 +12,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,8 +33,28 @@ public class OrderService {
 	private final ChargerService chargerService;
 
 	public String initOrder(String stationNumber, Integer hours) throws IOException {
-		String checkoutLink = null;
+		String checkoutLink = callMonobankRestAPI(stationNumber, hours);
+		String invoiceId = fetchInvoiceId(checkoutLink);
+		orderRepository.add(invoiceId, stationNumber, hours * 3600);
 
+		return checkoutLink;
+	}
+
+	public void processOrder(String paymentCallBack) {
+		log.info("Call back from monobank: {}", paymentCallBack);
+		if (paymentCallBack.contains("success")) {
+			String invoiceId = fetchInvoiceId(paymentCallBack);
+			OrderEntity order = orderRepository.getByInvoiceId(invoiceId);
+
+			chargerService.start(order.getStationNumber(), order.getPeriodSec());
+
+//			todo: implement order mark done
+//			orderRepository.markDone(order.getId());
+		}
+	}
+
+	private String callMonobankRestAPI(String stationNumber, Integer hours) throws IOException {
+		String checkoutLink = null;
 		URL url = new URL("https://api.monobank.ua/api/merchant/invoice/create");
 		URLConnection con = url.openConnection();
 		HttpURLConnection http = (HttpURLConnection) con;
@@ -65,50 +85,35 @@ public class OrderService {
 		http.setFixedLengthStreamingMode(length);
 		http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
 		http.connect();
-		try (OutputStream os = http.getOutputStream()) {
+		try (OutputStream outputStream = http.getOutputStream()) {
 			log.info("sending generateCheckoutLink request to monobank: {}", body);
-			os.write(out);
+			outputStream.write(out);
 		}
 
-		BufferedReader br = null;
+		BufferedReader br;
 		if (http.getResponseCode() == 200) {
-			br = new BufferedReader(new InputStreamReader(http.getInputStream()));
-			String strCurrentLine;
-			while ((strCurrentLine = br.readLine()) != null) {
-				log.info("Checkout info: {}", strCurrentLine);
-				checkoutLink = strCurrentLine;
+			try (InputStreamReader inputStream = new InputStreamReader(http.getInputStream())) {
+				br = new BufferedReader(inputStream);
+				String strCurrentLine;
+				while ((strCurrentLine = br.readLine()) != null) {
+					log.info("Checkout info: {}", strCurrentLine);
+					checkoutLink = strCurrentLine;
+				}
 			}
 		} else {
-			br = new BufferedReader(new InputStreamReader(http.getErrorStream()));
-			String strCurrentLine;
-			while ((strCurrentLine = br.readLine()) != null) {
-				log.error("Monobank error: {}", strCurrentLine);
+			try (InputStreamReader inputErrorStream = new InputStreamReader(http.getErrorStream())) {
+				br = new BufferedReader(inputErrorStream);
+				String strCurrentLine;
+				while ((strCurrentLine = br.readLine()) != null) {
+					log.error("Monobank error: {}", strCurrentLine);
+				}
 			}
 		}
 
-//		String invoiceId = fetchInvoiceId(checkoutLink);
-		String invoiceId = String.valueOf(System.currentTimeMillis());
-		orderRepository.add(invoiceId, stationNumber);
-
 		return checkoutLink;
-	}
-	public void processOrder(String paymentCallBack) {
-		log.info("Call back from monobank: {}", paymentCallBack);
-		// todo move to service
-		if (paymentCallBack.contains("success")) {
-			String invoiceId = fetchInvoiceId(paymentCallBack);
-//			String stationNumberFromCache = invoiceCache.get(invoiceId).split(";")[0];
-//			String hours = invoiceCache.get(invoiceId).split(";")[1];
-//			log.info("stationNumberFromCache: {}", stationNumberFromCache);
-			chargerService.start("1", Integer.parseInt("6") * 3600);
-		}
 	}
 
 	private String fetchInvoiceId(String paymentCallBack) {
 		return paymentCallBack.replace("{\"invoiceId\":\"", "").split("\"")[0];
-	}
-
-	private UUID createOrder(String invoiceId, String stationNumber) {
-		return orderRepository.add(invoiceId, stationNumber);
 	}
 }

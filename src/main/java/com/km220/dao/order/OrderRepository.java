@@ -33,19 +33,20 @@ public class OrderRepository {
     var sql = "SELECT * from order_220 WHERE invoice_id = :invoiceId";
 
     return DataAccessUtils.singleResult(
-        jdbcTemplate.query(sql, Map.of("invoice_id", invoiceId), orderRowMapper));
+        jdbcTemplate.query(sql, Map.of("invoiceId", invoiceId), orderRowMapper));
   }
 
   private static final String INSERT_SQL = """
-      INSERT into order_220(station_id, invoice_id)
-      VALUES ((SELECT id FROM station WHERE number = :station_number), :invoice_id);
+      INSERT into order_220(station_number, invoice_id, period_sec)
+      VALUES (:station_number, :invoice_id, :period_sec);
       """;
-	public UUID add(String invoice_id, String station_number ) {
+	public UUID add(String invoice_id, String station_number, int period_sec ) {
 		Objects.requireNonNull(invoice_id);
 
 		var parameters = new MapSqlParameterSource()
 				.addValue("invoice_id", invoice_id)
-				.addValue("station_number", station_number);
+				.addValue("station_number", station_number)
+				.addValue("period_sec", period_sec);
 		final KeyHolder keyHolder = new GeneratedKeyHolder();
 
 		if (jdbcTemplate.update(INSERT_SQL, parameters, keyHolder) > 0) {

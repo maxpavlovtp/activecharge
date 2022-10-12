@@ -1,10 +1,9 @@
 package com.km220.dao.order;
 
 import static com.km220.dao.order.OrderEntity.INVOICE_ID;
+import static com.km220.dao.order.OrderEntity.PERIOD_SEC;
 import static com.km220.dao.order.OrderEntity.STATE;
-import static com.km220.dao.station.StationEntity.NAME;
-import static com.km220.dao.station.StationEntity.NUMBER;
-import static com.km220.dao.station.StationEntity.PROVIDER_DEVICE_ID;
+import static com.km220.dao.order.OrderEntity.station_number;
 
 import com.km220.dao.DatabaseEntityRowMapper;
 import java.sql.ResultSet;
@@ -29,6 +28,8 @@ public class OrderRowMapper extends DatabaseEntityRowMapper<OrderEntity> {
 
     orderEntity.setInvoiceId(rs.getString(name(INVOICE_ID)));
     orderEntity.setState(OrderState.valueOf(rs.getString(name(STATE))));
+		orderEntity.setStationNumber(rs.getString(name(station_number)));
+		orderEntity.setPeriodSec(rs.getInt(name(PERIOD_SEC)));
 
     return orderEntity;
   }
