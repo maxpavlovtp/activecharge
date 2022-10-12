@@ -23,8 +23,13 @@ const MainSection: React.FC = () => {
   const [payUrls, setPayUrls] = useState<any>([]);
   let stationNumber: any = searchParams.get("station");
 
-  const urlPayment12h = `${process.env.REACT_APP_LINK_SERVE}order/generateCheckoutLink?station_number=${stationNumber}&&hours=12`;
-  const urlPayment6h = `${process.env.REACT_APP_LINK_SERVE}order/generateCheckoutLink?station_number=${stationNumber}&&hours=6`;
+  //refactor
+  const userUID = localStorage.getItem("@fpjs@client@__null__null__false");
+  const parsedUID = JSON.parse(userUID as string);
+  const statusUID = userUID ? `&user_uid=${parsedUID.body.visitorId}` : "";
+
+  const urlPayment12h = `${process.env.REACT_APP_LINK_SERVE}order/generateCheckoutLink?station_number=${stationNumber}&${statusUID}&hours=12`;
+  const urlPayment6h = `${process.env.REACT_APP_LINK_SERVE}order/generateCheckoutLink?station_number=${stationNumber}&${statusUID}&hours=6`;
   const payEndpoints = [urlPayment6h, urlPayment12h];
 
   const { data } = useVisitorData();

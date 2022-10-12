@@ -18,9 +18,13 @@ export default function HomeScreen() {
   const { t } = useTranslation();
 
   useEffect(() => {
+    //refactor
+    const userUID = localStorage.getItem("@fpjs@client@__null__null__false");
+    const parsedUID = JSON.parse(userUID as string);
+    const statusUID = userUID ? `&user_uid=${parsedUID.body.visitorId}` : "";
     try {
       axios
-        .get(urlV2StatusAll)
+        .get(`${urlV2StatusAll}?${statusUID}`)
         .catch(function (error: any) {
           setErrorAll(error.message);
           console.log(error.message);
