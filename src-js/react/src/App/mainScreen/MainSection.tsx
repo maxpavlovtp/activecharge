@@ -4,6 +4,7 @@ import { Link, useOutletContext, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import {
+  getDeviceFingerPrint,
   getDeviceOnlineStatus,
   idStart,
 } from "../../store/reducers/ActionCreators";
@@ -23,13 +24,10 @@ const MainSection: React.FC = () => {
   const [payUrls, setPayUrls] = useState<any>([]);
   let stationNumber: any = searchParams.get("station");
 
-  //refactor
-  const userUID = localStorage.getItem("@fpjs@client@__null__null__false");
-  const parsedUID = JSON.parse(userUID as string);
-  const statusUID = userUID ? `&user_uid=${parsedUID.body.visitorId}` : "";
+  const deviceFingerPrint = getDeviceFingerPrint();
 
-  const urlPayment12h = `${process.env.REACT_APP_LINK_SERVE}order/generateCheckoutLink?station_number=${stationNumber}&${statusUID}&hours=12`;
-  const urlPayment6h = `${process.env.REACT_APP_LINK_SERVE}order/generateCheckoutLink?station_number=${stationNumber}&${statusUID}&hours=6`;
+  const urlPayment12h = `${process.env.REACT_APP_LINK_SERVE}order/generateCheckoutLink?station_number=${stationNumber}&device_finger_print=${deviceFingerPrint}&hours=12`;
+  const urlPayment6h = `${process.env.REACT_APP_LINK_SERVE}order/generateCheckoutLink?station_number=${stationNumber}&device_finger_print=${deviceFingerPrint}&hours=6`;
   const payEndpoints = [urlPayment6h, urlPayment12h];
 
   const { data } = useVisitorData();

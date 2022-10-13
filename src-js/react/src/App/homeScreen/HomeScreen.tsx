@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import ErrorPage from "../../components/error-page/ErrorPage";
 import Spinner from "../../components/spinner/Spinner";
 import { StationCard } from "../../components/stationCard/StationCard";
+import { getDeviceFingerPrint } from "../../store/reducers/ActionCreators";
 
 const urlV2StatusAll = `${process.env.REACT_APP_LINK_SERVE}device/v2/station/statusAll`;
 
@@ -18,13 +19,11 @@ export default function HomeScreen() {
   const { t } = useTranslation();
 
   useEffect(() => {
-    //refactor
-    const userUID = localStorage.getItem("@fpjs@client@__null__null__false");
-    const parsedUID = JSON.parse(userUID as string);
-    const statusUID = userUID ? `&user_uid=${parsedUID.body.visitorId}` : "";
+    const deviceFingerPrint = getDeviceFingerPrint();
+
     try {
       axios
-        .get(`${urlV2StatusAll}?${statusUID}`)
+        .get(`${urlV2StatusAll}?device_finger_print=${deviceFingerPrint}`)
         .catch(function (error: any) {
           setErrorAll(error.message);
           console.log(error.message);

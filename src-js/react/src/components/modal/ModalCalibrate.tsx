@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Dropdown, Form } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import { getDeviceFingerPrint } from "../../store/reducers/ActionCreators";
 import ErrorPage from "../error-page/ErrorPage";
 import Modal from "./Modal";
 import "./Modal.css";
@@ -16,6 +17,7 @@ export default function ModalCalibrate({
   const [value, setValue] = useState<any>(null);
   const [error, setError] = useState<any>(null);
   const [calibratedKm, setCalibratedKm] = useState(null);
+  const roundChargedKm = Math.round(chargedKm / 10) * 10;
 
   const kmArray = [
     10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170,
@@ -30,12 +32,10 @@ export default function ModalCalibrate({
   const urlV2Calibrating = `${process.env.REACT_APP_LINK_SERVE}device/v2/station/calibrating?`;
 
   const calibrateResult = () => {
-    const userUID = localStorage.getItem("@fpjs@client@__null__null__false");
-    const parsedUID = JSON.parse(userUID as string);
-    const statusUID = userUID ? `&user_uid=${parsedUID.body.visitorId}` : "";
+    const deviceFingerPrint = getDeviceFingerPrint();
     axios
       .get(
-        `${urlV2Calibrating}station_number=${station}${statusUID}&real_km=${value}`
+        `${urlV2Calibrating}station_number=${station}&device_finger_print=${deviceFingerPrint}&real_km=${value}`
       )
       .catch(function (error: any) {
         setError(error.message);
