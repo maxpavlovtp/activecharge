@@ -7,4 +7,4 @@ spring:
     clean-on-validation-error: false
 
 device:
-  freeChargeSecs: 30
+  freeChargeSecs: 36

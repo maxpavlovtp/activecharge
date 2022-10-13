@@ -40,7 +40,7 @@ public class ChargingJobRepository {
           j.power_wt as j_power_wt, j.voltage as j_voltage, j.reason as j_reason, j.state as j_state,
           j.created_on as j_created_on, j.updated_on as j_updated_on, j.period_sec as j_period_sec,
           j.stopped_on as j_stopped_on,
-          s.id as s_id, s.number as s_number, s.name as s_name, s.provider_device_id as s_provider_device_id,
+          s.id as s_id, s.number as s_number,s.cost_per_hour as s_cost_per_hour, s.name as s_name, s.provider_device_id as s_provider_device_id,
           s.updated_on as s_updated_on, s.created_on as s_created_on
         FROM charging_job j
         JOIN station s on j.station_id = s.id

@@ -23,7 +23,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @Testcontainers
 @ActiveProfiles("integration-test")
-class StationRepositoryTest {
+class OrderRepositoryTest {
 
   private static final String STATION_NUMBER = "2";
 
