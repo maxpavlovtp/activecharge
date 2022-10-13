@@ -41,3 +41,55 @@
   margin-bottom: 8px;
   text-align: center;
 }
+
+.drobdownBtn {
+  background-color: #8f00ff !important;
+  border: none !important;
+  outline: none !important;
+  position: relative;
+  box-shadow: none !important;
+}
+
+.drobdownBtn::after {
+  position: absolute;
+  right: 0;
+  margin-right: 10px;
+  top: 40%;
+  display: inline-block;
+  content: "";
+  border-top: 0.3em solid;
+  border-right: 0.3em solid transparent;
+  border-bottom: 0;
+  border-left: 0.3em solid transparent;
+}
+
+.selectBox {
+  position: relative;
+  height: 100px;
+  width: 100%;
+  overflow-y: scroll;
+  text-align: center;
+  border: 1px solid #8f00ff;
+  border-radius: 10px;
+}
+
+.listKm {
+  font-family: "OpenSansMedium", Arial, Helvetica, sans-serif;
+  font-weight: 500;
+  color: #2c2b2b;
+  font-size: 19px;
+  margin-bottom: 0;
+  padding: 2px;
+}
+.listKm:not(:last-child) {
+  border-bottom: 1px solid #8f00ff;
+}
+
+.listKm:hover {
+  background-color: #8f00ff;
+}
+
+.listKm:active {
+  background-color: #8f00ff;
+  color: #fafafa;
+}
