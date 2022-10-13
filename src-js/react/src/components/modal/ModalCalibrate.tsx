@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Dropdown, Form } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { getDeviceFingerPrint } from "../../store/reducers/ActionCreators";
@@ -17,7 +17,8 @@ export default function ModalCalibrate({
   const [value, setValue] = useState<any>(null);
   const [error, setError] = useState<any>(null);
   const [calibratedKm, setCalibratedKm] = useState(null);
-  const roundChargedKm = Math.round(chargedKm / 10) * 10;
+  // Math.round(chargedKm / 10) * 10;
+  const roundChargedKm = 100;
 
   const kmArray = [
     10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170,
@@ -71,25 +72,18 @@ export default function ModalCalibrate({
               <>
                 <p className="calibrationTitle">{t("calibration")}</p>
                 <p className="calibrationText">{t("enterYourKm")}:</p>
-                <Dropdown>
-                  <Dropdown.Toggle
-                    style={{ width: "100%" }}
-                    bsPrefix="drobdownBtn"
-                    id="dropdown-basic"
-                  >
-                    {value === null ? chargedKm : value}
-                  </Dropdown.Toggle>
-
-                  <Dropdown.Menu
-                    style={{ height: "200px", overflowY: "scroll" }}
-                  >
-                    {kmArray.map((n: number, index: any) => (
-                      <Dropdown.Item onClick={() => setValue(n)} key={index}>
-                        {n}
-                      </Dropdown.Item>
-                    ))}
-                  </Dropdown.Menu>
-                </Dropdown>
+                {/* in telegram bootstrap dropdown */}
+                <div className="selectBox">
+                  {kmArray.map((n: number, index: any) => (
+                    <div
+                      className="listKm"
+                      onClick={() => setValue(n)}
+                      key={index}
+                    >
+                      {n}
+                    </div>
+                  ))}
+                </div>
 
                 <div onClick={calibrateResult} className={btnStyle}>
                   {t("sendKm")}
