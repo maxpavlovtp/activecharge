@@ -6,18 +6,18 @@ const urlV2Start = `${process.env.REACT_APP_LINK_SERVE}device/v2/start`;
 const urlV2Status = `${process.env.REACT_APP_LINK_SERVE}device/v2/station/status?`;
 const urlStationIsOnline = `${process.env.REACT_APP_LINK_SERVE}device/v2/station/isOnline?`;
 
-export const getDeviceFingerPrint = () => {
-  const userUID = localStorage.getItem("@fpjs@client@__null__null__false");
-  const parsedUID = JSON.parse(userUID as string);
-  return userUID ? parsedUID.body.visitorId : "";
+export const getClientFingerPring = () => {
+  const clientFingerPrint = localStorage.getItem("@fpjs@client@__null__null__false");
+  const parsedUID = JSON.parse(clientFingerPrint as string);
+  return clientFingerPrint ? parsedUID.body.visitorId : "";
 };
 
 export const idStart = (station: string) => async (dispatch: AppDispatch) => {
   dispatch(setDeviceStatusUndefind(undefined));
-  const deviceFingerPrint = getDeviceFingerPrint();
+  const clientFingerPrint = getClientFingerPring();
   const data = JSON.stringify({
     station_number: station,
-    device_finger_print: deviceFingerPrint,
+    client_finger_print: clientFingerPrint,
   });
 
   const config = {
@@ -47,11 +47,11 @@ export const idStart = (station: string) => async (dispatch: AppDispatch) => {
 
 export const getStationInfo =
   (station: string) => async (dispatch: AppDispatch) => {
-    const deviceFingerPrint = getDeviceFingerPrint();
+    const clientFingerPrint = getClientFingerPring();
     dispatch(FetchSlice.actions.deviceStatusFetching());
     await axios
       .get(
-        `${urlV2Status}station_number=${station}&device_finger_print=${deviceFingerPrint}`
+        `${urlV2Status}station_number=${station}&device_finger_print=${clientFingerPrint}`
       )
 
       .catch(function (error: any) {
@@ -66,10 +66,10 @@ export const getStationInfo =
 
 export const getUiNightMode =
   (station: string) => async (dispatch: AppDispatch) => {
-    const deviceFingerPrint = getDeviceFingerPrint();
+    const clientFingerPrint = getClientFingerPring();
     await axios
       .get(
-        `${urlV2Status}station_number=${station}&device_finger_print=${deviceFingerPrint}`
+        `${urlV2Status}station_number=${station}&device_finger_print=${clientFingerPrint}`
       )
       .catch(function (error: any) {
         dispatch(FetchSlice.actions.deviceStatusFetchingError(error.message));
@@ -83,10 +83,10 @@ export const getUiNightMode =
 
 export const getDeviceOnlineStatus =
   (station: string) => async (dispatch: AppDispatch) => {
-    const deviceFingerPrint = getDeviceFingerPrint();
+    const clientFingerPrint = getClientFingerPring();
     await axios
       .get(
-        `${urlStationIsOnline}station_number=${station}&device_finger_print=${deviceFingerPrint}`
+        `${urlStationIsOnline}station_number=${station}&device_finger_print=${clientFingerPrint}`
       )
       .catch(function (error: any) {
         dispatch(FetchSlice.actions.deviceStatusFetchingError(error.message));
