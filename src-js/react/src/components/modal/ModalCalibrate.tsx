@@ -6,6 +6,8 @@ import { getClientFingerPring } from "../../store/reducers/ActionCreators";
 import ErrorPage from "../error-page/ErrorPage";
 import Modal from "./Modal";
 import "./Modal.css";
+import "@mobiscroll/react/dist/css/mobiscroll.min.css";
+import { Select, Page, setOptions, localeUa } from "@mobiscroll/react";
 
 export default function ModalCalibrate({
   chargedKm,
@@ -73,18 +75,13 @@ export default function ModalCalibrate({
                 <p className="calibrationTitle">{t("calibration")}</p>
                 <p className="calibrationText">{t("enterYourKm")}:</p>
                 {/* in telegram bootstrap dropdown */}
-                <div className="selectBox">
-                  {kmArray.map((n: number, index: any) => (
-                    <div
-                      className="listKm"
-                      onClick={() => setValue(n)}
-                      key={index}
-                    >
-                      {n}
-                    </div>
-                  ))}
-                </div>
-
+                <Page>
+                  <Select
+                    defaultSelection={roundChargedKm}
+                    data={kmArray}
+                    display="inline"
+                  />
+                </Page>
                 <div onClick={calibrateResult} className={btnStyle}>
                   {t("sendKm")}
                 </div>
