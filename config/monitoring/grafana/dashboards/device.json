@@ -129,6 +129,90 @@
               {
                 "destinationType": "string",
                 "targetField": "1"
+              },
+              {
+                "destinationType": "string",
+                "targetField": "2"
+              },
+              {
+                "destinationType": "string",
+                "targetField": "3"
+              },
+              {
+                "destinationType": "string",
+                "targetField": "4"
+              },
+              {
+                "destinationType": "string",
+                "targetField": "5"
+              },
+              {
+                "destinationType": "string",
+                "targetField": "6"
+              },
+              {
+                "destinationType": "string",
+                "targetField": "7"
+              },
+              {
+                "destinationType": "string",
+                "targetField": "8"
+              },
+              {
+                "destinationType": "string",
+                "targetField": "9"
+              },
+              {
+                "destinationType": "string",
+                "targetField": "10"
+              },
+              {
+                "destinationType": "string",
+                "targetField": "11"
+              },
+              {
+                "destinationType": "string",
+                "targetField": "12"
+              },
+              {
+                "destinationType": "string",
+                "targetField": "13"
+              },
+              {
+                "destinationType": "string",
+                "targetField": "14"
+              },
+              {
+                "destinationType": "string",
+                "targetField": "15"
+              },
+              {
+                "destinationType": "string",
+                "targetField": "16"
+              },
+              {
+                "destinationType": "string",
+                "targetField": "17"
+              },
+              {
+                "destinationType": "string",
+                "targetField": "18"
+              },
+              {
+                "destinationType": "string",
+                "targetField": "19"
+              },
+              {
+                "destinationType": "string",
+                "targetField": "20"
+              },
+              {
+                "destinationType": "string",
+                "targetField": "21"
+              },
+              {
+                "destinationType": "string",
+                "targetField": "22"
               }
             ],
             "fields": {}
