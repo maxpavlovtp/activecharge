@@ -25,26 +25,6 @@ export default function ModalCalibrate({
 
   const dispatch = useAppDispatch();
 
-  // const useStyles = makeStyles(theme => ({
-  //   formControl: {
-  //     margin: theme.spacing(1),
-  //     minWidth: 120
-  //   },
-  //   selectEmpty: {
-  //     marginTop: theme.spacing(2)
-  //   },
-  //   menuPaper: {
-  //     maxHeight: 100
-  //   }
-  // }));
-
-  const selectionView = styled("div")({
-    color: "darkslategray",
-    backgroundColor: "aliceblue",
-    padding: 8,
-    borderRadius: 4,
-  });
-
   const kmArray = [
     10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170,
     180, 190, 200, 210, 220, 230, 240, 250, 260, 270, 280, 290, 300, 310, 320,
