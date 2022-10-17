@@ -21,7 +21,7 @@ export default function ModalCalibrate({
   const [error, setError] = useState<any>(null);
   const [calibratedKm, setCalibratedKm] = useState(null);
   // chargedKm <= 10 ? 10 : Math.round(chargedKm / 10) * 10
-  const roundChargedKm = 100;
+  const roundChargedKm = chargedKm <= 10 ? 10 : Math.round(chargedKm / 10) * 10;
 
   const dispatch = useAppDispatch();
 
