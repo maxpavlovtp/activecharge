@@ -7,7 +7,7 @@ import { getDeviceFingerPrint } from "../../store/reducers/ActionCreators";
 import Modal from "./Modal";
 import "./Modal.css";
 import { MenuItem, Select } from "@mui/material";
-import { useAppDispatch } from "../../hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import { setModalOpen } from "../../store/reducers/FetchSlice";
 
 export default function ModalCalibrate({
@@ -23,6 +23,7 @@ export default function ModalCalibrate({
   // chargedKm <= 10 ? 10 : Math.round(chargedKm / 10) * 10
   const roundChargedKm = chargedKm <= 10 ? 10 : Math.round(chargedKm / 10) * 10;
 
+  const { isModalOpen } = useAppSelector((state) => state.fetchReducer);
   const dispatch = useAppDispatch();
 
   const kmArray = [
@@ -83,27 +84,32 @@ export default function ModalCalibrate({
               <>
                 <p className="calibrationTitle">{t("calibration")}</p>
                 <p className="calibrationText">{t("enterYourKm")}:</p>
-                <FormControl size="small" fullWidth>
-                  <Select
-                    MenuProps={{
-                      style: {
-                        maxHeight: 250,
-                      },
-                    }}
-                    variant="outlined"
-                    onChange={setDefaultValue}
-                    defaultValue={roundChargedKm}
-                    sx={{
-                      height: 40,
-                    }}
-                  >
-                    {kmArray.map((n: number, index: any) => (
-                      <MenuItem key={index} value={n}>
-                        {n}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
+                {isModalOpen && (
+                  <FormControl size="small" fullWidth>
+                    <Select
+                      defaultOpen={true}
+                      MenuProps={{
+                        style: {
+                          maxHeight: 250,
+                          transition: '1s'
+                        },
+                      }}
+                      variant="outlined"
+                      onChange={setDefaultValue}
+                      defaultValue={roundChargedKm}
+                      sx={{
+                        height: 40,
+                      }}
+                    >
+                      {kmArray.map((n: number, index: any) => (
+                        <MenuItem key={index} value={n}>
+                          {n}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                )}
+
                 <div onClick={calibrateResult} className={btnStyle}>
                   {t("sendKm")}
                 </div>
