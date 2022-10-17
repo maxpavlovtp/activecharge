@@ -1,11 +1,13 @@
 import axios from "axios";
-import React, { useRef, useState } from "react";
-import { Dropdown, Form } from "react-bootstrap";
+import React, { useState } from "react";
+import FormControl from "@mui/material/FormControl";
 import { useTranslation } from "react-i18next";
 import { getDeviceFingerPrint } from "../../store/reducers/ActionCreators";
-import ErrorPage from "../error-page/ErrorPage";
 import Modal from "./Modal";
 import "./Modal.css";
+import { MenuItem, Select } from "@mui/material";
+import { useAppDispatch } from "../../hooks/reduxHooks";
+import { setModalOpen } from "../../store/reducers/FetchSlice";
 
 export default function ModalCalibrate({
   chargedKm,
@@ -17,8 +19,9 @@ export default function ModalCalibrate({
   const [value, setValue] = useState<any>(null);
   const [error, setError] = useState<any>(null);
   const [calibratedKm, setCalibratedKm] = useState(null);
-  // Math.round(chargedKm / 10) * 10;
-  const roundChargedKm = 100;
+  const roundChargedKm = chargedKm <= 10 ? 10 : Math.round(chargedKm / 10) * 10;
+
+  const dispatch = useAppDispatch();
 
   const kmArray = [
     10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170,
@@ -28,7 +31,8 @@ export default function ModalCalibrate({
   ];
 
   const { t } = useTranslation();
-  const btnStyle = value !== null ? "btnSend" : "disableBtn btnSend";
+
+  const btnStyle = value !== null ? "btnSend repeat" : "disableBtn btnSend";
 
   const urlV2Calibrating = `${process.env.REACT_APP_LINK_SERVE}device/v2/station/calibrating?`;
 
@@ -47,8 +51,12 @@ export default function ModalCalibrate({
       });
   };
 
+  const setDefaultValue = (event: any) => {
+    setValue(event.target.value);
+  };
+
   const tryMore = () => {
-    setError(null);
+    dispatch(setModalOpen(false));
   };
 
   return (
@@ -56,9 +64,9 @@ export default function ModalCalibrate({
       <div className="calibrationCont">
         {error ? (
           <>
-            <p className="calibrationText">{t("errorDevHeader")}</p>
+            <p className="calibrationText">{t("featureInProgress")}</p>
             <div onClick={tryMore} className={btnStyle}>
-              {t("btnRepeat")}
+              {t("close")}
             </div>
           </>
         ) : (
@@ -72,19 +80,22 @@ export default function ModalCalibrate({
               <>
                 <p className="calibrationTitle">{t("calibration")}</p>
                 <p className="calibrationText">{t("enterYourKm")}:</p>
-                {/* in telegram bootstrap dropdown */}
-                <div className="selectBox">
-                  {kmArray.map((n: number, index: any) => (
-                    <div
-                      className="listKm"
-                      onClick={() => setValue(n)}
-                      key={index}
-                    >
-                      {n}
-                    </div>
-                  ))}
-                </div>
-
+                <FormControl size="small" fullWidth>
+                  <Select
+                    variant="outlined"
+                    onChange={setDefaultValue}
+                    defaultValue={roundChargedKm}
+                    sx={{
+                      height: 40,
+                    }}
+                  >
+                    {kmArray.map((n: number, index: any) => (
+                      <MenuItem key={index} value={n}>
+                        {n}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
                 <div onClick={calibrateResult} className={btnStyle}>
                   {t("sendKm")}
                 </div>

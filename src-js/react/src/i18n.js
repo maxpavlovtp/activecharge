@@ -59,6 +59,11 @@ i18n
           calibratedKm: "Ваш результат відкалібровано",
           btnRepeat: "Повторити",
 
+          featureInProgress: "Чекайте в наступному оновленні :)",
+
+          back: "Повернутись",
+          close: "Закрити",
+
           offerTitle: "Договір публічної оферти",
           contents: "Зміст",
           callUs: "Зателефонувати",
@@ -127,6 +132,11 @@ i18n
           sendKm: "Calibrate",
           calibratedKm: "Your result was calibrated successfully",
           btnRepeat: "Try Again",
+
+          featureInProgress: "Coming soon :)",
+
+          back: "Back",
+          close: "Close",
 
           offerTitle: "Public offer agreement",
           contents: "Contents",
