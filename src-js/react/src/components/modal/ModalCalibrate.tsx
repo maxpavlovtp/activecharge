@@ -60,7 +60,7 @@ export default function ModalCalibrate({
 
   const calibrateResult = () => {
     const deviceFingerPrint = getDeviceFingerPrint();
-    setError('error');
+    setError("error");
     // axios
     //   .get(
     //     `${urlV2Calibrating}station_number=${station}&device_finger_print=${deviceFingerPrint}&real_km=${value}`
