@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { styled } from "@mui/system";
 import FormControl from "@mui/material/FormControl";
 import { useTranslation } from "react-i18next";
 import { getDeviceFingerPrint } from "../../store/reducers/ActionCreators";
@@ -19,9 +20,30 @@ export default function ModalCalibrate({
   const [value, setValue] = useState<any>(null);
   const [error, setError] = useState<any>(null);
   const [calibratedKm, setCalibratedKm] = useState(null);
-  const roundChargedKm = chargedKm <= 10 ? 10 : Math.round(chargedKm / 10) * 10;
+  // chargedKm <= 10 ? 10 : Math.round(chargedKm / 10) * 10
+  const roundChargedKm = 100;
 
   const dispatch = useAppDispatch();
+
+  // const useStyles = makeStyles(theme => ({
+  //   formControl: {
+  //     margin: theme.spacing(1),
+  //     minWidth: 120
+  //   },
+  //   selectEmpty: {
+  //     marginTop: theme.spacing(2)
+  //   },
+  //   menuPaper: {
+  //     maxHeight: 100
+  //   }
+  // }));
+
+  const selectionView = styled("div")({
+    color: "darkslategray",
+    backgroundColor: "aliceblue",
+    padding: 8,
+    borderRadius: 4,
+  });
 
   const kmArray = [
     10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170,
@@ -38,17 +60,18 @@ export default function ModalCalibrate({
 
   const calibrateResult = () => {
     const deviceFingerPrint = getDeviceFingerPrint();
-    axios
-      .get(
-        `${urlV2Calibrating}station_number=${station}&device_finger_print=${deviceFingerPrint}&real_km=${value}`
-      )
-      .catch(function (error: any) {
-        setError(error.message);
-        console.log(error.message);
-      })
-      .then(function (result: any) {
-        setCalibratedKm(result);
-      });
+    setError('error');
+    // axios
+    //   .get(
+    //     `${urlV2Calibrating}station_number=${station}&device_finger_print=${deviceFingerPrint}&real_km=${value}`
+    //   )
+    //   .catch(function (error: any) {
+    //     setError(error.message);
+    //     console.log(error.message);
+    //   })
+    //   .then(function (result: any) {
+    //     setCalibratedKm(result);
+    //   });
   };
 
   const setDefaultValue = (event: any) => {
@@ -82,6 +105,11 @@ export default function ModalCalibrate({
                 <p className="calibrationText">{t("enterYourKm")}:</p>
                 <FormControl size="small" fullWidth>
                   <Select
+                    MenuProps={{
+                      style: {
+                        maxHeight: 250,
+                      },
+                    }}
                     variant="outlined"
                     onChange={setDefaultValue}
                     defaultValue={roundChargedKm}
