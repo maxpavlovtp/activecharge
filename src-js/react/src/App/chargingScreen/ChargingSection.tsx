@@ -7,6 +7,7 @@ import { getStationInfo } from "../../store/reducers/ActionCreators";
 import GetPower from "../../components/getPower/GetPower";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Container } from "react-bootstrap";
+import { useVisitorData } from "@fingerprintjs/fingerprintjs-pro-react";
 
 const MainSection: React.FC = () => {
   const [loading, setLoading] = useState<any>(true);
@@ -15,6 +16,8 @@ const MainSection: React.FC = () => {
   let stationNumbers: any = searchParams.get("station");
 
   const dispatch = useAppDispatch();
+
+  const { data } = useVisitorData();
 
   const { t } = useTranslation();
   const navigate = useNavigate();
