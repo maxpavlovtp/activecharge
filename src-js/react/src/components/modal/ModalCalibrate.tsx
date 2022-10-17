@@ -91,7 +91,6 @@ export default function ModalCalibrate({
                       MenuProps={{
                         style: {
                           maxHeight: 250,
-                          transition: '1s'
                         },
                       }}
                       variant="outlined"
