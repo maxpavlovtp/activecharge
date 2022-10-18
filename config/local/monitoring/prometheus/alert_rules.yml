@@ -1,12 +1,18 @@
 groups:
   - name: km220
     rules:
-
       - alert: service_down
         expr: up{job="km220-actuator"} == 0
         for: 30s
         labels:
-          severity: major
+          severity: critical
         annotations:
           summary: "Instance {{ $labels.instance }} down"
           description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 30 seconds."
+      - alert: device_offline
+        expr: device_online_offline < 1
+        for: 30s
+        labels:
+          severity: major
+        annotations:
+          summary: "Instance {{ $labels.instance }}. Station {{ $labels.station_number }} is offline"
