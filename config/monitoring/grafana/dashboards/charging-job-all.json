@@ -24,6 +24,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
+  "id": 3,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -32,7 +33,6 @@
         "type": "prometheus",
         "uid": "P1809F7CD0C75ACF3"
       },
-      "description": "Charging job metrics. Power, voltage, consumption",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -86,8 +86,8 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 22,
-        "w": 24,
+        "h": 9,
+        "w": 12,
         "x": 0,
         "y": 0
       },
@@ -106,25 +106,35 @@
       },
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P1809F7CD0C75ACF3"
+          },
           "editorMode": "builder",
-          "expr": "job_power_joules{application=\"$application\", instance=\"$instance\", station_number=\"$station_number\", job_id=~\"$job_id\"}",
-          "format": "time_series",
-          "hide": false,
+          "expr": "job_power_joules",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P1809F7CD0C75ACF3"
+          },
           "editorMode": "builder",
-          "expr": "job_voltage_volts{application=\"$application\", instance=\"$instance\", station_number=\"$station_number\", job_id=~\"$job_id\"}",
+          "expr": "job_voltage_volts",
           "hide": false,
           "legendFormat": "__auto",
           "range": true,
           "refId": "B"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P1809F7CD0C75ACF3"
+          },
           "editorMode": "builder",
-          "expr": "job_consumption_joules{application=\"$application\", instance=\"$instance\", station_number=\"$station_number\", job_id=~\"$job_id\"}",
+          "expr": "job_consumption_joules",
           "hide": false,
           "legendFormat": "__auto",
           "range": true,
@@ -135,143 +145,12 @@
       "type": "timeseries"
     }
   ],
-  "refresh": "5s",
+  "refresh": true,
   "schemaVersion": 37,
   "style": "dark",
   "tags": [],
   "templating": {
-    "list": [
-      {
-        "current": {
-          "selected": false,
-          "text": "km220.com",
-          "value": "km220.com"
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "P1809F7CD0C75ACF3"
-        },
-        "definition": "",
-        "hide": 0,
-        "includeAll": false,
-        "label": "Application",
-        "multi": false,
-        "name": "application",
-        "options": [],
-        "query": {
-          "query": "label_values(application)",
-          "refId": "prometheus-application-Variable-Query"
-        },
-        "refresh": 2,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allFormat": "glob",
-        "current": {
-          "selected": false,
-          "text": "157.90.254.213:8080",
-          "value": "157.90.254.213:8080"
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "P1809F7CD0C75ACF3"
-        },
-        "definition": "",
-        "hide": 0,
-        "includeAll": false,
-        "label": "Instance",
-        "multi": false,
-        "multiFormat": "glob",
-        "name": "instance",
-        "options": [],
-        "query": {
-          "query": "label_values(job_power_joules{application=\"$application\"}, instance)",
-          "refId": "prometheus-instance-Variable-Query"
-        },
-        "refresh": 2,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allFormat": "glob",
-        "current": {
-          "selected": false,
-          "text": "1",
-          "value": "1"
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "P1809F7CD0C75ACF3"
-        },
-        "definition": "",
-        "hide": 0,
-        "includeAll": false,
-        "label": "Station",
-        "multi": false,
-        "multiFormat": "glob",
-        "name": "station_number",
-        "options": [],
-        "query": {
-          "query": "label_values(job_power_joules{application=\"$application\", instance=\"$instance\"}, station_number)",
-          "refId": "prometheus-station_number-Variable-Query"
-        },
-        "refresh": 2,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allFormat": "glob",
-        "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "P1809F7CD0C75ACF3"
-        },
-        "definition": "",
-        "hide": 0,
-        "includeAll": true,
-        "label": "Job",
-        "multi": false,
-        "multiFormat": "glob",
-        "name": "job_id",
-        "options": [],
-        "query": {
-          "query": "label_values(job_power_joules{application=\"$application\", instance=\"$instance\", station_number=\"$station_number\"}, job_id)",
-          "refId": "prometheus-job_id-Variable-Query"
-        },
-        "refresh": 2,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      }
-    ]
+    "list": []
   },
   "time": {
     "from": "now-12h",
@@ -279,8 +158,8 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Charging jobs. All stations.",
-  "uid": "81TBNvN5o",
-  "version": 3,
+  "title": "Charging jobs. Summary.",
+  "uid": "81TBNvM4s",
+  "version": 1,
   "weekStart": ""
 }
