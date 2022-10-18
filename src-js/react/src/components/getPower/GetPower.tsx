@@ -175,7 +175,16 @@ export default function GetPower({
         kWtCharged={kWtCharged}
         chargeStatus={chargeStatus}
       />
-      <ModalCalibrate station={station} chargedKm={Math.round((kWtCharged * 1000) / Math.round(carKwtKmRatio))}/>
+      {/* "http://49.12.19.42:8080/" */}
+      {/* "http://220-km.com:8080/"  */}
+      {process.env.REACT_APP_LINK_SERVE !== "http://220-km.com:8080/"  && (
+        <ModalCalibrate
+          station={station}
+          chargedKm={Math.round(
+            (kWtCharged * 1000) / Math.round(carKwtKmRatio)
+          )}
+        />
+      )}
     </>
   );
 }

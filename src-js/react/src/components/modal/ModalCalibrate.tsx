@@ -1,14 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { styled } from "@mui/system";
-import FormControl from "@mui/material/FormControl";
 import { useTranslation } from "react-i18next";
 import { getDeviceFingerPrint } from "../../store/reducers/ActionCreators";
 import Modal from "./Modal";
 import "./Modal.css";
-import { MenuItem, Select } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
-import { setModalOpen } from "../../store/reducers/FetchSlice";
 
 export default function ModalCalibrate({
   chargedKm,
@@ -22,9 +17,6 @@ export default function ModalCalibrate({
   const [calibratedKm, setCalibratedKm] = useState(null);
   // chargedKm <= 10 ? 10 : Math.round(chargedKm / 10) * 10
   const roundChargedKm = chargedKm <= 10 ? 10 : Math.round(chargedKm / 10) * 10;
-
-  const { isModalOpen } = useAppSelector((state) => state.fetchReducer);
-  const dispatch = useAppDispatch();
 
   const kmArray = [
     10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170,
@@ -41,26 +33,21 @@ export default function ModalCalibrate({
 
   const calibrateResult = () => {
     const deviceFingerPrint = getDeviceFingerPrint();
-    setError("error");
-    // axios
-    //   .get(
-    //     `${urlV2Calibrating}station_number=${station}&device_finger_print=${deviceFingerPrint}&real_km=${value}`
-    //   )
-    //   .catch(function (error: any) {
-    //     setError(error.message);
-    //     console.log(error.message);
-    //   })
-    //   .then(function (result: any) {
-    //     setCalibratedKm(result);
-    //   });
-  };
-
-  const setDefaultValue = (event: any) => {
-    setValue(event.target.value);
+    axios
+      .get(
+        `${urlV2Calibrating}station_number=${station}&device_finger_print=${deviceFingerPrint}&real_km=${value}`
+      )
+      .catch(function (error: any) {
+        setError(error.message);
+        console.log(error.message);
+      })
+      .then(function (result: any) {
+        setCalibratedKm(result);
+      });
   };
 
   const tryMore = () => {
-    dispatch(setModalOpen(false));
+    setError(null);
   };
 
   return (
@@ -68,9 +55,9 @@ export default function ModalCalibrate({
       <div className="calibrationCont">
         {error ? (
           <>
-            <p className="calibrationText">{t("featureInProgress")}</p>
+            <p className="calibrationText">{t("errorDevHeader")}</p>
             <div onClick={tryMore} className={btnStyle}>
-              {t("close")}
+              {t("btnRepeat")}
             </div>
           </>
         ) : (
@@ -84,30 +71,17 @@ export default function ModalCalibrate({
               <>
                 <p className="calibrationTitle">{t("calibration")}</p>
                 <p className="calibrationText">{t("enterYourKm")}:</p>
-                {isModalOpen && (
-                  <FormControl size="small" fullWidth>
-                    <Select
-                      defaultOpen={true}
-                      MenuProps={{
-                        style: {
-                          maxHeight: 250,
-                        },
-                      }}
-                      variant="outlined"
-                      onChange={setDefaultValue}
-                      defaultValue={roundChargedKm}
-                      sx={{
-                        height: 40,
-                      }}
+                <div className="selectBox">
+                  {kmArray.map((n: number, index: any) => (
+                    <div
+                      className={n === value ? "listKm celected" : "listKm"}
+                      onClick={() => setValue(n)}
+                      key={index}
                     >
-                      {kmArray.map((n: number, index: any) => (
-                        <MenuItem key={index} value={n}>
-                          {n}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                )}
+                      {n}
+                    </div>
+                  ))}
+                </div>
 
                 <div onClick={calibrateResult} className={btnStyle}>
                   {t("sendKm")}
