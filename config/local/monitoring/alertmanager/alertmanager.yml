@@ -5,14 +5,22 @@ global:
   telegram_api_url: https://api.telegram.org
 
 route:
-    receiver: default-telegram
-    continue: false
+    receiver: 'default-receiver'
     group_wait: 30s
     group_interval: 5m
     repeat_interval: 4h
+    routes:
+      - receiver: 'service-down-telegram'
+        matchers:
+          - alertname = service_down
+      - receiver: 'device-offline-telegram'
+        matchers:
+          - alertname = device_offline
 
 receivers:
-    - name: default-telegram
+    - name: default-receiver
+
+    - name: service-down-telegram
       telegram_configs:
       - send_resolved: true
         http_config:
@@ -20,6 +28,17 @@ receivers:
         api_url: https://api.telegram.org
         bot_token: 5688265658:AAG_B2tb1dp8dBtZH3FNPS2ytfDWpMCbJq4
         chat_id: -1001635023132
+        message: '{{ template "telegram.default.message" . }}'
+        parse_mode: HTML
+
+    - name: device-offline-telegram
+      telegram_configs:
+      - send_resolved: true
+        http_config:
+          follow_redirects: true
+        api_url: https://api.telegram.org
+        bot_token: 5688265658:AAG_B2tb1dp8dBtZH3FNPS2ytfDWpMCbJq4
+        chat_id: -611818755
         message: '{{ template "telegram.default.message" . }}'
         parse_mode: HTML
 templates: []
