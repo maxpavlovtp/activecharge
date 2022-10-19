@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { getDeviceFingerPrint } from "../../store/reducers/ActionCreators";
+import { getClientFingerPrint } from "../../store/reducers/ActionCreators";
 import Modal from "./Modal";
 import "./Modal.css";
 
@@ -32,10 +32,10 @@ export default function ModalCalibrate({
   const urlV2Calibrating = `${process.env.REACT_APP_LINK_SERVE}device/v2/station/calibrating?`;
 
   const calibrateResult = () => {
-    const deviceFingerPrint = getDeviceFingerPrint();
+    const clientFingerPrint = getClientFingerPrint();
     axios
       .get(
-        `${urlV2Calibrating}station_number=${station}&device_finger_print=${deviceFingerPrint}&real_km=${value}`
+        `${urlV2Calibrating}stationNumber=${station}&clientFingerPrint=${clientFingerPrint}&real_km=${value}`
       )
       .catch(function (error: any) {
         setError(error.message);
