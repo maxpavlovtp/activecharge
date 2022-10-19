@@ -95,11 +95,3 @@
 .listKm:not(:last-child) {
   border-bottom: 1px solid #8f00ff;
 }
-
-.listKm:hover {
-  background-color: #8f00ff;
-}
-
-.listKm:active {
-  background-color: #8f00ff;
-}
