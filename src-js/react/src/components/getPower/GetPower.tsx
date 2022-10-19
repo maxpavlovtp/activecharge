@@ -47,6 +47,14 @@ export default function GetPower({
   let chargeStatus = `${isZero ? " " : kWtCharged.toFixed(2)} ${t("wt")}`;
   let carKwtKmRatio = 200;
 
+  const openModal = () => {
+    if (process.env.REACT_APP_LINK_SERVE === "http://220-km.com:8080/") {
+      console.log("close");
+    } else {
+      dispatch(setModalOpen(true));
+    }
+  };
+
   const toggleMoreInfo = () => {
     setOpenInfo(!openInfo);
   };
@@ -91,9 +99,7 @@ export default function GetPower({
                 {t("chargedkWt")}
                 <br />
                 <FinishKmStap
-                  onClick={() => {
-                    dispatch(setModalOpen(true));
-                  }}
+                  onClick={openModal}
                   style={{ fontSize: "calc(1.7rem + 1.6vw)" }}
                 >
                   {Math.round((kWtCharged * 1000) / Math.round(carKwtKmRatio))}{" "}
@@ -177,7 +183,7 @@ export default function GetPower({
       />
       {/* "http://49.12.19.42:8080/" */}
       {/* "http://220-km.com:8080/"  */}
-      {process.env.REACT_APP_LINK_SERVE !== "http://220-km.com:8080/"  && (
+      {process.env.REACT_APP_LINK_SERVE !== "http://220-km.com:8080/" && (
         <ModalCalibrate
           station={station}
           chargedKm={Math.round(
