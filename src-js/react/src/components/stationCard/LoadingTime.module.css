@@ -6,6 +6,7 @@
   border-radius: 50%;
   border-top-color: #8f00ff;
   animation: spin 1s ease-in-out infinite;
+  margin-top: 38px;
   -webkit-animation: spin 1s ease-in-out infinite;
 }
 
