@@ -4,7 +4,7 @@ import { Link, useOutletContext, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import {
-  getClientFingerPring,
+  getClientFingerPrint,
   getDeviceOnlineStatus,
   idStart,
 } from "../../store/reducers/ActionCreators";
@@ -24,7 +24,7 @@ const MainSection: React.FC = () => {
   const [payUrls, setPayUrls] = useState<any>([]);
   let stationNumber: any = searchParams.get("station");
 
-  const clientFingerPrint = getClientFingerPring();
+  const clientFingerPrint = getClientFingerPrint();
 
   const urlPayment12h = `${process.env.REACT_APP_LINK_SERVE}order/generateCheckoutLink?station_number=${stationNumber}&clientFingerPrint=${clientFingerPrint}&hours=12`;
   const urlPayment6h = `${process.env.REACT_APP_LINK_SERVE}order/generateCheckoutLink?station_number=${stationNumber}&clientFingerPrint=${clientFingerPrint}&hours=6`;

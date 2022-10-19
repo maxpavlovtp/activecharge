@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import ErrorPage from "../../components/error-page/ErrorPage";
 import Spinner from "../../components/spinner/Spinner";
 import { StationCard } from "../../components/stationCard/StationCard";
-import { getClientFingerPring } from "../../store/reducers/ActionCreators";
+import { getClientFingerPrint } from "../../store/reducers/ActionCreators";
 
 const urlV2StatusAll = `${process.env.REACT_APP_LINK_SERVE}device/v2/station/statusAll`;
 
@@ -19,7 +19,7 @@ export default function HomeScreen() {
   const { t } = useTranslation();
 
   useEffect(() => {
-    const clientFingerPrint = getClientFingerPring();
+    const clientFingerPrint = getClientFingerPrint();
 
     try {
       axios
