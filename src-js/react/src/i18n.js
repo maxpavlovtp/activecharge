@@ -20,7 +20,7 @@ i18n
       ua: {
         translation: {
           btns: {
-            start: "г",
+            start: "h",
             startFree: "Фрі",
           },
           title: "Заряди 220 кілометрів",
@@ -43,15 +43,21 @@ i18n
 
           errorDevHeader: "Помилка серверу!",
           errorDevBody: "Ми вже вирішуємо проблему і скоро повернимось :)",
-          errorOfflineHeader: "Девайс офлайн",
+          errorOfflineHeader: "Станція офлайн",
           errorOfflineBody:
-            "Вибачте! Девайс офлайн. Спробуйте, будь ласка, пізніше",
+            "Вибачте! Станція офлайн. Спробуйте, будь ласка, пізніше",
           errorPayHeader: "Оплата недоступна!",
           errorPayBody: "Ми вже вирішуємо проблему і скоро повернемось :)",
 
-          helpCall: "Зателефонуйте нам :)",
+          helpCall: "тицни щоб зателефонувати",
 
           readyForUse: "Готова!",
+
+          calibration: "Відкалібруйте результат!",
+          enterYourKm: "Будь ласка, введіть заряджені кілометри",
+          sendKm: "Калібрувати",
+          calibratedKm: "Ваш результат відкалібровано",
+          btnRepeat: "Повторити",
 
           offerTitle: "Договір публічної оферти",
           contents: "Зміст",
@@ -73,7 +79,6 @@ i18n
             overloadDetected: "Виявлено перевантаження",
             slowdown: "Будь ласка, зменшіть напругу до",
             repeat: "і спробуйте ще раз",
-            btnRepeat: "Спробуй ще",
           },
           footer: {
             part1: "Всі права захищені",
@@ -92,7 +97,7 @@ i18n
           station: "Station",
           chargeLink: "Charging",
           landingLink: "Home",
-          contacts: "Contact Us",
+          contacts: "Contact us",
           offer: "Terms and conditions",
           wt: "kWt*h",
           powerWt: "kWt",
@@ -108,14 +113,20 @@ i18n
 
           errorDevHeader: "Server error!",
           errorDevBody: "We are reinventing and will be back soon :)",
-          errorOfflineHeader: "Device is offline",
-          errorOfflineBody: "Sorry! Device is offline. Please, try later",
+          errorOfflineHeader: "Station is offline",
+          errorOfflineBody: "Sorry! Station is offline. Please, try later",
           errorPayHeader: "Payment is unavailable!",
           errorPayBody: "Sorry! We are reinventing and will be back soon :)",
 
-          helpCall: "Call us :)",
+          helpCall: "Call us",
 
           readyForUse: "Ready!",
+
+          calibration: "Calibrate result!",
+          enterYourKm: "Please, enter your km",
+          sendKm: "Calibrate",
+          calibratedKm: "Your result was calibrated successfully",
+          btnRepeat: "Try Again",
 
           offerTitle: "Public offer agreement",
           contents: "Contents",
@@ -137,7 +148,6 @@ i18n
             overloadDetected: "Overload",
             slowdown: "Please, slow down to",
             repeat: "and try again",
-            btnRepeat: "Try Again",
           },
           footer: {
             part1: "All rights reserved",

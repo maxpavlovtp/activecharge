@@ -1,6 +1,7 @@
 # Transform any public spot to EV charging station.
 [![CI/CD Stage](https://github.com/maxpavlovdp/activecharge/actions/workflows/ci-stage.yml/badge.svg)](https://github.com/maxpavlovdp/activecharge/actions/workflows/ci-stage.yml)
-[![CI/CD Prod](https://github.com/maxpavlovdp/activecharge/actions/workflows/ci-prod.yml/badge.svg)](https://github.com/maxpavlovdp/activecharge/actions/workflows/ci-prod.yml)
+[![CI/CD Prod](https://github.com/maxpavlovdp/activecharge/actions/workflows/ci-prod.yml/badge.svg)](https://github.com/maxpavlovdp/activecharge/actions/workflows/ci-prod.yml) 
+
 
 ## FE endpoints:
 1. local: http://localhost:3000
@@ -28,8 +29,6 @@
     url: jdbc:postgresql://localhost:5432/km220
     username: km220
     password: Nopassword1
-9. buy device: https://smartunit.com.ua/p1468345789-wifi-rele-tomzn.html?source=merchant_center&gclid=CjwKCAjwlqOXBhBqEiwA-hhitJnVhc58A84dNE5pXfiLi6m56wuSncTd-V8D6tC-fHsVxSQa6EZCBBoCJB8QAvD_BwE
-10. go deeper :)
 
 ## SDLC:
 1. We deploy every PR to dev 178.18.251.90 using git actions + ssh + systemctl.

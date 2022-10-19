@@ -3,30 +3,38 @@ import "./MainSection.css";
 import { Link, useOutletContext, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
-import { idStart } from "../../store/reducers/ActionCreators";
+import {
+  getClientFingerPring,
+  getDeviceOnlineStatus,
+  idStart,
+} from "../../store/reducers/ActionCreators";
 import MainImgLoadingLazy from "../../components/lazyLoading/MainImgLoadingLazy";
 import placehoderSrc from "../../assets/chargingTiny.png";
 import ErrorPage from "../../components/error-page/ErrorPage";
 import axios from "axios";
 import { Col, Container, Row } from "react-bootstrap";
 import { useVisitorData } from "@fingerprintjs/fingerprintjs-pro-react";
+import Spinner from "../../components/spinner/Spinner";
 
 const MainSection: React.FC = () => {
   const [searchParams] = useSearchParams();
+  // const [loading, setLoading] = useState<any>(true);
   const [errorPay, setErrorPay] = useState<any>(null);
   const [mainImgTheme] = useOutletContext<any>();
   const [payUrls, setPayUrls] = useState<any>([]);
   let stationNumber: any = searchParams.get("station");
 
-  const urlPayment12h = `${process.env.REACT_APP_LINK_SERVE}order/generateCheckoutLink?station_number=${stationNumber}&&hours=12`;
-  const urlPayment6h = `${process.env.REACT_APP_LINK_SERVE}order/generateCheckoutLink?station_number=${stationNumber}&&hours=6`;
+  const clientFingerPrint = getClientFingerPring();
+
+  const urlPayment12h = `${process.env.REACT_APP_LINK_SERVE}order/generateCheckoutLink?station_number=${stationNumber}&clientFingerPrint=${clientFingerPrint}&hours=12`;
+  const urlPayment6h = `${process.env.REACT_APP_LINK_SERVE}order/generateCheckoutLink?station_number=${stationNumber}&clientFingerPrint=${clientFingerPrint}&hours=6`;
   const payEndpoints = [urlPayment6h, urlPayment12h];
 
   const { data } = useVisitorData();
 
   const { t } = useTranslation();
 
-  const { errorCharging, errorStart } = useAppSelector(
+  const { errorCharging, errorStart, isDeviceOnline } = useAppSelector(
     (state) => state.fetchReducer
   );
 
@@ -37,6 +45,7 @@ const MainSection: React.FC = () => {
   };
 
   useEffect(() => {
+    dispatch(getDeviceOnlineStatus(stationNumber));
     try {
       axios
         .all(payEndpoints.map((endpoint: any) => axios.get(endpoint)))
@@ -66,7 +75,7 @@ const MainSection: React.FC = () => {
     );
   }
 
-  if (errorStart) {
+  if (errorStart || isDeviceOnline === false) {
     return (
       <ErrorPage
         errorHeader={t("errorOfflineHeader")}
@@ -78,6 +87,9 @@ const MainSection: React.FC = () => {
   if (data) {
     console.log(data.visitorId);
   }
+
+  if (isDeviceOnline === null) return <Spinner />;
+
   return (
     <Container fluid="lg">
       <Row className="justify-content-center">

@@ -1,5 +1,6 @@
 package com.km220.dao.station;
 
+import static com.km220.dao.station.StationEntity.COST_PER_HOUR;
 import static com.km220.dao.station.StationEntity.NAME;
 import static com.km220.dao.station.StationEntity.NUMBER;
 import static com.km220.dao.station.StationEntity.PROVIDER_DEVICE_ID;
@@ -28,6 +29,7 @@ public class StationRowMapper extends DatabaseEntityRowMapper<StationEntity> {
     stationEntity.setNumber(rs.getString(name(NUMBER)));
     stationEntity.setName(rs.getString(name(NAME)));
     stationEntity.setDeviceId(rs.getString(name(PROVIDER_DEVICE_ID)));
+		stationEntity.setCostPerHour(rs.getString(name(COST_PER_HOUR)));
 
     return stationEntity;
   }

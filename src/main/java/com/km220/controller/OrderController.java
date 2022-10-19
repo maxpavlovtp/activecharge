@@ -1,9 +1,7 @@
 package com.km220.controller;
 
 import com.km220.service.OrderService;
-import com.km220.service.job.ChargerService;
 import java.io.IOException;
-import java.util.HashMap;
 import javax.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,45 +21,19 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class OrderController {
 
-  @Autowired
-  private OrderService orderService;
-  @Autowired
-  private ChargerService chargerService;
+	@Autowired
+	private OrderService orderService;
 
-  //  todo move to DB
-  private static final HashMap<String, String> invoiceCache = new HashMap<>();
+	@GetMapping("/generateCheckoutLink")
+	public ResponseEntity<String> generateCheckoutLink(
+			@NotBlank @RequestParam("station_number") String stationNumber,
+			@NotBlank @RequestParam("hours") String hours) throws IOException {
+		String checkoutLink = orderService.initOrder(stationNumber, Integer.valueOf(hours));
+		return ResponseEntity.status(HttpStatus.OK).body(checkoutLink);
+	}
 
-  @GetMapping("/generateCheckoutLink")
-  public ResponseEntity<String> generateCheckoutLink(
-      @NotBlank @RequestParam("station_number") String stationNumber,
-      @NotBlank @RequestParam("hours") String hours) throws IOException {
-    String monoResponse = orderService.generateCheckoutLink(stationNumber, Integer.valueOf(hours));
-    if (monoResponse == null) {
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("check orderService logs");
-    }
-    // todo extract to service
-    String invoiceId = fetchInvoiceId(monoResponse);
-    invoiceCache.put(invoiceId, stationNumber + ";" + hours);
-    return ResponseEntity.status(HttpStatus.OK).body(monoResponse);
-  }
-
-  private String fetchInvoiceId(String monoResponse) {
-    return monoResponse.replace("{\"invoiceId\":\"", "").split("\"")[0];
-  }
-
-  @PostMapping("/callBackMono")
-  public ResponseEntity<Void> callBackMono(@RequestBody String callBackMono) {
-    log.info("Call back from monobank: {}", callBackMono);
-    // todo move to service
-    if (callBackMono.contains("\"status\":\"success\"")) {
-      String invoiceId = fetchInvoiceId(callBackMono);
-      log.info("invoiceId: {}", invoiceId);
-      String stationNumberFromCache = invoiceCache.get(invoiceId).split(";")[0];
-      String hours = invoiceCache.get(invoiceId).split(";")[1];
-      log.info("stationNumberFromCache: {}", stationNumberFromCache);
-      chargerService.start(stationNumberFromCache, Integer.parseInt(hours) * 3600);
-    }
-
-    return ResponseEntity.status(HttpStatus.OK).body(null);
-  }
+	@PostMapping("/callBackMono")
+	public ResponseEntity<String> callBackMono(@RequestBody String callBackMono) {
+		return ResponseEntity.status(HttpStatus.OK).body(orderService.processOrder(callBackMono));
+	}
 }

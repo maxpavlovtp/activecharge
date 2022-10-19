@@ -27,6 +27,7 @@ import {
 } from "../globalStyles";
 import { lightTheme, darkTheme } from "../darkTheme/Theme";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { deviceOnlineStatus } from "../../store/reducers/FetchSlice";
 
 export default function Layout() {
   const [routeTo, setRouteTo] = useState<any>("/start");
@@ -127,6 +128,7 @@ export default function Layout() {
           >
             <LinksColor
               reloadDocument
+              onClick={() => dispatch(deviceOnlineStatus(null))}
               to={routeTo}
               className="flex-row align-items-center"
             >
@@ -149,7 +151,10 @@ export default function Layout() {
                   <Nav.Link
                     style={{ textDecoration: "none" }}
                     className="nav-link links"
-                    onClick={closeMenu}
+                    onClick={() => {
+                      closeMenu();
+                      dispatch(deviceOnlineStatus(null));
+                    }}
                     eventKey="1"
                     as={Link}
                     to={
