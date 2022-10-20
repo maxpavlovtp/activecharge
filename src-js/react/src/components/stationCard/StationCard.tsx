@@ -3,6 +3,7 @@ import styles from "./StationCard.module.css";
 import { useTranslation } from "react-i18next";
 import { CardLink, HomeCard } from "../globalStyles";
 import { useAppSelector } from "../../hooks/reduxHooks";
+import Timer from "../timer/Timer";
 
 export const StationCard = ({
   stationNumber,
@@ -14,16 +15,19 @@ export const StationCard = ({
   state: any;
 }) => {
   const [routeTo, setRouteTo] = useState<any>("");
-
+  const [over, setOver] = useState(false);
   const [timer, setTimer] = useState<any>(null);
+  // const timerNums = timer?.match(/\d+/g);
+  // console.log(timer);
 
   const { t } = useTranslation();
 
   const { isGotDeviceStatus } = useAppSelector((state) => state.fetchReducer);
 
   useEffect(() => {
-    setTimer(new Date(leftS * 1000).toISOString().slice(11, 19));
+    setTimer(new Date(leftS * 1000).toISOString().slice(11, 19).match(/\d+/g));
   }, []);
+  console.log(timer);
 
   useEffect(() => {
     if (state === "IN_PROGRESS") {
@@ -42,17 +46,26 @@ export const StationCard = ({
         </div>
 
         <div className={styles.status}>
-          {state === "IN_PROGRESS" ? (
-            <p className={styles.readyCharge}>{timer}</p>
+          {over === false && timer !== null ? (
+            // <p className={styles.readyCharge}>{timer}</p>
+            <Timer
+              hours={Number(timer[0])}
+              minutes={Number(timer[1])}
+              seconds={Number(timer[2])}
+              fontSize={"30px"}
+              margin={"20px 0 0 0"}
+              over={over}
+              setOver={setOver}
+            />
           ) : (
             <p className={styles.readyCharge}>{t("readyForUse")}</p>
           )}
 
           <div
-            className={state === "IN_PROGRESS" ? styles.online : styles.offline}
+            className={over === false ? styles.online : styles.offline}
           ></div>
         </div>
       </HomeCard>
     </CardLink>
   );
-}
+};

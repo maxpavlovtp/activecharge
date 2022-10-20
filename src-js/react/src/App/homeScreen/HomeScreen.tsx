@@ -36,18 +36,6 @@ export default function HomeScreen() {
     } catch (e: any) {
       console.log(e.message);
     }
-    const timerID = setInterval(() => {
-      try {
-        axios.get(urlV2StatusAll).then(function (result: any) {
-          setStatusAll(result.data);
-          statusALl !== null && setLoading(false);
-          console.log(result?.data);
-        });
-      } catch (e: any) {
-        console.log(e.message);
-      }
-    }, sec);
-    return () => clearInterval(timerID);
   }, []);
 
   if (errorAll) {
