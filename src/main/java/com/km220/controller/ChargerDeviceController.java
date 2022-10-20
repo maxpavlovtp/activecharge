@@ -18,7 +18,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -112,7 +111,7 @@ public class ChargerDeviceController {
 		List<Station> stations = stationService.getAllStations()
 				.stream()
 				.map(StationConverter.INSTANCE)
-				.sorted(Comparator.comparing(Station::getNumber))
+				.sorted((o1, o2) -> Integer.parseInt(o1.getNumber()) - Integer.parseInt(o1.getNumber()))
 				.toList();
 		return ResponseEntity.status(HttpStatus.OK).body(stations);
 	}
