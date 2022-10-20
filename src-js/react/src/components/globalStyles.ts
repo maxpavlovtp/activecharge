@@ -108,7 +108,7 @@ export const FullInfoContainer = styled.div`
   transition: all 0.5s linear;
 `;
 
-export const FinishKmStap = styled.span`
+export const FinishKmStap = styled.div`
   transition: all 0.5s linear;
   color: white;
 `;

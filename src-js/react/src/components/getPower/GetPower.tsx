@@ -95,21 +95,25 @@ export default function GetPower({
               <PowerMetricsColor className="finishTitle">
                 {t("chargedCongrats")}{" "}
               </PowerMetricsColor>
-              <p className="finishText">
-                {t("chargedkWt")}
-                <br />
-                <FinishKmStap
-                  onClick={openModal}
-                  style={{ fontSize: "calc(1.7rem + 1.6vw)", padding: '3px 10px', backgroundColor: '#8f00ff', borderRadius: '10px' }}
-                >
-                  {Math.round((kWtCharged * 1000) / Math.round(carKwtKmRatio))}{" "}
-                  {t("km")}
-                </FinishKmStap>
-                <br />
-                <FinishKwtStap style={{ fontSize: "calc(0.9rem + 1.3vw)" }}>
-                  {chargeStatus}
-                </FinishKwtStap>{" "}
-              </p>
+              <p className="finishText">{t("chargedkWt")}</p>
+              <FinishKmStap
+                onClick={openModal}
+                style={{
+                  fontSize: "calc(1.7rem + 1.6vw)",
+                  padding: "0 15px",
+                  marginBottom: '15px',
+                  backgroundColor: "#8f00ff",
+                  borderRadius: "10px",
+                  display: 'inline-block'
+                }}
+              >
+                {Math.round((kWtCharged * 1000) / Math.round(carKwtKmRatio))}{" "}
+                {t("km")}
+              </FinishKmStap>
+              <br />
+              <FinishKwtStap style={{ fontSize: "calc(0.9rem + 1.3vw)" }}>
+                {chargeStatus}
+              </FinishKwtStap>{" "}
             </Col>
           ) : (
             <Col className="text-center">
