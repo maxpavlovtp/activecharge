@@ -4,11 +4,11 @@ public abstract class AbstractEwelinkApiTest {
 
   protected final EwelinkClient ewelinkClient;
 
-  protected static final String LOCAL_1 = "1001323420";
-  protected static final String LOCAL_2 = "1000d61c41";
+  protected static final String LOCAL_1 = "1001692538";
+  protected static final String LOCAL_2 = "1001690629";
 
   // todo remove hardcode
-  private static final String EMAIL = "eskimorollerr@gmail.com";
+  private static final String EMAIL = "km220.com@gmail.com";
   private static final String PASSWORD = "Nopassword1";
   private static final String REGION = "eu";
   private static final String COUNTRY_CODE = "+380";
