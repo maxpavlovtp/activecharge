@@ -26,10 +26,6 @@ const MainSection: React.FC = () => {
 
   const clientFingerPrint = getClientFingerPrint();
 
-  const urlPayment12h = `${process.env.REACT_APP_LINK_SERVE}order/generateCheckoutLink?station_number=${stationNumber}&clientFingerPrint=${clientFingerPrint}&hours=12`;
-  const urlPayment6h = `${process.env.REACT_APP_LINK_SERVE}order/generateCheckoutLink?station_number=${stationNumber}&clientFingerPrint=${clientFingerPrint}&hours=6`;
-  const payEndpoints = [urlPayment6h, urlPayment12h];
-
   const { data } = useVisitorData();
 
   const { t } = useTranslation();
@@ -46,25 +42,9 @@ const MainSection: React.FC = () => {
 
   useEffect(() => {
     dispatch(getDeviceOnlineStatus(stationNumber));
-    try {
-      axios
-        .all(payEndpoints.map((endpoint: any) => axios.get(endpoint)))
-        .catch(function (error: any) {
-          setErrorPay(error.message);
-        })
-        .then((data) => {
-          setPayUrls([]);
-          data?.map((link: any) => {
-            const { pageUrl } = link.data;
-            setPayUrls((pay: any) => [...pay, pageUrl]);
-            console.log(pageUrl);
-          });
-        });
-    } catch (e: any) {
-      setErrorPay(e.message);
-    }
   }, []);
-  let statusBtn = payUrls.length === 0 ? "btnStart disableBtn" : "btnStart";
+
+  let statusBtn = "btnStart";
 
   if (errorCharging) {
     return (
@@ -114,24 +94,24 @@ const MainSection: React.FC = () => {
         </Col>
 
         <Col
-          as={"a"}
+          as={Link}
           xs="2"
           sm="1"
           lg="1"
           className={`ml-2 ${statusBtn}`}
-          href={`${payUrls[0]}`}
+          to={`/payment?station=${stationNumber}&hours=${6}`}
           target="_blank"
           rel="noreferrer"
         >
           6{t("btns.start")}
         </Col>
         <Col
-          as={"a"}
+          as={Link}
           xs="3"
           sm="2"
           lg="2"
           className={`ml-2 ${statusBtn}`}
-          href={`${payUrls[1]}`}
+          to={`/payment?station=${stationNumber}&hours=${12}`}
           target="_blank"
           rel="noreferrer"
         >

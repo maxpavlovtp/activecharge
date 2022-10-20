@@ -7,8 +7,10 @@ export interface FetchState {
   isGotDeviceStatus: any;
   isModalOpen: any;
   uiNightMode: any;
+  payLink: string;
   errorStart: string;
   errorCharging: string;
+  errorPay: string;
 }
 
 export const initialState: FetchState = {
@@ -18,8 +20,10 @@ export const initialState: FetchState = {
   isGotDeviceStatus: false,
   isModalOpen: false,
   uiNightMode: false,
+  payLink: "",
   errorStart: "",
   errorCharging: "",
+  errorPay: "",
 };
 
 export const FetchSlice = createSlice({
@@ -67,9 +71,16 @@ export const FetchSlice = createSlice({
     setModalOpen(state: FetchState, action: PayloadAction<any>) {
       state.isModalOpen = action.payload;
     },
+    getPayLink(state: FetchState, action: PayloadAction<any>) {
+      state.payLink = action.payload;
+    },
+    getPayLinkError(state: FetchState, action: PayloadAction<any>) {
+      state.errorPay = action.payload;
+    },
   },
 });
 
-export const { setDeviceStatusUndefind, setModalOpen, deviceOnlineStatus } = FetchSlice.actions;
+export const { setDeviceStatusUndefind, setModalOpen, deviceOnlineStatus } =
+  FetchSlice.actions;
 
 export default FetchSlice.reducer;
