@@ -13,4 +13,4 @@ INSERT INTO station ("name", "number", provider_device_id)VALUES('1001693a00', '
 INSERT INTO station ("name", "number", provider_device_id)VALUES('10016919c9', '11','1001692457');
 INSERT INTO station ("name", "number", provider_device_id)VALUES('1001692457', '12','1001694660');
 INSERT INTO station ("name", "number", provider_device_id)VALUES('1001694660', '13','1001692538');
-INSERT INTO station ("name", "number", provider_device_id)VALUES('1001694660', '14','1001690629');
+INSERT INTO station ("name", "number", provider_device_id)VALUES('1001690629', '14','1001690629');
