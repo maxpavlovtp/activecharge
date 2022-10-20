@@ -112,8 +112,8 @@ export const generatePaymentLink =
           console.log(error.message);
         })
         .then((link: any) => {
-          dispatch(FetchSlice.actions.getPayLink(link.data));
-          console.log(link.data);
+          dispatch(FetchSlice.actions.getPayLink(link.data.pageUrl));
+          console.log(link.data); 
         });
     } catch (err: any) {
       console.log(err.message);

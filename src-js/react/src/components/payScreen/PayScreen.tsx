@@ -1,11 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import { generatePaymentLink } from "../../store/reducers/ActionCreators";
 
 export default function PayScreen() {
+  const [getLink, setGetLink] = useState<any>(false);
   const dispatch = useAppDispatch();
   const { payLink } = useAppSelector((state) => state.fetchReducer);
+
+  const condition = payLink !== "" ? true : false;
 
   const [searchParams] = useSearchParams();
   let stationNumber: any = searchParams.get("station");
@@ -13,17 +16,11 @@ export default function PayScreen() {
 
   useEffect(() => {
     dispatch(generatePaymentLink(stationNumber, hours));
-  }, []);
+    if (payLink !== "") {
+      window.open(payLink, "_blank");
+    }
+    console.log(payLink);
+  }, [condition]);
 
-  return (
-    <>
-      {payLink === "" ? (
-        <p>Wait...</p>
-      ) : (
-        <div style={{ height: "100vh", width: "100wh" }}>
-          <iframe src='https://pay.mbnk.biz/2210202pwgCXASV1R9kD'height={"100%"} width={"100%"} />
-        </div>
-      )}
-    </>
-  );
+  return <p>Wait...</p>;
 }
