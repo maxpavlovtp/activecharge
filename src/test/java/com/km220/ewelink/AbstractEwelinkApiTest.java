@@ -4,8 +4,8 @@ public abstract class AbstractEwelinkApiTest {
 
   protected final EwelinkClient ewelinkClient;
 
-  protected static final String LOCAL_1 = "1001692538";
-  protected static final String LOCAL_2 = "1001690629";
+  protected static final String LOCAL_1 = "1001693a00";
+  protected static final String LOCAL_2 = "10016919c9";
 
   // todo remove hardcode
   private static final String EMAIL = "km220.com@gmail.com";
