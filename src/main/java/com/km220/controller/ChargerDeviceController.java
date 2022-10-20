@@ -111,6 +111,7 @@ public class ChargerDeviceController {
 		List<Station> stations = stationService.getAllStations()
 				.stream()
 				.map(StationConverter.INSTANCE)
+				.sorted((o1, o2) -> Integer.parseInt(o1.getNumber()) - Integer.parseInt(o1.getNumber()))
 				.toList();
 		return ResponseEntity.status(HttpStatus.OK).body(stations);
 	}
