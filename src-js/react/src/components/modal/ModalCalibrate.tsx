@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useAppSelector } from "../../hooks/reduxHooks";
 import { getClientFingerPrint } from "../../store/reducers/ActionCreators";
 import Modal from "./Modal";
 import "./Modal.css";
@@ -16,7 +17,9 @@ export default function ModalCalibrate({
   const [error, setError] = useState<any>(null);
   const [calibratedKm, setCalibratedKm] = useState(null);
   // chargedKm <= 10 ? 10 : Math.round(chargedKm / 10) * 10
-  const roundChargedKm = chargedKm <= 10 ? 10 : Math.round(chargedKm / 10) * 10;
+  const roundChargedKm = 330;
+
+  const { isModalOpen } = useAppSelector((state) => state.fetchReducer);
 
   const kmArray = [
     10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170,
@@ -50,11 +53,13 @@ export default function ModalCalibrate({
     setError(null);
   };
 
+  let scrollLet = value === null ? roundChargedKm : value;
   useEffect(() => {
-    const element = document.getElementById(`${roundChargedKm / 10 - 1}`);
+    const element = document.getElementById(`${scrollLet / 10 - 1}`);
     element?.scrollIntoView({ behavior: "smooth", block: "center" });
-    setValue(roundChargedKm);
-  }, []);
+    setValue((Number(element?.id) + 1) * 10);
+    console.log(element?.id);
+  }, [isModalOpen]);
 
   return (
     <Modal>
