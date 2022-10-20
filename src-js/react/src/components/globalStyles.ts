@@ -109,8 +109,8 @@ export const FullInfoContainer = styled.div`
 `;
 
 export const FinishKmStap = styled.span`
-  color: ${({ theme }: { theme: any }) => theme.colorSpan};
   transition: all 0.5s linear;
+  color: white;
 `;
 
 export const FinishKwtStap = styled.span`
