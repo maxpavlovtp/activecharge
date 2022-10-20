@@ -22,5 +22,5 @@ export default function PayScreen() {
     console.log(payLink);
   }, [condition]);
 
-  return <p>Wait...</p>;
+  return <p>Not working</p>;
 }
