@@ -8,7 +8,6 @@ import MainSection from "./App/mainScreen/MainSection";
 import ChargingSection from "./App/chargingScreen/ChargingSection";
 import ContactsSection from "./App/contactsScreen/ContactsSection";
 import ContractSection from "./App/contractScreen/ContractSection";
-import PayScreen from "./components/payScreen/PayScreen";
 
 function App() {
   return (
@@ -20,7 +19,6 @@ function App() {
             <Route path="/contract" element={<ContractSection />} />
             <Route path="/contacts" element={<ContactsSection />} />
             <Route path="/charging" element={<ChargingSection />} />
-            <Route path="/payment" element={<PayScreen />} />
             <Route
               path="/start"
               element={

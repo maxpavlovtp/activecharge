@@ -7,13 +7,29 @@ const urlV2Status = `${process.env.REACT_APP_LINK_SERVE}device/v2/station/status
 const urlStationIsOnline = `${process.env.REACT_APP_LINK_SERVE}device/v2/station/isOnline?`;
 const urlPay = `${process.env.REACT_APP_LINK_SERVE}order/generateCheckoutLink`;
 
-
 export const getClientFingerPrint = () => {
   const clientFingerPrint = localStorage.getItem(
     "@fpjs@client@__null__null__false"
   );
   const parsedUID = JSON.parse(clientFingerPrint as string);
   return clientFingerPrint ? parsedUID.body.visitorId : "";
+};
+
+export const openPaymentLink = (stationNumber: string, hours: string) => {
+  let win: any = window.open();
+  try {
+    axios
+      .get(`${urlPay}?station_number=${stationNumber}&hours=${hours}`)
+      .catch(function (error: any) {
+        console.log(error.message);
+      })
+      .then((link: any) => {
+        win.location = `${link.data.pageUrl}`
+        console.log(link.data);
+      });
+  } catch (err: any) {
+    console.log(err.message);
+  }
 };
 
 export const idStart = (station: string) => async (dispatch: AppDispatch) => {
@@ -100,22 +116,4 @@ export const getDeviceOnlineStatus =
         dispatch(FetchSlice.actions.deviceOnlineStatus(result.data));
         console.log(result.data);
       });
-  };
-
-export const generatePaymentLink =
-  (stationNumber: string, hours: string) => (dispatch: AppDispatch) => {
-    try {
-      axios
-        .get(`${urlPay}?station_number=${stationNumber}&hours=${hours}`)
-        .catch(function (error: any) {
-          dispatch(FetchSlice.actions.getPayLinkError(error.message));
-          console.log(error.message);
-        })
-        .then((link: any) => {
-          dispatch(FetchSlice.actions.getPayLink(link.data.pageUrl));
-          console.log(link.data); 
-        });
-    } catch (err: any) {
-      console.log(err.message);
-    }
   };

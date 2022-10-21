@@ -7,6 +7,7 @@ import {
   getClientFingerPrint,
   getDeviceOnlineStatus,
   idStart,
+  openPaymentLink,
 } from "../../store/reducers/ActionCreators";
 import MainImgLoadingLazy from "../../components/lazyLoading/MainImgLoadingLazy";
 import placehoderSrc from "../../assets/chargingTiny.png";
@@ -94,26 +95,22 @@ const MainSection: React.FC = () => {
         </Col>
 
         <Col
-          as={Link}
+          as={"div"}
           xs="2"
           sm="1"
           lg="1"
           className={`ml-2 ${statusBtn}`}
-          to={`/payment?station=${stationNumber}&hours=${6}`}
-          target="_blank"
-          rel="noreferrer"
+          onClick={() => openPaymentLink(stationNumber, "6")}
         >
           6{t("btns.start")}
         </Col>
         <Col
-          as={Link}
+          as={"div"}
           xs="3"
           sm="2"
           lg="2"
           className={`ml-2 ${statusBtn}`}
-          to={`/payment?station=${stationNumber}&hours=${12}`}
-          target="_blank"
-          rel="noreferrer"
+          onClick={() => openPaymentLink(stationNumber, "12")}
         >
           12{t("btns.start")}
         </Col>
