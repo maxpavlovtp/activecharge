@@ -19,19 +19,14 @@ import Spinner from "../../components/spinner/Spinner";
 
 const MainSection: React.FC = () => {
   const [searchParams] = useSearchParams();
-  // const [loading, setLoading] = useState<any>(true);
-  const [errorPay, setErrorPay] = useState<any>(null);
   const [mainImgTheme] = useOutletContext<any>();
-  const [payUrls, setPayUrls] = useState<any>([]);
   let stationNumber: any = searchParams.get("station");
-
-  const clientFingerPrint = getClientFingerPrint();
 
   const { data } = useVisitorData();
 
   const { t } = useTranslation();
 
-  const { errorCharging, errorStart, isDeviceOnline } = useAppSelector(
+  const { errorCharging, errorStart, isDeviceOnline, errorPay } = useAppSelector(
     (state) => state.fetchReducer
   );
 
@@ -47,7 +42,7 @@ const MainSection: React.FC = () => {
 
   let statusBtn = "btnStart";
 
-  if (errorCharging) {
+  if (errorCharging || errorPay) {
     return (
       <ErrorPage
         errorHeader={t("errorDevHeader")}
@@ -100,7 +95,7 @@ const MainSection: React.FC = () => {
           sm="1"
           lg="1"
           className={`ml-2 ${statusBtn}`}
-          onClick={() => openPaymentLink(stationNumber, "6")}
+          onClick={() => dispatch(openPaymentLink(stationNumber, "6"))}
         >
           6{t("btns.start")}
         </Col>
@@ -110,7 +105,7 @@ const MainSection: React.FC = () => {
           sm="2"
           lg="2"
           className={`ml-2 ${statusBtn}`}
-          onClick={() => openPaymentLink(stationNumber, "12")}
+          onClick={() => dispatch(openPaymentLink(stationNumber, "12"))}
         >
           12{t("btns.start")}
         </Col>

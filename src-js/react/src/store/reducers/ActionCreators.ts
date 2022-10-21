@@ -15,22 +15,28 @@ export const getClientFingerPrint = () => {
   return clientFingerPrint ? parsedUID.body.visitorId : "";
 };
 
-export const openPaymentLink = (stationNumber: string, hours: string) => {
-  let win: any = window.open();
-  try {
-    axios
-      .get(`${urlPay}?station_number=${stationNumber}&hours=${hours}`)
-      .catch(function (error: any) {
-        console.log(error.message);
-      })
-      .then((link: any) => {
-        win.location = `${link.data.pageUrl}`
-        console.log(link.data);
-      });
-  } catch (err: any) {
-    console.log(err.message);
-  }
-};
+export const openPaymentLink =
+  (stationNumber: string, hours: string) => async (dispatch: AppDispatch) => {
+    let win: any = window.open();
+    const clientFingerPrint = getClientFingerPrint();
+    try {
+      await axios
+        .get(
+          `${urlPay}?station_numbe=${stationNumber}&device_finger_print=${clientFingerPrint}&hours=${hours}`
+        )
+        .catch(function (error: any) {
+          dispatch(FetchSlice.actions.getPayLinkError(error.message));
+          win.close();
+          console.log(error.message);
+        })
+        .then((link: any) => {
+          win.location = `${link.data.pageUrl}`;
+          console.log(link.data);
+        });
+    } catch (err: any) {
+      console.log(err.message);
+    }
+  };
 
 export const idStart = (station: string) => async (dispatch: AppDispatch) => {
   dispatch(setDeviceStatusUndefind(undefined));
