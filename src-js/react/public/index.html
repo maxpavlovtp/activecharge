@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <script
+    <!-- // for prod -->
+    <!-- <script
       async
       src="https://www.googletagmanager.com/gtag/js?id=G-C143LGR9B0"
     ></script>
@@ -13,6 +14,21 @@
       gtag("js", new Date());
 
       gtag("config", "G-C143LGR9B0");
+    </script> -->
+
+    <!-- // for stage -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-TMZYY4VEF4"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-TMZYY4VEF4");
     </script>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
