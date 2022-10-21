@@ -22,7 +22,7 @@ export const openPaymentLink =
     try {
       await axios
         .get(
-          `${urlPay}?station_numbe=${stationNumber}&device_finger_print=${clientFingerPrint}&hours=${hours}`
+          `${urlPay}?station_number=${stationNumber}&device_finger_print=${clientFingerPrint}&hours=${hours}`
         )
         .catch(function (error: any) {
           dispatch(FetchSlice.actions.getPayLinkError(error.message));
