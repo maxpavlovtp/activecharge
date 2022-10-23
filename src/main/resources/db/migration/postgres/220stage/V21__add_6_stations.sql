@@ -6,7 +6,6 @@ INSERT INTO station ("name", "number", provider_device_id)VALUES('3', '3', '1001
 INSERT INTO station ("name", "number", provider_device_id)VALUES('4', '4', '10016905cf');
 INSERT INTO station ("name", "number", provider_device_id)VALUES('5', '5', '100169010c');
 INSERT INTO station ("name", "number", provider_device_id)VALUES('6', '6', '1001692662');
-INSERT INTO station ("name", "number", provider_device_id)VALUES('7', '7', '100155240d');
 INSERT INTO station ("name", "number", provider_device_id)VALUES('8', '8', '10016935ac');
 INSERT INTO station ("name", "number", provider_device_id)VALUES('9', '9', '1001693a00');
 INSERT INTO station ("name", "number", provider_device_id)VALUES('10', '10','10016919c9');
