@@ -18,6 +18,7 @@ const MainSection: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const { data } = useVisitorData();
+  console.log(data)
 
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -37,6 +38,7 @@ const MainSection: React.FC = () => {
         console.log(timer);
       }
     }
+    // eslint-disable-next-line 
   }, [isLoadingCharging]);
 
   useEffect(() => {

@@ -59,6 +59,7 @@ export default function ModalCalibrate({
     element?.scrollIntoView({ behavior: "smooth", block: "center" });
     setValue((Number(element?.id) + 1) * 10);
     console.log(element?.id);
+    // eslint-disable-next-line 
   }, [isModalOpen]);
 
   return (

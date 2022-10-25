@@ -14,8 +14,6 @@ export default function HomeScreen() {
   const [statusALl, setStatusAll] = useState<any>();
   const [errorAll, setErrorAll] = useState<any>(null);
 
-  const sec = 5000;
-
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -36,6 +34,7 @@ export default function HomeScreen() {
     } catch (e: any) {
       console.log(e.message);
     }
+    // eslint-disable-next-line
   }, []);
 
   if (errorAll) {
@@ -77,7 +76,7 @@ export default function HomeScreen() {
               errorBody={t("errorDevBody")}
             />;
           }
-
+          // eslint-disable-next-line
           return;
         })}
       </Row>

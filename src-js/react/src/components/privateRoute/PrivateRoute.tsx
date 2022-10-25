@@ -12,6 +12,7 @@ export default function PrivateRoute({ children }: { children: any }) {
   useEffect(() => {
     dispatch(getStationInfo(stationNumbers));
     console.log(deviceStatus?.state);
+    // eslint-disable-next-line 
   }, []);
 
   if (deviceStatus?.lastJob?.state === "IN_PROGRESS") {

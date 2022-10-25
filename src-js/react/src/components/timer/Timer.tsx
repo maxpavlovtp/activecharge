@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Timer = (props: any) => {
   const [[h = 0, m = 0, s = 0], setTime] = useState([
@@ -25,7 +25,7 @@ const Timer = (props: any) => {
       setTime([0, 0, 0]);
     } else if (m === 0 && s === 0) {
       setTime([h - 1, 59, 59]);
-    } else if (s == 0) {
+    } else if (s === 0) {
       setTime([h, m - 1, 59]);
     } else {
       setTime([h, m, s - 1]);
@@ -34,6 +34,7 @@ const Timer = (props: any) => {
 
   useEffect(() => {
     tick();
+    // eslint-disable-next-line 
   }, []);
 
   useEffect(() => {
@@ -41,6 +42,7 @@ const Timer = (props: any) => {
       tick();
     }, 1000);
     return () => clearInterval(timerID);
+    // eslint-disable-next-line 
   }, [h, m, s]);
 
   return (

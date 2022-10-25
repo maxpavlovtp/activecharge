@@ -26,6 +26,7 @@ export const StationCard = ({
 
   useEffect(() => {
     setTimer(new Date(leftS * 1000).toISOString().slice(11, 19).match(/\d+/g));
+    // eslint-disable-next-line 
   }, []);
   console.log(timer);
 
@@ -35,6 +36,7 @@ export const StationCard = ({
     } else if (state === "DONE") {
       setRouteTo(`/start?station=${stationNumber}`);
     }
+    // eslint-disable-next-line 
   }, [routeTo, isGotDeviceStatus]);
 
   return (

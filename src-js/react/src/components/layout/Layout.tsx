@@ -14,7 +14,6 @@ import placehoderSrc from "../../assets/logoTiny.png";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { ThemeProvider } from "styled-components";
 import {
-  getStationInfo,
   getUiNightMode,
 } from "../../store/reducers/ActionCreators";
 import {
@@ -51,6 +50,7 @@ export default function Layout() {
     } else if (stationNumbers === null) {
       setRouteTo("/");
     }
+    // eslint-disable-next-line 
   }, [isGotDeviceStatus]);
 
   const closeMenu = () => {
@@ -101,6 +101,7 @@ export default function Layout() {
         darkModeSetter();
       }
     }
+    // eslint-disable-next-line 
   }, [uiNightMode]);
 
   const themeToggler = () => {

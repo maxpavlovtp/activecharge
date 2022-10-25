@@ -37,6 +37,7 @@ export default function GetPower({
       }, sec);
       return () => clearInterval(timerID);
     }
+    // eslint-disable-next-line
   }, [deviceStatus?.lastJob?.state, chartTap]);
 
   let voltage = Number(Math.round(deviceStatus?.lastJob?.voltage));
@@ -101,10 +102,10 @@ export default function GetPower({
                 style={{
                   fontSize: "calc(1.7rem + 1.6vw)",
                   padding: "0 15px",
-                  marginBottom: '15px',
+                  marginBottom: "15px",
                   backgroundColor: "#8f00ff",
                   borderRadius: "10px",
-                  display: 'inline-block'
+                  display: "inline-block",
                 }}
               >
                 {Math.round((kWtCharged * 1000) / Math.round(carKwtKmRatio))}{" "}

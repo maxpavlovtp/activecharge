@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "./MainSection.css";
 import { Link, useOutletContext, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import {
-  getClientFingerPrint,
   getDeviceOnlineStatus,
   idStart,
   openPaymentLink,
@@ -12,7 +11,6 @@ import {
 import MainImgLoadingLazy from "../../components/lazyLoading/MainImgLoadingLazy";
 import placehoderSrc from "../../assets/chargingTiny.png";
 import ErrorPage from "../../components/error-page/ErrorPage";
-import axios from "axios";
 import { Col, Container, Row } from "react-bootstrap";
 import { useVisitorData } from "@fingerprintjs/fingerprintjs-pro-react";
 import Spinner from "../../components/spinner/Spinner";
@@ -26,9 +24,8 @@ const MainSection: React.FC = () => {
 
   const { t } = useTranslation();
 
-  const { errorCharging, errorStart, isDeviceOnline, errorPay } = useAppSelector(
-    (state) => state.fetchReducer
-  );
+  const { errorCharging, errorStart, isDeviceOnline, errorPay } =
+    useAppSelector((state) => state.fetchReducer);
 
   const dispatch = useAppDispatch();
 
@@ -38,6 +35,7 @@ const MainSection: React.FC = () => {
 
   useEffect(() => {
     dispatch(getDeviceOnlineStatus(stationNumber));
+    // eslint-disable-next-line
   }, []);
 
   let statusBtn = "btnStart";
