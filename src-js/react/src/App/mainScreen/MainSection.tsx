@@ -7,6 +7,7 @@ import {
   getClientFingerPrint,
   getDeviceOnlineStatus,
   idStart,
+  openPaymentLink,
 } from "../../store/reducers/ActionCreators";
 import MainImgLoadingLazy from "../../components/lazyLoading/MainImgLoadingLazy";
 import placehoderSrc from "../../assets/chargingTiny.png";
@@ -18,23 +19,14 @@ import Spinner from "../../components/spinner/Spinner";
 
 const MainSection: React.FC = () => {
   const [searchParams] = useSearchParams();
-  // const [loading, setLoading] = useState<any>(true);
-  const [errorPay, setErrorPay] = useState<any>(null);
   const [mainImgTheme] = useOutletContext<any>();
-  const [payUrls, setPayUrls] = useState<any>([]);
   let stationNumber: any = searchParams.get("station");
-
-  const clientFingerPrint = getClientFingerPrint();
-
-  const urlPayment12h = `${process.env.REACT_APP_LINK_SERVE}order/generateCheckoutLink?station_number=${stationNumber}&clientFingerPrint=${clientFingerPrint}&hours=12`;
-  const urlPayment6h = `${process.env.REACT_APP_LINK_SERVE}order/generateCheckoutLink?station_number=${stationNumber}&clientFingerPrint=${clientFingerPrint}&hours=6`;
-  const payEndpoints = [urlPayment6h, urlPayment12h];
 
   const { data } = useVisitorData();
 
   const { t } = useTranslation();
 
-  const { errorCharging, errorStart, isDeviceOnline } = useAppSelector(
+  const { errorCharging, errorStart, isDeviceOnline, errorPay } = useAppSelector(
     (state) => state.fetchReducer
   );
 
@@ -46,27 +38,11 @@ const MainSection: React.FC = () => {
 
   useEffect(() => {
     dispatch(getDeviceOnlineStatus(stationNumber));
-    try {
-      axios
-        .all(payEndpoints.map((endpoint: any) => axios.get(endpoint)))
-        .catch(function (error: any) {
-          setErrorPay(error.message);
-        })
-        .then((data) => {
-          setPayUrls([]);
-          data?.map((link: any) => {
-            const { pageUrl } = link.data;
-            setPayUrls((pay: any) => [...pay, pageUrl]);
-            console.log(pageUrl);
-          });
-        });
-    } catch (e: any) {
-      setErrorPay(e.message);
-    }
   }, []);
-  let statusBtn = payUrls.length === 0 ? "btnStart disableBtn" : "btnStart";
 
-  if (errorCharging) {
+  let statusBtn = "btnStart";
+
+  if (errorCharging || errorPay) {
     return (
       <ErrorPage
         errorHeader={t("errorDevHeader")}
@@ -114,26 +90,22 @@ const MainSection: React.FC = () => {
         </Col>
 
         <Col
-          as={"a"}
+          as={"div"}
           xs="2"
           sm="1"
           lg="1"
           className={`ml-2 ${statusBtn}`}
-          href={`${payUrls[0]}`}
-          target="_blank"
-          rel="noreferrer"
+          onClick={() => dispatch(openPaymentLink(stationNumber, "6"))}
         >
           6{t("btns.start")}
         </Col>
         <Col
-          as={"a"}
+          as={"div"}
           xs="3"
           sm="2"
           lg="2"
           className={`ml-2 ${statusBtn}`}
-          href={`${payUrls[1]}`}
-          target="_blank"
-          rel="noreferrer"
+          onClick={() => dispatch(openPaymentLink(stationNumber, "12"))}
         >
           12{t("btns.start")}
         </Col>
