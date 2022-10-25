@@ -1,4 +1,4 @@
 cd "$(dirname "$0")" || exit
 
-npm i
+npm install --loglevel=error
 npm run startLocalWithStageBE
