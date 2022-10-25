@@ -52,6 +52,7 @@
   font-family: "OpenSansMedium", Arial, Helvetica, sans-serif;
   font-weight: 500;
   font-size: calc(1rem + 1.5vw);
+  margin-bottom: 15px;
 }
 
 .btnVoltage {
@@ -75,4 +76,26 @@
 .info {
   transform: scale(0.5);
   transition: 1s all;
+}
+
+.pushable {
+  background: #530092;
+  border-radius: 12px;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  outline-offset: 4px;
+}
+.front {
+  display: block;
+  padding: 0 10px 0 10px;
+  border-radius: 12px;
+  font-size: 1.25rem;
+  background: #8f00ff;
+  color: white;
+  transform: translateY(-6px);
+}
+
+.pushable:active .front {
+  transform: translateY(-2px);
 }

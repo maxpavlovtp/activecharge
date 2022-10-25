@@ -48,6 +48,8 @@ export default function Layout() {
       deviceStatus?.lastJobPresented === false
     ) {
       setRouteTo(`/start?station=${stationNumbers}`);
+    } else if (stationNumbers === null) {
+      setRouteTo("/");
     }
   }, [isGotDeviceStatus]);
 

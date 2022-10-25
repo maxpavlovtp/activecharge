@@ -1,9 +1,8 @@
 import axios from "axios";
-import React, { useRef, useState } from "react";
-import { Dropdown, Form } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { getClientFingerPring } from "../../store/reducers/ActionCreators";
-import ErrorPage from "../error-page/ErrorPage";
+import { useAppSelector } from "../../hooks/reduxHooks";
+import { getClientFingerPrint } from "../../store/reducers/ActionCreators";
 import Modal from "./Modal";
 import "./Modal.css";
 
@@ -17,8 +16,10 @@ export default function ModalCalibrate({
   const [value, setValue] = useState<any>(null);
   const [error, setError] = useState<any>(null);
   const [calibratedKm, setCalibratedKm] = useState(null);
-  // Math.round(chargedKm / 10) * 10;
-  const roundChargedKm = 100;
+  // chargedKm <= 10 ? 10 : Math.round(chargedKm / 10) * 10
+  const roundChargedKm = 330;
+
+  const { isModalOpen } = useAppSelector((state) => state.fetchReducer);
 
   const kmArray = [
     10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170,
@@ -28,12 +29,13 @@ export default function ModalCalibrate({
   ];
 
   const { t } = useTranslation();
-  const btnStyle = value !== null ? "btnSend" : "disableBtn btnSend";
+
+  const btnStyle = value !== null ? "btnSend repeat" : "disableBtn btnSend";
 
   const urlV2Calibrating = `${process.env.REACT_APP_LINK_SERVE}device/v2/station/calibrating?`;
 
   const calibrateResult = () => {
-    const clientFingerPrint = getClientFingerPring();
+    const clientFingerPrint = getClientFingerPrint();
     axios
       .get(
         `${urlV2Calibrating}stationNumber=${station}&clientFingerPrint=${clientFingerPrint}&real_km=${value}`
@@ -50,6 +52,14 @@ export default function ModalCalibrate({
   const tryMore = () => {
     setError(null);
   };
+
+  let scrollLet = value === null ? roundChargedKm : value;
+  useEffect(() => {
+    const element = document.getElementById(`${scrollLet / 10 - 1}`);
+    element?.scrollIntoView({ behavior: "smooth", block: "center" });
+    setValue((Number(element?.id) + 1) * 10);
+    console.log(element?.id);
+  }, [isModalOpen]);
 
   return (
     <Modal>
@@ -72,8 +82,19 @@ export default function ModalCalibrate({
               <>
                 <p className="calibrationTitle">{t("calibration")}</p>
                 <p className="calibrationText">{t("enterYourKm")}:</p>
-                {/* in telegram bootstrap dropdown */}
-               
+                <ul className="selectBox">
+                  {kmArray.map((n: number, index: any) => (
+                    <li
+                      className={n === value ? "listKm celected" : "listKm"}
+                      onClick={() => setValue(n)}
+                      key={index}
+                      id={index}
+                    >
+                      {n}
+                    </li>
+                  ))}
+                </ul>
+
                 <div onClick={calibrateResult} className={btnStyle}>
                   {t("sendKm")}
                 </div>

@@ -34,6 +34,11 @@
   padding-bottom: 10px;
 }
 
+.repeat {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
 .calibrationSuccess {
   font-family: "OpenSansExtraBold", Arial, Helvetica, sans-serif;
   color: #2c2b2b;
@@ -65,7 +70,7 @@
 
 .selectBox {
   position: relative;
-  height: 100px;
+  height: 205px;
   width: 100%;
   overflow-y: scroll;
   text-align: center;
@@ -76,19 +81,17 @@
 .listKm {
   font-family: "OpenSansMedium", Arial, Helvetica, sans-serif;
   font-weight: 500;
-  color: #2c2b2b;
-  font-size: 19px;
+  font-size: 24px;
   margin-bottom: 0;
   padding: 2px;
+  color: #2c2b2b;
 }
+
+.celected {
+  background-color: #8f00ff;
+  color: #fafafa;
+}
+
 .listKm:not(:last-child) {
   border-bottom: 1px solid #8f00ff;
-}
-
-.listKm:hover {
-  background-color: #8f00ff;
-}
-
-.listKm:active {
-  background-color: #8f00ff;
 }

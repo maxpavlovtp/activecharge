@@ -49,7 +49,7 @@ i18n
           errorPayHeader: "Оплата недоступна!",
           errorPayBody: "Ми вже вирішуємо проблему і скоро повернемось :)",
 
-          helpCall: "тицни щоб зателефонувати",
+          helpCall: "Тицни щоб зателефонувати",
 
           readyForUse: "Готова!",
 
@@ -58,6 +58,11 @@ i18n
           sendKm: "Калібрувати",
           calibratedKm: "Ваш результат відкалібровано",
           btnRepeat: "Повторити",
+
+          featureInProgress: "Чекайте в наступному оновленні :)",
+
+          back: "Повернутись",
+          close: "Закрити",
 
           offerTitle: "Договір публічної оферти",
           contents: "Зміст",
@@ -127,6 +132,11 @@ i18n
           sendKm: "Calibrate",
           calibratedKm: "Your result was calibrated successfully",
           btnRepeat: "Try Again",
+
+          featureInProgress: "Coming soon :)",
+
+          back: "Back",
+          close: "Close",
 
           offerTitle: "Public offer agreement",
           contents: "Contents",

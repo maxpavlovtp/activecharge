@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import ErrorPage from "../../components/error-page/ErrorPage";
 import Spinner from "../../components/spinner/Spinner";
 import { StationCard } from "../../components/stationCard/StationCard";
-import { getClientFingerPring } from "../../store/reducers/ActionCreators";
+import { getClientFingerPrint } from "../../store/reducers/ActionCreators";
 
 const urlV2StatusAll = `${process.env.REACT_APP_LINK_SERVE}device/v2/station/statusAll`;
 
@@ -19,7 +19,7 @@ export default function HomeScreen() {
   const { t } = useTranslation();
 
   useEffect(() => {
-    const clientFingerPrint = getClientFingerPring();
+    const clientFingerPrint = getClientFingerPrint();
 
     try {
       axios
@@ -36,18 +36,6 @@ export default function HomeScreen() {
     } catch (e: any) {
       console.log(e.message);
     }
-    const timerID = setInterval(() => {
-      try {
-        axios.get(urlV2StatusAll).then(function (result: any) {
-          setStatusAll(result.data);
-          statusALl !== null && setLoading(false);
-          console.log(result?.data);
-        });
-      } catch (e: any) {
-        console.log(e.message);
-      }
-    }, sec);
-    return () => clearInterval(timerID);
   }, []);
 
   if (errorAll) {

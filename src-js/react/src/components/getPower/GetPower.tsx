@@ -47,6 +47,14 @@ export default function GetPower({
   let chargeStatus = `${isZero ? " " : kWtCharged.toFixed(2)} ${t("wt")}`;
   let carKwtKmRatio = 200;
 
+  const openModal = () => {
+    if (process.env.REACT_APP_LINK_SERVE === "http://220-km.com:8080/") {
+      console.log("close");
+    } else {
+      dispatch(setModalOpen(true));
+    }
+  };
+
   const toggleMoreInfo = () => {
     setOpenInfo(!openInfo);
   };
@@ -87,23 +95,25 @@ export default function GetPower({
               <PowerMetricsColor className="finishTitle">
                 {t("chargedCongrats")}{" "}
               </PowerMetricsColor>
-              <p className="finishText">
-                {t("chargedkWt")}
-                <br />
-                <FinishKmStap
-                  onClick={() => {
-                    dispatch(setModalOpen(true));
-                  }}
-                  style={{ fontSize: "calc(1.7rem + 1.6vw)" }}
-                >
-                  {Math.round((kWtCharged * 1000) / Math.round(carKwtKmRatio))}{" "}
-                  {t("km")}
-                </FinishKmStap>
-                <br />
-                <FinishKwtStap style={{ fontSize: "calc(0.9rem + 1.3vw)" }}>
-                  {chargeStatus}
-                </FinishKwtStap>{" "}
-              </p>
+              <p className="finishText">{t("chargedkWt")}</p>
+              <FinishKmStap
+                onClick={openModal}
+                style={{
+                  fontSize: "calc(1.7rem + 1.6vw)",
+                  padding: "0 15px",
+                  marginBottom: '15px',
+                  backgroundColor: "#8f00ff",
+                  borderRadius: "10px",
+                  display: 'inline-block'
+                }}
+              >
+                {Math.round((kWtCharged * 1000) / Math.round(carKwtKmRatio))}{" "}
+                {t("km")}
+              </FinishKmStap>
+              <br />
+              <FinishKwtStap style={{ fontSize: "calc(0.9rem + 1.3vw)" }}>
+                {chargeStatus}
+              </FinishKwtStap>{" "}
             </Col>
           ) : (
             <Col className="text-center">
@@ -175,7 +185,16 @@ export default function GetPower({
         kWtCharged={kWtCharged}
         chargeStatus={chargeStatus}
       />
-      <ModalCalibrate station={station} chargedKm={Math.round((kWtCharged * 1000) / Math.round(carKwtKmRatio))}/>
+      {/* "http://49.12.19.42:8080/" */}
+      {/* "http://220-km.com:8080/"  */}
+      {process.env.REACT_APP_LINK_SERVE !== "http://220-km.com:8080/" && (
+        <ModalCalibrate
+          station={station}
+          chargedKm={Math.round(
+            (kWtCharged * 1000) / Math.round(carKwtKmRatio)
+          )}
+        />
+      )}
     </>
   );
 }

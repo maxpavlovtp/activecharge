@@ -1,241 +1,242 @@
 {
-  "annotations": {
-    "list": [
-      {
-        "builtIn": 1,
-        "datasource": {
-          "type": "grafana",
-          "uid": "-- Grafana --"
-        },
-        "enable": true,
-        "hide": true,
-        "iconColor": "rgba(0, 211, 255, 1)",
-        "name": "Annotations & Alerts",
-        "target": {
-          "limit": 100,
-          "matchAny": false,
-          "tags": [],
-          "type": "dashboard"
-        },
-        "type": "dashboard"
-      }
-    ]
-  },
-  "editable": true,
-  "fiscalYearStartMonth": 0,
-  "graphTooltip": 0,
-  "links": [],
-  "liveNow": false,
-  "panels": [
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "P1809F7CD0C75ACF3"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {
-            "fillOpacity": 64,
-            "lineWidth": 1,
-            "spanNulls": false
-          },
-          "mappings": [
-            {
-              "options": {
-                "0": {
-                  "color": "red",
-                  "index": 0,
-                  "text": "Offline"
-                },
-                "1": {
-                  "color": "green",
-                  "index": 1,
-                  "text": "Online"
-                }
-              },
-              "type": "value"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 0,
-        "y": 0
-      },
-      "id": null,
-      "options": {
-        "alignValue": "center",
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "mergeValues": true,
-        "rowHeight": 0.51,
-        "showValue": "always",
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "P1809F7CD0C75ACF3"
-          },
-          "editorMode": "builder",
-          "expr": "device_online_offline",
-          "format": "table",
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "Device online/offline",
-      "transformations": [
-        {
-          "id": "groupingToMatrix",
-          "options": {
-            "columnField": "station_number",
-            "rowField": "Time",
-            "valueField": "Value"
-          }
-        },
-        {
-          "id": "convertFieldType",
-          "options": {
-            "conversions": [
-              {
-                "destinationType": "time",
-                "targetField": "Time\\station_number"
-              },
-              {
-                "destinationType": "string",
-                "targetField": "1"
-              },
-              {
-                "destinationType": "string",
-                "targetField": "2"
-              },
-              {
-                "destinationType": "string",
-                "targetField": "3"
-              },
-              {
-                "destinationType": "string",
-                "targetField": "4"
-              },
-              {
-                "destinationType": "string",
-                "targetField": "5"
-              },
-              {
-                "destinationType": "string",
-                "targetField": "6"
-              },
-              {
-                "destinationType": "string",
-                "targetField": "7"
-              },
-              {
-                "destinationType": "string",
-                "targetField": "8"
-              },
-              {
-                "destinationType": "string",
-                "targetField": "9"
-              },
-              {
-                "destinationType": "string",
-                "targetField": "10"
-              },
-              {
-                "destinationType": "string",
-                "targetField": "11"
-              },
-              {
-                "destinationType": "string",
-                "targetField": "12"
-              },
-              {
-                "destinationType": "string",
-                "targetField": "13"
-              },
-              {
-                "destinationType": "string",
-                "targetField": "14"
-              },
-              {
-                "destinationType": "string",
-                "targetField": "15"
-              },
-              {
-                "destinationType": "string",
-                "targetField": "16"
-              },
-              {
-                "destinationType": "string",
-                "targetField": "17"
-              },
-              {
-                "destinationType": "string",
-                "targetField": "18"
-              },
-              {
-                "destinationType": "string",
-                "targetField": "19"
-              },
-              {
-                "destinationType": "string",
-                "targetField": "20"
-              },
-              {
-                "destinationType": "string",
-                "targetField": "21"
-              },
-              {
-                "destinationType": "string",
-                "targetField": "22"
-              }
-            ],
-            "fields": {}
-          }
-        }
-      ],
-      "transparent": true,
-      "type": "state-timeline"
-    }
-  ],
-  "schemaVersion": 37,
-  "style": "dark",
-  "tags": [],
-  "templating": {
-    "list": []
-  },
-  "time": {
-    "from": "now-30m",
-    "to": "now"
-  },
-  "timepicker": {},
-  "timezone": "",
-  "title": "Devices",
-  "version": 0,
-  "weekStart": ""
+	"annotations": {
+		"list": [
+			{
+				"builtIn": 1,
+				"datasource": {
+					"type": "grafana",
+					"uid": "-- Grafana --"
+				},
+				"enable": true,
+				"hide": true,
+				"iconColor": "rgba(0, 211, 255, 1)",
+				"name": "Annotations & Alerts",
+				"target": {
+					"limit": 100,
+					"matchAny": false,
+					"tags": [],
+					"type": "dashboard"
+				},
+				"type": "dashboard"
+			}
+		]
+	},
+	"editable": true,
+	"fiscalYearStartMonth": 0,
+	"graphTooltip": 0,
+	"links": [],
+	"liveNow": false,
+	"panels": [
+		{
+			"datasource": {
+				"type": "prometheus",
+				"uid": "P1809F7CD0C75ACF3"
+			},
+			"description": "",
+			"fieldConfig": {
+				"defaults": {
+					"color": {
+						"mode": "thresholds"
+					},
+					"custom": {
+						"fillOpacity": 64,
+						"lineWidth": 1,
+						"spanNulls": false
+					},
+					"mappings": [
+						{
+							"options": {
+								"0": {
+									"color": "red",
+									"index": 0,
+									"text": "Offline"
+								},
+								"1": {
+									"color": "green",
+									"index": 1,
+									"text": "Online"
+								}
+							},
+							"type": "value"
+						}
+					],
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "green",
+								"value": null
+							}
+						]
+					}
+				},
+				"overrides": []
+			},
+			"gridPos": {
+				"h": 22,
+				"w": 24,
+				"x": 0,
+				"y": 0
+			},
+			"id": 1,
+			"options": {
+				"alignValue": "center",
+				"legend": {
+					"displayMode": "list",
+					"placement": "bottom",
+					"showLegend": true
+				},
+				"mergeValues": true,
+				"rowHeight": 0.51,
+				"showValue": "always",
+				"tooltip": {
+					"mode": "single",
+					"sort": "none"
+				}
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "P1809F7CD0C75ACF3"
+					},
+					"editorMode": "builder",
+					"expr": "device_online_offline",
+					"format": "table",
+					"legendFormat": "__auto",
+					"range": true,
+					"refId": "A"
+				}
+			],
+			"title": "Device online/offline",
+			"transformations": [
+				{
+					"id": "groupingToMatrix",
+					"options": {
+						"columnField": "station_number",
+						"rowField": "Time",
+						"valueField": "Value"
+					}
+				},
+				{
+					"id": "convertFieldType",
+					"options": {
+						"conversions": [
+							{
+								"destinationType": "time",
+								"targetField": "Time\\station_number"
+							},
+							{
+								"destinationType": "string",
+								"targetField": "1"
+							},
+							{
+								"destinationType": "string",
+								"targetField": "2"
+							},
+							{
+								"destinationType": "string",
+								"targetField": "3"
+							},
+							{
+								"destinationType": "string",
+								"targetField": "4"
+							},
+							{
+								"destinationType": "string",
+								"targetField": "5"
+							},
+							{
+								"destinationType": "string",
+								"targetField": "6"
+							},
+							{
+								"destinationType": "string",
+								"targetField": "7"
+							},
+							{
+								"destinationType": "string",
+								"targetField": "8"
+							},
+							{
+								"destinationType": "string",
+								"targetField": "9"
+							},
+							{
+								"destinationType": "string",
+								"targetField": "10"
+							},
+							{
+								"destinationType": "string",
+								"targetField": "11"
+							},
+							{
+								"destinationType": "string",
+								"targetField": "12"
+							},
+							{
+								"destinationType": "string",
+								"targetField": "13"
+							},
+							{
+								"destinationType": "string",
+								"targetField": "14"
+							},
+							{
+								"destinationType": "string",
+								"targetField": "15"
+							},
+							{
+								"destinationType": "string",
+								"targetField": "16"
+							},
+							{
+								"destinationType": "string",
+								"targetField": "17"
+							},
+							{
+								"destinationType": "string",
+								"targetField": "18"
+							},
+							{
+								"destinationType": "string",
+								"targetField": "19"
+							},
+							{
+								"destinationType": "string",
+								"targetField": "20"
+							},
+							{
+								"destinationType": "string",
+								"targetField": "21"
+							},
+							{
+								"destinationType": "string",
+								"targetField": "22"
+							}
+						],
+						"fields": {}
+					}
+				}
+			],
+			"transparent": true,
+			"type": "state-timeline"
+		}
+	],
+	"schemaVersion": 37,
+	"style": "dark",
+	"tags": [],
+	"templating": {
+		"list": []
+	},
+	"time": {
+		"from": "now-2d",
+		"to": "now"
+	},
+	"timepicker": {},
+	"timezone": "",
+	"title": "online/offline",
+	"uid": "J45f5MI4k",
+	"version": 3,
+	"weekStart": ""
 }
