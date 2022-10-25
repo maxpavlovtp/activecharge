@@ -21,7 +21,7 @@ jobs:
         run: ./gradlew clean build -i
 
       - name: 220 build FE
-        run: cd src-js/react && npm i && npm run buildProd
+        run: cd src-js/react && npm i --loglevel=error && npm run buildProd
 
       #      todo write function for all nodes
       #Node 1
